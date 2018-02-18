@@ -1,0 +1,44 @@
+https://hackmd.io/GwVgpmwMxSC0JgGMBMcAswBmU4A490BGOAExQE4UwAjG2m04IA==
+
+Visualizer
+	VisualizerMain()	{
+		TextBoxViewer
+		protected initialize()
+	}
+
+	Console() implements VisualizerMain()	{
+		scrollable
+	}
+
+	Canvas() implements VisualizerMain()	{
+	}
+
+	Options() implements VisualizerMain()	{
+
+	}
+
+	Exceptions() implements VisulizerMain()	{
+		uses alerts
+	}
+
+	Turtle implements VisualizerMain()	{
+	}
+
+	Help() implements VisualizerMain()	{
+		alert?
+		pop-up box
+	}
+
+Drawable
+
+Jennifer
+* main
+* canvas
+* options
+
+Maya
+* drawable (turtle)
+* command console (PRIORITIZE)
+* help pop-up
+* alerts
+* languages
