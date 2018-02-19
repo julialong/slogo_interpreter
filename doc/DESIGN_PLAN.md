@@ -10,7 +10,7 @@ PLAN
 Jennifer and Maya
 
 ### Design Overview
-![]("UML.png")
+![](UML.png)
 Our project will be divided into 4 parts, or packages: View, Model, Controller, and Command. 
 #### View
 View is the part of the program that will control everything that the user sees. There will be a main Visualizer interface that is implemented by the Visualization class. This interface will also implement Observable, so that the Controller part of the project can monitor the text box that the user types commands in. Three of the public methods in this interface are ones from the Observable interface, specifically addObserver(), notifyObserver(), and setChanged(). The other public method of the Visualizer interface is draw(), which will call a Drawable object to draw itself on the user's screen. There will be other private methods within the Visualization class that assist in the creation of the user interface.
