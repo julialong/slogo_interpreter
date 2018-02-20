@@ -9,7 +9,7 @@ public class NullCommand implements Commandable {
 	@Override
 	public <T1, T2> Result<?> execute(Argument<T1, T2> argument) {
 		// do nothing
-		return null;
+		return new Result<Void>();
 	}
 
 }
