@@ -68,7 +68,7 @@ This API contains front end methods that correspond to user input, and that the 
 * public BooleanProperty step() 
 * public BooleanProperty getWindow() 
 * public void setMyShape(Shape s) 
-* public Cell[][] getMyCells() 
+* public Cell\[][] getMyCells() 
 
 
 ### Internal 

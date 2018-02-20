@@ -71,54 +71,54 @@ public interface CommandFactory
 #### *The user types 'fd 50' in the command window, and sees the turtle move in the display window leaving a trail, and the command is added to the environment's history.*
 
 ``` java
-public class Visualization implements Visualizer{
+public class Visualization implements Visualizer {
     
 }
 
-public class Turtle implements Drawable    {
+public class Turtle implements Drawable, Updatable {
     public void draw(Group g)    {
         g.add(this);    // adds self to Scene's group to be displayed, so when Visualizer calls update, turtle will show in new position
     }
 }
 
-public class Console implements TextInput    {
+public class Console implements TextInput {
     public void run()    {
         Interpretation.update(myTextArea.getText());
         clear();
     }
     
-    public void clear()    {
+    public void clear() {
         myTextArea.clear();
     }
     
-    public void loadInput(String command)    {
+    public void loadInput(String command) {
         myTextArea.appendText("\n" + command));    // "types" long command into textbox for the ability to re-use a pre-defined function
     }
     
-    public void scrollUp()    {
+    public void scrollUp() {
         // view previous line of code, above currently displayed code, in the console
     }
     
-    public void scrollDown()    {
+    public void scrollDown() {
         // view following line of code, below currently displayed code, in the console
         // if no following lines, do nothing
     }
 }
 
-public class HelpBox implements TextDisplayWindow    {
+public class HelpBox implements TextDisplayWindow {
     public void open()    {
         // make new Stage
         // insert help (command manual) text into new scene
         // display scene
     }
     
-    public void close()    {
+    public void close() {
         Stage toClose = this.getScene().getWindow();
         toClose.close();
     }
 }
 
-public class Interpretation implements Interpreter{
+public class Interpretation implements Interpreter {
     public void update('fd 50'){
         // some code
         Collection commands = Parsing.parse('fd 50');
@@ -126,7 +126,7 @@ public class Interpretation implements Interpreter{
     }
 }
 
-public class Parsing implements Parser{ 
+public class Parsing implements Parser { 
     public Collection parse('fd 50'){
     // some code
     Command command =  CommandFactory.createCommand('fd',50);
@@ -135,7 +135,7 @@ public class Parsing implements Parser{
     }
 }
 
-public class CommandFactory{
+public class CommandFactory {
 
 }
 ```
@@ -153,7 +153,7 @@ public class Interpretation implements Interpreter{
 }
 
 public class Parsing implements Parser{ 
-    public Collection parse('setxy 40 50'){
+    public Collection parse('setxy 40 50') {
     // some code
     Command command =  CommandFactory.createCommand('setxy',40,50);
     // more code
