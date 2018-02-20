@@ -13,7 +13,7 @@ public class LessCommand implements Commandable {
 	}
 
 	@Override
-	public <T1, T2> Result<?> execute(Argument<T1, T2> argument) {
+	public Result<?> execute(Argument<?, ?> argument) {
 		Integer isLess = expr1 < expr2 ? 1 : 0;
 		return new Result<Integer>(isLess);
 	}
