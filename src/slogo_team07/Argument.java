@@ -21,3 +21,5 @@ public class Argument<T1, T2> {
 		return arg2;
 	}
 }
+
+
