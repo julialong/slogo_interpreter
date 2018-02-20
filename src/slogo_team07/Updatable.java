@@ -1,19 +1,19 @@
 package slogo_team07;
 
-import javafx.scene.paint.Color;
-
 public interface Updatable {
-	void setPosition(double x, double y);
+	double setPosition(double x, double y);
 	
-	void move(double delta_x, double delta_y);
+	double move(double delta_x, double delta_y);
 	
-	void changeColor(Color color);
+	double rotate(double clock, double counter);
 	
-	void rotate(double clock, double counter);
+	double setHeading(double degrees);
 	
-	void setHeading(double degrees);
+	double setFacing(double x, double y);
 	
-	void setFacing(double x, double y);
+	double setVisible(boolean isVisible);
 	
-	void setVisible(boolean isVisible);
+	double getY();
+	
+	double getX();
 }

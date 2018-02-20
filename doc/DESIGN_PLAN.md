@@ -96,15 +96,17 @@ public class Turtle implements Drawable, Updatable {
     }
     
     	@Override
-	public void move(double delta_x, double delta_y) {
+	public double move(double delta_x, double delta_y) {
 		myXPos += delta_x;
 		myYPos += delta_y;
 	}
 	
 	@Override
-	public void setPosition(double x, double y) {
+	public double setPosition(double x, double y) {
+		int distance = // calc distance moved;
 		myXPos = x;
 		myYPos = y;
+		return distance
 	}
 }
 
@@ -181,7 +183,7 @@ public class ForwardCommand implements Commandable {
 	}
 
 	@Override
-	public void execute(Turtle turtle) {
+	public double execute(Turtle turtle) {
 		turtle.move(delta, 0);
 	}
 
@@ -247,6 +249,28 @@ public class Parsing implements Parser{
     }
 }
 // model implemented down here 
+```
+
+#### *The user types 'home' in the command window, and sees the turtle reposition itself without a trail, and the command is added to the environment's history.*
+``` java 
+// view implemented up here
+
+public class Interpretation implements Interpreter {
+    public void update('less 4 2'){
+        // some code
+        Collection commands = Parsing.parse('less 4 2');
+        // more code
+    }
+}
+
+public class Parsing implements Parser{ 
+    public Collection parse('fd 50'){
+    // some code
+    Command command =  CommandFactory.createCommand('less 4 2');
+    // command.execute, which will move the turtle to 0,0 and return distance
+    return commands
+    }
+}
 ```
 
 ### Design Considerations

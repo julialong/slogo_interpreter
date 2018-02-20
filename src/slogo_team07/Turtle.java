@@ -15,15 +15,18 @@ public class Turtle implements Drawable, Updatable {
 	}
 	
 	@Override
-	public void setPosition(double x, double y) {
+	public double setPosition(double x, double y) {
+		int distance = // calc distance moved;
 		myXPos = x;
 		myYPos = y;
+		return distance
 	}
 
 	@Override
-	public void move(double delta_x, double delta_y) {
+	public double move(double delta_x, double delta_y) {
 		myXPos += delta_x;
 		myYPos += delta_y;
+		return (delta_x != 0) ? delta_x : delta_y;
 	}
 
 	@Override
@@ -33,19 +36,19 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public void rotate(double clock, double counter) {
+	public double rotate(double clock, double counter) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setHeading(double degrees) {
+	public double setHeading(double degrees) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setFacing(double x, double y) {
+	public double setFacing(double x, double y) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -54,6 +57,17 @@ public class Turtle implements Drawable, Updatable {
 	public void setVisible(boolean isVisible) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public double getY() {
+		return myYPos;
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return myXPos;
 	}
 
 }
