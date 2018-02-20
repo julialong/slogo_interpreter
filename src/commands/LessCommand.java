@@ -2,7 +2,7 @@ package commands;
 
 import slogo_team07.Argument;
 
-public class LessCommand implements Commandable<Void, Void, Integer> {
+public class LessCommand implements Commandable {
 	
 	private double expr1;
 	private double expr2;
@@ -13,8 +13,8 @@ public class LessCommand implements Commandable<Void, Void, Integer> {
 	}
 
 	@Override
-	public Result<Integer> execute(Argument<Void, Void> argument) {
-		int isLess = expr1 < expr2 ? 1 : 0;
+	public <T1, T2> Result<?> execute(Argument<T1, T2> argument) {
+		Integer isLess = expr1 < expr2 ? 1 : 0;
 		return new Result<Integer>(isLess);
 	}
 

@@ -3,7 +3,7 @@ package commands;
 import slogo_team07.Argument;
 import slogo_team07.Turtle;
 
-public class ForwardCommand implements Commandable<Turtle, Void, Double> {
+public class ForwardCommand implements Commandable {
 	
 	private double delta;
 	
@@ -12,8 +12,9 @@ public class ForwardCommand implements Commandable<Turtle, Void, Double> {
 	}
 
 	@Override
-	public Result<Double> execute(Argument<Turtle, Void> argument) {
-		Turtle turtle = argument.getArg1();
-		return new Result<Double>(turtle.move(delta, 0));
+	public <T1, T2> Result<?> execute(Argument<T1, T2> argument) {
+		Turtle turtle = (Turtle) argument.getArg1();
+		Double d = turtle.move(delta, 0.0);
+		return new Result<Double>(d);
 	}
 }
