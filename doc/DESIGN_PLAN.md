@@ -196,10 +196,13 @@ One other discussion we had at length was how to handle the interface for the tu
 ### Team Responsibilities
 #### Ben
 * Command, CommandFactory, and Updatable interface
+
 #### Jennifer
 * Visualization and Drawable interfaces (w/ Maya)
+
 #### Julia
 * Parser, Interpreter
+
 #### Maya
 * Visualization and Drawable interfaces (w/ Jennifer)
     * language
