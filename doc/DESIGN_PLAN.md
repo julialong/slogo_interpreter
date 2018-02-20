@@ -7,7 +7,7 @@ PLAN
 ===
 
 ### Introduction
-Jennifer and Maya
+Our team is making a SLogo environment that will allow a user to command a turtle on a per expression basis. Our team is trying to make adding new features as easy as possible, whether that be a new visual component, new command, or another turtle on the screen. Because this program is so dependent upon user input, we will throw a lot of exceptions pertaining to faulty user input in the back end that can be displayed as an alert in the front end, and that won't crash our program. Our design is based off of the Model View Controller design pattern, with our Turtle and its 2 interfaces, Updatable and Drawable, as the Model, Interpreter and its helper classes such as Parser and Command as the Controller, and the Visualizer as the View. Visualizer will implement the Observable interface and Interpreter will implement the Observer interface so that Interpreter can easily observe new user input. Easily being able to extend this project is one of our main design goals.
 
 ### Design Overview
 ![](UML.png)
@@ -22,7 +22,10 @@ The Controller component will have two classes, Parsing and Interpretation, that
 The Command interface will be implemented my a number of Command subclasses. There will be a Command subclass for every type of action. The Parser will create new Command objects through the CommandFactory class and return a Collection of them to the Interpreter through the createCommand method. These commands will have a public method execute() that takes in a Turtle object and updates the Turtle.
 
 ### User Interface
-Jennifer and Maya
+[]("uiMock.png")
+The user interface will consist of two main parts: the console for text entry of commands, and a sidebar of options with buttons/menus that can be modified by the user to change elements of the visualization. The console will be optimized for multi-line commands, so it will not execute on enter/return, but on the click of a "run" button. The user will be able to scroll, as well, to see previous commands entered. Errors of incorrect commands will result in the command simply being ignored by backend, and an alert box stating that the command was improper (user can close alert and type something else). There will be a help button that will pop up a window displaying supported commands if a user needs help formatting.
+For the options sidebar, there will be mostly buttons or drop-down menus that allow the user to change variables such as background color, turtle image, and pen color. The images/colors can to be chosen from a pre-selected list, so that user input error (wrong file type, null, wrong format, etc) will be avoided. There should be no need to display errors. User-defined commands, once entered, will also display in the sidebar and can be selected with a click. This will copy the function into the console, which the user can then modify or run as normal text entry.
+
 
 ### API Details
 public interface Interpreter implements Observer
@@ -40,8 +43,14 @@ public interface Vizualization implements Observable
 * protected void setChanged() {}
 * public void draw() {}
 
+The Visualizer interface will be implemented by classes that are responsible for setting up the View of the project. The Visualizer acts as the View of our program, since we are using the Model View Controller design pattern. Subclasses will place the text box, main canvas, and sidebar menu in a Scene. The Visualizer interface will need to deal with user input, and pass that input to the backend in order to update the program. The Visualizer interface will implement the Observable interface so that any new user input can easily be observed by the Interpreter. Once the back end has adjusted to the new user input, the Visualizer will need to be able to update the view accordingly. In order to add new features to the view, the programmer will need to create or add to a class implementing Visualizer.
+
+The Visualizer's external API will consist of methods that the Interpreter will need to call on its Visualizer instance variable. The Interpreter only needs to know when user input has been changed or added to the view. The Visualizer's internal API will consist of methods that will use JavaFX to create the front end of our prorgram. There will be a main view class, as well as text box, canvas, sidebar, and probably numerous other subclasses. A subclass of the Visualizer interface will create some aspect of the GUI, and that aspect will then be added to the GUI in the main class. 
+
 public interface Drawable
 * public void draw(Group g) {}
+
+The Drawable API will be implemented by the turtle. The purpose of this API is to split the model (turtle) object of the project into effectively two separate parts: a backend with values, and a frontend image - the Drawable interface handles the frontend visualization of the turtle. This interface allows for a large amount of flexibility within an individual class' implementation of draw(), which any accessing object doesn't need to know the details of. Any object implementing Drawable will have draw() call private methods that call upon the object's unique features.
 
 public interface Updatable
 * public setter methods called by Command
