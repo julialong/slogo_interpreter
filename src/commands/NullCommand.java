@@ -1,13 +1,14 @@
 package commands;
 
-import slogo_team07.Turtle;
+import slogo_team07.Argument;
 
-public class NullCommand implements Commandable {
+public class NullCommand implements Commandable<Void, Void, Void> {
+	
+	public NullCommand(Argument<Void, Void> argument) {}
 
 	@Override
-	public double execute(Turtle turtle) {
-		// do nothing	
-		return 0.0;
+	public Result<Void> execute(Argument<Void, Void> argument) {
+		return new Result<Void>(null);
 	}
 
 }

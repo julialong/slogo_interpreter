@@ -1,7 +1,5 @@
 package slogo_team07;
 
-import javafx.scene.paint.Color;
-
 public class Turtle implements Drawable, Updatable {
 	
 	private double myXPos;
