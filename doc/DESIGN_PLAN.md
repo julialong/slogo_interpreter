@@ -71,11 +71,15 @@ public interface CommandFactory
 Everyone handles their own API
 
 ### Design Considerations
-Ben
+One thing we discussed at length was how to manage the separation of our front-end from our back-end logic. We knew we need to have the two be as decoupled as possible, which would allow us to make modifications to either end without breaking the application. Our initial instinct was to have a cycle between our Visualization class, our Parser class, and our back-end logic class. The Visualization would pass the user-entered command to the Parser, the Parser would pass the parsed command objects to the back-end, the back-end would modify the turtles appropriately and allow the Visualization to be updated. We had some issues logically with how information would be passed around -- would the back-end pass things straight to the Visualization, or would it make most sense to have it go back through the Parser? Who would own the Turtle Objects? The Visualization, the back-end, or both?
+
+Ultimately, we came to the realization that we would be well served to implement the [Observer Pattern](http://www.oodesign.com/observer-pattern.html). This would allow us to make use of a simple one-method API to allow the front-end to communicate user input to the back-end. The back-end could then do its calculations (parsing and applying commands to the Turtle object) before telling the Visualization to update.
+
+One other discussion we had at length was how to handle the interface for the turtle. On the one hand, we want to be able to hold references to the Turtle object in multiple places (the back-end for modification purposes and the front-end for display purposes). On the other, we wanted to be sure that our design was extensible, so that if later on the Turtle were to be changed to a Frog or a Fish, not too much would have to change to accommodate that. We ended up settling on the idea of have the Turtle object implement two interfaces -- one that the back-end could make use of and one for the front-end. Each of those interfaces would expose only so much as was needed for those components to function, allowing the implementation details to be encapsulated within the Turtles. This also meant that we could modify one of the APIs without breaking the other one. Our plan is to make the Turtle API active and intelligent, so that the Turtle isn't just a dumb data object that gets operated on.
 
 ### Team Responsibilities
 #### Ben
-* Command, CommandFactory
+* Command, CommandFactory, and Updatable interface
 #### Jennifer
 * Visualization and Drawable interfaces (w/ Maya)
 #### Julia
