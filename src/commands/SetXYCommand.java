@@ -13,7 +13,7 @@ public class SetXYCommand implements Commandable {
 	}
 	
 	@Override
-	public void execute(Turtle turtle) {
-		turtle.setPosition(myXPos, myYPos);
+	public double execute(Turtle turtle) {
+		return turtle.setPosition(myXPos, myYPos);
 	}
 }

@@ -11,8 +11,8 @@ public class ForwardCommand implements Commandable {
 	}
 
 	@Override
-	public void execute(Turtle turtle) {
-		turtle.move(delta, 0);
+	public double execute(Turtle turtle) {
+		return turtle.move(delta, 0);
 	}
 
 }

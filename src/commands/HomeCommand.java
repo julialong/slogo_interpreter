@@ -5,8 +5,8 @@ import slogo_team07.Turtle;
 public class HomeCommand implements Commandable {
 
 	@Override
-	public void execute(Turtle turtle) {
-		
+	public double execute(Turtle turtle) {
+		return turtle.move(0, 0);
 	}
 
 }

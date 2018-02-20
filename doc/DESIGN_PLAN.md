@@ -267,9 +267,17 @@ public class Parsing implements Parser{
     public Collection parse('fd 50'){
     // some code
     Command command =  CommandFactory.createCommand('less 4 2');
-    // command.execute, which will move the turtle to 0,0 and return distance
     return commands
     }
+}
+
+public class HomeCommand implements Commandable {
+
+	@Override
+	public double execute(Turtle turtle) {
+		return turtle.move(0, 0);
+	}
+
 }
 ```
 
