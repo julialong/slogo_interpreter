@@ -2,15 +2,22 @@ package slogo_team07;
 
 import javafx.scene.paint.Color;
 
-public class Turtle implements Updatable {
+public class Turtle implements Drawable, Updatable {
 	
 	private double myXPos;
 	private double myYPos;
+	private boolean tailDown = true;
+	
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	@Override
 	public void setPosition(double x, double y) {
-		// TODO Auto-generated method stub
-		
+		myXPos = x;
+		myYPos = y;
 	}
 
 	@Override

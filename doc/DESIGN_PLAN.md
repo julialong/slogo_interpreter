@@ -76,9 +76,27 @@ public class Visualization implements Visualizer {
 }
 
 public class Turtle implements Drawable, Updatable {
+	
+	private double myXPos;
+	private double myYPos;
+	private boolean tailDown = true;
+	
+	@Override
     public void draw(Group g)    {
         g.add(this);    // adds self to Scene's group to be displayed, so when Visualizer calls update, turtle will show in new position
     }
+    
+    	@Override
+	public void move(double delta_x, double delta_y) {
+		myXPos += delta_x;
+		myYPos += delta_y;
+	}
+	
+	@Override
+	public void setPosition(double x, double y) {
+		myXPos = x;
+		myYPos = y;
+	}
 }
 
 public class Console implements TextInput {
@@ -136,6 +154,27 @@ public class Parsing implements Parser {
 }
 
 public class CommandFactory {
+	public Commandable create(String command, double value) {
+		if (command.equals("fd") || command.equals("forward")) {
+			return new ForwardCommand(value);
+		} else {
+			return new NullCommand();
+		}
+	}
+}
+
+public class ForwardCommand implements Commandable {
+	
+	private double delta;
+	
+	public ForwardCommand(double delta) {
+		this.delta = delta;
+	}
+
+	@Override
+	public void execute(Turtle turtle) {
+		turtle.move(delta, 0);
+	}
 
 }
 ```
@@ -160,14 +199,29 @@ public class Parsing implements Parser{
     return commands
     }
 }
-// model implemented down here 
+
+public class SetXYCommand implements Commandable {
+	
+	private double myXPos;
+	private double myYPos;
+
+	public SetXYCommand(double x, double y) {
+		this.myXPos = x;
+		this.myYPos = x;
+	}
+	
+	@Override
+	public void execute(Turtle turtle) {
+		turtle.setPosition(myXPos, myYPos);
+	}
+} 
 ```
 
 #### *The user types 'less 4 2' in the command window, and false is returned to the user because 4 > 2.*
 ``` java 
 // view implemented up here
 
-public class Interpretation implements Interpreter{
+public class Interpretation implements Interpreter {
     public void update('less 4 2'){
         // some code
         Collection commands = Parsing.parse('less 4 2');
