@@ -68,7 +68,123 @@ public interface CommandFactory
 * public void createCommand() {}
 
 ### API Example Code
-Everyone handles their own API
+#### *The user types 'fd 50' in the command window, and sees the turtle move in the display window leaving a trail, and the command is added to the environment's history.*
+
+``` java
+public class Visualization implements Visualizer{
+    
+}
+
+public class Turtle implements Drawable    {
+    public void draw(Group g)    {
+        g.add(this);    // adds self to Scene's group to be displayed, so when Visualizer calls update, turtle will show in new position
+    }
+}
+
+public class Console implements TextInput    {
+    public void run()    {
+        Interpretation.update(myTextArea.getText());
+        clear();
+    }
+    
+    public void clear()    {
+        myTextArea.clear();
+    }
+    
+    public void loadInput(String command)    {
+        myTextArea.appendText("\n" + command));    // "types" long command into textbox for the ability to re-use a pre-defined function
+    }
+    
+    public void scrollUp()    {
+        // view previous line of code, above currently displayed code, in the console
+    }
+    
+    public void scrollDown()    {
+        // view following line of code, below currently displayed code, in the console
+        // if no following lines, do nothing
+    }
+}
+
+public class HelpBox implements TextDisplayWindow    {
+    public void open()    {
+        // make new Stage
+        // insert help (command manual) text into new scene
+        // display scene
+    }
+    
+    public void close()    {
+        Stage toClose = this.getScene().getWindow();
+        toClose.close();
+    }
+}
+
+public class Interpretation implements Interpreter{
+    public void update('fd 50'){
+        // some code
+        Collection commands = Parsing.parse('fd 50');
+        // more code
+    }
+}
+
+public class Parsing implements Parser{ 
+    public Collection parse('fd 50'){
+    // some code
+    Command command =  CommandFactory.createCommand('fd',50);
+    // more code
+    return commands
+    }
+}
+
+public class CommandFactory{
+
+}
+```
+
+#### *The user types 'setxy 40 50' in the command window, and sees the turtle reposition itself without a trail, and the command is added to the environment's history.*
+``` java 
+// view implemented up here
+
+public class Interpretation implements Interpreter{
+    public void update('setxy 40 50'){
+        // some code
+        Collection commands = Parsing.parse('setxy 40 50');
+        // more code
+    }
+}
+
+public class Parsing implements Parser{ 
+    public Collection parse('setxy 40 50'){
+    // some code
+    Command command =  CommandFactory.createCommand('setxy',40,50);
+    // more code
+    return commands
+    }
+}
+// model implemented down here 
+```
+
+#### *The user types 'less 4 2' in the command window, and false is returned to the user because 4 > 2.*
+``` java 
+// view implemented up here
+
+public class Interpretation implements Interpreter{
+    public void update('less 4 2'){
+        // some code
+        Collection commands = Parsing.parse('less 4 2');
+        // more code
+    }
+}
+
+public class Parsing implements Parser{ 
+    public Collection parse('fd 50'){
+    // some code
+    Command command =  CommandFactory.createCommand('less 4 2');
+    // more code
+    return commands
+    }
+}
+// model implemented down here 
+```
 
 ### Design Considerations
 One thing we discussed at length was how to manage the separation of our front-end from our back-end logic. We knew we need to have the two be as decoupled as possible, which would allow us to make modifications to either end without breaking the application. Our initial instinct was to have a cycle between our Visualization class, our Parser class, and our back-end logic class. The Visualization would pass the user-entered command to the Parser, the Parser would pass the parsed command objects to the back-end, the back-end would modify the turtles appropriately and allow the Visualization to be updated. We had some issues logically with how information would be passed around -- would the back-end pass things straight to the Visualization, or would it make most sense to have it go back through the Parser? Who would own the Turtle Objects? The Visualization, the back-end, or both?
