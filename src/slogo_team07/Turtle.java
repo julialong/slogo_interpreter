@@ -1,5 +1,11 @@
 package slogo_team07;
 
+/**
+ * Part of Model of project, Turtle is the sprite that users move around canvas
+ * @author Jennifer Chin (jrc81)
+ * @author Maya Messinger (mm479)
+ */
+
 public class Turtle implements Drawable, Updatable {
 	
 	private double myXPos;
@@ -8,8 +14,10 @@ public class Turtle implements Drawable, Updatable {
 	
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
-		
+		// place turtle in canvas
+		// use set trail to move turtle along trail
+		// draw trail of turtle slime as turtle passes locations
+		// end with turtle in no]ew position		
 	}
 	
 	@Override
