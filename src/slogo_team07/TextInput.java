@@ -4,6 +4,8 @@
  * Interface that allows access and setting of any class containing a TextArea
  */
 
+package slogo_team07;
+
 public interface TextInput	{
 	/**
 	 * Sends text in TextArea as a String to an Interpreter for parsing, and clears TextArea
