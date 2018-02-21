@@ -10,12 +10,10 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import slogo_team07.Console;
 
 public class MayaTestRunner extends Application	{
-	private Console myConsole;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -28,10 +26,8 @@ public class MayaTestRunner extends Application	{
 	}
 
 	public Scene dummyScene()	{
-		Group root = new Group();
+		Group root = new Console();
         Scene scene = new Scene(root, 750, 750, Color.WHITE);
-
-        root.getChildren().add(new Console());
 
         return scene;
 	}
