@@ -1,6 +1,6 @@
 /**
  * @author Maya Messinger (mm479)
- * Started 20 Feb 18
+ * Started 21 Feb 18
  * Com
  */
 
@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import javafx.scene.control.TextArea;
 import slogo_team07.TextInput;
 
-public class Console extends TextArea implements TextInput {
-    private TextArea console;
+public class History extends TextArea implements TextInput {
     private TextArea history;
     private List<String> pastCommands;
 
@@ -20,32 +19,11 @@ public class Console extends TextArea implements TextInput {
     private int height = 100;
     private int commandIndex = -1;   // will track what command is "last" for scrollability
 
-    public Console()    {
-        console = new TextArea();
+    public History()    {
         history = new TextArea();
         pastCommands = new ArrayList<>();
 
-        console.setPromptText("commands");
-        console.setPrefWidth(width);
-        console.setPrefHeight(height);
         history.setPrefWidth(width);
-    }
-
-    @Override
-    public void run()    {
-        // new Interpretation().update(console.getText());
-        pastCommands.add(console.getText());
-        clear();
-    }
-    
-    @Override
-    public void clear() {
-        console.clear();
-    }
-    
-    @Override
-    public void loadInput(String command) {
-        console.appendText("\n" + command);    // "types" long command into textbox for the ability to re-use a pre-defined function
     }
     
     @Override
