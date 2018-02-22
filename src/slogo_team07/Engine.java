@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.Console;
 import java.util.ArrayList;
 
+import commands.Commandable;
 import commands.Result;
 
 public class Engine implements PropertyChangeListener {
@@ -39,7 +40,7 @@ public class Engine implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		Iterable iterable = myParser.parse(event.getNewValue());
-		for (Command c : iterable) {
+		for (Commandable c : iterable) {
 			Result result = c.execute();
 			c.updateView(result);
 		}
