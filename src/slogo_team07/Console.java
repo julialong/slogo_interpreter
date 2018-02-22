@@ -33,6 +33,9 @@ public class Console extends Group implements TextInput {
     private int bWidth = 50;
     private int commandIndex = -1;   // will track what command is "last" for scrollability
 
+    /**
+     * Constructor for Console
+     */
     public Console()    {
         console = new TextArea();
         history = new TextArea();
@@ -73,6 +76,9 @@ public class Console extends Group implements TextInput {
         elements.add(languager);
     }
 
+    /**
+     * Sends text from console to anything that calls run(), clears text box, and adds command to history
+     */
     @Override
     public String run()    {
         String comm = console.getText();
@@ -84,11 +90,18 @@ public class Console extends Group implements TextInput {
         return comm;
     }
     
+    /**
+     * Clears text in console
+     */
     @Override
     public void clear() {
         console.clear();
     }
     
+    /**
+     * Loads a String (pre-determined user command) into console
+     * @param command   pre-set command to insert into console
+     */
     @Override
     public void loadInput(String command) {
         console.appendText("\n" + command);    // "types" long command into textbox for the ability to re-use a pre-defined function

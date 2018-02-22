@@ -26,7 +26,11 @@ public class MayaTestRunner extends Application	{
 	}
 
 	public Scene dummyScene()	{
-		Group root = new Console();
+		Group root = new Group();
+
+		root.getChildren().add(new Console());
+		root.getChildren().add(new HelpBox());
+
         Scene scene = new Scene(root, 750, 750, Color.WHITE);
 
         return scene;
