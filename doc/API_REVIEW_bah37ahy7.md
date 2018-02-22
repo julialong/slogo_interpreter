@@ -1,0 +1,6 @@
+SLogo API Review (Ben Hubsch and Andrew Yeung)
+======
+1. The ability to add new commands -- it should be relatively easy to add new commands, as long as they have the proper implementation. Even TurtleCommands should have the proper Turtle objects exposed necessary for working on the Turtle.
+2. Everything is a "Commandable" object to the outside world. This is abstracted using an interface with a single method inside of it: an `execute()` method that returns a `Result` object. Whoever will end up calling the commands can depend on the abstraction rather than the implementation, so the command implementation is encapsulated nicely for every `Commmand`.
+3. Not many exceptions should occur -- the Parser should handle all of the logic dealing with improper commands or bad input. In the worst case scenario if the parsing goes wrong, I have a `NullCommand` object that the `CommandFactory` defaults to if the input key string isn't recognized.
+4. I think it's good because the interface is really clean and straightforward. The `Result` class has a `toString()` method that the front-end can rely on for the result of the series of the commands, and otherwise it's really just about calling `execute` in the right place at the right time.
