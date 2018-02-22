@@ -13,8 +13,7 @@ public class RightCommand extends TurtleCommand {
 
 	@Override
 	public Result execute() {
-		return new Result(0.0);
-//		Turtle turtle = getTurtle();
-//		return new Result(turtle.rotate(rotation));
+		Turtle turtle = getTurtle();
+		return new Result(turtle.rotate(rotation));
 	}
 }

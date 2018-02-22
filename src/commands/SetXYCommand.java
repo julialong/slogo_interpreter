@@ -15,8 +15,7 @@ public class SetXYCommand extends TurtleCommand {
 
 	@Override
 	public Result execute() {
-		return new Result(0.0);
-//		Turtle turtle = getTurtle();
-//		return new Result(turtle.setPosition(myXPos, myYPos));
+		Turtle turtle = getTurtle();
+		return new Result(turtle.setPosition(myXPos, myYPos));
 	}
 }

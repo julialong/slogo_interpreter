@@ -1,12 +1,13 @@
 package commands;
 
+import slogo_team07.Turtle;
+
 public class HomeCommand extends TurtleCommand {
 	
 	@Override
 	public Result execute() {
-		return new Result(0.0);
-//		Turtle turtle = getTurtle();
-//		return new Result<Double>(turtle.home());
+		Turtle turtle = getTurtle();
+		return new Result(turtle.home());
 	}
 
 }

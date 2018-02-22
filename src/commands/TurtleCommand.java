@@ -6,7 +6,7 @@ public abstract class TurtleCommand implements Commandable {
 	
 	private Turtle myTurtle;
 	
-	protected getTurtle() {
+	protected Turtle getTurtle() {
 		return Interpreter.getInstance().getTurtle();
 	}
 }
