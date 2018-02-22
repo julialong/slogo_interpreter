@@ -4,7 +4,7 @@
  * Interface that allows access and setting of any class containing a TextArea
  */
 
-package slogo_team07;
+package view;
 
 public interface TextInput	{
 	/**

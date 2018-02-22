@@ -4,7 +4,7 @@
  * Handles input of all commands from user in program. Has run, clear, and recall command functionality
  */
 
-package slogo_team07;
+package view;
 
 import java.util.List;
 import java.util.ArrayList;

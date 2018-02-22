@@ -7,13 +7,13 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
-import slogo_team07.Console;
+import view.Console;
 import slogo_team07.Turtle;
 
 public class SlogoMain extends Application{

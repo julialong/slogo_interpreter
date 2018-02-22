@@ -1,4 +1,4 @@
-package temp;
+package slogo_team07;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;

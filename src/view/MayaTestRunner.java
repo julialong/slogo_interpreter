@@ -4,14 +4,13 @@
  * Dummy/test runner class for testing without integration
  */
 
-package slogo_team07;
+package view;
 
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import slogo_team07.Console;
 
 public class MayaTestRunner extends Application	{
 
