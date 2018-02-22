@@ -1,11 +1,8 @@
-/**
- * @author Maya Messinger (mm479)
- * Started 20 Feb 18
- * Interface for objects that can be drawn on canvas
- */
-
 package slogo_team07;
 
+import javafx.scene.Group;
+import view.Canvas;
+
 public interface Drawable {
-	public void draw();
+	public Group draw(Group display);
 }
