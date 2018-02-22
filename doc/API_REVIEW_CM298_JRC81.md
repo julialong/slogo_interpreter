@@ -1,6 +1,6 @@
 ### API REVIEW
 
-All answers are referencing Team _'s API, and we are both working on front end. 
+All answers are referencing Team 9's API, and we are both working on front end. 
 
 #### Part 1
 
@@ -16,4 +16,12 @@ All answers are referencing Team _'s API, and we are both working on front end.
 
 1. Right now, no Design Patterns are being used, but the Factory pattern could help the design of the Turtles and Commands.
 
-2. 
+2. Implementing variables that have already been used and saving them to be used later.
+
+3. Most nervous about integrating the front end and the back end.
+
+4. Use Cases:
+* User inputs an incorrect command: the raw input goes to the Parser and the Parser detects that the command is invalid and throws an error. The error is displayed as an alert by the front end.
+* User creates their own command and saves it: the user inputs their code into the console and the Parser sends it to the back end. The back end will create a command object corresponding to the code and the front end will display the saved code on the side of the screen
+* User changes the color of the turtle: the user will select a color from the pen color combo box on the side bar. Then the GUI will change the color of the lines being drawn.`
+* User changes the language: 
