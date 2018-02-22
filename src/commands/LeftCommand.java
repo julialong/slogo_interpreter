@@ -1,21 +1,21 @@
 package commands;
 
 import slogo_team07.Argument;
-import slogo_team07.Turtle;
 
-public class LeftCommand implements Commandable {
+public class LeftCommand extends TurtleCommand {
 	
 	private double rotation;
 	
-	public LeftCommand(Argument<Double, Void> argument) {
+	public LeftCommand(Argument argument) {
 		rotation = convertToClockwise(argument.getArg1());
 		
 	}
 
 	@Override
-	public Result<?> execute(Argument<?, ?> argument) {
-		Turtle turtle = (Turtle) argument.getArg1();
-		return new Result<Double>(turtle.rotate(rotation));
+	public Result execute() {
+		return new Result(0.0);
+//		Turtle turtle = getTurtle();
+//		return new Result(turtle.rotate(rotation));
 	}
 
 	private double convertToClockwise(double rotation) {
