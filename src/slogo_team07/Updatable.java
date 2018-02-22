@@ -3,9 +3,9 @@ package slogo_team07;
 public interface Updatable {
 	double setPosition(double x, double y);
 	
-	double move(double delta_x, double delta_y);
+	double move(double delta);
 	
-	double rotate(double clock, double counter);
+	double rotate(double clockwise);
 	
 	double setHeading(double degrees);
 	
@@ -16,4 +16,6 @@ public interface Updatable {
 	double getY();
 	
 	double getX();
+	
+	double home();
 }

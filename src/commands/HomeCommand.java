@@ -10,7 +10,7 @@ public class HomeCommand implements Commandable {
 	@Override
 	public Result<?> execute(Argument<?, ?> argument) {
 		Turtle turtle = (Turtle) argument.getArg1();
-		return new Result<Double>(turtle.move(0, 0));
+		return new Result<Double>(turtle.home());
 	}
 
 }
