@@ -38,8 +38,8 @@ public class Engine implements PropertyChangeListener {
 	// should be stored on the front end as PropertyChangeListener.propertyChange(new ChangeListener)	
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		Iterable i = myParser.parse(event.getNewValue());
-		for (Command c : i) {
+		Iterable iterable = myParser.parse(event.getNewValue());
+		for (Command c : iterable) {
 			Result result = c.execute();
 			c.updateView(result);
 		}
