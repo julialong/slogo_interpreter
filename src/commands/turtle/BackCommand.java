@@ -3,17 +3,17 @@ package commands.turtle;
 import commands.Result;
 import slogo_team07.Turtle;
 
-public class RightCommand extends TurtleCommand {
+public class BackCommand extends TurtleCommand {
 	
 	private static final int NUM_ARGS = 1;
 	
 	private int myArgsInjected = 0;
-	private double rotation;
-
+	private double myDelta;
+	
 	@Override
 	public Result execute() {
 		Turtle turtle = getTurtle();
-		return new Result(turtle.rotate(rotation));
+		return new Result(turtle.move(myDelta));
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class RightCommand extends TurtleCommand {
 
 	@Override
 	public void inject(Double arg) {
-		rotation = arg;
+		myDelta = arg;
 		myArgsInjected = 1;
 	}
 }

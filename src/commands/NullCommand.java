@@ -8,4 +8,12 @@ public class NullCommand implements Commandable {
 		return new Result(null);
 	}
 
+	@Override
+	public boolean isReady() {
+		return true;
+	}
+
+	@Override
+	public void inject(Double arg) {}
+
 }

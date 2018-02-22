@@ -1,17 +1,14 @@
 package commands.turtle;
 
 import commands.Result;
-import slogo_team07.Argument;
 import slogo_team07.Turtle;
 
 public class LeftCommand extends TurtleCommand {
 	
-	private double rotation;
+	private static final int NUM_ARGS = 1;
 	
-	public LeftCommand(Argument argument) {
-		rotation = convertToClockwise(argument.getArg1());
-		
-	}
+	private int myArgsInjected = 0;
+	private double rotation;
 
 	@Override
 	public Result execute() {
@@ -21,6 +18,17 @@ public class LeftCommand extends TurtleCommand {
 
 	private double convertToClockwise(double rotation) {
 		return (-rotation + 90) % 360;
+	}
+
+	@Override
+	public boolean isReady() {
+		return myArgsInjected == NUM_ARGS;
+	}
+
+	@Override
+	public void inject(Double arg) {
+		rotation = convertToClockwise(arg);
+		myArgsInjected = 1;
 	}
 
 }

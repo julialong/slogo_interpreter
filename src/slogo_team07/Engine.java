@@ -27,8 +27,6 @@ public class Engine implements PropertyChangeListener {
         }
         return mySingleton;
     }
-	
-	public 
 
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
@@ -44,5 +42,9 @@ public class Engine implements PropertyChangeListener {
 			Result result = c.execute();
 			c.updateView(result);
 		}
+	}
+	
+	public ArrayList<Turtle> getTurtle() {
+		return myTurtles;
 	}
 }
