@@ -10,7 +10,7 @@ public interface TextInput	{
 	/**
 	 * Sends text in TextArea as a String to an Interpreter for parsing, and clears TextArea
 	 */
-	public void run();
+	public String run();
 
 	/**
 	 * Clears all text in TextArea

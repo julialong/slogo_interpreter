@@ -74,11 +74,14 @@ public class Console extends Group implements TextInput {
     }
 
     @Override
-    public void run()    {
-        // new Interpretation().update(console.getText());
-        pastCommands.add(console.getText());
-        history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + console.getText());
+    public String run()    {
+        String comm = console.getText();
+
+        pastCommands.add(comm);
+        history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
         clear();
+
+        return comm;
     }
     
     @Override
