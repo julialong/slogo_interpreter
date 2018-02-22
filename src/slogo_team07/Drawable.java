@@ -1,5 +1,8 @@
 package slogo_team07;
 
+import javafx.scene.Group;
+import view.Canvas;
+
 public interface Drawable {
-	public void draw();
+	public Group draw(Group display);
 }
