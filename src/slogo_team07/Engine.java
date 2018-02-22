@@ -16,13 +16,13 @@ public class Engine implements PropertyChangeListener {
 	
 	private Engine() {
 		myParser = new Parser();
-		myConsole = new Console(mySingleton);
 		addTurtle();
 	}
 	
 	public static Engine getInstance() {
         if(mySingleton == null){
         		mySingleton = new Engine();
+        		myConsole = new Console(mySingleton);
         }
         return mySingleton;
     }
