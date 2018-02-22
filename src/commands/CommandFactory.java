@@ -1,5 +1,8 @@
 package commands;
 
+import commands.turtle.ForwardCommand;
+import commands.turtle.HomeCommand;
+import commands.turtle.SetXYCommand;
 import slogo_team07.Argument;
 
 public class CommandFactory {

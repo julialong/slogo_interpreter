@@ -1,6 +1,8 @@
-package commands;
+package commands.turtle;
 
+import commands.Result;
 import slogo_team07.Argument;
+import slogo_team07.Turtle;
 
 public class LeftCommand extends TurtleCommand {
 	
@@ -13,9 +15,8 @@ public class LeftCommand extends TurtleCommand {
 
 	@Override
 	public Result execute() {
-		return new Result(0.0);
-//		Turtle turtle = getTurtle();
-//		return new Result(turtle.rotate(rotation));
+		Turtle turtle = getTurtle();
+		return new Result(turtle.rotate(rotation));
 	}
 
 	private double convertToClockwise(double rotation) {

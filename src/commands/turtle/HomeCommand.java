@@ -1,5 +1,6 @@
-package commands;
+package commands.turtle;
 
+import commands.Result;
 import slogo_team07.Turtle;
 
 public class HomeCommand extends TurtleCommand {
