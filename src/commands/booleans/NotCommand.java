@@ -10,7 +10,7 @@ public class NotCommand extends BooleanCommand {
 	}
 
 	@Override
-	protected boolean calcValue() {
-		return getExpr1() == 0.0;
+	protected boolean calcValue(Double a, Double b) {
+		return a == 0.0;
 	}
 }

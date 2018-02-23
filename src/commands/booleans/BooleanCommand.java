@@ -21,7 +21,7 @@ public abstract class BooleanCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		Double or = calcValue() ? 1.0 : 0.0;
+		Double or = calcValue(expr1, expr2) ? 1.0 : 0.0;
 		ans = or;
 		return new Result(or);
 	}
@@ -50,17 +50,9 @@ public abstract class BooleanCommand implements Commandable {
 		return ans;
 	}
 	
-	protected Double getExpr1() {
-		return expr1;
-	}
-	
-	protected Double getExpr2() {
-		return expr2;
-	}
-	
 	protected int getArgsInjected() {
 		return myArgsInjected;
 	}
 
-	protected abstract boolean calcValue();
+	protected abstract boolean calcValue(Double expr1, Double expr2);
 }
