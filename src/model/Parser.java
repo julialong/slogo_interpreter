@@ -2,10 +2,14 @@ package model;
 
 import commands.CommandFactory;
 
+import java.util.Map;
+
 public class Parser {
 
     private CommandFactory commandCreator;
     private CommandNode head;
+
+    private Map<String, Double> storedVariable;
 
     /**
      * Parses a string and builds a tree of CommandNodes
@@ -27,7 +31,6 @@ public class Parser {
      * @return true if the String is valid, false if invalid
      */
     private Boolean checkValid(String[] test) {
-
         return true;
     }
 
@@ -53,12 +56,30 @@ public class Parser {
     }
 
     /**
-     * Checks to determine if the given string is a variable
+     * Checks to determine if the given string is a number argument
      * @param string is the argument
      * @return true if the string is an argument
      */
     private Boolean isArgument(String string) {
         return string.matches("\t\n" + "-?[0-9]+\\.?[0-9]*");
+    }
+
+    /**
+     * Checks to determine if the given string is a variable
+     * @param string is the argument
+     * @return true if the string is an argument
+     */
+    private Boolean isVariable(String string) {
+        return string.matches(":[a-zA-Z_]+");
+    }
+
+    /**
+     * Checks to determine if the given string is a comment
+     * @param string is the argument
+     * @return true if the string is an argument
+     */
+    private Boolean isComment(String string) {
+        return string.matches("^#.*");
     }
 
     /**
