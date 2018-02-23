@@ -1,14 +1,14 @@
-package commands.booleans;
+package commands.math.misc;
 
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
 
-public abstract class BooleanCommand implements Commandable {
+public class PowCommand implements Commandable {
 
 	private static final int NUM_ARGS = 2;
-
+	
 	private int myArgsInjected = 0;
 	private Double myFirst;
 	private Double mySecond;
@@ -20,7 +20,7 @@ public abstract class BooleanCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		ans = calcValue(myFirst, mySecond) ? 1.0 : 0.0;
+		ans = Math.pow(myFirst, mySecond);
 		return new Result(ans);
 	}
 
@@ -40,16 +40,7 @@ public abstract class BooleanCommand implements Commandable {
 		} else {
 			mySecond = arg;
 		}
-		myArgsInjected += 1;	
-	}
-	
-	public Double getAns() {
-		return ans;
-	}
-	
-	protected int getArgsInjected() {
-		return myArgsInjected;
+		myArgsInjected += 1;
 	}
 
-	protected abstract boolean calcValue(Double expr1, Double expr2);
 }

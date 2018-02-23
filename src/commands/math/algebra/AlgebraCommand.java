@@ -1,11 +1,11 @@
-package commands.booleans;
+package commands.math.algebra;
 
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
 
-public abstract class BooleanCommand implements Commandable {
+public abstract class AlgebraCommand implements Commandable {
 
 	private static final int NUM_ARGS = 2;
 
@@ -13,14 +13,14 @@ public abstract class BooleanCommand implements Commandable {
 	private Double myFirst;
 	private Double mySecond;
 	private Double ans;
-
+	
 	@Override
 	public Result execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
-		
-		ans = calcValue(myFirst, mySecond) ? 1.0 : 0.0;
+
+		ans = calcValue(myFirst, mySecond);
 		return new Result(ans);
 	}
 
@@ -40,7 +40,7 @@ public abstract class BooleanCommand implements Commandable {
 		} else {
 			mySecond = arg;
 		}
-		myArgsInjected += 1;	
+		myArgsInjected += 1;
 	}
 	
 	public Double getAns() {
@@ -51,5 +51,5 @@ public abstract class BooleanCommand implements Commandable {
 		return myArgsInjected;
 	}
 
-	protected abstract boolean calcValue(Double expr1, Double expr2);
+	protected abstract Double calcValue(Double a, Double b);
 }

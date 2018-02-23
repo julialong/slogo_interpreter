@@ -1,17 +1,17 @@
-package commands.math;
+package commands.math.misc;
 
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
 
-public class SumCommand implements Commandable {
-	
-	private static final int NUM_ARGS = 2;
+public class LogCommand implements Commandable {
+
+	private static final int NUM_ARGS = 1;
 	
 	private int myArgsInjected = 0;
-	private double myA;
-	private double myB;
+	private Double myFirst;
+	private Double ans;
 
 	@Override
 	public Result execute() {
@@ -19,7 +19,8 @@ public class SumCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		return new Result(myA + myB);
+		ans = Math.log(myFirst);
+		return new Result(ans);
 	}
 
 	@Override
@@ -32,12 +33,8 @@ public class SumCommand implements Commandable {
 		if (isReady()) {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
-		
-		if (myArgsInjected == 0) {
-			myA = arg;
-		} else {
-			myB = arg;
-		}
+
+		myFirst = arg;
 		myArgsInjected += 1;
 	}
 

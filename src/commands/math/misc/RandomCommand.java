@@ -1,17 +1,16 @@
-package commands.booleans;
+package commands.math.misc;
 
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
 
-public abstract class BooleanCommand implements Commandable {
-
-	private static final int NUM_ARGS = 2;
-
+public abstract class RandomCommand implements Commandable {
+	
+	private static final int NUM_ARGS = 1;
+	
 	private int myArgsInjected = 0;
 	private Double myFirst;
-	private Double mySecond;
 	private Double ans;
 
 	@Override
@@ -20,7 +19,7 @@ public abstract class BooleanCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		ans = calcValue(myFirst, mySecond) ? 1.0 : 0.0;
+		ans = Math.random() * myFirst;
 		return new Result(ans);
 	}
 
@@ -33,23 +32,12 @@ public abstract class BooleanCommand implements Commandable {
 	public void inject(Double arg) {
 		if (isReady()) {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
+		} else if (arg < 0) {
+			throw new IllegalArgumentException("Argument to RANDOM must be positive");
 		}
 
-		if (myArgsInjected == 0) {
-			myFirst = arg;
-		} else {
-			mySecond = arg;
-		}
-		myArgsInjected += 1;	
-	}
-	
-	public Double getAns() {
-		return ans;
-	}
-	
-	protected int getArgsInjected() {
-		return myArgsInjected;
+		myFirst = arg;
+		myArgsInjected += 1;
 	}
 
-	protected abstract boolean calcValue(Double expr1, Double expr2);
 }
