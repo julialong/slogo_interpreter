@@ -27,6 +27,7 @@ public class Parser {
      * @return true if the String is valid, false if invalid
      */
     private Boolean checkValid(String[] test) {
+
         return true;
     }
 
@@ -43,12 +44,21 @@ public class Parser {
     }
 
     /**
-     * Checks to determine if the given string is a command or argument
+     * Checks to determine if the given string is a command
      * @param string is the argument
      * @return true if the string is a Command
      */
     private Boolean isCommand(String string) {
-        return !string.matches("\\d+");
+        return string.matches("[a-zA-Z_]+(\\?)?");
+    }
+
+    /**
+     * Checks to determine if the given string is a variable
+     * @param string is the argument
+     * @return true if the string is an argument
+     */
+    private Boolean isArgument(String string) {
+        return string.matches("\t\n" + "-?[0-9]+\\.?[0-9]*");
     }
 
     /**
