@@ -28,6 +28,7 @@ public abstract class BooleanCommand implements Commandable {
 
 	@Override
 	public boolean isReady() {
+
 		return myArgsInjected == NUM_ARGS;
 	}
 
@@ -55,6 +56,10 @@ public abstract class BooleanCommand implements Commandable {
 	
 	protected Double getExpr2() {
 		return expr2;
+	}
+	
+	protected int getArgsInjected() {
+		return myArgsInjected;
 	}
 
 	protected abstract boolean calcValue();
