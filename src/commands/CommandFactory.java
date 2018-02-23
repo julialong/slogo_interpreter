@@ -1,21 +1,24 @@
 package commands;
 
-import commands.booleans.LessCommand;
-import commands.turtle.ForwardCommand;
-import commands.turtle.HomeCommand;
-import commands.turtle.SetXYCommand;
+import java.lang.reflect.Constructor;
+import java.util.ResourceBundle;
 
 public class CommandFactory {
+
+	private static final String COMMANDS = "Commands";
+
+	ResourceBundle myResources;
+
+	public CommandFactory() {
+		myResources = ResourceBundle.getBundle(COMMANDS);
+	}
+
 	public Commandable createCommand(String command) {
-		if (command.equals("fd") || command.equals("forward")) {
-			return new ForwardCommand();
-		} else if (command.equals("setxy") || command.equals("goto")) {
-			return new SetXYCommand();
-		} else if (command.equals("home")) {
-			return new HomeCommand();
-		} else if (command.equals("less") || command.equals("lessp")) {
-			return new LessCommand();
-		} else {
+		try {
+			Class<?> clazz = Class.forName(myResources.getString(command));
+			Constructor<?> ctor = clazz.getConstructor();
+			return (Commandable) ctor.newInstance();
+		} catch (Exception e) {
 			return new NullCommand();
 		}
 	}	

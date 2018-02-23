@@ -1,17 +1,19 @@
-package commands.math;
+package commands.booleans;
 
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
 
-public class SumCommand implements Commandable {
-	
+public abstract class BooleanCommand implements Commandable {
+
 	private static final int NUM_ARGS = 2;
-	
+
 	private int myArgsInjected = 0;
-	private double myA;
-	private double myB;
+	private Double expr1;
+	private Double expr2;
+	
+	private Double ans;
 
 	@Override
 	public Result execute() {
@@ -19,7 +21,9 @@ public class SumCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		return new Result(myA + myB);
+		Double or = calcValue() ? 1.0 : 0.0;
+		ans = or;
+		return new Result(or);
 	}
 
 	@Override
@@ -32,13 +36,26 @@ public class SumCommand implements Commandable {
 		if (isReady()) {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
-		
+
 		if (myArgsInjected == 0) {
-			myA = arg;
+			expr1 = arg;
 		} else {
-			myB = arg;
+			expr2 = arg;
 		}
-		myArgsInjected += 1;
+		myArgsInjected += 1;	
+	}
+	
+	public Double getAns() {
+		return ans;
+	}
+	
+	protected Double getExpr1() {
+		return expr1;
+	}
+	
+	protected Double getExpr2() {
+		return expr2;
 	}
 
+	protected abstract boolean calcValue();
 }
