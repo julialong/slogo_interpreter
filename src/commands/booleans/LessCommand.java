@@ -1,5 +1,7 @@
 package commands.booleans;
 
+import commands.CommandArgsFullException;
+import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
 
@@ -13,6 +15,10 @@ public class LessCommand implements Commandable {
 
 	@Override
 	public Result execute() {
+		if (! isReady()) {
+			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
+		}
+		
 		Double isLess = expr1 < expr2 ? 1.0 : 0.0;
 		return new Result(isLess);
 	}
@@ -24,6 +30,10 @@ public class LessCommand implements Commandable {
 
 	@Override
 	public void inject(Double arg) {
+		if (isReady()) {
+			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
+		}
+		
 		if (myArgsInjected == 0) {
 			expr1 = arg;
 		} else {

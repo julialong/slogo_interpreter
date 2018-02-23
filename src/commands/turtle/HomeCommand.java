@@ -1,5 +1,6 @@
 package commands.turtle;
 
+import commands.CommandArgsUnfilledException;
 import commands.Result;
 import slogo_team07.Turtle;
 
@@ -11,6 +12,10 @@ public class HomeCommand extends TurtleCommand {
 	
 	@Override
 	public Result execute() {
+		if (! isReady()) {
+			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
+		}
+		
 		Turtle turtle = getTurtle();
 		return new Result(turtle.home());
 	}

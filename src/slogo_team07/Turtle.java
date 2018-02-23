@@ -45,8 +45,9 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double setHeading(double degrees) {
+		double old = myDegrees;
 		myDegrees = degrees;
-		return 0.0;
+		return degrees - old;
 	}
 
 	@Override

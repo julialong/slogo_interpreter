@@ -1,5 +1,7 @@
 package commands.turtle;
 
+import commands.CommandArgsFullException;
+import commands.CommandArgsUnfilledException;
 import commands.Result;
 import slogo_team07.Turtle;
 
@@ -12,6 +14,10 @@ public class LeftCommand extends TurtleCommand {
 
 	@Override
 	public Result execute() {
+		if (! isReady()) {
+			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
+		}
+		
 		Turtle turtle = getTurtle();
 		return new Result(turtle.rotate(rotation));
 	}
@@ -27,6 +33,10 @@ public class LeftCommand extends TurtleCommand {
 
 	@Override
 	public void inject(Double arg) {
+		if (isReady()) {
+			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
+		}
+		
 		rotation = convertToClockwise(arg);
 		myArgsInjected = 1;
 	}

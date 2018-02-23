@@ -5,13 +5,13 @@ import commands.CommandArgsUnfilledException;
 import commands.Result;
 import slogo_team07.Turtle;
 
-public class BackCommand extends TurtleCommand {
+public class SetHeadingCommand extends TurtleCommand {
 	
 	private static final int NUM_ARGS = 1;
 	
 	private int myArgsInjected = 0;
-	private double myDelta;
-	
+	private double myHeading;
+
 	@Override
 	public Result execute() {
 		if (! isReady()) {
@@ -19,7 +19,7 @@ public class BackCommand extends TurtleCommand {
 		}
 		
 		Turtle turtle = getTurtle();
-		return new Result(turtle.move(myDelta));
+		return new Result(turtle.setHeading(myHeading));
 	}
 
 	@Override
@@ -33,7 +33,8 @@ public class BackCommand extends TurtleCommand {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
 		
-		myDelta = arg;
+		myHeading = arg;
 		myArgsInjected = 1;
 	}
+
 }
