@@ -1,31 +1,18 @@
 package commands.turtle;
 
-import commands.CommandArgsUnfilledException;
-import commands.Result;
+import java.util.List;
+
 import slogo_team07.Turtle;
 
 public class HomeCommand extends TurtleCommand {
-	
-	private static final int NUM_ARGS = 0;
-	
-	private int myArgsInjected = 0;
-	
-	@Override
-	public Result execute() {
-		if (! isReady()) {
-			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
-		}
-		
-		Turtle turtle = getTurtle();
-		return new Result(turtle.home());
+
+	public HomeCommand(int num_args) {
+		super(0);
 	}
 
 	@Override
-	public boolean isReady() {
-		return myArgsInjected == NUM_ARGS;
+	protected Double calcValues(Turtle turtle, List<Double> args) {
+		return turtle.home();
 	}
-
-	@Override
-	public void inject(Double arg) {}
 
 }

@@ -1,43 +1,17 @@
 package commands.turtle;
 
-import commands.CommandArgsFullException;
-import commands.CommandArgsUnfilledException;
-import commands.Result;
+import java.util.List;
+
 import slogo_team07.Turtle;
 
 public class TowardsCommand extends TurtleCommand {
-	private static final int NUM_ARGS = 1;
 
-	private int myArgsInjected = 0;
-	private double myXPos;
-	private double myYPos;
-
-	@Override
-	public Result execute() {
-		if (! isReady()) {
-			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
-		}
-		
-		Turtle turtle = getTurtle();
-		return new Result(turtle.setFacing(myXPos, myYPos));
+	public TowardsCommand() {
+		super(2);
 	}
 
 	@Override
-	public boolean isReady() {
-		return myArgsInjected == NUM_ARGS;
-	}
-
-	@Override
-	public void inject(Double arg) {
-		if (isReady()) {
-			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
-		}
-		
-		if (myArgsInjected == 0) {
-			myXPos = arg;
-		} else {
-			myYPos = arg;
-		}
-		myArgsInjected += 1;
+	protected Double calcValues(Turtle turtle, List<Double> args) {
+		return turtle.setFacing(args.get(0), args.get(1));
 	}
 }
