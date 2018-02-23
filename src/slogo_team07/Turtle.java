@@ -1,11 +1,14 @@
 package slogo_team07;
 
+import java.awt.geom.Point2D;
+
 public class Turtle implements Drawable, Updatable {
 	
-	private double myXPos = 0;
-	private double myYPos = 0;
-	private double myDegrees = 90;
-	private boolean myTailDown = true;
+	private Double myXPos = 0.0;
+	private Double myYPos = 0.0;
+	private Double myDegrees = 90.0;
+	private boolean isDown = true;
+	private boolean isVisible = true;
 	
 	@Override
 	public void draw() {
@@ -14,72 +17,116 @@ public class Turtle implements Drawable, Updatable {
 	}
 	
 	@Override
-	public double setPosition(double x, double y) {
-		double distance = calcDistance(x, y, myXPos, myYPos); // calc distance moved;
+	public Double setPosition(Double x, Double y) {
+		Double distance = calcDistance(x, y, myXPos, myYPos); // calc distance moved;
 		myXPos = x;
 		myYPos = y;
 		return distance;
 	}
 
 	@Override
-	public double move(double pixels) {
-		double radians = degreesToRadians(myDegrees);
+	public Double move(Double pixels) {
+		Double radians = degreesToRadians(myDegrees);
 		myXPos += pixels * Math.cos(radians);
 		myYPos += pixels * Math.sin(radians);
 		return pixels;
 	}
 	
 	@Override
-	public double home() {
-		double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
-		myXPos = 0;
-		myYPos = 0;
+	public Double home() {
+		Double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
+		myXPos = 0.0;
+		myYPos = 0.0;
 		return distance;
 	}
 
 	@Override
-	public double rotate(double clockwise) {
+	public Double rotate(Double clockwise) {
 		myDegrees += clockwise;
 		return clockwise;
 	}
 
 	@Override
-	public double setHeading(double degrees) {
-		double old = myDegrees;
+	public Double setHeading(Double degrees) {
+		Double old = myDegrees;
 		myDegrees = degrees;
 		return degrees - old;
 	}
 
+	// THIS METHOD IS BROKEN....IT'S TOO LATE AND I'M TOO TIRED TO DO THIS
+	// MATH
 	@Override
-	public double setFacing(double x, double y) {
-		// TODO Auto-generated method stub
-		return 0.0;
+	public Double setFacing(Double x, Double y) {
+		Double radians = degreesToRadians(myDegrees);
+		Point2D.Double old_vec = calcVector(myXPos, 
+											myYPos,
+											myXPos + Math.cos(radians), 
+											myYPos + Math.sin(radians));
+		Point2D.Double new_vec = calcVector(0.0, 0.0, x, y);
+		
+		Double ans = calcAngle(old_vec, new_vec);
+		return ans;
+	}
+
+	private Double calcAngle(Point2D.Double old_vec, Point2D.Double new_vec) {
+		double numer = old_vec.x * new_vec.x + old_vec.y * new_vec.y;
+		double denom = Math.sqrt(old_vec.x * old_vec.x + old_vec.y * old_vec.y)
+						* Math.sqrt(new_vec.x * new_vec.x + new_vec.y * new_vec.y);
+		return Math.acos(numer / denom);
+		
 	}
 
 	@Override
-	public double setVisible(boolean isVisible) {
-		// TODO Auto-generated method stub
-		return 0.0;
+	public Double setVisible(boolean visible) {
+		isVisible = visible;
+		return isVisible ? 1.0 : 0.0;
 	}
 
 	@Override
-	public double getY() {
+	public Double getY() {
 		return myYPos;
 	}
 
 	@Override
-	public double getX() {
+	public Double getX() {
 		return myXPos;
 	}
 	
-	private double degreesToRadians(double degrees) {
+	@Override
+	public Double setPen(boolean down) {
+		isDown = down;
+		return isDown ? 1.0 : 0.0;
+	}
+	
+	@Override
+	public Double getHeading() {
+		return myDegrees;
+	}
+	
+	@Override
+	public Double getPendown() {
+		return isDown ? 1.0 : 0.0;
+	}
+
+	@Override
+	public Double getVisible() {
+		return isVisible ? 1.0 : 0.0;
+	}
+	
+	private Double degreesToRadians(Double degrees) {
 		return (degrees * Math.PI) / 180.0;
 	}
 	
-
-	private double calcDistance(double x1, double y1, double x2, double y2) {
-		double a = Math.abs(x2 - x1);
-		double b = Math.abs(y2 - y1);
+	private Double calcDistance(Double x1, Double y1, Double x2, Double y2) {
+		Double a = Math.abs(x2 - x1);
+		Double b = Math.abs(y2 - y1);
 		return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+	}
+	
+
+	private Point2D.Double calcVector(Double x1, Double y1, Double x2, Double y2) {
+		Double x = x2 - x1;
+		Double y = y2 - y1;
+		return new Point2D.Double(x, y);
 	}
 }
