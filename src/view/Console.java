@@ -26,7 +26,7 @@ public class Console extends Pane implements TextInput {
     private List<String> pastCommands;
 
     private int offsetPad = 9;
-    private int width = 500;
+    private int width = 700;
     private int cHeight = 100;
     private int hHeight = 30;
     private int bHeight = (cHeight + hHeight + offsetPad)/2;
@@ -38,6 +38,14 @@ public class Console extends Pane implements TextInput {
      */
     public Console()    {
         init();
+
+        // this.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        //     @Override
+        //     public void handle(KeyEvent event) {
+        //          console.setPrefWidth();
+        //          history.setPrefWidth();
+        //     }
+        // });
     }
 
     public Pane init() {
@@ -69,6 +77,7 @@ public class Console extends Pane implements TextInput {
         elements.add(console);
 
         history.setEditable(false);
+        history.setPromptText("command history");
         history.setPrefWidth(width);
         history.setPrefHeight(hHeight);
         history.setMaxHeight(history.USE_PREF_SIZE);
@@ -114,7 +123,7 @@ public class Console extends Pane implements TextInput {
     private Button setRunner() {
         Button aRunner = new Button("Run");
 
-        aRunner.setLayoutX(500 + offsetPad);
+        aRunner.setLayoutX(width + offsetPad);
         aRunner.setPrefWidth(bWidth);
         aRunner.setMaxWidth(runner.USE_PREF_SIZE);
         aRunner.setPrefHeight(bHeight);
@@ -134,7 +143,7 @@ public class Console extends Pane implements TextInput {
     private Button setClearer()    {
         Button aClearer = new Button("Clear");
 
-        aClearer.setLayoutX(500 + offsetPad);
+        aClearer.setLayoutX(width + offsetPad);
         aClearer.setLayoutY(bHeight);
         aClearer.setPrefWidth(bWidth);
         aClearer.setMaxWidth(aClearer.USE_PREF_SIZE);
