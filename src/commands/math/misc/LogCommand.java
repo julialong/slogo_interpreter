@@ -1,41 +1,17 @@
 package commands.math.misc;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import commands.CommandArgsFullException;
-import commands.CommandArgsUnfilledException;
-import commands.Commandable;
-import commands.Result;
+import commands.Command;
 
-public class LogCommand implements Commandable {
+public class LogCommand extends Command {
 	
-	private int myArgsNeeded = 1;
-	private List<Double> myArgs = new ArrayList<>();
-	private Double ans;
-
-	@Override
-	public Result execute() {
-		if (! isReady()) {
-			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
-		}
-		
-		ans = Math.log(myArgs.get(0));
-		return new Result(ans);
+	public LogCommand() {
+		super(1);
 	}
 
 	@Override
-	public boolean isReady() {
-		return myArgs.size() == myArgsNeeded;
+	protected Double calcValue(List<Double> args) {
+		return Math.log(getArgs().get(0));
 	}
-
-	@Override
-	public void inject(Double arg) {
-		if (isReady()) {
-			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
-		}
-
-		myArgs.add(arg);
-	}
-
 }

@@ -1,39 +1,19 @@
 package commands.math.misc;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import commands.CommandArgsFullException;
-import commands.CommandArgsUnfilledException;
-import commands.Commandable;
-import commands.Result;
+import commands.Command;
 
-public class PiCommand implements Commandable {
-	
-	private int myArgsNeeded = 0;
-	private List<Double> myArgs = new ArrayList<>();
-	private Double ans;
+public class PiCommand extends Command {
 
-	@Override
-	public Result execute() {
-		if (! isReady()) {
-			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
-		}
-		
-		ans = Math.PI;
-		return new Result(ans);
+	public PiCommand() {
+		super(0);
 	}
 
 	@Override
-	public boolean isReady() {
-		return myArgs.size() == myArgsNeeded;
+	protected Double calcValue(List<Double> args) {
+		return Math.PI;
 	}
 
-	@Override
-	public void inject(Double arg) {
-		if (isReady()) {
-			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
-		}
-	}
 
 }

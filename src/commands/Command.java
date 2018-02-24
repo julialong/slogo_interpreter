@@ -37,6 +37,14 @@ public abstract class Command implements Commandable {
 		myArgs.add(arg);
 	}
 	
+	public Double getAns() {
+		return ans;
+	}
+	
+	protected List<Double> getArgs() {
+		return myArgs;
+	}
+	
 	protected abstract Double calcValue(List<Double> args);
 
 }

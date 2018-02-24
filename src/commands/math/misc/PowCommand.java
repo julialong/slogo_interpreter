@@ -1,41 +1,18 @@
 package commands.math.misc;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import commands.CommandArgsFullException;
-import commands.CommandArgsUnfilledException;
-import commands.Commandable;
-import commands.Result;
+import commands.Command;
 
-public class PowCommand implements Commandable {
+public class PowCommand extends Command {
 
-	private int myArgsNeeded = 2;
-	private List<Double> myArgs = new ArrayList<>();
-	private Double ans;
-
-	@Override
-	public Result execute() {
-		if (! isReady()) {
-			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
-		}
-		
-		ans = Math.pow(myArgs.get(0), myArgs.get(1));
-		return new Result(ans);
+	public PowCommand() {
+		super(2);
 	}
 
 	@Override
-	public boolean isReady() {
-		return myArgs.size() == myArgsNeeded;
-	}
-
-	@Override
-	public void inject(Double arg) {
-		if (isReady()) {
-			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
-		}
-
-		myArgs.add(arg);
+	protected Double calcValue(List<Double> args) {
+		return Math.pow(getArgs().get(0), getArgs().get(1));
 	}
 
 }
