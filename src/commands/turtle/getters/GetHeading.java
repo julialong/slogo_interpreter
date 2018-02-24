@@ -7,9 +7,8 @@ import slogo_team07.Turtle;
 
 public class GetHeading extends TurtleCommand {
 
-	public GetHeading() {
-		super(0);
-		// TODO Auto-generated constructor stub
+	public GetHeading(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override

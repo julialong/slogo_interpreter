@@ -7,8 +7,8 @@ import slogo_team07.Turtle;
 
 public class GetYCor extends TurtleCommand {
 
-	public GetYCor() {
-		super(0);
+	public GetYCor(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override

@@ -7,8 +7,8 @@ import slogo_team07.Turtle;
 
 public class GetXCor extends TurtleCommand {
 
-	public GetXCor() {
-		super(0);
+	public GetXCor(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override
