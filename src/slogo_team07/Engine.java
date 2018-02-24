@@ -1,24 +1,25 @@
 package slogo_team07;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.Console;
-import java.util.ArrayList;
+import java.util.Map;
 
+import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
 
-public class Engine implements PropertyChangeListener {
+public class Engine implements ChangeListener {
 	
 	private Console myConsole;
 	private Map<Integer, Updatable> myUpdatables;
 	private Parser myParser;
-	private static Engine mySingleton;
+	private CommandFactory myCommandFactory;
 	
 	public Engine() {
 		myConsole = new Console(this);
 		addTurtle();
-		myParser = new Parser(new CommandFactory(myUpdatables));
+		myCommandFactory = new CommandFactory(myUpdatables);
+		myParser = new Parser(myCommandFactory);
 		
 	}
 
@@ -28,13 +29,18 @@ public class Engine implements PropertyChangeListener {
 		myUpdatables.put(0, turtle);
 	}
 
-	// should be stored on the front end as PropertyChangeListener.propertyChange(new ChangeListener)	
+	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)	
 	@Override
-	public void propertyChange(PropertyChangeEvent event) {
+	public void changeInput(PropertyChangeEvent event) {
 		Iterable iterable = myParser.parse(event.getNewValue());
 		for (Commandable c : iterable) {
 			Result result = c.execute();
 			c.updateView(result);
 		}
+	}
+
+	@Override
+	public void changeLanguage(PropertyChangeEvent event) {
+		myCommandFactory.updateLanguage(event.getNewValue());
 	}
 }
