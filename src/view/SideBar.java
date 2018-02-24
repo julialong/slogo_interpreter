@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import resources.keys.Resources;
+import slogo_team07.Drawable;
 import slogo_team07.Turtle;
 
 import resources.languages.ResourcesLanguages;
@@ -20,7 +21,7 @@ import resources.languages.ResourcesLanguages;
 public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
-	private ArrayList<Turtle> myTurtles;
+	private ArrayList<Drawable> myTurtles;
 	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
@@ -28,7 +29,7 @@ public class SideBar extends VBox{
 	GridPane myGridPane;
 	private String language = "English";
 	
-	public SideBar(Pane canvas, ArrayList<Turtle> turtles){
+	public SideBar(Pane canvas, ArrayList<Drawable> turtles){
 		myCanvasObjects = canvas;
 		myTurtles = turtles;
 	}
@@ -60,7 +61,7 @@ public class SideBar extends VBox{
 			@Override public void handle(ActionEvent e){
 				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
 				//right now will change icon of all turtles
-				for (Turtle turtle: myTurtles){
+				for (Drawable turtle: myTurtles){
 					myCanvasObjects.getChildren().remove(turtle.getView());
 					turtle.setView(Resources.getString(tempIcon));
 					myCanvasObjects.getChildren().add(turtle.getView());

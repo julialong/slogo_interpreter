@@ -3,6 +3,7 @@ package slogo_team07;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
 public class Turtle implements Drawable, Updatable {
@@ -39,7 +40,7 @@ public class Turtle implements Drawable, Updatable {
 	}
 	
 	@Override
-	public Group draw(Group display) {
+	public Pane draw(Pane display) {
 		Line trail = new Line(myPrevXPos, myPrevYPos, myXPos, myYPos);
 		display.getChildren().add(myIV);
 		display.getChildren().add(trail);
