@@ -7,14 +7,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import resources.keys.Resources;
-import slogo_team07.Turtle;
+import resources.languages.ResourcesLanguages;
 
 public class SideBar extends VBox{
-
 	private VBox myVBox;
 	private Pane myCanvasObjects;
 	private ArrayList<Turtle> myTurtles;
@@ -22,6 +25,8 @@ public class SideBar extends VBox{
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
+	GridPane myGridPane;
+	private String language = "English";ic
 	
 	public SideBar(Pane canvas, ArrayList<Turtle> turtles){
 		myCanvasObjects = canvas;
@@ -33,6 +38,19 @@ public class SideBar extends VBox{
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
 		
 		ComboBox colorMenu = new ComboBox(colorList);
+
+	public GridPane initSideBar(){
+		myGridPane = new GridPane();
+		myGridPane.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
+		myGridPane.setVgap(Resources.getInt("GridGap"));
+		myGridPane.setHgap(Resources.getInt("GridGap"));
+
+		ComboBox colorMenu = new ComboBox();
+		ComboBox turtleMenu = new ComboBox();
+		ComboBox penMenu = new ComboBox(); //observable list
+		ComboBox langMenu = new ComboBox<String>(); //observable list
+		Button helpButton = new Button();
+
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -59,7 +77,6 @@ public class SideBar extends VBox{
 		});
 		myVBox.getChildren().add(iconMenu);
 		
-		ComboBox penMenu = new ComboBox(); //observable list
 		penMenu.setPromptText(Resources.getString("PenMenu"));
 		penMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -68,14 +85,33 @@ public class SideBar extends VBox{
 		});
 		myVBox.getChildren().add(penMenu);
 		
-		ComboBox langMenu = new ComboBox(); //observable list
 		langMenu.setPromptText(Resources.getString("LangMenu"));
+		langMenu.getItems().addAll(
+			"Chinese",
+			"English",
+			"French",
+			"German",
+			"Italian",
+			"Portuguese",
+			"Russian",
+			"Spanish"
+			);
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				
+				language = (String)(langMenu.getValue());
+				helpButton.setText(ResourcesLanguages.getString(language, "Help"));
 			}
 		});
 		myVBox.getChildren().add(langMenu);
+
+		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
+    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				new HelpBox(language);
+			}
+		});
+		myGridPane.add(helpButton, Resources.getInt("ButtonX"), Resources.getInt("ButtonY5"));
 		
 		return myVBox;
 	}

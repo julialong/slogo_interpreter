@@ -28,7 +28,7 @@ public class MayaTestRunner extends Application	{
 		Group root = new Group();
 
 		root.getChildren().add(new Console());
-		root.getChildren().add(new HelpBox());
+		root.getChildren().add(new HelpBox("GERMAN"));
 
         Scene scene = new Scene(root, 750, 750, Color.WHITE);
 
