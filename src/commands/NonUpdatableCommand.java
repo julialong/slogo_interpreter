@@ -2,11 +2,11 @@ package commands;
 
 import java.util.List;
 
-public abstract class NonTurtleCommand extends Command {
+public abstract class NonUpdatableCommand extends Command {
 	
 	private Double ans;
 
-	public NonTurtleCommand(int num_args) {
+	public NonUpdatableCommand(int num_args) {
 		super(num_args);
 	}
 	

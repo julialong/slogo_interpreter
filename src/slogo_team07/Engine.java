@@ -24,7 +24,7 @@ public class Engine implements PropertyChangeListener {
 
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
-		myConsole.addTurtle(turtle);
+		myConsole.addDrawable(turtle);
 		myTurtles.add(turtle);
 	}
 

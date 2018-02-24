@@ -1,8 +1,8 @@
 package commands.math.trig;
 
-import commands.NonTurtleCommand;
+import commands.NonUpdatableCommand;
 
-public abstract class TrigCommand extends NonTurtleCommand {
+public abstract class TrigCommand extends NonUpdatableCommand {
 
 	public TrigCommand() {
 		super(1);

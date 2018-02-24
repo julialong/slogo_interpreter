@@ -2,9 +2,9 @@ package commands.math.misc;
 
 import java.util.List;
 
-import commands.NonTurtleCommand;
+import commands.NonUpdatableCommand;
 
-public class RandomCommand extends NonTurtleCommand {
+public class RandomCommand extends NonUpdatableCommand {
 
 	public RandomCommand() {
 		super(1);
