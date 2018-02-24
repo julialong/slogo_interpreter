@@ -1,45 +1,63 @@
 package view;
 
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import resources.keys.Resources;
+import slogo_team07.Turtle;
 
-public class SideBar extends Group{
+public class SideBar extends VBox{
 
-	GridPane myGridPane;
+	private VBox myVBox;
+	private Pane myCanvasObjects;
+	private ArrayList<Turtle> myTurtles;
+	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
+			"Yellow", "Green", "Blue", "Purple", "Pink");
+	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
+			"Octopus", "Bird", "Butterfly");
 	
-	public SideBar(){
-		
+	public SideBar(Pane canvas, ArrayList<Turtle> turtles){
+		myCanvasObjects = canvas;
+		myTurtles = turtles;
 	}
 	
-	public GridPane initSideBar(){
-		myGridPane = new GridPane();
-		myGridPane.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
-		myGridPane.setVgap(Resources.getInt("GridGap"));
-		myGridPane.setHgap(Resources.getInt("GridGap"));
+	public VBox initSideBar(){
+		myVBox = new VBox(Resources.getInt("Inset"));
+		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
 		
-		ComboBox colorMenu = new ComboBox(); //observable list
+		ComboBox colorMenu = new ComboBox(colorList);
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				
+				String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();
+				myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back", 
+						"green-back", "blue-back", "purple-back", "pink-back");
+				myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
 			}
 		});
-		myGridPane.add(colorMenu, Resources.getInt("ButtonX"), Resources.getInt("ButtonY1"));
+		myVBox.getChildren().add(colorMenu);
 		
-		ComboBox turtleMenu = new ComboBox(); //observable list
-		turtleMenu.setPromptText(Resources.getString("TurtleMenu"));
-		turtleMenu.setOnAction(new EventHandler<ActionEvent>(){
+		ComboBox iconMenu = new ComboBox(iconList); //observable list
+		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
+		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				
+				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
+				//right now will change icon of all turtles
+				for (Turtle turtle: myTurtles){
+					myCanvasObjects.getChildren().remove(turtle.getView());
+					turtle.setView(Resources.getString(tempIcon));
+					myCanvasObjects.getChildren().add(turtle.getView());
+				}
 			}
 		});
-		myGridPane.add(turtleMenu, Resources.getInt("ButtonX"), Resources.getInt("ButtonY2"));
+		myVBox.getChildren().add(iconMenu);
 		
 		ComboBox penMenu = new ComboBox(); //observable list
 		penMenu.setPromptText(Resources.getString("PenMenu"));
@@ -48,7 +66,7 @@ public class SideBar extends Group{
 				
 			}
 		});
-		myGridPane.add(penMenu, Resources.getInt("ButtonX"), Resources.getInt("ButtonY3"));
+		myVBox.getChildren().add(penMenu);
 		
 		ComboBox langMenu = new ComboBox(); //observable list
 		langMenu.setPromptText(Resources.getString("LangMenu"));
@@ -57,9 +75,9 @@ public class SideBar extends Group{
 				
 			}
 		});
-		myGridPane.add(langMenu, Resources.getInt("ButtonX"), Resources.getInt("ButtonY4"));
+		myVBox.getChildren().add(langMenu);
 		
-		return myGridPane;
+		return myVBox;
 	}
 	
 }
