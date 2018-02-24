@@ -1,3 +1,10 @@
+/**
+ * @author Jennifer Chin
+ * @author Maya Messinger
+ * Started 20 Feb 18
+ * Class that holds all of the GUI sidebar items - mmostly menus
+ */
+
 package view;
 
 import java.util.ArrayList;
@@ -26,6 +33,8 @@ public class SideBar extends VBox{
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
+	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
+			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	GridPane myGridPane;
 	private String language = "English";
 	
@@ -38,11 +47,20 @@ public class SideBar extends VBox{
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
 		
-		ComboBox colorMenu = new ComboBox(colorList);;
-		ComboBox turtleMenu = new ComboBox();
-		ComboBox penMenu = new ComboBox(); //observable list
-		ComboBox langMenu = new ComboBox<String>(); //observable list
 		Button helpButton = new Button();
+		ComboBox colorMenu = new ComboBox(colorList);
+		ComboBox iconMenu = new ComboBox(iconList); //observable list
+		ComboBox penMenu = new ComboBox(); //observable list
+		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
+
+		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
+    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				new HelpBox(language);
+			}
+		});
+		myVBox.getChildren().add(helpButton);
 
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
@@ -55,7 +73,6 @@ public class SideBar extends VBox{
 		});
 		myVBox.getChildren().add(colorMenu);
 		
-		ComboBox iconMenu = new ComboBox(iconList); //observable list
 		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
 		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -79,16 +96,6 @@ public class SideBar extends VBox{
 		myVBox.getChildren().add(penMenu);
 		
 		langMenu.setPromptText(Resources.getString("LangMenu"));
-		langMenu.getItems().addAll(
-			"Chinese",
-			"English",
-			"French",
-			"German",
-			"Italian",
-			"Portuguese",
-			"Russian",
-			"Spanish"
-			);
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				language = (String)(langMenu.getValue());
@@ -96,15 +103,6 @@ public class SideBar extends VBox{
 			}
 		});
 		myVBox.getChildren().add(langMenu);
-
-		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
-    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				new HelpBox(language);
-			}
-		});
-		myVBox.getChildren().add(helpButton);
 		
 		return myVBox;
 	}
