@@ -2,6 +2,9 @@ package slogo_team07;
 
 import java.awt.geom.Point2D;
 
+import slogo_team07.Drawable;
+import slogo_team07.Updatable;
+
 public class Turtle implements Drawable, Updatable {
 	
 	private Double myXPos = 0.0;

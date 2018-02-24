@@ -3,6 +3,9 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import commands.CommandArgsFullException;
+import commands.Commandable;
+
 public abstract class Command implements Commandable {
 	
 	private int myArgsNeeded;
