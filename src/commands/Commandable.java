@@ -5,6 +5,5 @@ public interface Commandable {
 	
 	boolean isReady();
 	
-	// an argument object potentially?
 	void inject(Double arg);
 }
