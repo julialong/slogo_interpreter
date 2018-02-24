@@ -1,7 +1,7 @@
 package commands;
 
 import java.lang.reflect.Constructor;
-import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import slogo_team07.Updatable;
@@ -11,20 +11,30 @@ public class CommandFactory {
 	private static final String COMMANDS = "resources.commands.Command";
 
 	ResourceBundle myResources;
-	List<Updatable> myUpdatables;
+	Map<String, Updatable> myUpdatables;
 
-	public CommandFactory(List<Updatable> updatables) {
+	public CommandFactory(Map<String, Updatable> updatables) {
 		myUpdatables = updatables;
 		myResources = ResourceBundle.getBundle(COMMANDS);
 	}
 
 	public Commandable createCommand(String command) {
+		return createCommmand(command, "0");
+	}
+	
+	public Commandable createCommmand(String command, String id) {
 		try {
 			Class<?> clazz = Class.forName(myResources.getString(command) + "Command");
-			Constructor<?> ctor = clazz.getConstructor();
-			return (Commandable) ctor.newInstance();
+			if (clazz.getSuperclass() == UpdatableCommand.class) {
+				Constructor<?> ctor = clazz.getConstructor(Updatable.class);
+				return (Commandable) ctor.newInstance(myUpdatables.get(id));
+			} else {
+				Constructor<?> ctor = clazz.getConstructor();
+				return (Commandable) ctor.newInstance();
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ExceptionCommand();
 		}
-	}	
+	}
 }

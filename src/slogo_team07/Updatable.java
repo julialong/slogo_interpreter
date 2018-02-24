@@ -26,4 +26,6 @@ public interface Updatable {
 	Double home();
 	
 	Double setPen(boolean down);
+	
+	Double clear();
 }

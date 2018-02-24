@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
+import slogo_team07.Drawable;
+import slogo_team07.Updatable;
+
 public class Turtle implements Drawable, Updatable {
 
 	private double myXPos;
@@ -151,7 +154,13 @@ public class Turtle implements Drawable, Updatable {
 	public Double getVisible() {
 		return isVisible ? 1.0 : 0.0;
 	}
-
+	
+	@Override
+	public Double clear() {
+		// NEEDS TO BE COMPLETED
+		return null;
+	}
+	
 	private Double degreesToRadians(Double degrees) {
 		return (degrees * Math.PI) / 180.0;
 	}
