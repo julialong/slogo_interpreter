@@ -19,7 +19,7 @@ public class Parser {
     public CommandNode parse(String s) {
         String[] splitString = s.split(" ");
         commandCreator = new CommandFactory();
-        // TODO: check if string is valid (not empty, valid size)
+        // checkValid(splitString);
         head = createNode(splitString[0]);
         createTree(splitString);
         return head;
@@ -84,6 +84,7 @@ public class Parser {
 
     /**
      * Creates the tree of CommandNode objects based on the original head
+     * TODO: check for incomplete or invalid tree and throw appropriate exception
      * @param s is the String array of commands
      */
     private void createTree(String[] s) {
@@ -91,7 +92,11 @@ public class Parser {
         for (int i = 1; i < s.length; i++) {
             CommandNode temp = createNode(s[i]);
             current.getChildren().add(temp);
-            if (isCommand(s[i])) current = temp;
+            temp.setParent(current);
+            if (temp.isCommand()) current = temp;
+            else if (temp.isCommand() && temp.checkChildren()) {
+                current = temp.getParent();
+            }
         }
     }
 

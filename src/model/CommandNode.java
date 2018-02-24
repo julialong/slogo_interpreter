@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import commands.Commandable;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Iterator;
 public class CommandNode implements Iterable{
 
     private ArrayList<CommandNode> children;
+    private CommandNode parent;
     private Commandable command;
     private double value;
     private Boolean ready;
@@ -35,12 +37,47 @@ public class CommandNode implements Iterable{
     }
 
     /**
+     * Checks to see if the current node is a command
+     * @return true if the current node is a command
+     */
+    public Boolean isCommand() {
+        return (this.commandType == CommandType.COMMAND);
+    }
+
+    /**
      * gets the children for the given node
-     * @return
+     * @return arraylist of child nodes
      */
     public ArrayList<CommandNode> getChildren() {
         return this.children;
     }
+
+    /**
+     * Compares the current number of children of the node to the needed children for the node
+     * @return the state of the node's children
+     */
+    public Boolean checkChildren() {
+//        Boolean state = (this.getChildren().size() == this.command.getNumChildren());
+//        this.ready = state;
+//        return state;
+        return true;
+    }
+
+    /**
+     * Sets the parent node for the given node
+     * @param newParent is the CommandNode directly above the current Node
+     */
+    public void setParent(CommandNode newParent) {
+        this.parent = newParent;
+    }
+
+    /**
+     * Gets the parent node for the given node
+     * @return the parent node
+     */
+    public CommandNode getParent() {
+        return parent;
+}
 
     /**
      *
@@ -48,6 +85,7 @@ public class CommandNode implements Iterable{
      */
     @Override
     public Iterator iterator() {
+
         return null;
     }
 }
