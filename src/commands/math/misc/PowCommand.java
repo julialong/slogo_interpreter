@@ -2,9 +2,9 @@ package commands.math.misc;
 
 import java.util.List;
 
-import commands.Command;
+import commands.NonTurtleCommand;
 
-public class PowCommand extends Command {
+public class PowCommand extends NonTurtleCommand {
 
 	public PowCommand() {
 		super(2);

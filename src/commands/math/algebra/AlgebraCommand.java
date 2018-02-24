@@ -1,8 +1,8 @@
 package commands.math.algebra;
 
-import commands.Command;
+import commands.NonTurtleCommand;
 
-public abstract class AlgebraCommand extends Command {
+public abstract class AlgebraCommand extends NonTurtleCommand {
 	
 	public AlgebraCommand(int num_args) {
 		super(num_args);

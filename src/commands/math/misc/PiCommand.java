@@ -2,9 +2,9 @@ package commands.math.misc;
 
 import java.util.List;
 
-import commands.Command;
+import commands.NonTurtleCommand;
 
-public class PiCommand extends Command {
+public class PiCommand extends NonTurtleCommand {
 
 	public PiCommand() {
 		super(0);

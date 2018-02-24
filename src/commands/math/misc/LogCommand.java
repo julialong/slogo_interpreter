@@ -2,9 +2,9 @@ package commands.math.misc;
 
 import java.util.List;
 
-import commands.Command;
+import commands.NonTurtleCommand;
 
-public class LogCommand extends Command {
+public class LogCommand extends NonTurtleCommand {
 	
 	public LogCommand() {
 		super(1);

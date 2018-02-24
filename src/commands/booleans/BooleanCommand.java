@@ -1,8 +1,8 @@
 package commands.booleans;
 
-import commands.Command;
+import commands.NonTurtleCommand;
 
-public abstract class BooleanCommand extends Command {
+public abstract class BooleanCommand extends NonTurtleCommand {
 	
 	public BooleanCommand(int num_args) {
 		super(num_args);

@@ -2,7 +2,7 @@ package commands.turtle.getters;
 
 import java.util.List;
 
-import commands.turtle.TurtleCommand;
+import commands.TurtleCommand;
 import slogo_team07.Turtle;
 
 public class GetXCor extends TurtleCommand {
