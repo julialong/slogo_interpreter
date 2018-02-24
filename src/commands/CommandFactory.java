@@ -1,7 +1,6 @@
 package commands;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -25,10 +24,16 @@ public class CommandFactory {
 	
 	public Commandable createCommmand(String command, String id) {
 		try {
+			System.out.println(myResources.getString(command) + "Command");
 			Class<?> clazz = Class.forName(myResources.getString(command) + "Command");
-			System.out.println(clazz.getSuperclass());
-			Constructor<?> ctor = clazz.getConstructor();
-			return (Commandable) ctor.newInstance();
+			System.out.println(clazz.getName());
+			if (clazz.getSuperclass() == UpdatableCommand.class) {
+				Constructor<?> ctor = clazz.getConstructor(Updatable.class);
+				return (Commandable) ctor.newInstance(myUpdatables.get(id));
+			} else {
+				Constructor<?> ctor = clazz.getConstructor();
+				return (Commandable) ctor.newInstance();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ExceptionCommand();
