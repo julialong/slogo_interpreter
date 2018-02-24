@@ -1,10 +1,16 @@
 package commands.math.trig;
 
+import java.util.List;
+
 public class TanCommand extends TrigCommand {
 
+	public TanCommand() {
+		super(1);
+	}
+
 	@Override
-	protected Double calcValue(Double a) {
-		return Math.tan(a);
+	protected Double calcValue(List<Double> args) {
+		return Math.tan(args.get(0));
 	}
 
 }

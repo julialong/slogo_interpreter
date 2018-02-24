@@ -1,5 +1,8 @@
 package commands.math.trig;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
@@ -7,25 +10,27 @@ import commands.Result;
 
 public abstract class TrigCommand implements Commandable {
 	
-	private static final int NUM_ARGS = 1;
-
-	private int myArgsInjected = 0;
-	private Double myFirst;
+	private int myArgsNeeded;
+	private List<Double> myArgs = new ArrayList<>();
 	private Double ans;
-
+	
+	public TrigCommand(int num_args) {
+		myArgsNeeded = num_args;
+	}
+	
 	@Override
 	public Result execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		ans = calcValue(myFirst);
+		ans = calcValue(myArgs);
 		return new Result(ans);
 	}
 
 	@Override
 	public boolean isReady() {
-		return myArgsInjected == NUM_ARGS;
+		return myArgs.size() == myArgsNeeded;
 	}
 
 	@Override
@@ -34,13 +39,12 @@ public abstract class TrigCommand implements Commandable {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
 
-		myFirst = arg;
-		myArgsInjected += 1;
+		myArgs.add(arg);
 	}
 	
 	public Double getAns() {
 		return ans;
 	}
 
-	protected abstract Double calcValue(Double a);
+	protected abstract Double calcValue(List<Double> args);
 }
