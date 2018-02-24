@@ -11,7 +11,7 @@ import commands.Result;
 public class Engine implements PropertyChangeListener {
 	
 	private Console myConsole;
-	private ArrayList<Turtle> myTurtles;
+	private ArrayList<Updatable> myUpdatables;
 	private Parser myParser;
 	private static Engine mySingleton;
 	
@@ -25,7 +25,7 @@ public class Engine implements PropertyChangeListener {
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
 		myConsole.addDrawable(turtle);
-		myTurtles.add(turtle);
+		myUpdatables.add(turtle);
 	}
 
 	// should be stored on the front end as PropertyChangeListener.propertyChange(new ChangeListener)	
@@ -36,9 +36,5 @@ public class Engine implements PropertyChangeListener {
 			Result result = c.execute();
 			c.updateView(result);
 		}
-	}
-	
-	public ArrayList<Turtle> getTurtle() {
-		return myTurtles;
 	}
 }
