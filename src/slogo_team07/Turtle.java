@@ -116,6 +116,12 @@ public class Turtle implements Drawable, Updatable {
 		return isVisible ? 1.0 : 0.0;
 	}
 	
+	@Override
+	public Double clear() {
+		// NEEDS TO BE COMPLETED
+		return null;
+	}
+	
 	private Double degreesToRadians(Double degrees) {
 		return (degrees * Math.PI) / 180.0;
 	}

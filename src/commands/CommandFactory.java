@@ -24,9 +24,7 @@ public class CommandFactory {
 	
 	public Commandable createCommmand(String command, String id) {
 		try {
-			System.out.println(myResources.getString(command) + "Command");
 			Class<?> clazz = Class.forName(myResources.getString(command) + "Command");
-			System.out.println(clazz.getName());
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getConstructor(Updatable.class);
 				return (Commandable) ctor.newInstance(myUpdatables.get(id));
