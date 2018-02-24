@@ -11,21 +11,21 @@ import commands.Result;
 public class Engine implements PropertyChangeListener {
 	
 	private Console myConsole;
-	private ArrayList<Updatable> myUpdatables;
+	private Map<Integer, Updatable> myUpdatables;
 	private Parser myParser;
 	private static Engine mySingleton;
 	
 	public Engine() {
 		myConsole = new Console(this);
 		addTurtle();
-		myParser = new Parser(new CommandFactory(myTurtles));
+		myParser = new Parser(new CommandFactory(myUpdatables));
 		
 	}
 
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
 		myConsole.addDrawable(turtle);
-		myUpdatables.add(turtle);
+		myUpdatables.put(0, turtle);
 	}
 
 	// should be stored on the front end as PropertyChangeListener.propertyChange(new ChangeListener)	
