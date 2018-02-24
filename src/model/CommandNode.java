@@ -80,12 +80,21 @@ public class CommandNode implements Iterable{
 }
 
     /**
-     *
-     * @return
+     * TODO: Make iterator traverse tree and return commands ready to execute
+     * @return CommandNode iterator
      */
     @Override
     public Iterator iterator() {
+        CommandNode commandTree = this;
+        return new Iterator<CommandNode>() {
 
-        return null;
+            public boolean hasNext() {
+                return false;
+            }
+
+            public CommandNode next() {
+                return new CommandNode(0);
+            }
+        };
     }
 }
