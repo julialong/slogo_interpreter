@@ -1,17 +1,16 @@
 package commands.math.algebra;
 
+import java.util.List;
+
 public class MinusCommand extends AlgebraCommand {
 	
-	private static final int NUM_ARGS = 1;
-	
-	@Override
-	public boolean isReady() {
-		return getArgsInjected() == NUM_ARGS;
+	public MinusCommand() {
+		super(1);
 	}
 
 	@Override
-	protected Double calcValue(Double a, Double b) {
-		return -a;
+	protected Double calcValue(List<Double> args) {
+		return -args.get(0);
 	}
 
 }
