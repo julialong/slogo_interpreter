@@ -7,14 +7,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import resources.keys.Resources;
+import slogo_team07.Turtle;
+
 import resources.languages.ResourcesLanguages;
 
 public class SideBar extends VBox{
@@ -26,7 +26,7 @@ public class SideBar extends VBox{
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
 	GridPane myGridPane;
-	private String language = "English";ic
+	private String language = "English";
 	
 	public SideBar(Pane canvas, ArrayList<Turtle> turtles){
 		myCanvasObjects = canvas;
@@ -37,15 +37,7 @@ public class SideBar extends VBox{
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
 		
-		ComboBox colorMenu = new ComboBox(colorList);
-
-	public GridPane initSideBar(){
-		myGridPane = new GridPane();
-		myGridPane.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
-		myGridPane.setVgap(Resources.getInt("GridGap"));
-		myGridPane.setHgap(Resources.getInt("GridGap"));
-
-		ComboBox colorMenu = new ComboBox();
+		ComboBox colorMenu = new ComboBox(colorList);;
 		ComboBox turtleMenu = new ComboBox();
 		ComboBox penMenu = new ComboBox(); //observable list
 		ComboBox langMenu = new ComboBox<String>(); //observable list
@@ -111,7 +103,7 @@ public class SideBar extends VBox{
 				new HelpBox(language);
 			}
 		});
-		myGridPane.add(helpButton, Resources.getInt("ButtonX"), Resources.getInt("ButtonY5"));
+		myVBox.getChildren().add(helpButton);
 		
 		return myVBox;
 	}
