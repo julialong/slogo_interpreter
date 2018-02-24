@@ -7,15 +7,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import resources.keys.Resources;
 import slogo_team07.Drawable;
 import slogo_team07.Turtle;
 
-public class SideBar extends VBox{
+import resources.languages.ResourcesLanguages;
 
+public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
 	private ArrayList<Drawable> myTurtles;
@@ -23,6 +26,8 @@ public class SideBar extends VBox{
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
+	GridPane myGridPane;
+	private String language = "English";
 	
 	public SideBar(Pane canvas, ArrayList<Drawable> turtles){
 		myCanvasObjects = canvas;
@@ -33,7 +38,12 @@ public class SideBar extends VBox{
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
 		
-		ComboBox colorMenu = new ComboBox(colorList);
+		ComboBox colorMenu = new ComboBox(colorList);;
+		ComboBox turtleMenu = new ComboBox();
+		ComboBox penMenu = new ComboBox(); //observable list
+		ComboBox langMenu = new ComboBox<String>(); //observable list
+		Button helpButton = new Button();
+
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -60,7 +70,6 @@ public class SideBar extends VBox{
 		});
 		myVBox.getChildren().add(iconMenu);
 		
-		ComboBox penMenu = new ComboBox(); //observable list
 		penMenu.setPromptText(Resources.getString("PenMenu"));
 		penMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -69,14 +78,33 @@ public class SideBar extends VBox{
 		});
 		myVBox.getChildren().add(penMenu);
 		
-		ComboBox langMenu = new ComboBox(); //observable list
 		langMenu.setPromptText(Resources.getString("LangMenu"));
+		langMenu.getItems().addAll(
+			"Chinese",
+			"English",
+			"French",
+			"German",
+			"Italian",
+			"Portuguese",
+			"Russian",
+			"Spanish"
+			);
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				
+				language = (String)(langMenu.getValue());
+				helpButton.setText(ResourcesLanguages.getString(language, "Help"));
 			}
 		});
 		myVBox.getChildren().add(langMenu);
+
+		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
+    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				new HelpBox(language);
+			}
+		});
+		myVBox.getChildren().add(helpButton);
 		
 		return myVBox;
 	}

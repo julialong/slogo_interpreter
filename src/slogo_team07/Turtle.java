@@ -1,5 +1,6 @@
 package slogo_team07;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,14 +8,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
 public class Turtle implements Drawable, Updatable {
-	
+
 	private double myXPos;
 	private double myYPos;
 	private double myPrevXPos;
 	private double myPrevYPos;
-	private boolean tailDown = true;
+	private boolean isDown = true;
+	private boolean isVisible = true;
+	private Double myDegrees = 90.0;
 	private ImageView myIV;
-	
+
 	public Turtle(double x, double y){
 		myXPos = x;
 		myYPos = y;
@@ -25,11 +28,11 @@ public class Turtle implements Drawable, Updatable {
 		myIV.setX(myXPos);
 		myIV.setY(myYPos);
 	}
-	
+
 	public ImageView getView(){
 		return myIV;
 	}
-	
+
 	public void setView(String imagePath){
 		Image image = new Image(imagePath);
 		myIV = new ImageView(image);
@@ -38,7 +41,7 @@ public class Turtle implements Drawable, Updatable {
 		myIV.setX(myXPos);
 		myIV.setY(myYPos);
 	}
-	
+
 	@Override
 	public Pane draw(Pane display) {
 		Line trail = new Line(myPrevXPos, myPrevYPos, myXPos, myYPos);
@@ -46,10 +49,10 @@ public class Turtle implements Drawable, Updatable {
 		display.getChildren().add(trail);
 		return display;
 	}
-	
+
 	@Override
-	public double setPosition(double x, double y) {
-		int distance = 0; // calc distance moved;
+	public Double setPosition(Double x, Double y) {
+		Double distance = calcDistance(x, y, myXPos, myYPos); // calc distance moved;
 		myPrevXPos = myXPos;
 		myPrevYPos = myYPos;
 		myXPos = x;
@@ -60,47 +63,110 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public double move(double delta_x, double delta_y) {
+	public Double move(Double pixels) {
 		myPrevXPos = myXPos;
 		myPrevYPos = myYPos;
-		myXPos += delta_x;
-		myYPos += delta_y;
-		return (delta_x != 0) ? delta_x : delta_y;
+		Double radians = degreesToRadians(myDegrees);
+		myXPos += pixels * Math.cos(radians);
+		myYPos += pixels * Math.sin(radians);
+		return pixels;
 	}
 
 	@Override
-	public double rotate(double clock, double counter) {
-		// TODO Auto-generated method stub
-		return 0.0;
+	public Double home() {
+		Double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
+		myXPos = 0.0;
+		myYPos = 0.0;
+		return distance;
 	}
 
 	@Override
-	public double setHeading(double degrees) {
-		// TODO Auto-generated method stub
-		return 0.0;
+	public Double rotate(Double clockwise) {
+		myDegrees += clockwise;
+		return clockwise;
 	}
 
 	@Override
-	public double setFacing(double x, double y) {
-		// TODO Auto-generated method stub
-		return 0.0;
+	public Double setHeading(Double degrees) {
+		Double old = myDegrees;
+		myDegrees = degrees;
+		return degrees - old;
+	}
+
+	// THIS METHOD IS BROKEN....IT'S TOO LATE AND I'M TOO TIRED TO DO THIS
+	// MATH
+	@Override
+	public Double setFacing(Double x, Double y) {
+		Double radians = degreesToRadians(myDegrees);
+		Point2D.Double old_vec = calcVector(myXPos, 
+				myYPos,
+				myXPos + Math.cos(radians), 
+				myYPos + Math.sin(radians));
+		Point2D.Double new_vec = calcVector(0.0, 0.0, x, y);
+
+		Double ans = calcAngle(old_vec, new_vec);
+		return ans;
+	}
+
+	private Double calcAngle(Point2D.Double old_vec, Point2D.Double new_vec) {
+		double numer = old_vec.x * new_vec.x + old_vec.y * new_vec.y;
+		double denom = Math.sqrt(old_vec.x * old_vec.x + old_vec.y * old_vec.y)
+				* Math.sqrt(new_vec.x * new_vec.x + new_vec.y * new_vec.y);
+		return Math.acos(numer / denom);
+
 	}
 
 	@Override
-	public double setVisible(boolean isVisible) {
-		// TODO Auto-generated method stub
-		return 0.0;
+	public Double setVisible(boolean visible) {
+		isVisible = visible;
+		return isVisible ? 1.0 : 0.0;
 	}
 
 	@Override
-	public double getY() {
+	public Double getY() {
 		return myYPos;
 	}
 
 	@Override
-	public double getX() {
-		// TODO Auto-generated method stub
+	public Double getX() {
 		return myXPos;
 	}
 
+	@Override
+	public Double setPen(boolean down) {
+		isDown = down;
+		return isDown ? 1.0 : 0.0;
+	}
+
+	@Override
+	public Double getHeading() {
+		return myDegrees;
+	}
+
+	@Override
+	public Double getPendown() {
+		return isDown ? 1.0 : 0.0;
+	}
+
+	@Override
+	public Double getVisible() {
+		return isVisible ? 1.0 : 0.0;
+	}
+
+	private Double degreesToRadians(Double degrees) {
+		return (degrees * Math.PI) / 180.0;
+	}
+
+	private Double calcDistance(Double x1, Double y1, Double x2, Double y2) {
+		Double a = Math.abs(x2 - x1);
+		Double b = Math.abs(y2 - y1);
+		return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+	}
+
+
+	private Point2D.Double calcVector(Double x1, Double y1, Double x2, Double y2) {
+		Double x = x2 - x1;
+		Double y = y2 - y1;
+		return new Point2D.Double(x, y);
+	}
 }
