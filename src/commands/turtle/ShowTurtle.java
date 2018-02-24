@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class ShowTurtle extends TurtleCommand {
 
-	public ShowTurtle() {
-		super(0);
+	public ShowTurtle(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override

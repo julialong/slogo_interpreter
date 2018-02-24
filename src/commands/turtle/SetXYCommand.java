@@ -6,9 +6,8 @@ import slogo_team07.Turtle;
 
 public class SetXYCommand extends TurtleCommand {
 
-	public SetXYCommand() {
-		super(2);
-		// TODO Auto-generated constructor stub
+	public SetXYCommand(Turtle turtle) {
+		super(2, turtle);
 	}
 
 	@Override

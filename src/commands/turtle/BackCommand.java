@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class BackCommand extends TurtleCommand {
 	
-	public BackCommand() {
-		super(1);
+	public BackCommand(Turtle turtle) {
+		super(1, turtle);
 	}
 
 	@Override

@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class ForwardCommand extends TurtleCommand {
 	
-	public ForwardCommand() {
-		super(1);
+	public ForwardCommand(Turtle turtle) {
+		super(1, turtle);
 	}
 
 	@Override

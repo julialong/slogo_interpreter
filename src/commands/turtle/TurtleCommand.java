@@ -7,16 +7,17 @@ import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
-import slogo_team07.Engine;
 import slogo_team07.Turtle;
 
 public abstract class TurtleCommand implements Commandable {
 	
 	private int myArgsNeeded;
 	private List<Double> myArgs = new ArrayList<>();
+	private Turtle myTurtle;
 	
-	public TurtleCommand(int num_args) {
+	public TurtleCommand(int num_args, Turtle turtle) {
 		myArgsNeeded = num_args;
+		myTurtle = turtle;
 	}
 	
 	@Override
@@ -25,8 +26,7 @@ public abstract class TurtleCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		Turtle turtle = getTurtle();
-		return new Result(calcValues(turtle, myArgs));
+		return new Result(calcValues(myTurtle, myArgs));
 	}
 
 	@Override
@@ -42,11 +42,6 @@ public abstract class TurtleCommand implements Commandable {
 		
 		myArgs.add(arg);
 	}
-	
-	private Turtle getTurtle() {
-		return Engine.getInstance().getTurtle().get(0);
-	}
-	
 
 	protected abstract Double calcValues(Turtle turtle, List<Double> args);
 }

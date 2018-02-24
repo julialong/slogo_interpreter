@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class SetHeadingCommand extends TurtleCommand {
 
-	public SetHeadingCommand() {
-		super(1);
+	public SetHeadingCommand(Turtle turtle) {
+		super(1, turtle);
 	}
 
 	@Override

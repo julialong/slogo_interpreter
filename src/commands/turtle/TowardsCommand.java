@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class TowardsCommand extends TurtleCommand {
 
-	public TowardsCommand() {
-		super(2);
+	public TowardsCommand(Turtle turtle) {
+		super(2, turtle);
 	}
 
 	@Override

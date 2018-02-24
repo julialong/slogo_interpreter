@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class Penup extends TurtleCommand {
 
-	public Penup() {
-		super(0);
+	public Penup(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override

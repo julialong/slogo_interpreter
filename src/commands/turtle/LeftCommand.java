@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class LeftCommand extends TurtleCommand {
 
-	public LeftCommand() {
-		super(0);
+	public LeftCommand(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override

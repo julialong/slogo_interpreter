@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class HideTurtle extends TurtleCommand {
 
-	public HideTurtle() {
-		super(0);
+	public HideTurtle(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override

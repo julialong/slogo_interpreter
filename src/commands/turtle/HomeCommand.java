@@ -6,8 +6,8 @@ import slogo_team07.Turtle;
 
 public class HomeCommand extends TurtleCommand {
 
-	public HomeCommand(int num_args) {
-		super(0);
+	public HomeCommand(Turtle turtle) {
+		super(0, turtle);
 	}
 
 	@Override
