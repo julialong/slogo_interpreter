@@ -5,5 +5,7 @@
  * Because we don't want actual exceptions that throw errors, we will have a class for "exception" alerts
  */
 
+package view;
+
 public class Alert {
 }
