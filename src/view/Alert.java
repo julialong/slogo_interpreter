@@ -8,4 +8,7 @@
 package view;
 
 public class Alert {
+	public Alert()	{
+		// Double.MAX_VALUE
+	}
 }
