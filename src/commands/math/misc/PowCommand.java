@@ -1,5 +1,8 @@
 package commands.math.misc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
@@ -7,11 +10,8 @@ import commands.Result;
 
 public class PowCommand implements Commandable {
 
-	private static final int NUM_ARGS = 2;
-	
-	private int myArgsInjected = 0;
-	private Double myFirst;
-	private Double mySecond;
+	private int myArgsNeeded = 2;
+	private List<Double> myArgs = new ArrayList<>();
 	private Double ans;
 
 	@Override
@@ -20,13 +20,13 @@ public class PowCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		ans = Math.pow(myFirst, mySecond);
+		ans = Math.pow(myArgs.get(0), myArgs.get(1));
 		return new Result(ans);
 	}
 
 	@Override
 	public boolean isReady() {
-		return myArgsInjected == NUM_ARGS;
+		return myArgs.size() == myArgsNeeded;
 	}
 
 	@Override
@@ -35,12 +35,7 @@ public class PowCommand implements Commandable {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
 
-		if (myArgsInjected == 0) {
-			myFirst = arg;
-		} else {
-			mySecond = arg;
-		}
-		myArgsInjected += 1;
+		myArgs.add(arg);
 	}
 
 }

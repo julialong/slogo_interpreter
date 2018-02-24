@@ -1,16 +1,17 @@
 package commands.math.misc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
 import commands.Result;
 
 public class LogCommand implements Commandable {
-
-	private static final int NUM_ARGS = 1;
 	
-	private int myArgsInjected = 0;
-	private Double myFirst;
+	private int myArgsNeeded = 1;
+	private List<Double> myArgs = new ArrayList<>();
 	private Double ans;
 
 	@Override
@@ -19,13 +20,13 @@ public class LogCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		ans = Math.log(myFirst);
+		ans = Math.log(myArgs.get(0));
 		return new Result(ans);
 	}
 
 	@Override
 	public boolean isReady() {
-		return myArgsInjected == NUM_ARGS;
+		return myArgs.size() == myArgsNeeded;
 	}
 
 	@Override
@@ -34,8 +35,7 @@ public class LogCommand implements Commandable {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
 
-		myFirst = arg;
-		myArgsInjected += 1;
+		myArgs.add(arg);
 	}
 
 }

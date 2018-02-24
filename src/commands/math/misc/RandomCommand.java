@@ -1,5 +1,8 @@
 package commands.math.misc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import commands.CommandArgsFullException;
 import commands.CommandArgsUnfilledException;
 import commands.Commandable;
@@ -7,10 +10,8 @@ import commands.Result;
 
 public abstract class RandomCommand implements Commandable {
 	
-	private static final int NUM_ARGS = 1;
-	
-	private int myArgsInjected = 0;
-	private Double myFirst;
+	private int myArgsNeeded = 1;
+	private List<Double> myArgs = new ArrayList<>();
 	private Double ans;
 
 	@Override
@@ -19,13 +20,13 @@ public abstract class RandomCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		ans = Math.random() * myFirst;
+		ans = Math.random() * myArgs.get(0);
 		return new Result(ans);
 	}
 
 	@Override
 	public boolean isReady() {
-		return myArgsInjected == NUM_ARGS;
+		return myArgs.size() == myArgsNeeded;
 	}
 
 	@Override
@@ -36,8 +37,7 @@ public abstract class RandomCommand implements Commandable {
 			throw new IllegalArgumentException("Argument to RANDOM must be positive");
 		}
 
-		myFirst = arg;
-		myArgsInjected += 1;
+		myArgs.add(arg);
 	}
 
 }
