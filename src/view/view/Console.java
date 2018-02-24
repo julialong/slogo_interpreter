@@ -14,10 +14,11 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class Console extends Group implements TextInput {
+public class Console extends Pane implements TextInput {
     private TextArea console;
     private TextArea history;
     private Button runner;
@@ -36,6 +37,10 @@ public class Console extends Group implements TextInput {
      * Constructor for Console
      */
     public Console()    {
+        init();
+    }
+
+    public Pane init() {
         console = new TextArea();
         history = new TextArea();
         runner = setRunner();
@@ -43,6 +48,8 @@ public class Console extends Group implements TextInput {
         pastCommands = new ArrayList<>();
 
         addElements();
+
+        return this;
     }
 
     private void addElements()  {

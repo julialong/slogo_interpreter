@@ -1,3 +1,10 @@
+/**
+ * @author Jennifer Chin
+ * @author Maya Messinger
+ * Started 20 Feb 18
+ * Class that holds all of the GUI sidebar items - mmostly menus
+ */
+
 package view;
 
 import java.util.ArrayList;
@@ -13,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import resources.keys.Resources;
+import slogo_team07.Drawable;
 import slogo_team07.Turtle;
 
 import resources.languages.ResourcesLanguages;
@@ -20,15 +28,17 @@ import resources.languages.ResourcesLanguages;
 public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
-	private ArrayList<Turtle> myTurtles;
+	private ArrayList<Drawable> myTurtles;
 	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
+	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
+			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	GridPane myGridPane;
 	private String language = "English";
 	
-	public SideBar(Pane canvas, ArrayList<Turtle> turtles){
+	public SideBar(Pane canvas, ArrayList<Drawable> turtles){
 		myCanvasObjects = canvas;
 		myTurtles = turtles;
 	}
@@ -37,11 +47,20 @@ public class SideBar extends VBox{
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
 		
-		ComboBox colorMenu = new ComboBox(colorList);;
-		ComboBox turtleMenu = new ComboBox();
-		ComboBox penMenu = new ComboBox(); //observable list
-		ComboBox langMenu = new ComboBox<String>(); //observable list
 		Button helpButton = new Button();
+		ComboBox colorMenu = new ComboBox(colorList);
+		ComboBox iconMenu = new ComboBox(iconList); //observable list
+		ComboBox penMenu = new ComboBox(); //observable list
+		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
+
+		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
+    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				new HelpBox(language);
+			}
+		});
+		myVBox.getChildren().add(helpButton);
 
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
@@ -54,13 +73,12 @@ public class SideBar extends VBox{
 		});
 		myVBox.getChildren().add(colorMenu);
 		
-		ComboBox iconMenu = new ComboBox(iconList); //observable list
 		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
 		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
 				//right now will change icon of all turtles
-				for (Turtle turtle: myTurtles){
+				for (Drawable turtle: myTurtles){
 					myCanvasObjects.getChildren().remove(turtle.getView());
 					turtle.setView(Resources.getString(tempIcon));
 					myCanvasObjects.getChildren().add(turtle.getView());
@@ -78,16 +96,6 @@ public class SideBar extends VBox{
 		myVBox.getChildren().add(penMenu);
 		
 		langMenu.setPromptText(Resources.getString("LangMenu"));
-		langMenu.getItems().addAll(
-			"Chinese",
-			"English",
-			"French",
-			"German",
-			"Italian",
-			"Portuguese",
-			"Russian",
-			"Spanish"
-			);
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				language = (String)(langMenu.getValue());
@@ -95,15 +103,6 @@ public class SideBar extends VBox{
 			}
 		});
 		myVBox.getChildren().add(langMenu);
-
-		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
-    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				new HelpBox(language);
-			}
-		});
-		myVBox.getChildren().add(helpButton);
 		
 		return myVBox;
 	}
