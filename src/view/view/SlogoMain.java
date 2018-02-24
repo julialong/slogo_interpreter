@@ -25,6 +25,8 @@ public class SlogoMain extends Application{
 	private Console myConsole;
 	private SideBar mySideBar;
 	private Toolbar myToolbar;
+	private BorderPane root;
+	private ArrayList<Drawable> myTurtles = new ArrayList<Drawable>();
 	
 	public void start(Stage primaryStage) throws Exception {
 		Stage myStage = primaryStage;
@@ -44,20 +46,20 @@ public class SlogoMain extends Application{
 	}
 	
 	private void step(double cycles){
-		
+		myCanvasObjects = myCanvas.updateCanvas();
+		root.setCenter(myCanvasObjects);
 	}
 	
 	private Scene initScreen(){
-		BorderPane root = new BorderPane();
+		root = new BorderPane();
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		
 		//hardcoded, need to get from backend
-		ArrayList<Drawable> test = new ArrayList<Drawable>();
-		Turtle testTurt = new Turtle(20, 20);
-		test.add(testTurt);
+		Turtle testTurt = new Turtle(0, 0);
+		myTurtles.add(testTurt);
 		
-		myCanvas = new Canvas(test);
+		myCanvas = new Canvas(myTurtles);
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
@@ -65,7 +67,7 @@ public class SlogoMain extends Application{
 		myConsole = new Console();
 		root.setBottom(myConsole);
 		
-		mySideBar = new SideBar(myCanvasObjects, test);
+		mySideBar = new SideBar(myCanvasObjects, myTurtles);
 		root.setRight(mySideBar.initSideBar());
 		
 		myToolbar = new Toolbar();
