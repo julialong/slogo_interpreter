@@ -1,4 +1,4 @@
-package commands.updatable.getters;
+package commands.updatable.queries;
 
 import java.util.List;
 

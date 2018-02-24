@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
+import slogo_team07.Drawable;
+import slogo_team07.Updatable;
+
 public class Turtle implements Drawable, Updatable {
 
 	private double myXPos;
@@ -98,20 +101,20 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public Double setFacing(Double x, Double y) {
 		Double radians = degreesToRadians(myDegrees);
-		Point2D.Double old_vec = calcVector(myXPos, 
+		Point2D old_vec = calcVector(myXPos, 
 				myYPos,
 				myXPos + Math.cos(radians), 
 				myYPos + Math.sin(radians));
-		Point2D.Double new_vec = calcVector(0.0, 0.0, x, y);
+		Point2D new_vec = calcVector(0.0, 0.0, x, y);
 
 		Double ans = calcAngle(old_vec, new_vec);
 		return ans;
 	}
 
-	private Double calcAngle(Point2D.Double old_vec, Point2D.Double new_vec) {
-		double numer = old_vec.x * new_vec.x + old_vec.y * new_vec.y;
-		double denom = Math.sqrt(old_vec.x * old_vec.x + old_vec.y * old_vec.y)
-				* Math.sqrt(new_vec.x * new_vec.x + new_vec.y * new_vec.y);
+	private Double calcAngle(Point2D old_vec, Point2D new_vec) {
+		double numer = old_vec.getX() * new_vec.getX() + old_vec.getY() * new_vec.getY();
+		double denom = Math.sqrt(old_vec.getX() * old_vec.getX() + old_vec.getY() * old_vec.getY())
+				* Math.sqrt(new_vec.getX() * new_vec.getX() + new_vec.getY() * new_vec.getY());
 		return Math.acos(numer / denom);
 
 	}
@@ -152,7 +155,13 @@ public class Turtle implements Drawable, Updatable {
 	public Double getVisible() {
 		return isVisible ? 1.0 : 0.0;
 	}
-
+	
+	@Override
+	public Double clear() {
+		// NEEDS TO BE COMPLETED
+		return null;
+	}
+	
 	private Double degreesToRadians(Double degrees) {
 		return (degrees * Math.PI) / 180.0;
 	}
@@ -164,9 +173,9 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 
-	private Point2D.Double calcVector(Double x1, Double y1, Double x2, Double y2) {
+	private Point2D calcVector(Double x1, Double y1, Double x2, Double y2) {
 		Double x = x2 - x1;
 		Double y = y2 - y1;
-		return new Point2D.Double(x, y);
+		return new Point2D(x, y);
 	}
 }

@@ -6,8 +6,9 @@ import commands.Commandable;
 public class Test {
 	public static void main(String[] args){
 		CommandFactory cf = new CommandFactory(null);
-		Commandable less = cf.createCommand("not");
-		less.inject(0.0);
-		System.out.println(less.execute().toString());
+		Commandable c = cf.createCommand("random");
+		c.inject(8.0);
+//		c.inject(4.9);
+		System.out.println(c.execute().toString());
 	}
 }
