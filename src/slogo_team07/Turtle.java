@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
-import view.Canvas;
 
 public class Turtle implements Drawable, Updatable {
 	
@@ -13,15 +12,28 @@ public class Turtle implements Drawable, Updatable {
 	private double myPrevXPos;
 	private double myPrevYPos;
 	private boolean tailDown = true;
-	public ImageView myIV;
+	private ImageView myIV;
 	
 	public Turtle(double x, double y){
 		myXPos = x;
 		myYPos = y;
 		myPrevXPos = x;
 		myPrevYPos = y;
-		Image image = new Image("turtle.jpg");
+		Image image = new Image("/view/turtle.jpg");
 		myIV = new ImageView(image);
+		myIV.setX(myXPos);
+		myIV.setY(myYPos);
+	}
+	
+	public ImageView getView(){
+		return myIV;
+	}
+	
+	public void setView(String imagePath){
+		Image image = new Image(imagePath);
+		myIV = new ImageView(image);
+		myIV.setFitHeight(20);
+		myIV.setFitWidth(20);
 		myIV.setX(myXPos);
 		myIV.setY(myYPos);
 	}
