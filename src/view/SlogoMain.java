@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
 import view.Console;
+import slogo_team07.Drawable;
 import slogo_team07.Turtle;
 
 public class SlogoMain extends Application{
@@ -52,12 +53,12 @@ public class SlogoMain extends Application{
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		
 		//hardcoded, need to get from backend
-		ArrayList<Turtle> test = new ArrayList<Turtle>();
+		ArrayList<Drawable> test = new ArrayList<Drawable>();
 		Turtle testTurt = new Turtle(20, 20);
 		test.add(testTurt);
 		
-		myCanvas = new Canvas();
-		myCanvasObjects = myCanvas.initCanvas(test); 
+		myCanvas = new Canvas(test);
+		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
