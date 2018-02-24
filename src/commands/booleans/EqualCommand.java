@@ -9,7 +9,8 @@ public class EqualCommand extends BooleanCommand {
 	}
 
 	@Override
-	protected boolean calcValue(List<Double> args) {
-		return args.get(0) == args.get(1);
+	protected Double calcValue(List<Double> args) {
+		Boolean b = args.get(0) == args.get(1);
+		return boolToDouble(b);
 	}
 }

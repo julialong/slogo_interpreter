@@ -9,7 +9,8 @@ public class AndCommand extends BooleanCommand {
 	}
 
 	@Override
-	protected boolean calcValue(List<Double> args) {
-		return (args.get(0) != 0.0) && (args.get(1) != 0.0);
+	protected Double calcValue(List<Double> args) {
+		Boolean b = (args.get(0) != 0.0) && (args.get(1) != 0.0);
+		return boolToDouble(b);
 	}
 }
