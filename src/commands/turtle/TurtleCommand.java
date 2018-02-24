@@ -14,6 +14,7 @@ public abstract class TurtleCommand implements Commandable {
 	private int myArgsNeeded;
 	private List<Double> myArgs = new ArrayList<>();
 	private Turtle myTurtle;
+	private Double ans;
 	
 	public TurtleCommand(int num_args, Turtle turtle) {
 		myArgsNeeded = num_args;
@@ -26,7 +27,8 @@ public abstract class TurtleCommand implements Commandable {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 		
-		return new Result(calcValues(myTurtle, myArgs));
+		ans = calcValues(myTurtle, myArgs);
+		return new Result(ans);
 	}
 
 	@Override

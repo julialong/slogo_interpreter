@@ -1,16 +1,15 @@
 package commands.booleans;
 
+import java.util.List;
+
 public class NotCommand extends BooleanCommand {
 	
-	private static final int NUM_ARGS = 1;
-
-	@Override
-	public boolean isReady() {
-		return getArgsInjected() == NUM_ARGS;
+	public NotCommand() {
+		super(1);
 	}
-
+	
 	@Override
-	protected boolean calcValue(Double a, Double b) {
-		return a == 0.0;
+	protected boolean calcValue(List<Double> args) {
+		return args.get(0) == 0.0;
 	}
 }
