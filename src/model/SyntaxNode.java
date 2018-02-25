@@ -4,17 +4,16 @@ import commands.Commandable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  *
  * @author julia
  */
-public class CommandNode implements Iterable{
+public abstract class SyntaxNode implements Iterable{
 
-    private ArrayList<CommandNode> children;
+    private ArrayList<SyntaxNode> children;
     private int currentChild;
-    private CommandNode parent;
+    private SyntaxNode parent;
     private Commandable command;
     private double value;
     private Boolean ready;
@@ -22,43 +21,25 @@ public class CommandNode implements Iterable{
     private int totalArguments;
     private CommandType commandType;
 
-    /**
-     * Creates new CommandNode if the argument passed in implements the Commandable interface
-     * @param newCommand the Command object to be made into a node
-     */
-    CommandNode(Commandable newCommand) {
-        children = new ArrayList<>();
-        currentChild = 0;
-        command = newCommand;
-        commandType = CommandType.COMMAND;
-        ready = false;
-        traversed = false;
+
+    SyntaxNode() {
     }
 
-    /**
-     * Creates new CommandNode if the argument passed in is a number
-     * @param argument the number to be made into a node
-     */
-    CommandNode(double argument) {
-        commandType = CommandType.ARGUMENT;
-        value = argument;
-        children = new ArrayList<>();
-        currentChild = 0;
-        traversed = false;
-    }
 
     /**
      * Checks to see if the current node is a command
      * @return true if the current node is a command
      */
     public Boolean isCommand() {
-        return (this.commandType == CommandType.COMMAND);
+        return false;
     }
 
     private void injectArguments() {
         if (this.isCommand()) {
-            for (CommandNode child : this.children) {
-                this.command.inject(child.value);
+            for (SyntaxNode child : this.children) {
+                if(child.isReady()) {
+                    this.command.inject(child.value);
+                }
                 child.traversed = true;
             }
         }
@@ -68,31 +49,24 @@ public class CommandNode implements Iterable{
      * gets the children for the given node
      * @return arraylist of child nodes
      */
-    public ArrayList<CommandNode> getChildren() {
+    public ArrayList<SyntaxNode> getChildren() {
         return this.children;
     }
 
-    private CommandNode getNextChild() {
+    private SyntaxNode getNextChild() {
         this.currentChild++;
         return this.getChildren().get(currentChild - 1);
     }
 
-    /**
-     * Compares the current number of children of the node to the needed children for the node
-     * @return the state of the node's children
-     */
-    public Boolean checkChildren() {
-//        Boolean state = (this.getChildren().size() == this.command.getNumChildren());
-//        this.ready = state;
-//        return state;
-        return true;
+    public boolean isReady() {
+        return false;
     }
 
     /**
      * Sets the parent node for the given node
-     * @param newParent is the CommandNode directly above the current Node
+     * @param newParent is the SyntaxNode directly above the current Node
      */
-    public void setParent(CommandNode newParent) {
+    public void setParent(SyntaxNode newParent) {
         this.parent = newParent;
     }
 
@@ -100,7 +74,7 @@ public class CommandNode implements Iterable{
      * Gets the parent node for the given node
      * @return the parent node
      */
-    public CommandNode getParent(){
+    public SyntaxNode getParent(){
         return this.parent;
     }
 
@@ -110,15 +84,15 @@ public class CommandNode implements Iterable{
 
     /**
      * TODO: Make iterator traverse tree and return commands ready to execute
-     * @return CommandNode iterator
+     * @return SyntaxNode iterator
      */
     @Override
     public Iterator iterator() {
-        CommandNode commandTree = this;
+        SyntaxNode commandTree = this;
         traverseToBottom(commandTree);
 
-        return new Iterator<CommandNode>() {
-            CommandNode current = commandTree; // current is now equal to the bottom leftmost component of tree
+        return new Iterator<SyntaxNode>() {
+            SyntaxNode current = commandTree; // current is now equal to the bottom leftmost component of tree
 
             /**
              * Checks parent and children of the current node to see if the tree can be further parsed
@@ -128,7 +102,7 @@ public class CommandNode implements Iterable{
                 if (!current.getParent().traversed) {
                     return true;
                 }
-                for (CommandNode child : current.getChildren()) {
+                for (SyntaxNode child : current.getChildren()) {
                     if (!child.traversed) {
                         return true;
                     }
@@ -136,15 +110,19 @@ public class CommandNode implements Iterable{
                 return false;
             }
 
-            public CommandNode next() {
-                //current.value = current.command.
-                while (!current.isCommand()) {
+            /**
+             * Returns the next ready command object in the tree
+             * @return next SyntaxNode object in the tree
+             */
+            public SyntaxNode next() {
+                while (!current.isCommand() && !current.traversed) {
                     current = current.getParent();
-                    if (!current.ready) {
-
-                    }
                 }
                 current.injectArguments();
+                while (!current.isReady()) {
+                    current = current.getNextChild();
+                    current.injectArguments();
+                }
                 return current;
             }
         };
@@ -154,7 +132,7 @@ public class CommandNode implements Iterable{
      * traverses to the bottom of the tree and sets current to the bottom leftmost node
      * @param current head of the current tree to be traversed
      */
-    private void traverseToBottom(CommandNode current) {
+    private void traverseToBottom(SyntaxNode current) {
         while (current.getChildren().size() > 0) {
             current = current.getNextChild();
         }

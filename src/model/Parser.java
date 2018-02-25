@@ -11,12 +11,14 @@ import java.util.Map;
 public class Parser {
 
     private CommandFactory commandCreator;
-    private CommandNode head;
+    private SyntaxNode head;
 
-    private Map<String, Double> storedVariable;
+    private Map<String, String> variableMap;
+    private Map<String, String> commandMap;
 
     public Parser(CommandFactory cf) {
         commandCreator = cf;
+
     }
 
     /**
@@ -24,11 +26,19 @@ public class Parser {
      * @param s is the input string
      * @return the head node of a tree of CommandNodes
      */
-    public CommandNode parse(String s) {
+    public SyntaxNode parse(String s) {
         String[] splitString = s.split(" ");
         checkValid(splitString);
-        head = createNode(splitString[0]);
-        createTree(splitString);
+        return parseCommands(splitString);
+    }
+
+//    private SyntaxNode parseControl(String[] s) {
+//
+//    }
+
+    private SyntaxNode parseCommands(String[] s) {
+        head = new HeadNode();
+        createTree(s);
         return head;
     }
 
@@ -42,15 +52,15 @@ public class Parser {
     }
 
     /**
-     * Creates CommandNode object based on the content of the string
+     * Creates SyntaxNode object based on the content of the string
      * @param string string argument
-     * @return CommandNode object containing the Command or argument
+     * @return SyntaxNode object containing the Command or argument
      */
-    private CommandNode createNode(String string) {
+    private SyntaxNode createNode(String string) {
         if (isCommand(string)) {
-            return new CommandNode(commandCreator.createCommand(string));
+            return new CommandableNode(commandCreator.createCommand(string));
         }
-        return new CommandNode(Integer.parseInt(string));
+        return new ArgumentNode(Double.parseDouble(string));
     }
 
     /**
@@ -60,6 +70,10 @@ public class Parser {
      */
     private Boolean isCommand(String string) {
         return string.matches("[a-zA-Z_]+(\\?)?");
+    }
+
+    private Boolean isControl(String string) {
+        return (string.contains("[") && string.contains("]"));
     }
 
     /**
@@ -90,20 +104,24 @@ public class Parser {
     }
 
     /**
-     * Creates the tree of CommandNode objects based on the original head
+     * Creates the tree of SyntaxNode objects based on the original head
      * TODO: check for incomplete or invalid tree and throw appropriate exception
-     * TODO: refactor some of this logic to CommandNode class to improve encapsulation
+     * TODO: refactor some of this logic to SyntaxNode class to improve encapsulation
      * @param s is the String array of commands
      */
     private void createTree(String[] s) {
-        CommandNode current = head;
-        for (int i = 1; i < s.length; i++) {
-            CommandNode temp = createNode(s[i]);
+        SyntaxNode current = head;
+        for (int i = 0; i < s.length; i++) {
+            SyntaxNode temp = createNode(s[i]);
             current.getChildren().add(temp);
             temp.setParent(current);
-            if (temp.isCommand()) current = temp;
-            else if (temp.isCommand() && temp.checkChildren()) {
-                current = temp.getParent();
+            if (temp.isCommand()) {
+                current = temp;
+            }
+            else if (!temp.isCommand()) {
+                while (temp.getParent().isReady()) {
+                    current = temp.getParent();
+                }
             }
         }
     }

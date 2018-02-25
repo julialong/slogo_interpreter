@@ -4,7 +4,7 @@ import commands.Commandable;
 
 import java.util.ArrayList;
 
-public class CommandableNode extends SyntaxNode {
+public class HeadNode extends SyntaxNode{
 
     private ArrayList<SyntaxNode> children;
     private int currentChild;
@@ -16,30 +16,13 @@ public class CommandableNode extends SyntaxNode {
     private int totalArguments;
     private CommandType commandType;
 
-    /**
-     *
-     * @param newCommand
-     */
-    CommandableNode(Commandable newCommand) {
+    HeadNode() {
         children = new ArrayList<>();
         currentChild = 0;
-        command = newCommand;
         commandType = CommandType.COMMAND;
         ready = false;
         traversed = false;
+        parent = null;
     }
 
-    /**
-     * Checks to see if the current node is a command
-     * @return true if the current node is a command
-     */
-    @Override
-    public Boolean isCommand() {
-        return true;
-    }
-
-    @Override
-    public boolean isReady() {
-        return command.isReady();
-    }
 }
