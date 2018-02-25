@@ -1,10 +1,13 @@
 package model;
 
 import commands.Commandable;
+import model.CommandType;
+import model.ControlNode;
+import model.SyntaxNode;
 
 import java.util.ArrayList;
 
-public class RepeatNode extends ControlNode{
+public class RepeatNode extends ControlNode {
 
     private ArrayList<SyntaxNode> children;
     private int currentChild;
@@ -23,9 +26,14 @@ public class RepeatNode extends ControlNode{
         completed = 0;
     }
 
+    public void resetChildren() {
+        SyntaxNode current = this;
+
+    }
+
     @Override
     public boolean isReady() {
-        return true;
+        return (completed == this.getChildren().get(0).getValue());
     }
 
 }
