@@ -4,12 +4,20 @@ import commands.CommandFactory;
 
 import java.util.Map;
 
+/**
+ *
+ * @author julia
+ */
 public class Parser {
 
     private CommandFactory commandCreator;
     private CommandNode head;
 
     private Map<String, Double> storedVariable;
+
+    public Parser(CommandFactory cf) {
+        commandCreator = cf;
+    }
 
     /**
      * Parses a string and builds a tree of CommandNodes
@@ -18,8 +26,7 @@ public class Parser {
      */
     public CommandNode parse(String s) {
         String[] splitString = s.split(" ");
-        commandCreator = new CommandFactory();
-        // checkValid(splitString);
+        checkValid(splitString);
         head = createNode(splitString[0]);
         createTree(splitString);
         return head;
@@ -85,6 +92,7 @@ public class Parser {
     /**
      * Creates the tree of CommandNode objects based on the original head
      * TODO: check for incomplete or invalid tree and throw appropriate exception
+     * TODO: refactor some of this logic to CommandNode class to improve encapsulation
      * @param s is the String array of commands
      */
     private void createTree(String[] s) {
@@ -99,17 +107,4 @@ public class Parser {
             }
         }
     }
-
-
-    public static void main(String[] args){
-        Parser p = new Parser();
-        try {
-            p.parse("fd 50");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }

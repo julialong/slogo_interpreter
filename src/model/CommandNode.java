@@ -1,11 +1,15 @@
 package model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import commands.Commandable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+/**
+ *
+ * @author julia
+ */
 public class CommandNode implements Iterable{
 
     private ArrayList<CommandNode> children;
@@ -14,6 +18,7 @@ public class CommandNode implements Iterable{
     private Commandable command;
     private double value;
     private Boolean ready;
+    private Boolean traversed;
     private int totalArguments;
     private CommandType commandType;
 
@@ -27,6 +32,7 @@ public class CommandNode implements Iterable{
         command = newCommand;
         commandType = CommandType.COMMAND;
         ready = false;
+        traversed = false;
     }
 
     /**
@@ -36,6 +42,9 @@ public class CommandNode implements Iterable{
     CommandNode(double argument) {
         commandType = CommandType.ARGUMENT;
         value = argument;
+        children = new ArrayList<>();
+        currentChild = 0;
+        traversed = false;
     }
 
     /**
@@ -44,6 +53,15 @@ public class CommandNode implements Iterable{
      */
     public Boolean isCommand() {
         return (this.commandType == CommandType.COMMAND);
+    }
+
+    private void injectArguments() {
+        if (this.isCommand()) {
+            for (CommandNode child : this.children) {
+                this.command.inject(child.value);
+                child.traversed = true;
+            }
+        }
     }
 
     /**
@@ -82,9 +100,13 @@ public class CommandNode implements Iterable{
      * Gets the parent node for the given node
      * @return the parent node
      */
-    public CommandNode getParent() {
-        return parent;
-}
+    public CommandNode getParent(){
+        return this.parent;
+    }
+
+    private boolean isHead() {
+        return false;
+    }
 
     /**
      * TODO: Make iterator traverse tree and return commands ready to execute
@@ -93,22 +115,45 @@ public class CommandNode implements Iterable{
     @Override
     public Iterator iterator() {
         CommandNode commandTree = this;
-        CommandNode current = commandTree;
-        traverseToBottom(current);
+        traverseToBottom(commandTree);
 
         return new Iterator<CommandNode>() {
+            CommandNode current = commandTree; // current is now equal to the bottom leftmost component of tree
 
+            /**
+             * Checks parent and children of the current node to see if the tree can be further parsed
+             * @return true if tree can be further parsed
+             */
             public boolean hasNext() {
+                if (!current.getParent().traversed) {
+                    return true;
+                }
+                for (CommandNode child : current.getChildren()) {
+                    if (!child.traversed) {
+                        return true;
+                    }
+                }
                 return false;
             }
 
             public CommandNode next() {
+                //current.value = current.command.
+                while (!current.isCommand()) {
+                    current = current.getParent();
+                    if (!current.ready) {
 
-                return commandTree;
+                    }
+                }
+                current.injectArguments();
+                return current;
             }
         };
     }
 
+    /**
+     * traverses to the bottom of the tree and sets current to the bottom leftmost node
+     * @param current head of the current tree to be traversed
+     */
     private void traverseToBottom(CommandNode current) {
         while (current.getChildren().size() > 0) {
             current = current.getNextChild();
