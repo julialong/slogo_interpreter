@@ -9,6 +9,12 @@ package view;
 
 public class Alert {
 	public Alert()	{
-		// Double.MAX_VALUE
+		// if (result.getRes1() == Double.MAX_VALUE)	{
+			
+		// }
 	}
+
+	// throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");	Command 26
+	// throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");	NonUpdatableCommand 16
+	// throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");	UpdatableCommand	20
 }

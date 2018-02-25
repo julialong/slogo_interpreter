@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
@@ -24,6 +24,7 @@ public class Console extends Pane implements TextInput {
     private Button runner;
     private Button clearer;
     private List<String> pastCommands;
+    protected VBox myVBox;
 
     private int offsetPad = 9;
     private int width = 700;
@@ -48,6 +49,9 @@ public class Console extends Pane implements TextInput {
         // });
     }
 
+    /**
+     * Initialized this Console with variables/contents
+     */
     public Pane init() {
         console = new TextArea();
         history = new TextArea();
@@ -100,6 +104,10 @@ public class Console extends Pane implements TextInput {
         history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
         clear();
 
+        if (comm.matches("^(?i)to (?s).*?"))   {
+            ((SideBar)myVBox).addButton(comm);
+        }
+
         return comm;
     }
     
@@ -117,7 +125,7 @@ public class Console extends Pane implements TextInput {
      */
     @Override
     public void loadInput(String command) {
-        console.appendText("\n" + command);    // "types" long command into textbox for the ability to re-use a pre-defined function
+        console.appendText(command);    // "types" long command into textbox for the ability to re-use a pre-defined function
     }
 
     private Button setRunner() {

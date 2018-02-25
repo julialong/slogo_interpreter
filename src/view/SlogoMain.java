@@ -6,11 +6,11 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
-import view.Console;
 import slogo_team07.Drawable;
 import slogo_team07.Turtle;
 
@@ -22,8 +22,8 @@ public class SlogoMain extends Application{
 	
 	private Canvas myCanvas;
 	private Pane myCanvasObjects;
-	private Console myConsole;
-	private SideBar mySideBar;
+	private TextInput myConsole;
+	private VBox mySideBar;
 	private Toolbar myToolbar;
 	
 	public void start(Stage primaryStage) throws Exception {
@@ -62,11 +62,14 @@ public class SlogoMain extends Application{
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		myConsole = new Console();
-		root.setBottom(myConsole);
-		
 		mySideBar = new SideBar(myCanvasObjects, test);
-		root.setRight(mySideBar.initSideBar());
+		root.setRight(((SideBar)mySideBar).initSideBar());
+
+		myConsole = new Console();
+		root.setBottom(((Console)myConsole));
+
+		((SideBar)mySideBar).myConsole = myConsole;
+		((Console)myConsole).myVBox = mySideBar;
 		
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
