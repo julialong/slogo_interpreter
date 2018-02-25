@@ -16,7 +16,7 @@ import slogo_team07.Updatable;
 import slogo_team07.Engine;
 import slogo_team07.Turtle;
 
-public class SlogoMain extends Application{
+public class Visualizer extends Application{
 	
 	public static final int FRAMES_PER_SECOND = 5;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;

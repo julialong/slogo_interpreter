@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -21,7 +22,7 @@ import resources.languages.ResourcesLanguages;
 import slogo_team07.ChangeListener;
 import slogo_team07.Engine;
 
-public class Console extends Pane implements TextInput {
+public class Console extends AnchorPane implements TextInput {
     private TextArea console;
     private TextArea history;
     private Button runner;
@@ -43,29 +44,36 @@ public class Console extends Pane implements TextInput {
      * Constructor for Console
      */
     public Console()    {
-        init();
+        initConsole();
     }
 
     /**
      * Initialized this Console with variables/contents
      */
-    public Pane init() {
+    public AnchorPane initConsole() {
+    	AnchorPane myPane = new AnchorPane();
         console = new TextArea();
         history = new TextArea();
         runner = setRunner();
         clearer = setClearer();
         pastCommands = new ArrayList<>();
-
+        
+        VBox myButtons = new VBox(5);
+        myButtons.getChildren().addAll(runner, clearer);
+        this.getChildren().add(myButtons);
         addElements();
+        myPane.setTopAnchor(history, 0.0);
+        myPane.setBottomAnchor(console, 0.0);
+        myPane.setRightAnchor(myButtons, 0.0);
 
-        return this;
+        return myPane;
     }
 
     private void addElements()  {
         List<Node> elements = new ArrayList<Node>();
 
         addText(elements);
-        addButtons(elements);
+        //addButtons(elements);
 
         this.getChildren().addAll(elements);
     }
