@@ -35,7 +35,7 @@ public class Engine implements ChangeListener {
 		Iterable<Commandable> iterable = myParser.parse(input);
 		for (Commandable c : iterable) {
 			Result result = c.execute();
-			c.updateView(result);
+			myVis.updateView(result);
 		}
 	}
 
