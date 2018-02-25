@@ -1,17 +1,17 @@
 package slogo_team07;
 
-import java.beans.PropertyChangeEvent;
-import java.io.Console;
+import java.util.HashMap;
 import java.util.Map;
 
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
+import view.SlogoMain;
 
 public class Engine implements ChangeListener {
 	
+	private Map<String, Updatable> myUpdatables = new HashMap<>();
 	private SlogoMain myVis;
-	private Map<Integer, Updatable> myUpdatables;
 	private Parser myParser;
 	private CommandFactory myCommandFactory;
 	
@@ -20,7 +20,6 @@ public class Engine implements ChangeListener {
 		addTurtle();
 		myCommandFactory = new CommandFactory(myUpdatables);
 		myParser = new Parser(myCommandFactory);
-		
 	}
 
 	private void addTurtle() {
@@ -29,7 +28,7 @@ public class Engine implements ChangeListener {
 		myUpdatables.put(0, turtle);
 	}
 
-	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)	
+	// should be stored on the front end as ChangeListener.changeInput(String)	
 	@Override
 	public void changeInput(String input) {
 		Iterable<Commandable> iterable = myParser.parse(input);
