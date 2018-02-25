@@ -17,6 +17,7 @@ public class ArgumentNode extends SyntaxNode {
     private CommandType commandType;
 
     ArgumentNode(Double argument) {
+
         children = new ArrayList<>();
         value = argument;
         ready = true;

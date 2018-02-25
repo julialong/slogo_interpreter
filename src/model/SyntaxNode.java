@@ -12,6 +12,7 @@ import java.util.Iterator;
 public abstract class SyntaxNode implements Iterable{
 
     private ArrayList<SyntaxNode> children;
+    private int currentChild;
     private SyntaxNode parent;
     private Commandable command;
     private double value;
@@ -22,7 +23,6 @@ public abstract class SyntaxNode implements Iterable{
 
 
     SyntaxNode() {
-        children = new ArrayList<>();
     }
 
 

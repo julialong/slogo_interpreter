@@ -21,6 +21,8 @@ public class CommandableNode extends SyntaxNode {
      * @param newCommand
      */
     CommandableNode(Commandable newCommand) {
+        children = new ArrayList<>();
+        currentChild = 0;
         command = newCommand;
         commandType = CommandType.COMMAND;
         ready = false;
