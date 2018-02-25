@@ -10,4 +10,9 @@ public class ExceptionCommand extends Command {
 	public Result execute() {
 		return new Result(Double.MAX_VALUE);
 	}
+
+	@Override
+	public double getAns() {
+		return 0;
+	}
 }
