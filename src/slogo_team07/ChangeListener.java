@@ -1,9 +1,7 @@
 package slogo_team07;
 
-import java.beans.PropertyChangeEvent;
-
 public interface ChangeListener {
-	void changeInput(PropertyChangeEvent event);
+	void changeInput(String input);
 	
-	void changeLanguage(PropertyChangeEvent event);
+	void changeLanguage(String lang);
 }

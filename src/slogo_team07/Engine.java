@@ -31,8 +31,8 @@ public class Engine implements ChangeListener {
 
 	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)	
 	@Override
-	public void changeInput(PropertyChangeEvent event) {
-		Iterable<Commandable> iterable = myParser.parse(event.getNewValue());
+	public void changeInput(String input) {
+		Iterable<Commandable> iterable = myParser.parse(input);
 		for (Commandable c : iterable) {
 			Result result = c.execute();
 			c.updateView(result);
@@ -40,7 +40,7 @@ public class Engine implements ChangeListener {
 	}
 
 	@Override
-	public void changeLanguage(PropertyChangeEvent event) {
-		myCommandFactory.updateLanguage(event.getNewValue());
+	public void changeLanguage(String lang) {
+		myCommandFactory.updateLanguage(lang);
 	}
 }
