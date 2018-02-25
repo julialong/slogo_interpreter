@@ -20,11 +20,10 @@ public class Engine implements ChangeListener {
 
 	public Engine(SlogoMain vis) {
 		myVis = vis;
-		addTurtle();
 		myUpdatables = new HashMap<>();
 		myCommandFactory = new CommandFactory(myUpdatables);
 		myParser = new Parser(myCommandFactory);
-
+		addTurtle();
 	}
 
 	private void addTurtle() {
