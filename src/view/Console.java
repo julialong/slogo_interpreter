@@ -32,10 +32,10 @@ public class Console extends AnchorPane implements TextInput {
     protected ChangeListener myCL;
     protected String language;
 
-    private int offsetPad = 9;
+    private int offsetPad = 0;
     private int width = 700;
     private int cHeight = 100;
-    private int hHeight = 30;
+    private int hHeight = 60;
     private int bHeight = (cHeight + hHeight + offsetPad)/2;
     private int bWidth = 100;
     private int commandIndex = -1;   // will track what command is "last" for scrollability
@@ -51,7 +51,6 @@ public class Console extends AnchorPane implements TextInput {
      * Initialized this Console with variables/contents
      */
     public AnchorPane initConsole() {
-    	AnchorPane myPane = new AnchorPane();
         console = new TextArea();
         history = new TextArea();
         runner = setRunner();
@@ -62,43 +61,14 @@ public class Console extends AnchorPane implements TextInput {
         myButtons.getChildren().addAll(runner, clearer);
         this.getChildren().add(myButtons);
         addElements();
-        myPane.setTopAnchor(history, 0.0);
-        myPane.setBottomAnchor(console, 0.0);
-        myPane.setRightAnchor(myButtons, 0.0);
+        this.setTopAnchor(history, 0.0);
+        this.setBottomAnchor(console, 0.0);
+        this.setRightAnchor(myButtons, 0.0);
 
-        return myPane;
+        return this;
     }
 
-    private void addElements()  {
-        List<Node> elements = new ArrayList<Node>();
-
-        addText(elements);
-        //addButtons(elements);
-
-        this.getChildren().addAll(elements);
-    }
-
-    private void addText(List<Node> elements)  {
-        console.setPromptText("commands");
-        console.setPrefWidth(width);
-        console.setPrefHeight(cHeight);
-        console.setLayoutY(Math.max(hHeight, history.getMinHeight()) + offsetPad);
-        elements.add(console);
-
-        history.setEditable(false);
-        history.setPromptText("command history");
-        history.setPrefWidth(width);
-        history.setPrefHeight(hHeight);
-        history.setMaxHeight(history.USE_PREF_SIZE);
-        elements.add(history);
-    }
-
-    private void addButtons(List<Node> elements)   {
-        elements.add(runner);
-        elements.add(clearer);
-    }
-
-    /**
+     /**
      * Sends text from console to anything that calls run(), clears text box, and adds command to history
      */
     @Override
@@ -111,14 +81,14 @@ public class Console extends AnchorPane implements TextInput {
 
         myCL.changeInput(comm);
 
-        // if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
-        //     ((SideBar)myVBox).addButton(comm);
-        // }
+        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
+            ((SideBar)myVBox).addButton(comm);
+        }
 
-        // if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
-        //   || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
-        //     ((SideBar)myVBox).addButton(comm.split(" ")[1]);
-        // }
+        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
+          || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
+            ((SideBar)myVBox).addButton(comm.split(" ")[1]);
+        }
 
         return comm;
     }
@@ -138,6 +108,39 @@ public class Console extends AnchorPane implements TextInput {
     @Override
     public void loadInput(String command) {
         console.appendText(command);    // "types" long command into textbox for the ability to re-use a pre-defined function
+    }
+
+    private void addElements()  {
+        List<Node> elements = new ArrayList<Node>();
+
+        addText(elements);
+        //addButtons(elements);
+
+        this.getChildren().addAll(elements);
+    }
+
+    protected void printResult(String res)    {
+        history.appendText("\n" + res);
+    }
+
+    private void addText(List<Node> elements)  {
+        history.setEditable(false);
+        history.setPromptText("command history");
+        history.setPrefWidth(width);
+        history.setPrefHeight(hHeight);
+        history.setMaxHeight(history.USE_PREF_SIZE);
+        elements.add(history);
+
+        console.setPromptText("commands");
+        console.setPrefWidth(width);
+        console.setPrefHeight(cHeight);
+        console.setLayoutY(Math.max(hHeight, history.getMinHeight()) + offsetPad);
+        elements.add(console);
+    }
+
+    private void addButtons(List<Node> elements)   {
+        elements.add(runner);
+        elements.add(clearer);
     }
 
     private Button setRunner() {
