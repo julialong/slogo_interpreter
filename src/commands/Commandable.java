@@ -4,4 +4,8 @@ public interface Commandable {
 	Result execute();
 	
 	void inject(Double arg);
+
+	boolean isReady();
+
+	double getAns();
 }

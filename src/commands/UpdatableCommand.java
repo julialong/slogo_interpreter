@@ -23,8 +23,9 @@ public abstract class UpdatableCommand extends Command {
 		ans = calcValues(myUpdatable, getArgs());
 		return new Result(ans);
 	}
-	
-	public Double getAns() {
+
+	@Override
+	public double getAns() {
 		return ans;
 	}
 

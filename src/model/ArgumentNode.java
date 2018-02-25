@@ -21,7 +21,7 @@ public class ArgumentNode extends SyntaxNode {
         children = new ArrayList<>();
         value = argument;
         ready = true;
-        traversed = false;
+        traversed = true;
         commandType = CommandType.ARGUMENT;
     }
 }

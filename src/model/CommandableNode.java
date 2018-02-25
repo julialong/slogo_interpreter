@@ -42,4 +42,9 @@ public class CommandableNode extends SyntaxNode {
     public boolean isReady() {
         return command.isReady();
     }
+
+    @Override
+    public double getValue() {
+        return command.getAns();
+    }
 }

@@ -24,9 +24,11 @@ public abstract class Command implements Commandable {
 		myArgs.add(arg);
 	}
 
-	protected boolean isReady() {
+	public boolean isReady() {
 		return myArgs.size() == myArgsNeeded;
 	}
+
+	public abstract double getAns();
 	
 	protected List<Double> getArgs() {
 		return myArgs;

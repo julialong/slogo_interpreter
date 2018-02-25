@@ -38,9 +38,8 @@ public abstract class SyntaxNode implements Iterable{
         if (this.isCommand()) {
             for (SyntaxNode child : this.children) {
                 if(child.isReady()) {
-                    this.command.inject(child.value);
+                    this.command.inject(child.getValue());
                 }
-                child.traversed = true;
             }
         }
     }
@@ -54,8 +53,12 @@ public abstract class SyntaxNode implements Iterable{
     }
 
     private SyntaxNode getNextChild() {
-        this.currentChild++;
-        return this.getChildren().get(currentChild - 1);
+        for (SyntaxNode child : this.children) {
+            if (!child.traversed) {
+                return child;
+            }
+        }
+        return null;
     }
 
     public boolean isReady() {
@@ -76,6 +79,10 @@ public abstract class SyntaxNode implements Iterable{
      */
     public SyntaxNode getParent(){
         return this.parent;
+    }
+
+    public double getValue() {
+        return this.value;
     }
 
     private boolean isHead() {
@@ -99,13 +106,13 @@ public abstract class SyntaxNode implements Iterable{
              * @return true if tree can be further parsed
              */
             public boolean hasNext() {
-                if (!current.getParent().traversed) {
-                    return true;
-                }
                 for (SyntaxNode child : current.getChildren()) {
                     if (!child.traversed) {
                         return true;
                     }
+                }
+                if (!current.isHead() || !current.getParent().traversed) {
+                    return true;
                 }
                 return false;
             }
@@ -115,7 +122,7 @@ public abstract class SyntaxNode implements Iterable{
              * @return next SyntaxNode object in the tree
              */
             public SyntaxNode next() {
-                while (!current.isCommand() && !current.traversed) {
+                while (!current.isCommand() || current.traversed) {
                     current = current.getParent();
                 }
                 current.injectArguments();
@@ -123,6 +130,7 @@ public abstract class SyntaxNode implements Iterable{
                     current = current.getNextChild();
                     current.injectArguments();
                 }
+                current.traversed = true;
                 return current;
             }
         };
