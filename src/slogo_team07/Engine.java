@@ -1,40 +1,47 @@
 package slogo_team07;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.Console;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
+import view.Canvas;
+import model.Parser;
+import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
 
-public class Engine implements PropertyChangeListener {
-	
-	private Console myConsole;
-	private Map<Integer, Updatable> myUpdatables;
+public class Engine implements ChangeListener {
+
+	private Canvas myVis;
+	private Map<String, Updatable> myUpdatables;
 	private Parser myParser;
-	private static Engine mySingleton;
-	
-	public Engine() {
-		myConsole = new Console(this);
+	private CommandFactory myCommandFactory;
+
+	public Engine(Canvas vis) {
+		myVis = vis;
+		myUpdatables = new HashMap<>();
+		myCommandFactory = new CommandFactory(myUpdatables);
+		myParser = new Parser(myCommandFactory);
 		addTurtle();
-		myParser = new Parser(new CommandFactory(myUpdatables));
-		
 	}
 
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
-		myConsole.addDrawable(turtle);
-		myUpdatables.put(0, turtle);
+		myVis.addDrawable(turtle);
+		myUpdatables.put(Integer.toString(0), turtle);
 	}
 
-	// should be stored on the front end as PropertyChangeListener.propertyChange(new ChangeListener)	
+	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)
 	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		Iterable iterable = myParser.parse(event.getNewValue());
+	public void changeInput(String input) {
+		Iterable<Commandable> iterable = myParser.parse(input);
 		for (Commandable c : iterable) {
 			Result result = c.execute();
-			c.updateView(result);
+			myVis.updateCanvas(result);
 		}
+	}
+
+	@Override
+	public void changeLanguage(String lang) {
+		myCommandFactory.updateLanguage(lang);
 	}
 }

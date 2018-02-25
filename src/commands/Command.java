@@ -14,11 +14,6 @@ public abstract class Command implements Commandable {
 	public Command(int num_args) {
 		myArgsNeeded = num_args;
 	}
-	
-	@Override
-	public boolean isReady() {
-		return myArgs.size() == myArgsNeeded;
-	}
 
 	@Override
 	public void inject(Double arg) {
@@ -27,6 +22,10 @@ public abstract class Command implements Commandable {
 		}
 
 		myArgs.add(arg);
+	}
+
+	protected boolean isReady() {
+		return myArgs.size() == myArgsNeeded;
 	}
 	
 	protected List<Double> getArgs() {

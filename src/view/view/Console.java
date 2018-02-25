@@ -10,53 +10,70 @@ import java.util.List;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import resources.languages.ResourcesLanguages;
+import slogo_team07.ChangeListener;
+import slogo_team07.Engine;
 
-public class Console extends Pane implements TextInput {
+public class Console extends AnchorPane implements TextInput {
     private TextArea console;
     private TextArea history;
     private Button runner;
     private Button clearer;
     private List<String> pastCommands;
+    protected VBox myVBox;
+    protected ChangeListener myCL;
+    protected String language;
 
     private int offsetPad = 9;
-    private int width = 500;
+    private int width = 700;
     private int cHeight = 100;
     private int hHeight = 30;
     private int bHeight = (cHeight + hHeight + offsetPad)/2;
-    private int bWidth = 50;
+    private int bWidth = 100;
     private int commandIndex = -1;   // will track what command is "last" for scrollability
 
     /**
      * Constructor for Console
      */
     public Console()    {
-        init();
+        initConsole();
     }
 
-    public Pane init() {
+    /**
+     * Initialized this Console with variables/contents
+     */
+    public AnchorPane initConsole() {
+    	AnchorPane myPane = new AnchorPane();
         console = new TextArea();
         history = new TextArea();
         runner = setRunner();
         clearer = setClearer();
         pastCommands = new ArrayList<>();
-
+        
+        VBox myButtons = new VBox(5);
+        myButtons.getChildren().addAll(runner, clearer);
+        this.getChildren().add(myButtons);
         addElements();
+        myPane.setTopAnchor(history, 0.0);
+        myPane.setBottomAnchor(console, 0.0);
+        myPane.setRightAnchor(myButtons, 0.0);
 
-        return this;
+        return myPane;
     }
 
     private void addElements()  {
         List<Node> elements = new ArrayList<Node>();
 
         addText(elements);
-        addButtons(elements);
+        //addButtons(elements);
 
         this.getChildren().addAll(elements);
     }
@@ -69,6 +86,7 @@ public class Console extends Pane implements TextInput {
         elements.add(console);
 
         history.setEditable(false);
+        history.setPromptText("command history");
         history.setPrefWidth(width);
         history.setPrefHeight(hHeight);
         history.setMaxHeight(history.USE_PREF_SIZE);
@@ -91,6 +109,17 @@ public class Console extends Pane implements TextInput {
         history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
         clear();
 
+        myCL.changeInput(comm);
+
+        // if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
+        //     ((SideBar)myVBox).addButton(comm);
+        // }
+
+        // if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
+        //   || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
+        //     ((SideBar)myVBox).addButton(comm.split(" ")[1]);
+        // }
+
         return comm;
     }
     
@@ -108,13 +137,13 @@ public class Console extends Pane implements TextInput {
      */
     @Override
     public void loadInput(String command) {
-        console.appendText("\n" + command);    // "types" long command into textbox for the ability to re-use a pre-defined function
+        console.appendText(command);    // "types" long command into textbox for the ability to re-use a pre-defined function
     }
 
     private Button setRunner() {
         Button aRunner = new Button("Run");
 
-        aRunner.setLayoutX(500 + offsetPad);
+        aRunner.setLayoutX(width + offsetPad);
         aRunner.setPrefWidth(bWidth);
         aRunner.setMaxWidth(runner.USE_PREF_SIZE);
         aRunner.setPrefHeight(bHeight);
@@ -134,8 +163,8 @@ public class Console extends Pane implements TextInput {
     private Button setClearer()    {
         Button aClearer = new Button("Clear");
 
-        aClearer.setLayoutX(500 + offsetPad);
-        aClearer.setLayoutY(bHeight);
+        aClearer.setLayoutX(width + offsetPad);
+        aClearer.setLayoutY(bHeight + offsetPad);
         aClearer.setPrefWidth(bWidth);
         aClearer.setMaxWidth(aClearer.USE_PREF_SIZE);
         aClearer.setPrefHeight(bHeight);
