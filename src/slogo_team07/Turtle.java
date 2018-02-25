@@ -12,20 +12,16 @@ import slogo_team07.Updatable;
 
 public class Turtle implements Drawable, Updatable {
 
-	private double myXPos;
-	private double myYPos;
-	private double myPrevXPos;
-	private double myPrevYPos;
+	private double myXPos = 0.0;
+	private double myYPos = 0.0;
+	private double myPrevXPos = 0.0;
+	private double myPrevYPos = 0.0;
 	private boolean isDown = true;
 	private boolean isVisible = true;
 	private Double myDegrees = 90.0;
 	private ImageView myIV;
 
-	public Turtle(double x, double y){
-		myXPos = x;
-		myYPos = y;
-		myPrevXPos = x;
-		myPrevYPos = y;
+	public Turtle() {
 		Image image = new Image("/view/turtle.jpg");
 		myIV = new ImageView(image);
 		myIV.setX(myXPos);
