@@ -55,7 +55,7 @@ public class SlogoMain extends Application{
 		
 		//hardcoded, need to get from backend
 		ArrayList<Drawable> test = new ArrayList<Drawable>();
-		Turtle testTurt = new Turtle(20, 20);
+		Turtle testTurt = new Turtle();
 		test.add(testTurt);
 		
 		myCanvas = new Canvas(test);
