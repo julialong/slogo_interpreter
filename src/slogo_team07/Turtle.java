@@ -107,8 +107,11 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public Double home() {
 		Double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
+		myPrevXPos = myXPos;
+		myPrevYPos = myYPos;
 		myXPos = 0.0;
 		myYPos = 0.0;
+		translate(myPane);
 		return distance;
 	}
 
@@ -190,8 +193,12 @@ public class Turtle implements Drawable, Updatable {
 	
 	@Override
 	public Double clear() {
-		// NEEDS TO BE COMPLETED
-		return null;
+		Double dist = this.home();
+		myPane.getChildren().clear();
+		myIV.setFitHeight(20);
+		myIV.setFitWidth(20);
+		myPane.getChildren().add(myIV);
+		return dist;
 	}
 	
 	private Double degreesToRadians(Double degrees) {

@@ -30,7 +30,7 @@ public class Console extends Pane implements TextInput {
     private int cHeight = 100;
     private int hHeight = 30;
     private int bHeight = (cHeight + hHeight + offsetPad)/2;
-    private int bWidth = 50;
+    private int bWidth = 100;
     private int commandIndex = -1;   // will track what command is "last" for scrollability
 
     /**
