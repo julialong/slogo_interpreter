@@ -83,6 +83,7 @@ public class SlogoMain extends Application{
 		((Console)myConsole).language = language;
 		root.setBottom(((Console)myConsole));
 
+		myCanvas.myVBox = mySideBar;
 		((SideBar)mySideBar).myTextInput = myConsole;
 		((Console)myConsole).myVBox = mySideBar;
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import slogo_team07.Drawable;
 import commands.Result;
 
@@ -11,6 +12,7 @@ public class Canvas {
 
 	private Pane myPane;
 	private ArrayList<Drawable> myTurtles;
+	protected VBox myVBox;
 	
 	public Canvas(ArrayList<Drawable> turtles){
 		myTurtles = turtles;
@@ -49,6 +51,14 @@ public class Canvas {
 			alert.setContentText("The command " + result.toString() + " is not supported.");
 			alert.show();
 		}
+
+		// if (result.getRes1() == varRetVal)	{
+  //           ((SideBar)myVBox).addButton(result.toString());
+  //       }
+
+  //       if (result.getRes1() == udcRetVal)   {
+  //           ((SideBar)myVBox).addButton(result.toString());
+		// }
 
 		return updateCanvas();
 	}

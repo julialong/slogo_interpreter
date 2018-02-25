@@ -98,14 +98,14 @@ public class Console extends Pane implements TextInput {
         history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
         clear();
 
-        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
-            ((SideBar)myVBox).addButton(comm);
-        }
+        // if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
+        //     ((SideBar)myVBox).addButton(comm);
+        // }
 
-        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
-          || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
-            ((SideBar)myVBox).addButton(comm.split(" ")[1]);
-        }
+        // if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
+        //   || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
+        //     ((SideBar)myVBox).addButton(comm.split(" ")[1]);
+        // }
 
         return comm;
     }
