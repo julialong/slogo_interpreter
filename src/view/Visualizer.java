@@ -15,6 +15,7 @@ import slogo_team07.Drawable;
 import slogo_team07.Updatable;
 import slogo_team07.Engine;
 import slogo_team07.Turtle;
+import commands.Result;
 
 public class Visualizer extends Application{
 	
@@ -86,7 +87,7 @@ public class Visualizer extends Application{
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
 
-		myEngine = new Engine(myCanvas);
+		myEngine = new Engine(this);
 
 		myCanvas.myVBox = mySideBar;
 		((Console)myConsole).myCL = myEngine;
@@ -96,8 +97,12 @@ public class Visualizer extends Application{
 		return scene;
 	}
 
-	public void addDrawable(Updatable turtle)	{
-		// myMovers.add(turtle);
+	public void addDrawable(Drawable turtle)	{
+		myCanvas.addDrawable(turtle);
+	}
+
+	public void updateCanvas(Result result)	{
+		myCanvas.updateCanvas(result);
 	}
 	
 	public static void main(String[] args) {
