@@ -64,7 +64,7 @@ public class SlogoMain extends Application{
 		root = new BorderPane();
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
-		
+
 		//hardcoded, need to get from backend
 		ArrayList<Drawable> test = new ArrayList<Drawable>();
 		Turtle testTurt = new Turtle();
@@ -83,14 +83,15 @@ public class SlogoMain extends Application{
 		((Console)myConsole).language = language;
 		root.setBottom(((Console)myConsole));
 
-		myCanvas.myVBox = mySideBar;
-		((SideBar)mySideBar).myTextInput = myConsole;
-		((Console)myConsole).myVBox = mySideBar;
-		
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
 
 		myEngine = new Engine(myCanvas);
+
+		myCanvas.myVBox = mySideBar;
+		((Console)myConsole).myCL = myEngine;
+		((SideBar)mySideBar).myTextInput = myConsole;
+		((Console)myConsole).myVBox = mySideBar;
 		
 		return scene;
 	}

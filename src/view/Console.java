@@ -18,6 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import resources.languages.ResourcesLanguages;
+import slogo_team07.ChangeListener;
+import slogo_team07.Engine;
 
 public class Console extends Pane implements TextInput {
     private TextArea console;
@@ -26,6 +28,7 @@ public class Console extends Pane implements TextInput {
     private Button clearer;
     private List<String> pastCommands;
     protected VBox myVBox;
+    protected ChangeListener myCL;
     protected String language;
 
     private int offsetPad = 9;
@@ -97,6 +100,8 @@ public class Console extends Pane implements TextInput {
         pastCommands.add(comm);
         history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
         clear();
+
+        myCL.changeInput(comm);
 
         // if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
         //     ((SideBar)myVBox).addButton(comm);
