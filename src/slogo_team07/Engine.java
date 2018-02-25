@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.Console;
 import java.util.Map;
 
+import view.SlogoMain;
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;

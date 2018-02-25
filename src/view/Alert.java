@@ -9,9 +9,7 @@ package view;
 
 public class Alert {
 	public Alert()	{
-		// if (result.getRes1() == Double.MAX_VALUE)	{
-			
-		// }
+		
 	}
 
 	// throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");	Command 26

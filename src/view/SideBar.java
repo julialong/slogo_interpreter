@@ -109,7 +109,6 @@ public class SideBar extends VBox{
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				language = (String)(langMenu.getValue());
-				// ChangeListener .changeLanguage(language);
 				helpButton.setText(ResourcesLanguages.getString(language, "Help"));
 			}
 		});
@@ -134,5 +133,5 @@ public class SideBar extends VBox{
 		});
 
 		myVBox.getChildren().add(udc);
-	}	
+	}
 }

@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import resources.keys.Resources;
 import slogo_team07.Drawable;
 import slogo_team07.Turtle;
+import commands.Result;
 
 public class SlogoMain extends Application{
 	
@@ -22,8 +23,8 @@ public class SlogoMain extends Application{
 	
 	private Canvas myCanvas;
 	private Pane myCanvasObjects;
-	private TextInput myConsole;
-	private VBox mySideBar;
+	private SideBar mySideBar;
+	private Console myConsole;
 	private Toolbar myToolbar;
 	private String language = "English";
 	
@@ -45,7 +46,11 @@ public class SlogoMain extends Application{
 	}
 	
 	private void step(double cycles){
-		
+		if (!mySideBar.language.equals(language))	{
+			language = mySideBar.language;
+			myConsole.language = language;
+			// ChangeListener .changeLanguage(language);
+		}
 	}
 	
 	private Scene initScreen(){
@@ -68,7 +73,6 @@ public class SlogoMain extends Application{
 		root.setRight(((SideBar)mySideBar).initSideBar());
 
 		myConsole = new Console();
-		((Console)myConsole).language = language;
 		root.setBottom(((Console)myConsole));
 
 		((SideBar)mySideBar).myConsole = myConsole;
@@ -78,6 +82,12 @@ public class SlogoMain extends Application{
 		root.setTop(myToolbar.initToolbar());
 		
 		return scene;
+	}
+
+	public void updateView(Result result)	{
+		if (result.getRes1() == Double.MAX_VALUE)	{
+			new Alert();
+		}
 	}
 	
 	public static void main(String[] args) {
