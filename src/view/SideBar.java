@@ -36,7 +36,7 @@ public class SideBar extends VBox{
 			"Octopus", "Bird", "Butterfly");
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
-	protected TextInput myConsole;
+	protected TextInput myTextInput;
 	protected String language;
 	
 	/**
@@ -128,7 +128,7 @@ public class SideBar extends VBox{
 		udc.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				myConsole.loadInput("\n" + udc.getText());
+				myTextInput.loadInput("\n" + udc.getText());
 			}
 		});
 

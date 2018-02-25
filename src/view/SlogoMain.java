@@ -5,6 +5,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -81,9 +83,10 @@ public class SlogoMain extends Application{
 		root.setRight(((SideBar)mySideBar).initSideBar());
 
 		myConsole = new Console();
+		((Console)myConsole).language = language;
 		root.setBottom(((Console)myConsole));
 
-		((SideBar)mySideBar).myConsole = myConsole;
+		((SideBar)mySideBar).myTextInput = myConsole;
 		((Console)myConsole).myVBox = mySideBar;
 		
 		myToolbar = new Toolbar();
@@ -96,8 +99,12 @@ public class SlogoMain extends Application{
 
 	public void updateView(Result result)	{
 		if (result.getRes1() == Double.MAX_VALUE)	{
-			new Alert();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Improper command");
+			alert.setContentText("The command " + result.toString() + " is not supported.");
+			alert.show();
 		}
+
 		// move shit
 	}
 
