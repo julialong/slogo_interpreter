@@ -5,8 +5,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -17,7 +15,6 @@ import slogo_team07.Drawable;
 import slogo_team07.Updatable;
 import slogo_team07.Engine;
 import slogo_team07.Turtle;
-import commands.Result;
 
 public class SlogoMain extends Application{
 	
@@ -92,20 +89,9 @@ public class SlogoMain extends Application{
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
 
-		myEngine = new Engine(this);
+		myEngine = new Engine(myCanvas);
 		
 		return scene;
-	}
-
-	public void updateView(Result result)	{
-		if (result.getRes1() == Double.MAX_VALUE)	{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Improper command");
-			alert.setContentText("The command " + result.toString() + " is not supported.");
-			alert.show();
-		}
-
-		// move shit
 	}
 
 	public void addDrawable(Updatable turtle)	{

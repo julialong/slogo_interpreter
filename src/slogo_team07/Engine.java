@@ -1,11 +1,9 @@
 package slogo_team07;
 
-import java.beans.PropertyChangeEvent;
-import java.io.Console;
 import java.util.Map;
 import java.util.HashMap;
 
-import view.SlogoMain;
+import view.Canvas;
 import model.Parser;
 import commands.CommandFactory;
 import commands.Commandable;
@@ -13,12 +11,12 @@ import commands.Result;
 
 public class Engine implements ChangeListener {
 
-	private SlogoMain myVis;
+	private Canvas myVis;
 	private Map<String, Updatable> myUpdatables;
 	private Parser myParser;
 	private CommandFactory myCommandFactory;
 
-	public Engine(SlogoMain vis) {
+	public Engine(Canvas vis) {
 		myVis = vis;
 		myUpdatables = new HashMap<>();
 		myCommandFactory = new CommandFactory(myUpdatables);
@@ -38,7 +36,7 @@ public class Engine implements ChangeListener {
 		Iterable<Commandable> iterable = myParser.parse(input);
 		for (Commandable c : iterable) {
 			Result result = c.execute();
-			myVis.updateView(result);
+			myVis.updateCanvas(result);
 		}
 	}
 

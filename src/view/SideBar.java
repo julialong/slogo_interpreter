@@ -36,6 +36,7 @@ public class SideBar extends VBox{
 			"Octopus", "Bird", "Butterfly");
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
+	List<Button> uDefCommands = new ArrayList<>();
 	protected TextInput myTextInput;
 	protected String language;
 	
@@ -61,7 +62,6 @@ public class SideBar extends VBox{
 		ComboBox iconMenu = new ComboBox(iconList); //observable list
 		ComboBox penMenu = new ComboBox(); //observable list
 		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
-		List<Button> uDefCommands = new ArrayList<>();
 
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -113,17 +113,18 @@ public class SideBar extends VBox{
 			}
 		});
 		myVBox.getChildren().add(langMenu);
-
-		for (Button udc:uDefCommands)	{
-			myVBox.getChildren().add(udc);
-		}
-		
+				
 		return myVBox;
 	}
 
 	protected void addButton(String text)	{
+		if (buttonExists(text))	{
+			return;
+		}
+
 		Button udc = new Button();
 		udc.setText(text);
+		uDefCommands.add(udc);
 
 		udc.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -133,5 +134,15 @@ public class SideBar extends VBox{
 		});
 
 		myVBox.getChildren().add(udc);
+	}
+
+	private boolean buttonExists(String text)	{
+		for (Button butt:uDefCommands)	{
+			if (butt.getText().equals(text))	{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
