@@ -9,6 +9,7 @@ import java.util.Iterator;
 public class CommandNode implements Iterable{
 
     private ArrayList<CommandNode> children;
+    private int currentChild;
     private CommandNode parent;
     private Commandable command;
     private double value;
@@ -20,8 +21,9 @@ public class CommandNode implements Iterable{
      * Creates new CommandNode if the argument passed in implements the Commandable interface
      * @param newCommand the Command object to be made into a node
      */
-    public CommandNode(Commandable newCommand) {
+    CommandNode(Commandable newCommand) {
         children = new ArrayList<>();
+        currentChild = 0;
         command = newCommand;
         commandType = CommandType.COMMAND;
         ready = false;
@@ -31,7 +33,7 @@ public class CommandNode implements Iterable{
      * Creates new CommandNode if the argument passed in is a number
      * @param argument the number to be made into a node
      */
-    public CommandNode(double argument) {
+    CommandNode(double argument) {
         commandType = CommandType.ARGUMENT;
         value = argument;
     }
@@ -50,6 +52,11 @@ public class CommandNode implements Iterable{
      */
     public ArrayList<CommandNode> getChildren() {
         return this.children;
+    }
+
+    private CommandNode getNextChild() {
+        this.currentChild++;
+        return this.getChildren().get(currentChild - 1);
     }
 
     /**
@@ -86,6 +93,9 @@ public class CommandNode implements Iterable{
     @Override
     public Iterator iterator() {
         CommandNode commandTree = this;
+        CommandNode current = commandTree;
+        traverseToBottom(current);
+
         return new Iterator<CommandNode>() {
 
             public boolean hasNext() {
@@ -93,8 +103,15 @@ public class CommandNode implements Iterable{
             }
 
             public CommandNode next() {
-                return new CommandNode(0);
+
+                return commandTree;
             }
         };
+    }
+
+    private void traverseToBottom(CommandNode current) {
+        while (current.getChildren().size() > 0) {
+            current = current.getNextChild();
+        }
     }
 }
