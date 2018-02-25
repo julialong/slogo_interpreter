@@ -1,31 +1,40 @@
 package commands;
 
-import slogo_team07.Argument;
+import java.lang.reflect.Constructor;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-public class CommandFactory<T1, T2> {
-	
-	public Commandable<?, ?, ?> createCommand(String command) {
-		return createCommand(command, null);
+import slogo_team07.Updatable;
+
+public class CommandFactory {
+
+	private static final String COMMANDS = "resources.commands.Command";
+
+	ResourceBundle myResources;
+	Map<String, Updatable> myUpdatables;
+
+	public CommandFactory(Map<String, Updatable> updatables) {
+		myUpdatables = updatables;
+		myResources = ResourceBundle.getBundle(COMMANDS);
+	}
+
+	public Commandable createCommand(String command) {
+		return createCommmand(command, "0");
 	}
 	
-	public Commandable<?, ?, ?> createCommand(String command, T1 arg1) {
-		return createCommand(command, arg1, null);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Commandable<?, ?, ?> createCommand(String command, T1 arg1, T2 arg2) {
-		Argument<T1, T2> constructorArg = new Argument<>(arg1, arg2);
-		if (command.equals("fd") || command.equals("forward")) {
-			return new ForwardCommand((Argument<Double, Void>) constructorArg);
-		} else if (command.equals("setxy") || command.equals("goto")) {
-			return new SetXYCommand((Argument<Double, Double>) constructorArg);
-		} else if (command.equals("home")) {
-			return new HomeCommand((Argument<Void, Void>) constructorArg);
-		} else if (command.equals("less") || command.equals("lessp")) {
-			return new LessCommand((Argument<Double, Double>) constructorArg);
-		} else {
-			return new NullCommand((Argument<Void, Void>) constructorArg);
+	public Commandable createCommmand(String command, String id) {
+		try {
+			Class<?> clazz = Class.forName(myResources.getString(command) + "Command");
+			if (clazz.getSuperclass() == UpdatableCommand.class) {
+				Constructor<?> ctor = clazz.getConstructor(Updatable.class);
+				return (Commandable) ctor.newInstance(myUpdatables.get(id));
+			} else {
+				Constructor<?> ctor = clazz.getConstructor();
+				return (Commandable) ctor.newInstance();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ExceptionCommand();
 		}
 	}
-	
 }

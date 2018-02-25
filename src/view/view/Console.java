@@ -14,22 +14,22 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class Console extends Group implements TextInput {
+public class Console extends Pane implements TextInput {
     private TextArea console;
     private TextArea history;
     private Button runner;
     private Button clearer;
-    private Button languager;
     private List<String> pastCommands;
 
     private int offsetPad = 9;
     private int width = 500;
     private int cHeight = 100;
     private int hHeight = 30;
-    private int bHeight = (cHeight + hHeight + offsetPad)/3;
+    private int bHeight = (cHeight + hHeight + offsetPad)/2;
     private int bWidth = 50;
     private int commandIndex = -1;   // will track what command is "last" for scrollability
 
@@ -37,14 +37,19 @@ public class Console extends Group implements TextInput {
      * Constructor for Console
      */
     public Console()    {
+        init();
+    }
+
+    public Pane init() {
         console = new TextArea();
         history = new TextArea();
         runner = setRunner();
         clearer = setClearer();
-        languager = setLang();
         pastCommands = new ArrayList<>();
 
         addElements();
+
+        return this;
     }
 
     private void addElements()  {
@@ -73,7 +78,6 @@ public class Console extends Group implements TextInput {
     private void addButtons(List<Node> elements)   {
         elements.add(runner);
         elements.add(clearer);
-        elements.add(languager);
     }
 
     /**
@@ -137,6 +141,7 @@ public class Console extends Group implements TextInput {
         aClearer.setPrefHeight(bHeight);
         aClearer.setMaxHeight(aClearer.USE_PREF_SIZE);
         aClearer.setTextAlignment(TextAlignment.CENTER);
+        aClearer.setFont(new Font(11));
 
         aClearer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -146,27 +151,5 @@ public class Console extends Group implements TextInput {
         });
 
         return aClearer;
-    }
-
-    private Button setLang()    {
-        Button aLanguager = new Button("Change\nLanguage");
-
-        aLanguager.setLayoutX(500 + offsetPad);
-        aLanguager.setLayoutY(bHeight * 2);
-        aLanguager.setPrefWidth(bWidth);
-        aLanguager.setMaxWidth(aLanguager.USE_PREF_SIZE);
-        aLanguager.setPrefHeight(bHeight);
-        aLanguager.setMaxHeight(aLanguager.USE_PREF_SIZE);
-        aLanguager.setFont(new Font(8));
-        aLanguager.setTextAlignment(TextAlignment.CENTER);
-
-        aLanguager.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                // change language
-            }
-        });
-
-        return aLanguager;
     }
 }

@@ -1,20 +1,17 @@
 package view;
 
 import java.util.ArrayList;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
 import view.Console;
+import slogo_team07.Drawable;
 import slogo_team07.Turtle;
 
 public class SlogoMain extends Application{
@@ -24,9 +21,10 @@ public class SlogoMain extends Application{
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	
 	private Canvas myCanvas;
-	private GridPane myCanvasObjects;
+	private Pane myCanvasObjects;
 	private Console myConsole;
 	private SideBar mySideBar;
+	private Toolbar myToolbar;
 	
 	public void start(Stage primaryStage) throws Exception {
 		Stage myStage = primaryStage;
@@ -52,21 +50,26 @@ public class SlogoMain extends Application{
 	private Scene initScreen(){
 		BorderPane root = new BorderPane();
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
+		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		
-		ArrayList<Turtle> test = new ArrayList<Turtle>();
-		//may not need canvas, can just set center as group
-		myCanvas = new Canvas();
-		myCanvasObjects = myCanvas.initCanvas(test); //need turtles to display
+		//hardcoded, need to get from backend
+		ArrayList<Drawable> test = new ArrayList<Drawable>();
+		Turtle testTurt = new Turtle(20, 20);
+		test.add(testTurt);
+		
+		myCanvas = new Canvas(test);
+		myCanvasObjects = myCanvas.initCanvas(); 
+		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
 		myConsole = new Console();
 		root.setBottom(myConsole);
 		
-		mySideBar = new SideBar();
+		mySideBar = new SideBar(myCanvasObjects, test);
 		root.setRight(mySideBar.initSideBar());
 		
-		Text title = new Text(Resources.getString("Title"));
-		root.setTop(title);
+		myToolbar = new Toolbar();
+		root.setTop(myToolbar.initToolbar());
 		
 		return scene;
 	}
