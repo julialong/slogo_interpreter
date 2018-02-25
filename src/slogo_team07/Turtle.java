@@ -26,11 +26,7 @@ public class Turtle implements Drawable, Updatable {
 	private ImageView myIV;
 	private Pane myPane;
 
-	public Turtle(double x, double y){
-		myXPos = x;
-		myYPos = y;
-		myPrevXPos = x;
-		myPrevYPos = y;
+	public Turtle() {
 		Image image = new Image("/view/turtle.jpg");
 		myIV = new ImageView(image);
 		myIV.setX(myViewX);

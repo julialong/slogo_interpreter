@@ -1,6 +1,5 @@
 package slogo_team07;
 
-import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import view.Canvas;

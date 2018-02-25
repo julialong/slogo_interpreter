@@ -10,9 +10,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
-import view.Console;
+import slogo_team07.ChangeListener;
 import slogo_team07.Drawable;
+import slogo_team07.Updatable;
+import slogo_team07.Engine;
 import slogo_team07.Turtle;
+import commands.Result;
 
 public class SlogoMain extends Application{
 	
@@ -22,11 +25,13 @@ public class SlogoMain extends Application{
 	
 	private Canvas myCanvas;
 	private Pane myCanvasObjects;
-	private Console myConsole;
 	private SideBar mySideBar;
+	private Console myConsole;
 	private Toolbar myToolbar;
 	private BorderPane root;
 	private ArrayList<Drawable> myTurtles = new ArrayList<Drawable>();
+	private ChangeListener myEngine;
+	private String language = "English";
 	
 	public void start(Stage primaryStage) throws Exception {
 		Stage myStage = primaryStage;
@@ -48,6 +53,12 @@ public class SlogoMain extends Application{
 	private void step(double cycles){
 		myCanvasObjects = myCanvas.updateCanvas();
 		root.setCenter(myCanvasObjects);
+
+		if (!mySideBar.language.equals(language))	{
+			language = mySideBar.language;
+			myConsole.language = language;
+			myEngine.changeLanguage(language);
+		}
 	}
 	
 	private Scene initScreen(){
@@ -56,24 +67,42 @@ public class SlogoMain extends Application{
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		
 		//hardcoded, need to get from backend
-		Turtle testTurt = new Turtle(0, 0);
-		myTurtles.add(testTurt);
+		ArrayList<Drawable> test = new ArrayList<Drawable>();
+		Turtle testTurt = new Turtle();
+		test.add(testTurt);
 		
 		myCanvas = new Canvas(myTurtles);
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
+		mySideBar = new SideBar(myCanvasObjects, test);
+		((SideBar)mySideBar).language = language;
+		root.setRight(((SideBar)mySideBar).initSideBar());
+
 		myConsole = new Console();
-		root.setBottom(myConsole);
-		
-		mySideBar = new SideBar(myCanvasObjects, myTurtles);
-		root.setRight(mySideBar.initSideBar());
+		root.setBottom(((Console)myConsole));
+
+		((SideBar)mySideBar).myConsole = myConsole;
+		((Console)myConsole).myVBox = mySideBar;
 		
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
+
+		myEngine = new Engine(this);
 		
 		return scene;
+	}
+
+	public void updateView(Result result)	{
+		if (result.getRes1() == Double.MAX_VALUE)	{
+			new Alert();
+		}
+		// move shit
+	}
+
+	public void addDrawable(Updatable turtle)	{
+		// myMovers.add(turtle);
 	}
 	
 	public static void main(String[] args) {

@@ -7,6 +7,7 @@
 
 package view;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
@@ -28,21 +29,29 @@ import resources.languages.ResourcesLanguages;
 public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
-	private ArrayList<Drawable> myTurtles;
+	private List<Drawable> myTurtles;
 	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
-	GridPane myGridPane;
-	private String language = "English";
+	protected TextInput myConsole;
+	protected String language;
 	
-	public SideBar(Pane canvas, ArrayList<Drawable> turtles){
+	/**
+	 * Constructor for sidebar of program that contains buttons/options
+	 * @param canvas	canvas of program, where turtles are displayed
+	 * @param turtles	list of all the movers in the canvas
+	 */
+	public SideBar(Pane canvas, List<Drawable> turtles){
 		myCanvasObjects = canvas;
 		myTurtles = turtles;
 	}
 	
+	/**
+	 * Creates the sidebar as a VBox and adds its children (buttons) inside
+	 */
 	public VBox initSideBar(){
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
@@ -52,6 +61,7 @@ public class SideBar extends VBox{
 		ComboBox iconMenu = new ComboBox(iconList); //observable list
 		ComboBox penMenu = new ComboBox(); //observable list
 		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
+		List<Button> uDefCommands = new ArrayList<>();
 
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -103,8 +113,25 @@ public class SideBar extends VBox{
 			}
 		});
 		myVBox.getChildren().add(langMenu);
+
+		for (Button udc:uDefCommands)	{
+			myVBox.getChildren().add(udc);
+		}
 		
 		return myVBox;
 	}
-	
+
+	protected void addButton(String text)	{
+		Button udc = new Button();
+		udc.setText(text);
+
+		udc.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				myConsole.loadInput("\n" + udc.getText());
+			}
+		});
+
+		myVBox.getChildren().add(udc);
+	}
 }
