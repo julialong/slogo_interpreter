@@ -6,12 +6,14 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
+import slogo_team07.ChangeListener;
 import slogo_team07.Drawable;
+import slogo_team07.Updatable;
+import slogo_team07.Engine;
 import slogo_team07.Turtle;
 import commands.Result;
 
@@ -26,6 +28,7 @@ public class SlogoMain extends Application{
 	private SideBar mySideBar;
 	private Console myConsole;
 	private Toolbar myToolbar;
+	private ChangeListener myEngine;
 	private String language = "English";
 	
 	public void start(Stage primaryStage) throws Exception {
@@ -49,7 +52,7 @@ public class SlogoMain extends Application{
 		if (!mySideBar.language.equals(language))	{
 			language = mySideBar.language;
 			myConsole.language = language;
-			// ChangeListener .changeLanguage(language);
+			myEngine.changeLanguage(language);
 		}
 	}
 	
@@ -80,6 +83,8 @@ public class SlogoMain extends Application{
 		
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
+
+		myEngine = new Engine(this);
 		
 		return scene;
 	}
@@ -88,6 +93,11 @@ public class SlogoMain extends Application{
 		if (result.getRes1() == Double.MAX_VALUE)	{
 			new Alert();
 		}
+		// move shit
+	}
+
+	public void addDrawable(Updatable turtle)	{
+		// myMovers.add(turtle);
 	}
 	
 	public static void main(String[] args) {

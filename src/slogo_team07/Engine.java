@@ -3,8 +3,10 @@ package slogo_team07;
 import java.beans.PropertyChangeEvent;
 import java.io.Console;
 import java.util.Map;
+import java.util.HashMap;
 
 import view.SlogoMain;
+import model.Parser;
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
@@ -12,13 +14,14 @@ import commands.Result;
 public class Engine implements ChangeListener {
 
 	private SlogoMain myVis;
-	private Map<Integer, Updatable> myUpdatables;
+	private Map<String, Updatable> myUpdatables;
 	private Parser myParser;
 	private CommandFactory myCommandFactory;
 
-	public Engine() {
-		myVis = new SlogoMain(this);
+	public Engine(SlogoMain vis) {
+		myVis = vis;
 		addTurtle();
+		myUpdatables = new HashMap<>();
 		myCommandFactory = new CommandFactory(myUpdatables);
 		myParser = new Parser(myCommandFactory);
 
@@ -27,7 +30,7 @@ public class Engine implements ChangeListener {
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
 		myVis.addDrawable(turtle);
-		myUpdatables.put(0, turtle);
+		myUpdatables.put(Integer.toString(0), turtle);
 	}
 
 	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)

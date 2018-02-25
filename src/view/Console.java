@@ -154,7 +154,7 @@ public class Console extends Pane implements TextInput {
         Button aClearer = new Button("Clear");
 
         aClearer.setLayoutX(width + offsetPad);
-        aClearer.setLayoutY(bHeight);
+        aClearer.setLayoutY(bHeight + offsetPad);
         aClearer.setPrefWidth(bWidth);
         aClearer.setMaxWidth(aClearer.USE_PREF_SIZE);
         aClearer.setPrefHeight(bHeight);

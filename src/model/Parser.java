@@ -11,6 +11,10 @@ public class Parser {
 
     private Map<String, Double> storedVariable;
 
+    public Parser(CommandFactory cf) {
+        commandCreator = cf;
+    }
+
     /**
      * Parses a string and builds a tree of CommandNodes
      * @param s is the input string
@@ -18,8 +22,14 @@ public class Parser {
      */
     public CommandNode parse(String s) {
         String[] splitString = s.split(" ");
-        commandCreator = new CommandFactory();
-        // checkValid(splitString);
+
+        try {
+             // checkValid(splitString);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         head = createNode(splitString[0]);
         createTree(splitString);
         return head;
@@ -99,17 +109,4 @@ public class Parser {
             }
         }
     }
-
-
-    public static void main(String[] args){
-        Parser p = new Parser();
-        try {
-            p.parse("fd 50");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }
