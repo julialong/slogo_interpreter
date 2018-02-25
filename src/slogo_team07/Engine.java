@@ -10,13 +10,13 @@ import commands.Result;
 
 public class Engine implements ChangeListener {
 	
-	private Console myConsole;
+	private SlogoMain myVis;
 	private Map<Integer, Updatable> myUpdatables;
 	private Parser myParser;
 	private CommandFactory myCommandFactory;
 	
 	public Engine() {
-		myConsole = new Console(this);
+		myVis = new SlogoMain(this);
 		addTurtle();
 		myCommandFactory = new CommandFactory(myUpdatables);
 		myParser = new Parser(myCommandFactory);
@@ -25,14 +25,14 @@ public class Engine implements ChangeListener {
 
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
-		myConsole.addDrawable(turtle);
+		myVis.addDrawable(turtle);
 		myUpdatables.put(0, turtle);
 	}
 
 	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)	
 	@Override
 	public void changeInput(PropertyChangeEvent event) {
-		Iterable iterable = myParser.parse(event.getNewValue());
+		Iterable<Commandable> iterable = myParser.parse(event.getNewValue());
 		for (Commandable c : iterable) {
 			Result result = c.execute();
 			c.updateView(result);

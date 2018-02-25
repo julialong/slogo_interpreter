@@ -1,7 +1,6 @@
 package commands;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -51,7 +50,7 @@ public class CommandFactory {
 		for (String key : rb.keySet()) {
 			String[] input = rb.getString(key).split("\\|");
 			for (String s : input) {
-				myLanguages.put(s, key);
+				myLanguages.put(s.replace("\\", ""), key);
 			}
 		}
 		System.out.println(myLanguages);
