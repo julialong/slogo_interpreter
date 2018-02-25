@@ -36,9 +36,8 @@ public class SideBar extends VBox{
 			"Octopus", "Bird", "Butterfly");
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
-	GridPane myGridPane;
 	protected TextInput myConsole;
-	private String language = "English";
+	protected String language;
 	
 	/**
 	 * Constructor for sidebar of program that contains buttons/options
@@ -110,6 +109,7 @@ public class SideBar extends VBox{
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				language = (String)(langMenu.getValue());
+				// ChangeListener .changeLanguage(language);
 				helpButton.setText(ResourcesLanguages.getString(language, "Help"));
 			}
 		});

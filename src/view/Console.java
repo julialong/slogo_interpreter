@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import resources.languages.ResourcesLanguages;
 
 public class Console extends Pane implements TextInput {
     private TextArea console;
@@ -25,6 +26,7 @@ public class Console extends Pane implements TextInput {
     private Button clearer;
     private List<String> pastCommands;
     protected VBox myVBox;
+    protected String language;
 
     private int offsetPad = 9;
     private int width = 700;
@@ -104,7 +106,7 @@ public class Console extends Pane implements TextInput {
         history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
         clear();
 
-        if (comm.matches("^(?i)to (?s).*?"))   {
+        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
             ((SideBar)myVBox).addButton(comm);
         }
 

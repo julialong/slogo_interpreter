@@ -25,6 +25,7 @@ public class SlogoMain extends Application{
 	private TextInput myConsole;
 	private VBox mySideBar;
 	private Toolbar myToolbar;
+	private String language = "English";
 	
 	public void start(Stage primaryStage) throws Exception {
 		Stage myStage = primaryStage;
@@ -63,9 +64,11 @@ public class SlogoMain extends Application{
 		root.setCenter(myCanvasObjects);
 		
 		mySideBar = new SideBar(myCanvasObjects, test);
+		((SideBar)mySideBar).language = language;
 		root.setRight(((SideBar)mySideBar).initSideBar());
 
 		myConsole = new Console();
+		((Console)myConsole).language = language;
 		root.setBottom(((Console)myConsole));
 
 		((SideBar)mySideBar).myConsole = myConsole;
