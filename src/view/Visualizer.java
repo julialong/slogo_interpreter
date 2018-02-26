@@ -101,7 +101,8 @@ public class Visualizer extends Application{
 		myCanvas.addDrawable(turtle);
 	}
 
-	public void updateCanvas(Result result)	{
+	public void runCommand(Result result)	{
+		((Console)myConsole).printResult(Double.toString(result.getRes1()));
 		myCanvas.updateCanvas(result);
 	}
 	
