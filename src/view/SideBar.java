@@ -189,7 +189,7 @@ public class SideBar extends VBox{
 
 	private VarVal varExists(String var)	{
 		for (VarVal aVar:setVariables)	{
-			if (aVar.key.getName().equals(var))	{
+			if (aVar.key.getValue().equals(var))	{
 				return aVar;
 			}
 		}
