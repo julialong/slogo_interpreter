@@ -60,6 +60,11 @@ public class CommandableNode extends SyntaxNode {
     }
 
     @Override
+    public void hasBeenTraversed() {
+        this.traversed = true;
+    }
+
+    @Override
     public Commandable getCommand() {
         return this.command;
     }

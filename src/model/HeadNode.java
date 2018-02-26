@@ -19,7 +19,7 @@ public class HeadNode extends SyntaxNode{
     HeadNode() {
         children = new ArrayList<>();
         currentChild = 0;
-        commandType = CommandType.COMMAND;
+        commandType = CommandType.HEAD;
         ready = false;
         traversed = false;
         parent = null;
@@ -27,12 +27,16 @@ public class HeadNode extends SyntaxNode{
 
     @Override
     public Boolean isCommand() {
-        return true;
+        return false;
     }
 
     @Override
+    public void injectArguments() {}
+
+
+    @Override
     public boolean isReady() {
-        return command.isReady();
+        return false;
     }
 
     @Override
@@ -42,17 +46,22 @@ public class HeadNode extends SyntaxNode{
 
     @Override
     CommandType getCommandType() {
-        return CommandType.COMMAND;
+        return CommandType.HEAD;
     }
 
     @Override
     public boolean wasTraversed() {
-        return this.traversed;
+        return false;
+    }
+
+    @Override
+    public void hasBeenTraversed() {
+
     }
 
     @Override
     public Commandable getCommand() {
-        return this.command;
+        return null;
     }
 
     @Override

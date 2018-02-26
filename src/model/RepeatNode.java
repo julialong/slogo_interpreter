@@ -53,6 +53,11 @@ public class RepeatNode extends ControlNode {
     }
 
     @Override
+    public void hasBeenTraversed() {
+
+    }
+
+    @Override
     public ArrayList<SyntaxNode> getChildren() {
         return this.children;
     }
