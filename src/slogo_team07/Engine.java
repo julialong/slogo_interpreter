@@ -1,13 +1,13 @@
 package slogo_team07;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
-import view.Visualizer;
-import model.Parser;
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
+import model.Parser;
+import view.Visualizer;
 
 public class Engine implements ChangeListener {
 
