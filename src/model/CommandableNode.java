@@ -21,6 +21,7 @@ public class CommandableNode extends SyntaxNode {
      * @param newCommand
      */
     CommandableNode(Commandable newCommand) {
+        super();
         children = new ArrayList<>();
         currentChild = 0;
         command = newCommand;
@@ -46,5 +47,25 @@ public class CommandableNode extends SyntaxNode {
     @Override
     public double getValue() {
         return command.getAns();
+    }
+
+    @Override
+    CommandType getCommandType() {
+        return CommandType.COMMAND;
+    }
+
+    @Override
+    public boolean wasTraversed() {
+        return this.traversed;
+    }
+
+    @Override
+    public Commandable getCommand() {
+        return this.command;
+    }
+
+    @Override
+    public ArrayList<SyntaxNode> getChildren() {
+        return this.children;
     }
 }

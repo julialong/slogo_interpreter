@@ -17,11 +17,35 @@ public class ArgumentNode extends SyntaxNode {
     private CommandType commandType;
 
     ArgumentNode(Double argument) {
-
+        super();
         children = new ArrayList<>();
         value = argument;
         ready = true;
         traversed = true;
-        commandType = CommandType.ARGUMENT;
+    }
+
+    @Override
+    CommandType getCommandType() {
+        return CommandType.ARGUMENT;
+    }
+
+    @Override
+    public boolean wasTraversed() {
+        return this.traversed;
+    }
+
+    @Override
+    public Commandable getCommand() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<SyntaxNode> getChildren() {
+        return this.children;
+    }
+
+    @Override
+    public double getValue() {
+        return this.value;
     }
 }

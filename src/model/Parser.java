@@ -32,10 +32,6 @@ public class Parser {
         return parseCommands(splitString);
     }
 
-//    private SyntaxNode parseControl(String[] s) {
-//
-//    }
-
     private SyntaxNode parseCommands(String[] s) {
         head = new HeadNode();
         createTree(s);
@@ -112,6 +108,8 @@ public class Parser {
     private void createTree(String[] s) {
         SyntaxNode current = head;
         for (int i = 0; i < s.length; i++) {
+            //System.out.println(s[i]);
+            //System.out.println(current.toString());
             SyntaxNode temp = createNode(s[i]);
             current.getChildren().add(temp);
             temp.setParent(current);

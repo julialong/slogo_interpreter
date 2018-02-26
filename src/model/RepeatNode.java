@@ -21,9 +21,10 @@ public class RepeatNode extends ControlNode {
     private CommandType commandType;
 
     RepeatNode(Commandable newCommand) {
-        super();
+        children = new ArrayList<>();
         command = newCommand;
         completed = 0;
+        traversed = false;
     }
 
     public void resetChildren() {
@@ -36,4 +37,28 @@ public class RepeatNode extends ControlNode {
         return (completed == this.getChildren().get(0).getValue());
     }
 
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.CONTROL;
+    }
+
+    @Override
+    public boolean wasTraversed() {
+        return this.traversed;
+    }
+
+    @Override
+    public Commandable getCommand() {
+        return this.command;
+    }
+
+    @Override
+    public ArrayList<SyntaxNode> getChildren() {
+        return this.children;
+    }
+
+    @Override
+    public double getValue() {
+        return this.value;
+    }
 }

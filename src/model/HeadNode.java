@@ -25,4 +25,40 @@ public class HeadNode extends SyntaxNode{
         parent = null;
     }
 
+    @Override
+    public Boolean isCommand() {
+        return true;
+    }
+
+    @Override
+    public boolean isReady() {
+        return command.isReady();
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
+    }
+
+    @Override
+    CommandType getCommandType() {
+        return CommandType.COMMAND;
+    }
+
+    @Override
+    public boolean wasTraversed() {
+        return this.traversed;
+    }
+
+    @Override
+    public Commandable getCommand() {
+        return this.command;
+    }
+
+    @Override
+    public ArrayList<SyntaxNode> getChildren() {
+        return this.children;
+    }
+
+
 }

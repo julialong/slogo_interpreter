@@ -11,22 +11,13 @@ import java.util.Iterator;
  */
 public abstract class SyntaxNode implements Iterable{
 
-    private ArrayList<SyntaxNode> children;
+
     private SyntaxNode parent;
-    private Commandable command;
-    private double value;
-    private Boolean ready;
     private Boolean traversed;
-    private int totalArguments;
-    private CommandType commandType;
 
 
     SyntaxNode() {
-        children = new ArrayList<>();
-        value = 0;
-        traversed = false;
     }
-
 
     /**
      * Checks to see if the current node is a command
@@ -38,9 +29,9 @@ public abstract class SyntaxNode implements Iterable{
 
     private void injectArguments() {
         if (this.isCommand()) {
-            for (SyntaxNode child : this.children) {
+            for (SyntaxNode child : this.getChildren()) {
                 if(child.isReady()) {
-                    this.command.inject(child.getValue());
+                    this.getCommand().inject(child.getValue());
                 }
             }
         }
@@ -50,13 +41,11 @@ public abstract class SyntaxNode implements Iterable{
      * gets the children for the given node
      * @return arraylist of child nodes
      */
-    public ArrayList<SyntaxNode> getChildren() {
-        return this.children;
-    }
+    abstract ArrayList<SyntaxNode> getChildren();
 
     private SyntaxNode getNextChild() {
-        for (SyntaxNode child : this.children) {
-            if (!child.traversed) {
+        for (SyntaxNode child : this.getChildren()) {
+            if (!child.wasTraversed()) {
                 return child;
             }
         }
@@ -83,12 +72,21 @@ public abstract class SyntaxNode implements Iterable{
         return this.parent;
     }
 
-    public double getValue() {
-        return this.value;
-    }
+    abstract double getValue();
 
     private boolean isHead() {
         return false;
+    }
+
+    abstract boolean wasTraversed();
+
+    abstract Commandable getCommand();
+
+    abstract CommandType getCommandType();
+
+    @Override
+    public String toString() {
+        return "type:" + this.getCommandType().toString() + "| children: " + this.getChildren().size();
     }
 
     /**
@@ -124,6 +122,7 @@ public abstract class SyntaxNode implements Iterable{
              * @return next SyntaxNode object in the tree
              */
             public SyntaxNode next() {
+                System.out.println(current.toString());
                 while (!current.isCommand() || current.traversed) {
                     current = current.getParent();
                 }
@@ -143,8 +142,12 @@ public abstract class SyntaxNode implements Iterable{
      * @param current head of the current tree to be traversed
      */
     private void traverseToBottom(SyntaxNode current) {
+        int i = 0;
         while (current.getChildren().size() > 0) {
+            System.out.println(i + " " + current.toString());
             current = current.getNextChild();
+            i++;
         }
+        System.out.println(i + " " + current.toString());
     }
 }
