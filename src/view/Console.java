@@ -80,15 +80,7 @@ public class Console extends AnchorPane implements TextInput {
         clear();
 
         myCL.changeInput(comm);
-
-        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
-            ((SideBar)myVBox).addButton(comm);
-        }
-
-        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
-          || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
-            ((SideBar)myVBox).addButton(comm.split(" ")[1]);
-        }
+        checkSpecial(comm);
 
         return comm;
     }
@@ -136,6 +128,25 @@ public class Console extends AnchorPane implements TextInput {
         console.setPrefHeight(cHeight);
         console.setLayoutY(Math.max(hHeight, history.getMinHeight()) + offsetPad);
         elements.add(console);
+    }
+
+    private void checkSpecial(String comm)  {
+        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
+            makeUDI(comm);
+        }
+
+        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
+          || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
+            makeVariable(comm);
+        }
+    }
+
+    private void makeUDI(String comm)  {
+        ((SideBar)myVBox).addButton(comm);
+    }
+
+    private void makeVariable(String comm) {
+        ((SideBar)myVBox).addVar(comm.split(" ")[1], comm.split(" ")[2]);
     }
 
     private void addButtons(List<Node> elements)   {

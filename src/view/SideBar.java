@@ -17,6 +17,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -62,6 +64,7 @@ public class SideBar extends VBox{
 		ComboBox iconMenu = new ComboBox(iconList); //observable list
 		ComboBox penMenu = new ComboBox(); //observable list
 		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
+		TableView table = new TableView();
 
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -113,6 +116,15 @@ public class SideBar extends VBox{
 			}
 		});
 		myVBox.getChildren().add(langMenu);
+
+		table.setEditable(true);
+		TableColumn udcs = new TableColumn("User-defined commands");
+		TableColumn vars = new TableColumn("Variables");
+		TableColumn varName = new TableColumn("Name");
+		TableColumn varValue = new TableColumn("Value");
+		vars.getColumns().addAll(varName, varValue);
+        table.getColumns().addAll(udcs, vars);
+		myVBox.getChildren().add(table);
 				
 		return myVBox;
 	}
@@ -134,6 +146,10 @@ public class SideBar extends VBox{
 		});
 
 		myVBox.getChildren().add(udc);
+	}
+
+	protected void addVar(String var, String value)	{
+
 	}
 
 	private boolean buttonExists(String text)	{
