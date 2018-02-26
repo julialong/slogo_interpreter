@@ -79,7 +79,7 @@ public class Console extends AnchorPane implements TextInput {
         history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
         clear();
 
-        myCL.changeInput(comm);
+        // myCL.changeInput(comm);
         checkSpecial(comm);
 
         return comm;
