@@ -11,7 +11,7 @@ public class RepeatUnbundler implements Unbundler {
 
     private double repeat;
 
-    private StringBuilder expression;
+    private List<String> expression;
     private ArrayList<String> unbundledArray;
     private CommandFactory commandFactory;
 
@@ -20,8 +20,6 @@ public class RepeatUnbundler implements Unbundler {
 
     /**
      * Creates an unbundler for the repeat command
-     * @param p parser p
-     * @param variables Current dictionary of variables stored
      */
     public RepeatUnbundler(CommandFactory cf) {
     		commandFactory = cf;
@@ -35,7 +33,7 @@ public class RepeatUnbundler implements Unbundler {
      */
     public String unbundle(List<String> exp, int index) {
 
-        expression = new StringBuilder();
+        expression = new ArrayList<>();
         int commandStartIndex = buildExpression(exp, index);
         executeExpression();
         int commandEndIndex = buildCommand(exp, index);
@@ -54,7 +52,7 @@ public class RepeatUnbundler implements Unbundler {
         int i = index + 1;
         String current = exp.get(i);
         while (notLeftBracket(current) && i < exp.size()) {
-            expression.append(addSpaces(current));
+            expression.add(current);
             i++;
             current = exp.get(i);
         }
@@ -62,7 +60,7 @@ public class RepeatUnbundler implements Unbundler {
     }
 
     private void executeExpression() {
-        Iterable<Commandable> iterable = new Parser(commandFactory).parse(expression.toString());
+        Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
         for (Commandable c : iterable) {
             c.execute();
             repeat = c.getAns();
@@ -118,13 +116,5 @@ public class RepeatUnbundler implements Unbundler {
      */
     private boolean notRightBracket(String current) {
         return !current.equals(RIGHT_BRACE);
-    }
-
-    /**
-     * @param noSpaces String that has currently been stripped of spaces
-     * @return string with spaces added to the ends
-     */
-    private String addSpaces(String noSpaces) {
-        return " " + noSpaces + " ";
     }
 }
