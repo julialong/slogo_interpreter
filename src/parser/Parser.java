@@ -11,11 +11,12 @@ import java.util.Set;
 
 import commands.CommandFactory;
 import commands.Commandable;
+import unbundler.Unbundler;
 
 public class Parser implements Iterable<Commandable> {
-	
-    private static final String[] CONTROL_NAMES = { "MAKE", "SET", "FOR", "IFELSE", "IF", "REPEAT", "DOTIMES", "TO" };
-  
+
+	private static final String[] CONTROL_NAMES = { "MAKE", "SET", "FOR", "IFELSE", "IF", "REPEAT", "DOTIMES", "TO" };
+
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
 	private List<String> myStringList;
@@ -28,13 +29,14 @@ public class Parser implements Iterable<Commandable> {
 
 	public Parser(CommandFactory cf) {
 		myCommandFactory = cf;
-		myUnbundlerFactory = new UnbundlerFactory();
+		myUnbundlerFactory = new UnbundlerFactory(this);
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
 	}
-	
+
 	public Iterable<Commandable> parse(String s) {
-		 myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
-		
+//		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
+		myStringList = Arrays.asList(s.split(" "));
+
 		myDex = 0;
 		myDummyRoot = new Node(myCommandFactory.createCommand("null"));
 		myCurrent = myDummyRoot;
@@ -59,24 +61,24 @@ public class Parser implements Iterable<Commandable> {
 					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
 				} else {
 					String next = myStringList.get(myDex);
-//					if (myControlSet.contains(next)) {
-//						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
-//						// need unbundled to rip out the commandflow stuff and return an array of Strings / string most likely
-//						String unbundled = unbundler.unbundle(myStringList, myDex);
-//						// can we have the unbundler perform this task?
-//						Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
-//						Double ans;
-//						for (Commandable c : i) {
-//							System.out.println("in parser: " + c.execute());
-//							ans = c.getAns();
-//						}
-//						myCurrent.inject(ans);
-//						return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-//					} else {
+					if (myControlSet.contains(next)) {
+						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
+						// need unbundled to rip out the commandflow stuff and return an array of Strings / string most likely
+						String unbundled = unbundler.unbundle(myStringList, myDex);
+						System.out.println(unbundled);
+						Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
+						Double ans = null;
+						for (Commandable c : i) {
+							System.out.println("in parser: " + c.execute());
+							ans = c.getAns();
+						}
+						myCurrent.inject(ans);
+						return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
+					} else {
 						myCurrent = createNode(next, myCurrent);
 						myDex += 1;
 						return findNext();
-//					}
+					}
 				}
 			}
 
@@ -86,7 +88,7 @@ public class Parser implements Iterable<Commandable> {
 			}
 		};
 	}
-	
+
 	private Commandable findNext() {
 		while (!myCurrent.isReady()) {
 			String curr = myStringList.get(myDex);
@@ -94,10 +96,10 @@ public class Parser implements Iterable<Commandable> {
 				myCurrent.inject(Double.parseDouble(curr));
 			} else if (isCommand(curr)) {
 				if (myControlSet.contains(curr)) {
-					Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
+					Unbundler unbundler = myUnbundlerFactory.createUnbundler(curr, myVarMap, myFuncMap);
 					String unbundled = unbundler.unbundle(myStringList, myDex);
 					Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
-					Double ans;
+					Double ans = null;
 					for (Commandable c : i) {
 						System.out.println("in parser: " + c.execute());
 						ans = c.getAns();
@@ -120,7 +122,7 @@ public class Parser implements Iterable<Commandable> {
 		parent.addToChildren(new_node);
 		return new_node;
 	}
-	
+
 
 	private List<String> replaceUnknowns(String s, Map<String, String> var_map, Map<String, Function> func_map) {
 		String[] arr = s.split(" ");

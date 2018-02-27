@@ -1,9 +1,9 @@
 package unbundler;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Unbundler {
 
-    String unbundle(ArrayList<String> exp, int index);
+    String unbundle(List<String> exp, int index);
 
 }

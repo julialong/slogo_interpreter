@@ -2,13 +2,22 @@ package parser;
 
 import java.util.Map;
 
+import unbundler.RepeatUnbundler;
+import unbundler.Unbundler;
+
 public class UnbundlerFactory {
 	private static final String PREFIX_STRING = "model.Unbundlers.";
 	private static final String SUFFIX_STRING = "Unbundler";
+	
+	private Parser myParser;
+	
+	public UnbundlerFactory(Parser parser) {
+		myParser = parser;
+	}
 
-	public Unbundler createUnbundler(String control, Map<String, String> var_map, Map<String, String> func_map) {
+	public Unbundler createUnbundler(String control, Map<String, String> var_map, Map<String, Function> func_map) {
 		if (control.equals("REPEAT")) {
-			return new RepeatUnbundler();
+			return new RepeatUnbundler(myParser);
 		} // else if (control.equals("IF")) {
 //			return new IfUnbundler();
 //		} else if (control.equals("IFELSE")) {

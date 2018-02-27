@@ -2,14 +2,12 @@ package unbundler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import commands.Commandable;
 import parser.Parser;
 
-public class RepeatUnbundler {
-
-    private Map<String, String> dictionary;
+public class RepeatUnbundler implements Unbundler {
+	
     private Parser pr;
 
     private double repeat;
@@ -25,9 +23,8 @@ public class RepeatUnbundler {
      * @param p parser p
      * @param variables Current dictionary of variables stored
      */
-    public RepeatUnbundler(Parser p, Map<String,String> variables) {
+    public RepeatUnbundler(Parser p) {
         pr = p;
-        dictionary = variables;
     }
 
     /**
@@ -36,12 +33,11 @@ public class RepeatUnbundler {
      * @param index is the index that the control command was found
      * @return the String of the unbundled control command
      */
-    public String unbundle(ArrayList<String> exp, int index) {
+    public String unbundle(List<String> exp, int index) {
 
         expression = new StringBuilder();
         int commandStartIndex = buildExpression(exp, index);
         Iterable<Commandable> iterable = pr.parse(expression.toString());
-        Double repeat;
         for (Commandable c : iterable) {
         		c.execute();
         		repeat = c.getAns();
@@ -59,7 +55,7 @@ public class RepeatUnbundler {
      * @param index index that the control command was found
      * @return the index of the first left bracket
      */
-    private int buildExpression(ArrayList<String> exp, int index) {
+    private int buildExpression(List<String> exp, int index) {
         int i = index + 1;
         String current = exp.get(i);
         while (notLeftBracket(current) && i < exp.size()) {
@@ -76,7 +72,7 @@ public class RepeatUnbundler {
      * @param commandIndex is the index where the command begins
      * @return the index where the command ends, or the last bracket
      */
-    private int buildCommand(ArrayList<String> exp, int commandIndex) {
+    private int buildCommand(List<String> exp, int commandIndex) {
         unbundledArray = new ArrayList<>();
         int currentIndex = 0;
         for (int i = 0; i < repeat; i++) {
@@ -97,24 +93,12 @@ public class RepeatUnbundler {
      * @param lastIndex is the index where the command ends
      * @return modified list
      */
-    private ArrayList<String> modifyList(ArrayList<String> exp, int firstIndex, int lastIndex) {
+    private List<String> modifyList(List<String> exp, int firstIndex, int lastIndex) {
         List<String> start = exp.subList(0, firstIndex + 1);
         List<String> end = exp.subList(lastIndex - 1, exp.size()-1);
         start.addAll(end);
 
         return new ArrayList<> (start);
-    }
-
-    /**
-     * Replaces the current string with a variable if the current string has been stored by the user as a variable
-     * @param current is the current string
-     * @return the string, replaced by the appropriate variable if necessary
-     */
-    private String replaceVariables(String current) {
-        if (dictionary.containsKey(current)) {
-            return dictionary.get(current);
-        }
-        else return current;
     }
 
     /**
