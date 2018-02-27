@@ -1,8 +1,11 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,30 +18,27 @@ public class Parser implements Iterable<Commandable> {
   
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
-	private String[] myStringArr;
+	private List<String> myStringList;
 	private int myDex;
 	private Node myDummyRoot;
 	private Node myCurrent;
 	private Set<String> myControlSet;
-	private Map<String, String> myVarMap;
-	private Map<String, String> myFuncMap;
+	private Map<String, String> myVarMap = new HashMap<>();
+	private Map<String, List<String>> myFuncMap = new HashMap<>();
 
 	public Parser(CommandFactory cf) {
 		myCommandFactory = cf;
 		myUnbundlerFactory = new UnbundlerFactory();
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
 	}
-
-	public Iterator<Commandable> parse(String s) {
-		return parse(s.split(" "));
-	}
 	
-	public Iterator<Commandable> parse(String[] arr) {
-		myStringArr = arr;
+	public Iterable<Commandable> parse(String s) {
+		 myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
+		
 		myDex = 0;
 		myDummyRoot = new Node(myCommandFactory.createCommand("null"));
 		myCurrent = myDummyRoot;
-		return iterator();
+		return () -> iterator();
 	}
 
 	@Override
@@ -47,37 +47,36 @@ public class Parser implements Iterable<Commandable> {
 
 			@Override
 			public boolean hasNext() {
-				return myCurrent.getParent() != myDummyRoot || myDex < myStringArr.length;
+				return myCurrent.getParent() != myDummyRoot || myDex < myStringList.size();
 			}
 
 			@Override
 			public Commandable next() {
 				if (myCurrent.isReady() && myCurrent != myDummyRoot) { // means that we just executed a command we need the result of
 					Double ans = myCurrent.getAns();
-					myCurrent.getParent().inject(ans);
 					myCurrent = myCurrent.getParent();
+					myCurrent.inject(ans);
 					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
 				} else {
-					String next = myStringArr[myDex]; 
-					if (myControlSet.contains(next)) {
-						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next);
-						// need unbundled to rip out the commandflow stuff and return an array of Strings / string most likely
-						String[] unbundled_arr = unbundler.unbundle(myStringArr, myDex);
-						Iterator<Commandable> i = new Parser(myCommandFactory).parse(unbundled_arr);
-						Double ans;
-						while (i.hasNext()) {
-							Commandable c = i.next();
-							System.out.println("in parser: " + c.execute());
-							ans = c.getAns();
-						}
-						myCurrent.getParent().inject(ans);
-						myCurrent = myCurrent.getParent();
-						return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-					} else {
-						createNode(next);
+					String next = myStringList.get(myDex);
+//					if (myControlSet.contains(next)) {
+//						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
+//						// need unbundled to rip out the commandflow stuff and return an array of Strings / string most likely
+//						String unbundled = unbundler.unbundle(myStringList, myDex);
+//						// can we have the unbundler perform this task?
+//						Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
+//						Double ans;
+//						for (Commandable c : i) {
+//							System.out.println("in parser: " + c.execute());
+//							ans = c.getAns();
+//						}
+//						myCurrent.inject(ans);
+//						return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
+//					} else {
+						myCurrent = createNode(next, myCurrent);
 						myDex += 1;
 						return findNext();
-					}
+//					}
 				}
 			}
 
@@ -90,29 +89,55 @@ public class Parser implements Iterable<Commandable> {
 	
 	private Commandable findNext() {
 		while (!myCurrent.isReady()) {
-			String curr = myStringArr[myDex];
+			String curr = myStringList.get(myDex);
 			if (isArgument(curr)) {
 				myCurrent.inject(Double.parseDouble(curr));
 			} else if (isCommand(curr)) {
 //				if (myControlSet.contains(curr)) {
-//					Unbundler unbundler = myUnbundlerFactory.createUnbundler(curr);
-//					unbundler.unbundle(myStringArr, myDex);
+//					Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
+//					String unbundled = unbundler.unbundle(myStringList, myDex);
+//					Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
+//					Double ans;
+//					for (Commandable c : i) {
+//						System.out.println("in parser: " + c.execute());
+//						ans = c.getAns();
+//					}
+//					myCurrent.inject(ans);
+//					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
 //				} else {
-					createNode(curr);
+					myCurrent = createNode(curr, myCurrent);
 //				}	
 			}
 			myDex += 1;
 		}
-		System.out.println("exited");
 		return myCurrent.getCommandable();
 	}
 
-	private void createNode(String command) {
+	private Node createNode(String command, Node parent) {
 		Commandable c = myCommandFactory.createCommand(command);
 		Node new_node = new Node(c);
 		new_node.setParent(myCurrent);
-		myCurrent.addToChildren(new_node);
-		myCurrent = new_node;
+		parent.addToChildren(new_node);
+		return new_node;
+	}
+	
+
+	private List<String> replaceUnknowns(String s, Map<String, String> var_map, Map<String, List<String>> func_map) {
+		String[] arr = s.split(" ");
+		List<String> ans = new ArrayList<>();
+		for (int i=0; i < arr.length; i++) {
+			String curr = arr[i];
+			if (var_map.containsKey(curr)) {
+				List<String> replaced = Arrays.asList(var_map.get(curr).split(" "));
+				ans.addAll(replaced);
+			} else if (func_map.containsKey(curr)) {
+				List<String> replaced = func_map.get(curr);
+				ans.addAll(replaced);
+			} else {
+				ans.add(curr);
+			}
+		}
+		return ans;
 	}
 
 	/**
