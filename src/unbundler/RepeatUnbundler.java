@@ -76,8 +76,9 @@ public class RepeatUnbundler implements Unbundler {
     private void buildCommand(List<String> exp, int start, int stop) {
         unbundledArray = new ArrayList<>();
         for (int i = 0; i < repeat; i++) {
-            for (int j = start + 1; j < stop; j++)
-                unbundledArray.add(exp.get(i));
+            for (int j = start + 1; j < stop; j++) {
+                unbundledArray.add(exp.get(j));
+            }
         }
     }
 
@@ -126,12 +127,5 @@ public class RepeatUnbundler implements Unbundler {
      */
     private boolean notRightBracket(String current) {
         return !current.equals(RIGHT_BRACE);
-    }
-
-    public static void main (String[] args) {
-        RepeatUnbundler r = new RepeatUnbundler();
-        String p = "[ h [ b [ b ] c ] t ]";
-        int[] a = r.findBrackets(new ArrayList<String>(Arrays.asList(p.split(" "))), 0);
-        System.out.println(a[0] + " " + a[1]);
     }
 }
