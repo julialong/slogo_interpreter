@@ -89,3 +89,12 @@
 	-fx-background-color: #62629d;
 }
 
+.table-view .column-header{
+	-fx-background-color: #a3a3c2;
+	-fx-border-style: solid;
+	-fx-border-color: black;
+}
+
+.table-view {
+	-fx-background-color: #e0e0eb;
+}

@@ -76,16 +76,15 @@ public class Visualizer extends Application{
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 
 		//hardcoded, need to get from backend
-		ArrayList<Drawable> test = new ArrayList<Drawable>();
 		Turtle testTurt = new Turtle();
-		test.add(testTurt);
+		myTurtles.add(testTurt);
 		
 		myCanvas = new Canvas(myTurtles);
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, test);
+		mySideBar = new SideBar(myCanvasObjects, myTurtles, myCanvas);
 		((SideBar)mySideBar).language = language;
 		root.setRight(((SideBar)mySideBar).initSideBar());
 

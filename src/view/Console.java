@@ -9,6 +9,7 @@ package view;
 import java.util.List;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 import slogo_team07.ChangeListener;
 import slogo_team07.Engine;
@@ -35,9 +37,9 @@ public class Console extends AnchorPane implements TextInput {
     private int offsetPad = 0;
     private int width = 700;
     private int cHeight = 100;
-    private int hHeight = 60;
-    private int bHeight = (cHeight + hHeight + offsetPad)/2;
-    private int bWidth = 100;
+    private int hHeight = 80;
+    private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt("Inset"))/3;
+    private int bWidth = 80;
     private int commandIndex = -1;   // will track what command is "last" for scrollability
 
     /**
@@ -57,7 +59,8 @@ public class Console extends AnchorPane implements TextInput {
         clearer = setClearer();
         pastCommands = new ArrayList<>();
         
-        VBox myButtons = new VBox(5);
+        VBox myButtons = new VBox(Resources.getInt("Inset"));
+        myButtons.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
         myButtons.getChildren().addAll(runner, clearer);
         this.getChildren().add(myButtons);
         addElements();
@@ -117,13 +120,13 @@ public class Console extends AnchorPane implements TextInput {
 
     private void addText(List<Node> elements)  {
         history.setEditable(false);
-        history.setPromptText("command history");
+        history.setPromptText("Command History");
         history.setPrefWidth(width);
         history.setPrefHeight(hHeight);
         history.setMaxHeight(history.USE_PREF_SIZE);
         elements.add(history);
 
-        console.setPromptText("commands");
+        console.setPromptText("Enter Commands");
         console.setPrefWidth(width);
         console.setPrefHeight(cHeight);
         console.setLayoutY(Math.max(hHeight, history.getMinHeight()) + offsetPad);
@@ -163,6 +166,7 @@ public class Console extends AnchorPane implements TextInput {
         aRunner.setPrefHeight(bHeight);
         aRunner.setMaxHeight(aRunner.USE_PREF_SIZE);
         aRunner.setTextAlignment(TextAlignment.CENTER);
+        aRunner.setFont(new Font(20));
 
         aRunner.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -184,7 +188,7 @@ public class Console extends AnchorPane implements TextInput {
         aClearer.setPrefHeight(bHeight);
         aClearer.setMaxHeight(aClearer.USE_PREF_SIZE);
         aClearer.setTextAlignment(TextAlignment.CENTER);
-        aClearer.setFont(new Font(11));
+        aClearer.setFont(new Font(20));
 
         aClearer.setOnAction(new EventHandler<ActionEvent>() {
             @Override

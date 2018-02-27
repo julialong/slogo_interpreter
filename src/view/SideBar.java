@@ -27,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
@@ -35,11 +36,14 @@ import slogo_team07.Turtle;
 public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
+	private Canvas myCanvas;
 	private List<Drawable> myTurtles;
 	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
+	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
+			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
@@ -58,9 +62,10 @@ public class SideBar extends VBox{
 	 * @param canvas	canvas of program, where turtles are displayed
 	 * @param turtles	list of all the movers in the canvas
 	 */
-	public SideBar(Pane canvas, List<Drawable> turtles){
+	public SideBar(Pane canvas, List<Drawable> turtles, Canvas c){
 		myCanvasObjects = canvas;
 		myTurtles = turtles;
+		myCanvas = c;
 	}
 	
 	/**
@@ -72,12 +77,26 @@ public class SideBar extends VBox{
 		
 		Button helpButton = new Button();
 		ComboBox colorMenu = new ComboBox(colorList);
-		ComboBox iconMenu = new ComboBox(iconList); //observable list
-		ComboBox penMenu = new ComboBox(); //observable list
-		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
+		ComboBox iconMenu = new ComboBox(iconList);
+		ComboBox penMenu = new ComboBox(penList); 
+		ComboBox langMenu = new ComboBox<String>(langsSupported);
 		commandTable = new TableView();
 		variableTable = new TableView();
 		double colWidth = 250;
+		
+		Button test = new Button("Test");
+		test.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e){
+				double x = 0;
+				double y = 0;
+				for (Drawable turtle: myTurtles){
+					turtle.setPane(myCanvasObjects);
+					turtle.test(100, 100);
+				}
+			}
+		});
+		myVBox.getChildren().add(test);
 
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -106,6 +125,7 @@ public class SideBar extends VBox{
 				//right now will change icon of all turtles
 				for (Drawable turtle: myTurtles){
 					myCanvasObjects.getChildren().remove(turtle.getView());
+					turtle.setPane(myCanvasObjects);
 					turtle.setView(Resources.getString(tempIcon));
 					myCanvasObjects.getChildren().add(turtle.getView());
 				}
@@ -116,7 +136,9 @@ public class SideBar extends VBox{
 		penMenu.setPromptText(Resources.getString("PenMenu"));
 		penMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				
+				String tempPen = penMenu.getSelectionModel().getSelectedItem().toString();
+				//System.out.println("set: " + Color.valueOf(tempPen));
+				myCanvas.setColor(Color.valueOf(tempPen));
 			}
 		});
 		myVBox.getChildren().add(penMenu);
