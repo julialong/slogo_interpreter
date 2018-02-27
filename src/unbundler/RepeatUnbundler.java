@@ -37,14 +37,14 @@ public class RepeatUnbundler implements Unbundler {
      * @return the String of the unbundled control command
      */
     public String unbundle(List<String> exp, int index) {
-        int[] commandIndex = findBrackets(exp, index);
+        int[] commandIndex = this.findBrackets(exp, index);
         expression = new ArrayList<>();
         buildExpression(exp, index, commandIndex[0]);
         executeExpression();
         buildCommand(exp, commandIndex[0], commandIndex[1]);
-        exp.removeAll(modifyList(exp, commandIndex[0], commandIndex[1]));
+        exp.removeAll(modifyList(exp, index, commandIndex[1]));
         System.out.println("final expression:" + exp.toString());
-
+        System.out.println("unbundled: " + unbundledArray.toString());
         return String.join(" ", unbundledArray);
     }
 

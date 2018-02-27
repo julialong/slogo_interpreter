@@ -4,6 +4,7 @@ import parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class ForUnbundler implements  Unbundler{
 
@@ -38,6 +39,7 @@ public class ForUnbundler implements  Unbundler{
 
     public String unbundle(List<String> exp, int index) {
         setNumbers(exp, index + 1);
+        int[] commandIndex = findBrackets(exp, index + 5);
         return "";
     }
 
@@ -48,6 +50,42 @@ public class ForUnbundler implements  Unbundler{
         increment = Double.parseDouble(exp.get(index + 4));
     }
 
+    /**
+     * Finds the beginning and ending brackets for the given control command
+     * @param exp
+     * @param index
+     * @return
+     */
+    private int[] findBrackets(List<String> exp, int index) {
+        int[] answer = new int[2];
+        Stack<Integer> bracketIndex = new Stack<>();
+        for (int i = index; i < exp.size(); i++) {
+            if (!notLeftBracket(exp.get(i))) {
+                bracketIndex.push(i);
+            }
+            else if (!notRightBracket(exp.get(i)) && bracketIndex.size() > 0) {
+                answer[1] = i;
+                answer[0] = bracketIndex.pop();
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @param current is the current string
+     * @return true if the current string is not a left bracket, false otherwise
+     */
+    private boolean notLeftBracket(String current) {
+        return !current.equals(LEFT_BRACE);
+    }
+
+    /**
+     * @param current is the current string
+     * @return true if the current string is not a right bracket, false otherwise
+     */
+    private boolean notRightBracket(String current) {
+        return !current.equals(RIGHT_BRACE);
+    }
 
 
 }
