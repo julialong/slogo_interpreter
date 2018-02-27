@@ -30,7 +30,7 @@ public class Engine implements ChangeListener {
 		myUpdatables.put(Integer.toString(0), turtle);
 	}
 
-	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)
+	// should be stored on the front end as ChangeListener.changeInput(String)
 	@Override
 	public void changeInput(String input) {
 		Iterable<Commandable> iterable = myParser.parse(input);
