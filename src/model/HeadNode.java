@@ -45,18 +45,13 @@ public class HeadNode extends SyntaxNode{
     }
 
     @Override
-    CommandType getCommandType() {
+    public CommandType getCommandType() {
         return CommandType.HEAD;
     }
 
     @Override
-    public boolean wasTraversed() {
+    public boolean isDone() {
         return false;
-    }
-
-    @Override
-    public void hasBeenTraversed() {
-
     }
 
     @Override
@@ -69,5 +64,7 @@ public class HeadNode extends SyntaxNode{
         return this.children;
     }
 
-
+    @Override
+    public void clearCommand() {
+    }
 }

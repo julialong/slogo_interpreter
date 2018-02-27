@@ -68,6 +68,11 @@ public class Parser {
         return string.matches("[a-zA-Z_]+(\\?)?");
     }
 
+    /**
+     * Checks for list structure required for control command
+     * @param string is the argument
+     * @return true if the string is a control argument
+     */
     private Boolean isControl(String string) {
         return (string.contains("[") && string.contains("]"));
     }
@@ -108,18 +113,21 @@ public class Parser {
     private void createTree(String[] s) {
         SyntaxNode current = head;
         for (int i = 0; i < s.length; i++) {
-            //System.out.println(s[i]);
-            //System.out.println(current.toString());
             SyntaxNode temp = createNode(s[i]);
+            System.out.println(current.toString() + " + " + temp.toString());
             current.getChildren().add(temp);
             temp.setParent(current);
             if (temp.isCommand()) {
                 current = temp;
             }
             else if (!temp.isCommand()) {
-                while (temp.getParent().isReady()) {
-                    current = temp.getParent();
+                temp.getParent().getCommand().inject(temp.getValue());
+                current = temp.getParent();
+                while (current.getParent().isDone()) {
+                    System.out.println(current.getParent().toString());
+                    current = current.getParent();
                 }
+
             }
         }
     }

@@ -1,47 +1,48 @@
-package model;
+package model.ControlNodes;
 
 import commands.Commandable;
+import model.CommandType;
+import model.SyntaxNode;
 
 import java.util.ArrayList;
 
-public class ArgumentNode extends SyntaxNode {
+public class ToNode extends ControlNode {
 
     private ArrayList<SyntaxNode> children;
-    private int currentChild;
     private SyntaxNode parent;
     private Commandable command;
+    private int completed;
     private double value;
     private Boolean ready;
     private Boolean traversed;
     private int totalArguments;
     private CommandType commandType;
 
-    ArgumentNode(Double argument) {
-        super();
+    ToNode(Commandable newCommand) {
         children = new ArrayList<>();
-        value = argument;
-        ready = true;
-        traversed = true;
-    }
-
-    @Override
-    public CommandType getCommandType() {
-        return CommandType.ARGUMENT;
-    }
-
-    @Override
-    public boolean isDone() {
-        return true;
+        command = newCommand;
+        completed = 0;
+        traversed = false;
     }
 
     @Override
     public boolean isReady() {
-        return true;
+        return (completed == this.getChildren().get(0).getValue());
+    }
+
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.CONTROL;
+    }
+
+    @Override
+    public boolean isDone() {
+        return this.traversed;
     }
 
     @Override
     public Commandable getCommand() {
-        return null;
+        return this.command;
     }
 
     @Override

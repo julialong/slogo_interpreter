@@ -8,4 +8,6 @@ public interface Commandable {
 	boolean isReady();
 
 	double getAns();
+
+	int getChildren();
 }

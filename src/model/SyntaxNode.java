@@ -17,8 +17,7 @@ public abstract class SyntaxNode implements Iterable{
     private ArrayList<SyntaxNode> children;
 
 
-    SyntaxNode() {
-        children = new ArrayList<>();
+    public SyntaxNode() {
     }
 
     /**
@@ -29,6 +28,9 @@ public abstract class SyntaxNode implements Iterable{
         return false;
     }
 
+    /**
+     * Injects the child arguments into the current command so that the command object can execute
+     */
     public void injectArguments() {
         if (this.hasChildren() && this.isCommand()) {
             for (SyntaxNode child : this.getChildren()) {
@@ -43,19 +45,19 @@ public abstract class SyntaxNode implements Iterable{
      * gets the children for the given node
      * @return arraylist of child nodes
      */
-    abstract ArrayList<SyntaxNode> getChildren();
+    public abstract ArrayList<SyntaxNode> getChildren();
 
+    /**
+     * Traverses to the next child of the current node that has not been executed
+     * @return the next SyntaxNode child of the current Node
+     */
     private SyntaxNode getNextChild() {
         for (SyntaxNode child : this.getChildren()) {
-            if (!child.wasTraversed()) {
+            if (!child.isReady()) {
                 return child;
             }
         }
         return null;
-    }
-
-    public boolean isReady() {
-        return false;
     }
 
     /**
@@ -74,27 +76,59 @@ public abstract class SyntaxNode implements Iterable{
         return this.parent;
     }
 
-    abstract double getValue();
+    /**
+     * Keeps track of the current state of the node
+     * @return true if the node has been executed and is ready to be moved on from, false if needs more actions
+     */
+    public abstract boolean isReady();
 
+    /**
+     * Sets the current command to its initial state; as if it had not been executed
+     */
+    public abstract void clearCommand();
+
+    /**
+     * Gets the value from the node
+     * @return double value of current node
+     */
+    public abstract double getValue();
+
+    /**
+     * @return true if current node is the head of the tree
+     */
     private boolean isHead() {
         return false;
     }
 
-    private boolean hasChildren() {
+    /**
+     * Determines if the current node has children
+     * @return true if the current node has children, false otherwise
+     */
+    public boolean hasChildren() {
         return this.getChildren().size() > 0;
     }
 
-    abstract boolean wasTraversed();
+    /**
+     * Determines if the current node has enough arguments to be evaluated
+     * @return true if the current command is ready to execute, false otherwise
+     */
+    public abstract boolean isDone();
 
-    abstract void hasBeenTraversed();
+    /**
+     * Gets the command contained in the current node
+     * @return the command contained in the node, null if node is not a CommandableNode
+     */
+    public abstract Commandable getCommand();
 
-    abstract Commandable getCommand();
-
-    abstract CommandType getCommandType();
+    /**
+     * Gets the type of node
+     * @return the type of node
+     */
+    public abstract CommandType getCommandType();
 
     @Override
     public String toString() {
-        return "type:" + this.getCommandType().toString() + "| children: " + this.getChildren().size();
+        return "type:" + this.getCommandType().toString() + " | children: " + this.getChildren().size();
     }
 
     /**
@@ -106,7 +140,7 @@ public abstract class SyntaxNode implements Iterable{
         SyntaxNode commandTree = this;
         traverseToBottom(commandTree);
 
-        return new Iterator<SyntaxNode>() {
+        return new Iterator<Commandable>() {
             SyntaxNode current = commandTree; // current is now equal to the bottom leftmost component of tree
 
             /**
@@ -115,11 +149,11 @@ public abstract class SyntaxNode implements Iterable{
              */
             public boolean hasNext() {
                 for (SyntaxNode child : current.getChildren()) {
-                    if (!child.wasTraversed()) {
+                    if (!child.isReady() && child.isCommand()) {
                         return true;
                     }
                 }
-                if (!current.isHead() || !current.getParent().traversed) {
+                if (current.getParent() != null && !current.getParent().isReady()) {
                     return true;
                 }
                 return false;
@@ -129,9 +163,8 @@ public abstract class SyntaxNode implements Iterable{
              * Returns the next ready command object in the tree
              * @return next SyntaxNode object in the tree
              */
-            public SyntaxNode next() {
-                while (current != null && (!current.isCommand() || !current.isHead() || current.wasTraversed())) {
-                    System.out.println(current.toString());
+            public Commandable next() {
+                while (current != null && (!current.isCommand() || !current.isHead() || current.isDone())) {
                     current = current.getParent();
                 }
                 if (current != null) {
@@ -143,10 +176,10 @@ public abstract class SyntaxNode implements Iterable{
                         current.injectArguments();
                     }
                 }
-                if (current != null){
-                    current.hasBeenTraversed();
+                if (current != null) {
+                    return current.getCommand();
                 }
-                return current;
+                return null;
             }
         };
     }
@@ -156,11 +189,8 @@ public abstract class SyntaxNode implements Iterable{
      * @param current head of the current tree to be traversed
      */
     private void traverseToBottom(SyntaxNode current) {
-        int i = 0;
         while (current != null && current.hasChildren()) {
-            System.out.println(i + " " + current.toString());
             current = current.getNextChild();
-            i++;
         }
     }
 }

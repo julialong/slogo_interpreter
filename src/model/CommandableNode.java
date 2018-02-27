@@ -39,9 +39,10 @@ public class CommandableNode extends SyntaxNode {
         return true;
     }
 
+
     @Override
     public boolean isReady() {
-        return command.isReady();
+        return this.ready;
     }
 
     @Override
@@ -50,18 +51,13 @@ public class CommandableNode extends SyntaxNode {
     }
 
     @Override
-    CommandType getCommandType() {
+    public CommandType getCommandType() {
         return CommandType.COMMAND;
     }
 
     @Override
-    public boolean wasTraversed() {
-        return this.traversed;
-    }
-
-    @Override
-    public void hasBeenTraversed() {
-        this.traversed = true;
+    public boolean isDone() {
+        return (this.getCommand().getChildren() == this.getChildren().size());
     }
 
     @Override
@@ -72,5 +68,10 @@ public class CommandableNode extends SyntaxNode {
     @Override
     public ArrayList<SyntaxNode> getChildren() {
         return this.children;
+    }
+
+    @Override
+    public void clearCommand() {
+        this.ready = false;
     }
 }
