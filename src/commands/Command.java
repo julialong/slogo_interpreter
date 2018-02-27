@@ -3,9 +3,6 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import commands.CommandArgsFullException;
-import commands.Commandable;
-
 public abstract class Command implements Commandable {
 	
 	private int myArgsNeeded;
@@ -24,7 +21,7 @@ public abstract class Command implements Commandable {
 		myArgs.add(arg);
 	}
 
-	protected boolean isReady() {
+	public boolean isReady() {
 		return myArgs.size() == myArgsNeeded;
 	}
 	
