@@ -18,7 +18,7 @@ public class UnbundleTest {
         myParser = new Parser(myCommandFactory);
         myVariables = new HashMap<>();
         myVariables.put("x", "fd 50");
-        String[] exp = {"sum", "2", "2"};
+        String[] exp = {"2"};
         String[] command = {"fd", "fd", "2"};
         myUnbundler = new RepeatUnbundler(myParser, myVariables, exp, command);
         System.out.println(myUnbundler.getUnbundledString());
