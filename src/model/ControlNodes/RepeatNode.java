@@ -2,6 +2,7 @@ package model.ControlNodes;
 
 import commands.Commandable;
 import model.CommandType;
+import model.CommandableNode;
 import model.ControlNodes.ControlNode;
 import model.SyntaxNode;
 
@@ -13,7 +14,7 @@ public class RepeatNode extends ControlNode {
     private SyntaxNode parent;
     private Commandable command;
     private int completed;
-    private double value;
+    private double expression;
     private Boolean ready;
     private Boolean traversed;
     private int totalArguments;
@@ -38,12 +39,18 @@ public class RepeatNode extends ControlNode {
 
     @Override
     public boolean isDone() {
+        for (SyntaxNode child : this.getChildren()) {
+            if (!child.isDone()) {
+                return false;
+            }
+        }
+        // TODO: check if has enough children
         return true;
     }
 
     @Override
     public Commandable getCommand() {
-        return this.command;
+        return null;
     }
 
     @Override
@@ -58,6 +65,6 @@ public class RepeatNode extends ControlNode {
 
     @Override
     public double getValue() {
-        return this.value;
+        return 0;
     }
 }

@@ -160,11 +160,8 @@ public abstract class SyntaxNode implements Iterable{
      * @param current head of the current tree to be traversed
      */
     private void traverseToBottom(SyntaxNode current) {
-        int i = 0;
         while (current != null && current.hasChildren()) {
-            //System.out.println(i + " " + current.toString());
             current = current.getNextChild();
-            i++;
         }
     }
 }
