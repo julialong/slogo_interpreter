@@ -31,5 +31,9 @@ public abstract class Command implements Commandable {
 	protected List<Double> getArgs() {
 		return myArgs;
 	}
+	
+	public int getChildren() {
+		return myArgsNeeded;
+	}
 
 }
