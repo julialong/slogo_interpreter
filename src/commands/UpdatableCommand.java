@@ -25,7 +25,7 @@ public abstract class UpdatableCommand extends Command {
 	}
 
 	@Override
-	public double getAns() {
+	public Double getAns() {
 		return ans;
 	}
 

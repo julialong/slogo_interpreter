@@ -63,10 +63,15 @@ public class RepeatUnbundler implements Unbundler {
     }
 
     private void executeExpression() {
+        if (expression.size() <= 0) {
+            repeat = 0;
+        }
+        else {
         Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
         for (Commandable c : iterable) {
             c.execute();
             repeat = c.getAns();
+        }
         }
     }
 

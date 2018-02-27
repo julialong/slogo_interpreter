@@ -57,7 +57,7 @@ public class CommandableNode extends SyntaxNode {
 
     @Override
     public boolean isDone() {
-        return (this.getCommand().getChildren() == this.getChildren().size());
+        return false;
     }
 
     @Override
