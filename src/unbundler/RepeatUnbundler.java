@@ -40,14 +40,8 @@ public class RepeatUnbundler {
 
         expression = new StringBuilder();
         int commandStartIndex = buildExpression(exp, index);
-        Iterable<Commandable> iterable = pr.parse(expression.toString());
-        Double repeat;
-        for (Commandable c : iterable) {
-        		c.execute();
-        		repeat = c.getAns();
-        }
-        int commandEndIndex = buildCommand(exp, commandStartIndex);
-
+        executeExpression();
+        int commandEndIndex = buildCommand(exp, index);
         exp = modifyList(exp, commandStartIndex, commandEndIndex);
 
         return String.join(" ", unbundledArray);
@@ -68,6 +62,14 @@ public class RepeatUnbundler {
             current = exp.get(i);
         }
         return i;
+    }
+
+    private void executeExpression() {
+        Iterable<Commandable> iterable = pr.parse(expression.toString());
+        for (Commandable c : iterable) {
+            c.execute();
+            repeat = c.getAns();
+        }
     }
 
     /**
@@ -98,8 +100,8 @@ public class RepeatUnbundler {
      * @return modified list
      */
     private ArrayList<String> modifyList(ArrayList<String> exp, int firstIndex, int lastIndex) {
-        List<String> start = exp.subList(0, firstIndex + 1);
-        List<String> end = exp.subList(lastIndex - 1, exp.size()-1);
+        List<String> start = exp.subList(0, firstIndex);
+        List<String> end = exp.subList(lastIndex + 1, exp.size()-1);
         start.addAll(end);
 
         return new ArrayList<> (start);
