@@ -54,7 +54,7 @@ public class RepeatUnbundler implements Unbundler {
         int i = index + 1;
         String current = exp.get(i);
         while (notLeftBracket(current) && i < exp.size()) {
-            expression.append(addSpaces(current));
+            expression.append(current);
             i++;
             current = exp.get(i);
         }
