@@ -5,9 +5,8 @@ import parser.Parser;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class DoTimesUnbundler {
+public class DoTimesUnbundler implements Unbundler{
 
-    private Map<String, String> dictionary;
     private Parser pr;
 
     private double repeat;
@@ -17,4 +16,24 @@ public class DoTimesUnbundler {
 
     private static final String LEFT_BRACE = "[";
     private static final String RIGHT_BRACE = "]";
+
+    /**
+     * Creates an unbundler for the dotimes command
+     * @param p parser p
+     */
+    public DoTimesUnbundler(Parser p) {
+        pr = p;
+    }
+
+    /**
+     * unbundles the given control command starting at index
+     * @param exp is the entire ArrayList of the input commands
+     * @param index is the index that the control command was found
+     * @return the String of the unbundled control command
+     */
+    public String unbundle(ArrayList<String> exp, int index) {
+
+
+    }
+
 }
