@@ -39,10 +39,16 @@ public class CommandableNode extends SyntaxNode {
         return true;
     }
 
+
     @Override
-    public boolean isReady() {
+    public boolean isDone() {
         return command.isReady();
     }
+
+//    @Override
+//    public boolean isReady() {
+//        return (this.getChildren().size() == this.getCommand().)
+//    }
 
     @Override
     public double getValue() {
@@ -50,7 +56,7 @@ public class CommandableNode extends SyntaxNode {
     }
 
     @Override
-    CommandType getCommandType() {
+    public CommandType getCommandType() {
         return CommandType.COMMAND;
     }
 

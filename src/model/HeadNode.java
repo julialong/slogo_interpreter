@@ -45,7 +45,7 @@ public class HeadNode extends SyntaxNode{
     }
 
     @Override
-    CommandType getCommandType() {
+    public CommandType getCommandType() {
         return CommandType.HEAD;
     }
 

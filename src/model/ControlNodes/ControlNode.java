@@ -1,10 +1,12 @@
-package model;
+package model.ControlNodes;
 
 import commands.Commandable;
+import model.CommandType;
+import model.SyntaxNode;
 
 import java.util.ArrayList;
 
-public abstract class ControlNode extends SyntaxNode{
+public abstract class ControlNode extends SyntaxNode {
 
     private ArrayList<SyntaxNode> children;
     private SyntaxNode parent;
@@ -22,4 +24,17 @@ public abstract class ControlNode extends SyntaxNode{
         traversed = false;
     }
 
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.CONTROL;
+    }
+
+    @Override
+    public abstract boolean wasTraversed();
+
+    @Override
+    public abstract Commandable getCommand();
+
+    @Override
+    public abstract void hasBeenTraversed();
 }

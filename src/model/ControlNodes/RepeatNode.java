@@ -1,8 +1,8 @@
-package model;
+package model.ControlNodes;
 
 import commands.Commandable;
 import model.CommandType;
-import model.ControlNode;
+import model.ControlNodes.ControlNode;
 import model.SyntaxNode;
 
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class RepeatNode extends ControlNode {
 
     private ArrayList<SyntaxNode> children;
-    private int currentChild;
     private SyntaxNode parent;
     private Commandable command;
     private int completed;
@@ -25,11 +24,6 @@ public class RepeatNode extends ControlNode {
         command = newCommand;
         completed = 0;
         traversed = false;
-    }
-
-    public void resetChildren() {
-        SyntaxNode current = this;
-
     }
 
     @Override
@@ -54,7 +48,6 @@ public class RepeatNode extends ControlNode {
 
     @Override
     public void hasBeenTraversed() {
-
     }
 
     @Override
