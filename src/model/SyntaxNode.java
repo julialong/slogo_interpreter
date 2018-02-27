@@ -14,9 +14,11 @@ public abstract class SyntaxNode implements Iterable{
 
     private SyntaxNode parent;
     private Boolean traversed;
+    private ArrayList<SyntaxNode> children;
 
 
     SyntaxNode() {
+        children = new ArrayList<>();
     }
 
     /**
@@ -27,8 +29,8 @@ public abstract class SyntaxNode implements Iterable{
         return false;
     }
 
-    private void injectArguments() {
-        if (this.isCommand()) {
+    public void injectArguments() {
+        if (this.hasChildren() && this.isCommand()) {
             for (SyntaxNode child : this.getChildren()) {
                 if(child.isReady()) {
                     this.getCommand().inject(child.getValue());
@@ -78,7 +80,13 @@ public abstract class SyntaxNode implements Iterable{
         return false;
     }
 
+    private boolean hasChildren() {
+        return this.getChildren().size() > 0;
+    }
+
     abstract boolean wasTraversed();
+
+    abstract void hasBeenTraversed();
 
     abstract Commandable getCommand();
 
@@ -107,7 +115,7 @@ public abstract class SyntaxNode implements Iterable{
              */
             public boolean hasNext() {
                 for (SyntaxNode child : current.getChildren()) {
-                    if (!child.traversed) {
+                    if (!child.wasTraversed()) {
                         return true;
                     }
                 }
@@ -122,16 +130,22 @@ public abstract class SyntaxNode implements Iterable{
              * @return next SyntaxNode object in the tree
              */
             public SyntaxNode next() {
-                System.out.println(current.toString());
-                while (!current.isCommand() || current.traversed) {
+                while (current != null && (!current.isCommand() || !current.isHead() || current.wasTraversed())) {
+                    System.out.println(current.toString());
                     current = current.getParent();
                 }
-                current.injectArguments();
-                while (!current.isReady()) {
-                    current = current.getNextChild();
+                if (current != null) {
                     current.injectArguments();
                 }
-                current.traversed = true;
+                while (current != null && !current.isReady()) {
+                    current = current.getNextChild();
+                    if (current != null) {
+                        current.injectArguments();
+                    }
+                }
+                if (current != null){
+                    current.hasBeenTraversed();
+                }
                 return current;
             }
         };
@@ -143,11 +157,10 @@ public abstract class SyntaxNode implements Iterable{
      */
     private void traverseToBottom(SyntaxNode current) {
         int i = 0;
-        while (current.getChildren().size() > 0) {
+        while (current != null && current.hasChildren()) {
             System.out.println(i + " " + current.toString());
             current = current.getNextChild();
             i++;
         }
-        System.out.println(i + " " + current.toString());
     }
 }

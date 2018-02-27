@@ -3,7 +3,8 @@ package model;
 public enum CommandType {
     COMMAND("Command"),
     ARGUMENT("Argument"),
-    CONTROL("Command");
+    CONTROL("Command"),
+    HEAD("Head");
 
     private String textRepresentation;
 

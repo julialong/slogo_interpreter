@@ -45,6 +45,11 @@ public class ArgumentNode extends SyntaxNode {
     }
 
     @Override
+    public void hasBeenTraversed() {
+        this.traversed = true;
+    }
+
+    @Override
     public double getValue() {
         return this.value;
     }
