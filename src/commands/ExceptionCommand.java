@@ -5,15 +5,22 @@ public class ExceptionCommand extends Command {
 	private Double ans;
 	
 	public ExceptionCommand() {
-		super(0);
+		super(Integer.MAX_VALUE);
 	}
 
 	@Override
 	public Result execute() {
 		return new Result(Double.MAX_VALUE);
 	}
+	
+	@Override 
+	public boolean isReady() {
+		return false;
+	}
 
-	public double getAns()	{
-		return ans;
+	@Override
+	public Double getAns() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

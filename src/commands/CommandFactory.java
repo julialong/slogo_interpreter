@@ -53,6 +53,5 @@ public class CommandFactory {
 				myLanguages.put(s.replace("\\", ""), key);
 			}
 		}
-		System.out.println(myLanguages);
 	}
 }
