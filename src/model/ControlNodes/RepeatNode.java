@@ -27,9 +27,38 @@ public class RepeatNode extends ControlNode {
         traversed = false;
     }
 
+    public void setExpression(double arg) {
+        expression = arg;
+    }
+
+    private boolean checkChildren() {
+        if (expression == completed) {
+            return true;
+        }
+        for (SyntaxNode child : this.getChildren()) {
+            if (!child.isReady()) {
+                return false;
+            }
+        }
+        this.clearChildren();
+        return false;
+    }
+
+    private void clearChildren() {
+        for (int i = 1; i < this.getChildren().size(); i++) {
+
+        }
+    }
+
+    private void clear (SyntaxNode node) {
+        if(!node.hasChildren()) {
+            node.clearCommand();
+        }
+    }
+
     @Override
     public boolean isReady() {
-        return (completed == this.getChildren().get(0).getValue());
+        return checkChildren();
     }
 
     @Override
@@ -54,11 +83,6 @@ public class RepeatNode extends ControlNode {
     }
 
     @Override
-    public void setDone() {
-
-    }
-
-    @Override
     public ArrayList<SyntaxNode> getChildren() {
         return this.children;
     }
@@ -67,4 +91,10 @@ public class RepeatNode extends ControlNode {
     public double getValue() {
         return 0;
     }
+
+    @Override
+    public void clearCommand() {
+
+    }
+
 }

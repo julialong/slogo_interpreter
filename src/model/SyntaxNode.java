@@ -18,7 +18,6 @@ public abstract class SyntaxNode implements Iterable{
 
 
     public SyntaxNode() {
-        children = new ArrayList<>();
     }
 
     /**
@@ -29,6 +28,9 @@ public abstract class SyntaxNode implements Iterable{
         return false;
     }
 
+    /**
+     * Injects the child arguments into the current command so that the command object can execute
+     */
     public void injectArguments() {
         if (this.hasChildren() && this.isCommand()) {
             for (SyntaxNode child : this.getChildren()) {
@@ -45,17 +47,17 @@ public abstract class SyntaxNode implements Iterable{
      */
     public abstract ArrayList<SyntaxNode> getChildren();
 
+    /**
+     * Traverses to the next child of the current node that has not been executed
+     * @return the next SyntaxNode child of the current Node
+     */
     private SyntaxNode getNextChild() {
         for (SyntaxNode child : this.getChildren()) {
-            if (!child.isDone()) {
+            if (!child.isReady()) {
                 return child;
             }
         }
         return null;
-    }
-
-    public boolean isReady() {
-        return false;
     }
 
     /**
@@ -74,29 +76,59 @@ public abstract class SyntaxNode implements Iterable{
         return this.parent;
     }
 
+    /**
+     * Keeps track of the current state of the node
+     * @return true if the node has been executed and is ready to be moved on from, false if needs more actions
+     */
+    public abstract boolean isReady();
+
+    /**
+     * Sets the current command to its initial state; as if it had not been executed
+     */
+    public abstract void clearCommand();
+
+    /**
+     * Gets the value from the node
+     * @return double value of current node
+     */
     public abstract double getValue();
 
+    /**
+     * @return true if current node is the head of the tree
+     */
     private boolean isHead() {
         return false;
     }
 
-    private boolean hasChildren() {
+    /**
+     * Determines if the current node has children
+     * @return true if the current node has children, false otherwise
+     */
+    public boolean hasChildren() {
         return this.getChildren().size() > 0;
     }
 
+    /**
+     * Determines if the current node has enough arguments to be evaluated
+     * @return true if the current command is ready to execute, false otherwise
+     */
     public abstract boolean isDone();
 
-    public abstract void setDone();
-
+    /**
+     * Gets the command contained in the current node
+     * @return the command contained in the node, null if node is not a CommandableNode
+     */
     public abstract Commandable getCommand();
 
+    /**
+     * Gets the type of node
+     * @return the type of node
+     */
     public abstract CommandType getCommandType();
-
-    //public abstract boolean isDone();
 
     @Override
     public String toString() {
-        return "type:" + this.getCommandType().toString() + "| children: " + this.getChildren().size();
+        return "type:" + this.getCommandType().toString() + " | children: " + this.getChildren().size();
     }
 
     /**
@@ -117,11 +149,11 @@ public abstract class SyntaxNode implements Iterable{
              */
             public boolean hasNext() {
                 for (SyntaxNode child : current.getChildren()) {
-                    if (!child.isDone()) {
+                    if (!child.isReady() && child.isCommand()) {
                         return true;
                     }
                 }
-                if (!current.isHead() || !current.getParent().isDone()) {
+                if (current.getParent() != null && !current.getParent().isReady()) {
                     return true;
                 }
                 return false;
@@ -143,9 +175,6 @@ public abstract class SyntaxNode implements Iterable{
                     if (current != null) {
                         current.injectArguments();
                     }
-                }
-                if (current != null) {
-                    current.setDone();
                 }
                 if (current != null) {
                     return current.getCommand();

@@ -34,7 +34,4 @@ public abstract class ControlNode extends SyntaxNode {
 
     @Override
     public abstract Commandable getCommand();
-
-    @Override
-    public abstract void setDone();
 }

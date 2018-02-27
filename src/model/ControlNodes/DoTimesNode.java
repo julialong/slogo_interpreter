@@ -48,10 +48,6 @@ public class DoTimesNode extends ControlNode {
     }
 
     @Override
-    public void setDone() {
-    }
-
-    @Override
     public ArrayList<SyntaxNode> getChildren() {
         return this.children;
     }
@@ -59,5 +55,10 @@ public class DoTimesNode extends ControlNode {
     @Override
     public double getValue() {
         return this.value;
+    }
+
+    @Override
+    public void clearCommand() {
+
     }
 }

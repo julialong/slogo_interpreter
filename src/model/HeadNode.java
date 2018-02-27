@@ -55,11 +55,6 @@ public class HeadNode extends SyntaxNode{
     }
 
     @Override
-    public void setDone() {
-
-    }
-
-    @Override
     public Commandable getCommand() {
         return null;
     }
@@ -69,5 +64,7 @@ public class HeadNode extends SyntaxNode{
         return this.children;
     }
 
-
+    @Override
+    public void clearCommand() {
+    }
 }

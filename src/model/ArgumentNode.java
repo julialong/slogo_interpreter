@@ -35,6 +35,11 @@ public class ArgumentNode extends SyntaxNode {
     }
 
     @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
     public Commandable getCommand() {
         return null;
     }
@@ -42,11 +47,6 @@ public class ArgumentNode extends SyntaxNode {
     @Override
     public ArrayList<SyntaxNode> getChildren() {
         return this.children;
-    }
-
-    @Override
-    public void setDone() {
-        this.traversed = true;
     }
 
     @Override

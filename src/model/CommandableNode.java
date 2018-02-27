@@ -42,7 +42,7 @@ public class CommandableNode extends SyntaxNode {
 
     @Override
     public boolean isReady() {
-        return command.isReady();
+        return this.ready;
     }
 
     @Override
@@ -57,12 +57,7 @@ public class CommandableNode extends SyntaxNode {
 
     @Override
     public boolean isDone() {
-        return this.traversed;
-    }
-
-    @Override
-    public void setDone() {
-        this.traversed = true;
+        return (this.getCommand().getChildren() == this.getChildren().size());
     }
 
     @Override
@@ -73,5 +68,10 @@ public class CommandableNode extends SyntaxNode {
     @Override
     public ArrayList<SyntaxNode> getChildren() {
         return this.children;
+    }
+
+    @Override
+    public void clearCommand() {
+        this.ready = false;
     }
 }
