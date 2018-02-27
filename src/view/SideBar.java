@@ -137,7 +137,6 @@ public class SideBar extends VBox{
 		penMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				String tempPen = penMenu.getSelectionModel().getSelectedItem().toString();
-				//System.out.println("set: " + Color.valueOf(tempPen));
 				myCanvas.setColor(Color.valueOf(tempPen));
 			}
 		});

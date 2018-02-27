@@ -35,7 +35,6 @@ public class Turtle implements Drawable, Updatable {
 	}
 	
 	private void translate(Pane display){
-		//System.out.println(myPane);
 		double height = display.getHeight();
 		double width = display.getWidth();
 		myViewX = myXPos + width/2;
@@ -66,7 +65,6 @@ public class Turtle implements Drawable, Updatable {
 		myIV = new ImageView(image);
 		myIV.setFitHeight(20);
 		myIV.setFitWidth(20);
-		System.out.println(myPane);
 		translate(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
@@ -76,15 +74,11 @@ public class Turtle implements Drawable, Updatable {
 	public void draw(Pane display, Color color) {
 		myPane = display;
 		translate(myPane);
-		//System.out.println("good");
 		if (isDown){
 			Line trail = new Line(myViewPrevX, myViewPrevY, myViewX, myViewY);
 			trail.setStroke(color);
-			//System.out.println("actual: " + color);
 			display.getChildren().add(trail);
 		}
-//		System.out.println(myViewX);
-//		System.out.println(myViewY);
 	}
 	
 	@Override
@@ -96,14 +90,6 @@ public class Turtle implements Drawable, Updatable {
 		translate(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
-//		System.out.println(myIV.getX());
-//		System.out.println(myIV.getY());
-//		myIV.setTranslateX(myViewX);
-//		myIV.setTranslateY(myViewY);
-//		System.out.println(myXPos);
-//		System.out.println(myYPos);
-//		System.out.println(myViewX);
-//		System.out.println(myViewY);
 	}
 
 	@Override
