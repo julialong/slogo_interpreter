@@ -93,20 +93,20 @@ public class Parser implements Iterable<Commandable> {
 			if (isArgument(curr)) {
 				myCurrent.inject(Double.parseDouble(curr));
 			} else if (isCommand(curr)) {
-//				if (myControlSet.contains(curr)) {
-//					Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
-//					String unbundled = unbundler.unbundle(myStringList, myDex);
-//					Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
-//					Double ans;
-//					for (Commandable c : i) {
-//						System.out.println("in parser: " + c.execute());
-//						ans = c.getAns();
-//					}
-//					myCurrent.inject(ans);
-//					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-//				} else {
+				if (myControlSet.contains(curr)) {
+					Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
+					String unbundled = unbundler.unbundle(myStringList, myDex);
+					Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
+					Double ans;
+					for (Commandable c : i) {
+						System.out.println("in parser: " + c.execute());
+						ans = c.getAns();
+					}
+					myCurrent.inject(ans);
+					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
+				} else {
 					myCurrent = createNode(curr, myCurrent);
-//				}	
+				}	
 			}
 			myDex += 1;
 		}
