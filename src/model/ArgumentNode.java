@@ -53,4 +53,9 @@ public class ArgumentNode extends SyntaxNode {
     public double getValue() {
         return this.value;
     }
+
+    @Override
+    public void clearCommand() {
+
+    }
 }

@@ -124,7 +124,7 @@ public class Parser {
                 temp.getParent().getCommand().inject(temp.getValue());
                 current = temp.getParent();
                 while (current.getParent().isDone()) {
-                    System.out.println("up");
+                    System.out.println(current.getParent().toString());
                     current = current.getParent();
                 }
 
