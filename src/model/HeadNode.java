@@ -50,12 +50,12 @@ public class HeadNode extends SyntaxNode{
     }
 
     @Override
-    public boolean wasTraversed() {
+    public boolean isDone() {
         return false;
     }
 
     @Override
-    public void hasBeenTraversed() {
+    public void setDone() {
 
     }
 

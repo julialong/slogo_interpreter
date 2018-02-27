@@ -30,8 +30,8 @@ public class ArgumentNode extends SyntaxNode {
     }
 
     @Override
-    public boolean wasTraversed() {
-        return this.traversed;
+    public boolean isDone() {
+        return true;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ArgumentNode extends SyntaxNode {
     }
 
     @Override
-    public void hasBeenTraversed() {
+    public void setDone() {
         this.traversed = true;
     }
 

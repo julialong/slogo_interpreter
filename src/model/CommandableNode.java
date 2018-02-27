@@ -41,13 +41,13 @@ public class CommandableNode extends SyntaxNode {
 
 
     @Override
-    public boolean isDone() {
+    public boolean isReady() {
         return command.isReady();
     }
 
 //    @Override
 //    public boolean isReady() {
-//        return (this.getChildren().size() == this.getCommand().)
+//        return (this.getChildren().size() == this.getCommand())
 //    }
 
     @Override
@@ -61,12 +61,12 @@ public class CommandableNode extends SyntaxNode {
     }
 
     @Override
-    public boolean wasTraversed() {
+    public boolean isDone() {
         return this.traversed;
     }
 
     @Override
-    public void hasBeenTraversed() {
+    public void setDone() {
         this.traversed = true;
     }
 

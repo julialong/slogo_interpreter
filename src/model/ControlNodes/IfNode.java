@@ -36,7 +36,7 @@ public class IfNode extends ControlNode {
     }
 
     @Override
-    public boolean wasTraversed() {
+    public boolean isDone() {
         return this.traversed;
     }
 
@@ -46,7 +46,7 @@ public class IfNode extends ControlNode {
     }
 
     @Override
-    public void hasBeenTraversed() {
+    public void setDone() {
     }
 
     @Override

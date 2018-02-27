@@ -114,13 +114,14 @@ public class Parser {
         SyntaxNode current = head;
         for (int i = 0; i < s.length; i++) {
             SyntaxNode temp = createNode(s[i]);
+            System.out.println(temp.toString());
             current.getChildren().add(temp);
             temp.setParent(current);
             if (temp.isCommand()) {
                 current = temp;
             }
             else if (!temp.isCommand()) {
-                while (temp.getParent().isReady()) {
+                while (temp.getParent().isDone()) {
                     current = temp.getParent();
                 }
             }

@@ -30,11 +30,11 @@ public abstract class ControlNode extends SyntaxNode {
     }
 
     @Override
-    public abstract boolean wasTraversed();
+    public abstract boolean isDone();
 
     @Override
     public abstract Commandable getCommand();
 
     @Override
-    public abstract void hasBeenTraversed();
+    public abstract void setDone();
 }

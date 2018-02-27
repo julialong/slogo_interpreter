@@ -47,7 +47,7 @@ public abstract class SyntaxNode implements Iterable{
 
     private SyntaxNode getNextChild() {
         for (SyntaxNode child : this.getChildren()) {
-            if (!child.wasTraversed()) {
+            if (!child.isDone()) {
                 return child;
             }
         }
@@ -84,15 +84,15 @@ public abstract class SyntaxNode implements Iterable{
         return this.getChildren().size() > 0;
     }
 
-    public abstract boolean wasTraversed();
+    public abstract boolean isDone();
 
-    public abstract void hasBeenTraversed();
+    public abstract void setDone();
 
     public abstract Commandable getCommand();
 
     public abstract CommandType getCommandType();
 
-    public abstract boolean isDone();
+    //public abstract boolean isDone();
 
     @Override
     public String toString() {
@@ -117,11 +117,11 @@ public abstract class SyntaxNode implements Iterable{
              */
             public boolean hasNext() {
                 for (SyntaxNode child : current.getChildren()) {
-                    if (!child.wasTraversed()) {
+                    if (!child.isDone()) {
                         return true;
                     }
                 }
-                if (!current.isHead() || !current.getParent().traversed) {
+                if (!current.isHead() || !current.getParent().isDone()) {
                     return true;
                 }
                 return false;
@@ -132,8 +132,7 @@ public abstract class SyntaxNode implements Iterable{
              * @return next SyntaxNode object in the tree
              */
             public Commandable next() {
-                while (current != null && (!current.isCommand() || !current.isHead() || current.wasTraversed())) {
-                    System.out.println(current.toString());
+                while (current != null && (!current.isCommand() || !current.isHead() || current.isDone())) {
                     current = current.getParent();
                 }
                 if (current != null) {
@@ -146,7 +145,7 @@ public abstract class SyntaxNode implements Iterable{
                     }
                 }
                 if (current != null) {
-                    current.hasBeenTraversed();
+                    current.setDone();
                 }
                 if (current != null) {
                     return current.getCommand();
@@ -163,7 +162,7 @@ public abstract class SyntaxNode implements Iterable{
     private void traverseToBottom(SyntaxNode current) {
         int i = 0;
         while (current != null && current.hasChildren()) {
-            System.out.println(i + " " + current.toString());
+            //System.out.println(i + " " + current.toString());
             current = current.getNextChild();
             i++;
         }

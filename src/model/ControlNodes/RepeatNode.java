@@ -37,8 +37,8 @@ public class RepeatNode extends ControlNode {
     }
 
     @Override
-    public boolean wasTraversed() {
-        return this.traversed;
+    public boolean isDone() {
+        return true;
     }
 
     @Override
@@ -47,7 +47,8 @@ public class RepeatNode extends ControlNode {
     }
 
     @Override
-    public void hasBeenTraversed() {
+    public void setDone() {
+
     }
 
     @Override
