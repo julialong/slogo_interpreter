@@ -7,6 +7,7 @@ import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
 import view.SlogoMain;
+import parser.Parser;
 
 public class Engine implements ChangeListener {
 	

@@ -82,6 +82,7 @@ public class RepeatUnbundler implements Unbundler {
             while (notRightBracket(current)) {
                 unbundledArray.add(current);
                 current = exp.get(currentIndex);
+                currentIndex++;
             }
         }
         return currentIndex;

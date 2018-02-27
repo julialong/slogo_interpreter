@@ -30,6 +30,7 @@ public class ForUnbundler implements  Unbundler{
      */
     public ForUnbundler(Parser p) {
         pr = p;
+        repCount = 0;
     }
 
     public String unbundle(List<String> exp, int index) {
@@ -37,10 +38,11 @@ public class ForUnbundler implements  Unbundler{
         return "";
     }
 
-    private void setNumbers(ArrayList<String> exp, int index) {
+    private void setNumbers(List<String> exp, int index) {
         variable = Double.parseDouble(exp.get(index + 1));
         start = Double.parseDouble(exp.get(index + 2));
         end = Double.parseDouble(exp.get(index + 3));
+        increment = Double.parseDouble(exp.get(index + 4));
     }
 
 }
