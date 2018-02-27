@@ -202,19 +202,30 @@ public class SideBar extends VBox{
 		return null;
 	}
 
+	/**
+	 * Button that has an ObjectProperty in order for TableView to display
+	 * Only public because TableView getter uses reflection and could not operate without this class being public
+	 */
 	public class LoadButton extends Button	{
 		private SimpleObjectProperty me;
 
-		public LoadButton()	{
+		private LoadButton()	{
 			super();
 			me = new SimpleObjectProperty(this);
 		}
 
+		/**
+		 * Returns this button as an ObjectProperty
+		 */
 		public SimpleObjectProperty meProperty()	{
 			return me;
 		}
 	}
 
+	/**
+	 * Class that has properties that TableView can read in order to import into table
+	 * Only public so PropertyValueFactory can get its properties
+	 */
 	public class VarVal	{
 		private SimpleStringProperty key;
 		private SimpleStringProperty value;
@@ -224,10 +235,16 @@ public class SideBar extends VBox{
 			value = new SimpleStringProperty(aVal);
 		}
 
+		/**
+		 * Returns the name of a variable, as a property
+		 */
     	public StringProperty keyProperty() {
 	        return key;
 	    }
 
+	    /**
+	     * Returns the value of a variable, as a property
+	     */
 	    public StringProperty valueProperty()	{
 	    	return value;
 	    }
