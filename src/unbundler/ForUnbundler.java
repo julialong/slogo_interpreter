@@ -4,7 +4,6 @@ import parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ForUnbundler implements  Unbundler{
 
@@ -24,6 +23,10 @@ public class ForUnbundler implements  Unbundler{
     private static final String LEFT_BRACE = "[";
     private static final String RIGHT_BRACE = "]";
 
+    public ForUnbundler() {
+        repCount = 0;
+    }
+
     /**
      * Creates an unbundler for the repeat command
      * @param p parser p
@@ -42,5 +45,7 @@ public class ForUnbundler implements  Unbundler{
         start = Double.parseDouble(exp.get(index + 2));
         end = Double.parseDouble(exp.get(index + 3));
     }
+
+
 
 }

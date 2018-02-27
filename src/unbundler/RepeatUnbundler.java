@@ -21,7 +21,6 @@ public class RepeatUnbundler implements Unbundler {
     private static final String RIGHT_BRACE = "]";
 
     public RepeatUnbundler() {
-
     }
 
     /**
@@ -43,7 +42,8 @@ public class RepeatUnbundler implements Unbundler {
         buildExpression(exp, index, commandIndex[0]);
         executeExpression();
         buildCommand(exp, commandIndex[0], commandIndex[1]);
-        exp = modifyList(exp, commandIndex[0], commandIndex[1]);
+        exp.removeAll(modifyList(exp, commandIndex[0], commandIndex[1]));
+        System.out.println("final expression:" + exp.toString());
 
         return String.join(" ", unbundledArray);
     }
@@ -54,10 +54,12 @@ public class RepeatUnbundler implements Unbundler {
      * @return the index of the first left bracket
      */
     private void buildExpression(List<String> exp, int start, int end) {
+        System.out.println(start + " " + end);
         for (int i = start + 1; i < end; i++) {
             String current = exp.get(i);
             expression.add(current);
         }
+        System.out.println("expression: " + expression.toString());
     }
 
     private void executeExpression() {
@@ -90,14 +92,16 @@ public class RepeatUnbundler implements Unbundler {
      * @return modified list
      */
     private List<String> modifyList(List<String> exp, int firstIndex, int lastIndex) {
-        List<String> start = new ArrayList<>(exp.subList(0, firstIndex));
-        if (lastIndex + 1 < exp.size()) {
-            List<String> end = new ArrayList<>(exp.subList(lastIndex + 1, exp.size()-1));
-            start.addAll(end);
-        }
-        return new ArrayList<>(start);
+        List<String> toRemove = new ArrayList<>(exp.subList(firstIndex, lastIndex + 1));
+        return toRemove;
     }
 
+    /**
+     * Finds the beginning and ending brackets for the given control command
+     * @param exp
+     * @param index
+     * @return
+     */
     private int[] findBrackets(List<String> exp, int index) {
         int[] answer = new int[2];
         Stack<Integer> bracketIndex = new Stack<>();
@@ -105,7 +109,7 @@ public class RepeatUnbundler implements Unbundler {
             if (!notLeftBracket(exp.get(i))) {
                 bracketIndex.push(i);
             }
-            else if (!notRightBracket(exp.get(i))) {
+            else if (!notRightBracket(exp.get(i)) && bracketIndex.size() > 0) {
                 answer[1] = i;
                 answer[0] = bracketIndex.pop();
             }
