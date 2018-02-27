@@ -1,3 +1,9 @@
+/**
+ * @author Jennifer Chin
+ * @author Maya Messinger
+ * Main application that runs the whole program, and displays all parts of the GUI
+ */
+
 package view;
 
 import java.util.ArrayList;
@@ -33,6 +39,9 @@ public class Visualizer extends Application{
 	private ChangeListener myEngine;
 	private String language = "English";
 	
+	/**
+	 * Default application start method that begins to run program
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		Stage myStage = primaryStage;
 		Scene myScene = initScreen();
@@ -97,15 +106,26 @@ public class Visualizer extends Application{
 		return scene;
 	}
 
+	/**
+	 * Called by Engine, takes in a drawable made in Engine and sends to canvas to draw. This is another middle man to separate model and view
+	 * @param turtle	object to be drawn on canvas
+	 */
 	public void addDrawable(Drawable turtle)	{
 		myCanvas.addDrawable(turtle);
 	}
 
+	/**
+	 * Controller functionality that passes visual elements the necessary info to update them
+	 * @param result	Result ojbect passed back from Engine that gives a double return value
+	 */
 	public void runCommand(Result result)	{
 		((Console)myConsole).printResult(Double.toString(result.getRes1()));
 		myCanvas.updateCanvas(result);
 	}
 	
+	/**
+	 * Runs the program
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

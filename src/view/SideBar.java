@@ -77,6 +77,7 @@ public class SideBar extends VBox{
 		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
 		commandTable = new TableView();
 		variableTable = new TableView();
+		double colWidth = 250;
 
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -132,15 +133,19 @@ public class SideBar extends VBox{
 		commandTable.setEditable(false);
 		comText = new TableColumn("User-defined commands");
 		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
+		comText.setMinWidth(colWidth);
         commandTable.getColumns().add(comText);
         commandTable.setItems(uDefCommands);
 		myVBox.getChildren().add(commandTable);
 
 		variableTable.setEditable(false);
 		vars = new TableColumn("Variables");
+		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
 		varName.setCellValueFactory(new PropertyValueFactory<>("key"));
+		varName.setPrefWidth(colWidth/2);
 		varValue = new TableColumn("Value");
+		varValue.setPrefWidth(colWidth/2);
 		varValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 		vars.getColumns().addAll(varName, varValue);
 		variableTable.getColumns().add(vars);
