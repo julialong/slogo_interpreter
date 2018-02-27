@@ -3,6 +3,7 @@ package unbundler;
 import parser.Parser;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class DoTimesUnbundler implements Unbundler{
@@ -31,7 +32,7 @@ public class DoTimesUnbundler implements Unbundler{
      * @param index is the index that the control command was found
      * @return the String of the unbundled control command
      */
-    public String unbundle(ArrayList<String> exp, int index) {
+    public String unbundle(List<String> exp, int index) {
 
 
         return "";

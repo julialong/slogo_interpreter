@@ -1,7 +1,9 @@
 package unbundler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 import commands.CommandFactory;
 import commands.Commandable;
@@ -18,6 +20,10 @@ public class RepeatUnbundler implements Unbundler {
     private static final String LEFT_BRACE = "[";
     private static final String RIGHT_BRACE = "]";
 
+    public RepeatUnbundler() {
+
+    }
+
     /**
      * Creates an unbundler for the repeat command
      */
@@ -32,12 +38,12 @@ public class RepeatUnbundler implements Unbundler {
      * @return the String of the unbundled control command
      */
     public String unbundle(List<String> exp, int index) {
-
+        int[] commandIndex = findBrackets(exp, index);
         expression = new ArrayList<>();
-        int commandStartIndex = buildExpression(exp, index);
+        buildExpression(exp, index, commandIndex[0]);
         executeExpression();
-        int commandEndIndex = buildCommand(exp, index);
-        exp = modifyList(exp, commandStartIndex, commandEndIndex);
+        buildCommand(exp, commandIndex[0], commandIndex[1]);
+        exp = modifyList(exp, commandIndex[0], commandIndex[1]);
 
         return String.join(" ", unbundledArray);
     }
@@ -45,18 +51,13 @@ public class RepeatUnbundler implements Unbundler {
     /**
      * Builds the expression to be evaluated
      * @param exp is the entire ArrayList of the input commands
-     * @param index index that the control command was found
      * @return the index of the first left bracket
      */
-    private int buildExpression(List<String> exp, int index) {
-        int i = index + 1;
-        String current = exp.get(i);
-        while (notLeftBracket(current) && i < exp.size()) {
+    private void buildExpression(List<String> exp, int start, int end) {
+        for (int i = start + 1; i < end; i++) {
+            String current = exp.get(i);
             expression.add(current);
-            i++;
-            current = exp.get(i);
         }
-        return i;
     }
 
     private void executeExpression() {
@@ -70,22 +71,14 @@ public class RepeatUnbundler implements Unbundler {
     /**
      * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
      * @param exp is the entire ArrayList of the input commands
-     * @param commandIndex is the index where the command begins
      * @return the index where the command ends, or the last bracket
      */
-    private int buildCommand(List<String> exp, int commandIndex) {
+    private void buildCommand(List<String> exp, int start, int stop) {
         unbundledArray = new ArrayList<>();
-        int currentIndex = 0;
         for (int i = 0; i < repeat; i++) {
-            currentIndex = commandIndex + 1;
-            String current = exp.get(currentIndex);
-            while (notRightBracket(current)) {
-                unbundledArray.add(current);
-                current = exp.get(currentIndex);
-                currentIndex++;
-            }
+            for (int j = start + 1; j < stop; j++)
+                unbundledArray.add(exp.get(i));
         }
-        return currentIndex;
     }
 
     /**
@@ -96,11 +89,27 @@ public class RepeatUnbundler implements Unbundler {
      * @return modified list
      */
     private List<String> modifyList(List<String> exp, int firstIndex, int lastIndex) {
-        List<String> start = exp.subList(0, firstIndex);
-        List<String> end = exp.subList(lastIndex + 1, exp.size()-1);
-        start.addAll(end);
+        List<String> start = new ArrayList<>(exp.subList(0, firstIndex));
+        if (lastIndex + 1 < exp.size()) {
+            List<String> end = new ArrayList<>(exp.subList(lastIndex + 1, exp.size()-1));
+            start.addAll(end);
+        }
+        return new ArrayList<>(start);
+    }
 
-        return new ArrayList<> (start);
+    private int[] findBrackets(List<String> exp, int index) {
+        int[] answer = new int[2];
+        Stack<Integer> bracketIndex = new Stack<>();
+        for (int i = index; i < exp.size(); i++) {
+            if (!notLeftBracket(exp.get(i))) {
+                bracketIndex.push(i);
+            }
+            else if (!notRightBracket(exp.get(i))) {
+                answer[1] = i;
+                answer[0] = bracketIndex.pop();
+            }
+        }
+        return answer;
     }
 
     /**
@@ -117,5 +126,12 @@ public class RepeatUnbundler implements Unbundler {
      */
     private boolean notRightBracket(String current) {
         return !current.equals(RIGHT_BRACE);
+    }
+
+    public static void main (String[] args) {
+        RepeatUnbundler r = new RepeatUnbundler();
+        String p = "[ h [ b [ b ] c ] t ]";
+        int[] a = r.findBrackets(new ArrayList<String>(Arrays.asList(p.split(" "))), 0);
+        System.out.println(a[0] + " " + a[1]);
     }
 }
