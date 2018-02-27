@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -27,10 +28,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import resources.keys.Resources;
+import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
 import slogo_team07.Turtle;
-
-import resources.languages.ResourcesLanguages;
 
 public class SideBar extends VBox{
 	private VBox myVBox;
@@ -42,11 +42,11 @@ public class SideBar extends VBox{
 			"Octopus", "Bird", "Butterfly");
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
-	private ObservableList<Button> uDefCommands = FXCollections.observableArrayList();
+	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
 	private TableView commandTable;
 	private TableView variableTable;
-	private TableColumn udCommands;
+	private TableColumn comText;
 	private TableColumn vars;
 	private TableColumn varName;
 	private TableColumn varValue;
@@ -130,9 +130,9 @@ public class SideBar extends VBox{
 		myVBox.getChildren().add(langMenu);
 
 		commandTable.setEditable(false);
-		udCommands = new TableColumn("User-defined commands");
-		udCommands.setCellValueFactory(new PropertyValueFactory<>("text"));
-        commandTable.getColumns().add(udCommands);
+		comText = new TableColumn("User-defined commands");
+		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
+        commandTable.getColumns().add(comText);
         commandTable.setItems(uDefCommands);
 		myVBox.getChildren().add(commandTable);
 
@@ -155,7 +155,7 @@ public class SideBar extends VBox{
 			return;
 		}
 
-		Button udc = new Button();
+		LoadButton udc = new LoadButton();
 		udc.setText(text);
 
 		udc.setOnAction(new EventHandler<ActionEvent>() {
@@ -195,6 +195,19 @@ public class SideBar extends VBox{
 		}
 
 		return null;
+	}
+
+	public class LoadButton extends Button	{
+		private SimpleObjectProperty me;
+
+		public LoadButton()	{
+			super();
+			me = new SimpleObjectProperty(this);
+		}
+
+		public SimpleObjectProperty meProperty()	{
+			return me;
+		}
 	}
 
 	public class VarVal	{
