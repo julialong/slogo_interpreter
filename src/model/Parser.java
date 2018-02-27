@@ -64,7 +64,7 @@ public class Parser {
      * @param string is the argument
      * @return true if the string is a Command
      */
-    private Boolean isCommand(String string) {
+    public Boolean isCommand(String string) {
         return string.matches("[a-zA-Z_]+(\\?)?");
     }
 
@@ -73,7 +73,7 @@ public class Parser {
      * @param string is the argument
      * @return true if the string is a control argument
      */
-    private Boolean isControl(String string) {
+    public Boolean isControl(String string) {
         return (string.contains("[") && string.contains("]"));
     }
 
@@ -82,7 +82,7 @@ public class Parser {
      * @param string is the argument
      * @return true if the string is an argument
      */
-    private Boolean isArgument(String string) {
+    public Boolean isArgument(String string) {
         return string.matches("\t\n" + "-?[0-9]+\\.?[0-9]*");
     }
 
@@ -91,7 +91,7 @@ public class Parser {
      * @param string is the argument
      * @return true if the string is an argument
      */
-    private Boolean isVariable(String string) {
+    public Boolean isVariable(String string) {
         return string.matches(":[a-zA-Z_]+");
     }
 
@@ -100,7 +100,7 @@ public class Parser {
      * @param string is the argument
      * @return true if the string is an argument
      */
-    private Boolean isComment(String string) {
+    public Boolean isComment(String string) {
         return string.matches("^#.*");
     }
 
@@ -114,7 +114,6 @@ public class Parser {
         SyntaxNode current = head;
         for (int i = 0; i < s.length; i++) {
             SyntaxNode temp = createNode(s[i]);
-            System.out.println(current.toString() + " + " + temp.toString());
             current.getChildren().add(temp);
             temp.setParent(current);
             if (temp.isCommand()) {
@@ -124,7 +123,6 @@ public class Parser {
                 temp.getParent().getCommand().inject(temp.getValue());
                 current = temp.getParent();
                 while (current.getParent().isDone()) {
-                    System.out.println(current.getParent().toString());
                     current = current.getParent();
                 }
 
