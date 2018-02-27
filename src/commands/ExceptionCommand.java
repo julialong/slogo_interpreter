@@ -1,6 +1,8 @@
 package commands;
 
 public class ExceptionCommand extends Command {
+
+	private Double ans;
 	
 	public ExceptionCommand() {
 		super(0);
@@ -11,8 +13,7 @@ public class ExceptionCommand extends Command {
 		return new Result(Double.MAX_VALUE);
 	}
 
-	@Override
-	public double getAns() {
-		return 0;
+	public double getAns()	{
+		return ans;
 	}
 }

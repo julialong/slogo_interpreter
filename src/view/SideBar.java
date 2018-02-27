@@ -9,7 +9,11 @@ package view;
 
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Map;
+import java.util.HashMap;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,14 +21,16 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import resources.keys.Resources;
+import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
 import slogo_team07.Turtle;
-
-import resources.languages.ResourcesLanguages;
 
 public class SideBar extends VBox{
 	private VBox myVBox;
@@ -36,7 +42,14 @@ public class SideBar extends VBox{
 			"Octopus", "Bird", "Butterfly");
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
-	List<Button> uDefCommands = new ArrayList<>();
+	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
+	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
+	private TableView commandTable;
+	private TableView variableTable;
+	private TableColumn comText;
+	private TableColumn vars;
+	private TableColumn varName;
+	private TableColumn varValue;
 	protected TextInput myTextInput;
 	protected String language;
 	
@@ -62,6 +75,9 @@ public class SideBar extends VBox{
 		ComboBox iconMenu = new ComboBox(iconList); //observable list
 		ComboBox penMenu = new ComboBox(); //observable list
 		ComboBox langMenu = new ComboBox<String>(langsSupported); //observable list
+		commandTable = new TableView();
+		variableTable = new TableView();
+		double colWidth = 250;
 
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -113,6 +129,28 @@ public class SideBar extends VBox{
 			}
 		});
 		myVBox.getChildren().add(langMenu);
+
+		commandTable.setEditable(false);
+		comText = new TableColumn("User-defined commands");
+		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
+		comText.setMinWidth(colWidth);
+        commandTable.getColumns().add(comText);
+        commandTable.setItems(uDefCommands);
+		myVBox.getChildren().add(commandTable);
+
+		variableTable.setEditable(false);
+		vars = new TableColumn("Variables");
+		vars.setPrefWidth(colWidth);
+		varName = new TableColumn("Name");
+		varName.setCellValueFactory(new PropertyValueFactory<>("key"));
+		varName.setPrefWidth(colWidth/2);
+		varValue = new TableColumn("Value");
+		varValue.setPrefWidth(colWidth/2);
+		varValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+		vars.getColumns().addAll(varName, varValue);
+		variableTable.getColumns().add(vars);
+		variableTable.setItems(setVariables);
+		myVBox.getChildren().add(variableTable);
 				
 		return myVBox;
 	}
@@ -122,9 +160,8 @@ public class SideBar extends VBox{
 			return;
 		}
 
-		Button udc = new Button();
+		LoadButton udc = new LoadButton();
 		udc.setText(text);
-		uDefCommands.add(udc);
 
 		udc.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -133,16 +170,66 @@ public class SideBar extends VBox{
 			}
 		});
 
-		myVBox.getChildren().add(udc);
+		uDefCommands.add(udc);
+	}
+
+	protected void addVar(String var, String value)	{
+		if (varExists(var) != null)	{
+			varExists(var).value.set(value);
+		}
+		else	{
+			setVariables.add(new VarVal(var, value));
+		}
 	}
 
 	private boolean buttonExists(String text)	{
-		for (Button butt:uDefCommands)	{
-			if (butt.getText().equals(text))	{
+		for (Button command:uDefCommands)	{
+			if (command.getText().equals(text))	{
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	private VarVal varExists(String var)	{
+		for (VarVal aVar:setVariables)	{
+			if (aVar.key.getValue().equals(var))	{
+				return aVar;
+			}
+		}
+
+		return null;
+	}
+
+	public class LoadButton extends Button	{
+		private SimpleObjectProperty me;
+
+		public LoadButton()	{
+			super();
+			me = new SimpleObjectProperty(this);
+		}
+
+		public SimpleObjectProperty meProperty()	{
+			return me;
+		}
+	}
+
+	public class VarVal	{
+		private SimpleStringProperty key;
+		private SimpleStringProperty value;
+
+		private VarVal(String aKey, String aVal)	{
+			key = new SimpleStringProperty(aKey);
+			value = new SimpleStringProperty(aVal);
+		}
+
+    	public StringProperty keyProperty() {
+	        return key;
+	    }
+
+	    public StringProperty valueProperty()	{
+	    	return value;
+	    }
 	}
 }

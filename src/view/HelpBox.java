@@ -1,3 +1,8 @@
+/**
+ * @author Maya Messinger
+ * 
+ */
+
 package view;
 
 import javafx.beans.value.ChangeListener;
