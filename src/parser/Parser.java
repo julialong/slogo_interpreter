@@ -24,7 +24,7 @@ public class Parser implements Iterable<Commandable> {
 	private Node myCurrent;
 	private Set<String> myControlSet;
 	private Map<String, String> myVarMap = new HashMap<>();
-	private Map<String, List<String>> myFuncMap = new HashMap<>();
+	private Map<String, Function> myFuncMap = new HashMap<>();
 
 	public Parser(CommandFactory cf) {
 		myCommandFactory = cf;
@@ -122,17 +122,22 @@ public class Parser implements Iterable<Commandable> {
 	}
 	
 
-	private List<String> replaceUnknowns(String s, Map<String, String> var_map, Map<String, List<String>> func_map) {
+	private List<String> replaceUnknowns(String s, Map<String, String> var_map, Map<String, Function> func_map) {
 		String[] arr = s.split(" ");
 		List<String> ans = new ArrayList<>();
-		for (int i=0; i < arr.length; i++) {
+		int i=0;
+		while (i < arr.length) {
 			String curr = arr[i];
 			if (var_map.containsKey(curr)) {
-				List<String> replaced = Arrays.asList(var_map.get(curr).split(" "));
-				ans.addAll(replaced);
+				String replaced = var_map.get(curr);
+				ans.add(replaced);
 			} else if (func_map.containsKey(curr)) {
-				List<String> replaced = func_map.get(curr);
-				ans.addAll(replaced);
+				Function func = func_map.get(curr);
+				for (int j=0; j < func.numArgs(); j++) {
+					func.inject(arr[i + j + 1]);
+				}
+				ans.addAll(func.replaceParams());
+				i = i + func.numArgs() + 1; 
 			} else {
 				ans.add(curr);
 			}
