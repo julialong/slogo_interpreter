@@ -1,6 +1,6 @@
-package unbundlers;
+package unbundler;
 
-import model.Parser;
+import parser.Parser;
 
 import java.util.ArrayList;
 import java.util.Map;
