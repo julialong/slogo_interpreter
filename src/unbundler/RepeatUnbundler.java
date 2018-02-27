@@ -3,17 +3,17 @@ package unbundler;
 import java.util.ArrayList;
 import java.util.List;
 
+import commands.CommandFactory;
 import commands.Commandable;
 import parser.Parser;
 
 public class RepeatUnbundler implements Unbundler {
-	
-    private Parser pr;
 
     private double repeat;
 
     private StringBuilder expression;
     private ArrayList<String> unbundledArray;
+    private CommandFactory commandFactory;
 
     private static final String LEFT_BRACE = "[";
     private static final String RIGHT_BRACE = "]";
@@ -23,8 +23,8 @@ public class RepeatUnbundler implements Unbundler {
      * @param p parser p
      * @param variables Current dictionary of variables stored
      */
-    public RepeatUnbundler(Parser p) {
-        pr = p;
+    public RepeatUnbundler(CommandFactory cf) {
+    		commandFactory = cf;
     }
 
     /**
@@ -37,7 +37,8 @@ public class RepeatUnbundler implements Unbundler {
 
         expression = new StringBuilder();
         int commandStartIndex = buildExpression(exp, index);
-        Iterable<Commandable> iterable = pr.parse(expression.toString());
+        System.out.println(expression);
+        Iterable<Commandable> iterable = new Parser(commandFactory).parse(expression.toString());
         for (Commandable c : iterable) {
         		c.execute();
         		repeat = c.getAns();

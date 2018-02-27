@@ -2,6 +2,7 @@ package parser;
 
 import java.util.Map;
 
+import commands.CommandFactory;
 import unbundler.RepeatUnbundler;
 import unbundler.Unbundler;
 
@@ -9,15 +10,15 @@ public class UnbundlerFactory {
 	private static final String PREFIX_STRING = "model.Unbundlers.";
 	private static final String SUFFIX_STRING = "Unbundler";
 	
-	private Parser myParser;
+	private CommandFactory myCommandFactory;
 	
-	public UnbundlerFactory(Parser parser) {
-		myParser = parser;
+	public UnbundlerFactory(CommandFactory cf) {
+		myCommandFactory = cf;
 	}
 
 	public Unbundler createUnbundler(String control, Map<String, String> var_map, Map<String, Function> func_map) {
 		if (control.equals("REPEAT")) {
-			return new RepeatUnbundler(myParser);
+			return new RepeatUnbundler(myCommandFactory);
 		} // else if (control.equals("IF")) {
 //			return new IfUnbundler();
 //		} else if (control.equals("IFELSE")) {

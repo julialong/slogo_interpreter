@@ -29,13 +29,14 @@ public class Parser implements Iterable<Commandable> {
 
 	public Parser(CommandFactory cf) {
 		myCommandFactory = cf;
-		myUnbundlerFactory = new UnbundlerFactory(this);
+		myUnbundlerFactory = new UnbundlerFactory(myCommandFactory);
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
 	}
 
 	public Iterable<Commandable> parse(String s) {
 //		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
 		myStringList = Arrays.asList(s.split(" "));
+		System.out.println(myStringList);
 
 		myDex = 0;
 		myDummyRoot = new Node(myCommandFactory.createCommand("null"));
@@ -64,6 +65,8 @@ public class Parser implements Iterable<Commandable> {
 					if (myControlSet.contains(next)) {
 						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
 						// need unbundled to rip out the commandflow stuff and return an array of Strings / string most likely
+						System.out.println(myStringList);
+						System.out.println(myDex);
 						String unbundled = unbundler.unbundle(myStringList, myDex);
 						System.out.println(unbundled);
 						Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
