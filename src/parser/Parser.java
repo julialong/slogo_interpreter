@@ -19,7 +19,7 @@ public class Parser implements Iterable<Commandable> {
 
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
-	private List<String> myStringList;
+	private ArrayList<String> myStringList;
 	private int myDex;
 	private Node myDummyRoot;
 	private Node myCurrent;
@@ -35,7 +35,7 @@ public class Parser implements Iterable<Commandable> {
 
 	public Iterable<Commandable> parse(String s) {
 //		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
-		myStringList = Arrays.asList(s.split(" "));
+		myStringList = new ArrayList<>(Arrays.asList(s.split(" ")));
 		System.out.println(myStringList);
 
 		myDex = 0;
