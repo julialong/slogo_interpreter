@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
 public class GetPendown extends UpdatableCommand {
 
-	public GetPendown(Updatable updatable) {
-		super(0, updatable);
+	public GetPendown(Visualizer vis, Updatable updatable) {
+		super(vis, 0, updatable);
 	}
 
 	@Override

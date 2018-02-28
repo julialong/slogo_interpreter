@@ -2,10 +2,12 @@ package commands.math.algebra;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class DifferenceCommand extends AlgebraCommand {
 
-	public DifferenceCommand() {
-		super(2);
+	public DifferenceCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

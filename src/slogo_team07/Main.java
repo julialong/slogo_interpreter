@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
-		 Engine engine = new Engine(stage);
+		 new Engine(stage);
 	}
 	
 	

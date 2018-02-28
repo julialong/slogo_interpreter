@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
 public class HomeCommand extends UpdatableCommand {
 
-	public HomeCommand(Updatable updatable) {
-		super(0, updatable);
+	public HomeCommand(Visualizer vis, Updatable updatable) {
+		super(vis, 0, updatable);
 	}
 
 	@Override

@@ -2,10 +2,12 @@ package commands.math.algebra;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class RemainderCommand extends AlgebraCommand {
 
-	public RemainderCommand() {
-		super(2);
+	public RemainderCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

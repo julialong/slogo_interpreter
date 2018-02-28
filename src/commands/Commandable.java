@@ -1,7 +1,7 @@
 package commands;
 
 public interface Commandable {
-	Result execute();
+	void execute();
 	
 	boolean isReady();
 	

@@ -2,10 +2,12 @@ package commands.booleans;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class OrCommand extends BooleanCommand {
 
-	public OrCommand() {
-		super(2);
+	public OrCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

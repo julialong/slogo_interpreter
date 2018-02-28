@@ -2,10 +2,12 @@ package commands.booleans;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class NotCommand extends BooleanCommand {
 	
-	public NotCommand() {
-		super(1);
+	public NotCommand(Visualizer vis) {
+		super(vis, 1);
 	}
 	
 	@Override

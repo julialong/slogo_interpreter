@@ -16,13 +16,13 @@ import unbundler.UnbundlerFactory;
 
 public class Parser implements Iterable<Commandable> {
 
-	private static final String[] CONTROL_NAMES = { "MAKE", "SET", "FOR", "IFELSE", "IF", "REPEAT", "DOTIMES", "TO" };
+	private static final String[] CONTROL_NAMES = { "make", "set", "for", "ifelse", "if", "repeat", "dotimes", "to" };
 	private static final String NULL = "null";
 	private static final String NUMBER = "number";
 
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
-	private ArrayList<String> myStringList;
+	private List<String> myStringList;
 	private int myDex;
 	private Node myDummyRoot;
 	private Node myCurrent;
@@ -37,8 +37,7 @@ public class Parser implements Iterable<Commandable> {
 	}
 
 	public Iterable<Commandable> parse(String s) {
-//		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
-		myStringList = new ArrayList<>(Arrays.asList(s.split(" ")));
+		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
 
 		myDex = 0;
 		myDummyRoot = new Node(myCommandFactory.createCommand(NULL));
@@ -65,17 +64,20 @@ public class Parser implements Iterable<Commandable> {
 					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
 				} else {
 					String next = myStringList.get(myDex);
-					if (myControlSet.contains(next)) {
+					if (myControlSet.contains(next.toLowerCase())) {
 						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
 						String unbundled = unbundler.unbundle(myStringList, myDex);
 						System.out.println("main: " + unbundled);
 						System.out.println(myStringList);
+						if (unbundled.length() == 0) {
+							return myCommandFactory.createCommand(NULL);
+						}
 						Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
 						Double ans = null;
 						for (Commandable c : i) {
 							c.execute();
 							ans = c.getAns();
-							System.out.println("in parser next(): " + ans);
+							System.out.println(c + " in parser findNext(): " + ans);
 						}
 						if (ans != null && myCurrent != myDummyRoot) {
 							myCurrent.inject(ans);
@@ -116,13 +118,15 @@ public class Parser implements Iterable<Commandable> {
 					String unbundled = unbundler.unbundle(myStringList, myDex);
 					System.out.println("next: " + unbundled);
 					System.out.println(myStringList);
+					if (unbundled.length() == 0) {
+						return myCommandFactory.createCommand(NULL);
+					}
 					Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
 					Double ans = null;
 					for (Commandable c : i) {
 						c.execute();
 						ans = c.getAns();
-						System.out.println("in parser findNext(): " + ans);
-						return null;
+						System.out.println(c + " in parser findNext(): " + ans);
 					}
 					if (ans != null && myCurrent != myDummyRoot) {
 						myCurrent.inject(ans);
@@ -150,6 +154,7 @@ public class Parser implements Iterable<Commandable> {
 
 	private List<String> replaceUnknowns(String s, Map<String, String> var_map, Map<String, Function> func_map) {
 		String[] arr = s.split(" ");
+		System.out.println(Arrays.toString(arr));
 		List<String> ans = new ArrayList<>();
 		int i=0;
 		while (i < arr.length) {
@@ -157,6 +162,7 @@ public class Parser implements Iterable<Commandable> {
 			if (var_map.containsKey(curr)) {
 				String replaced = var_map.get(curr);
 				ans.add(replaced);
+				i += 1;
 			} else if (func_map.containsKey(curr)) {
 				Function func = func_map.get(curr);
 				for (int j=0; j < func.numArgs(); j++) {
@@ -166,8 +172,10 @@ public class Parser implements Iterable<Commandable> {
 				i = i + func.numArgs() + 1; 
 			} else {
 				ans.add(curr);
+				i += 1;
 			}
 		}
+		System.out.println(Arrays.toString(ans.toArray()));
 		return ans;
 	}
 
@@ -181,39 +189,12 @@ public class Parser implements Iterable<Commandable> {
 	}
 
 	/**
-	 * Checks for list structure required for control command
-	 * @param string is the argument
-	 * @return true if the string is a control argument
-	 */
-	private Boolean isControl(String string) {
-		return (string.contains("[") && string.contains("]"));
-	}
-
-	/**
 	 * Checks to determine if the given string is a number argument
 	 * @param string is the argument
 	 * @return true if the string is an argument
 	 */
 	private Boolean isArgument(String string) {
 		return string.matches("-?[0-9]+\\.?[0-9]*");
-	}
-
-	/**
-	 * Checks to determine if the given string is a variable
-	 * @param string is the argument
-	 * @return true if the string is an argument
-	 */
-	private Boolean isVariable(String string) {
-		return string.matches(":[a-zA-Z_]+");
-	}
-
-	/**
-	 * Checks to determine if the given string is a comment
-	 * @param string is the argument
-	 * @return true if the string is an argument
-	 */
-	private Boolean isComment(String string) {
-		return string.matches("^#.*");
 	}
 
 

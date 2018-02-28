@@ -2,7 +2,13 @@ package commands.math.trig;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class AtanCommand extends TrigCommand {
+
+	public AtanCommand(Visualizer vis) {
+		super(vis);
+	}
 
 	@Override
 	protected Double calcValue(List<Double> args) {

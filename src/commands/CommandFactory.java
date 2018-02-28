@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import commands.misc.NullCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
 public class CommandFactory {
 
@@ -16,9 +18,11 @@ public class CommandFactory {
 	ResourceBundle myCommands = ResourceBundle.getBundle(COMMANDS);
 	Map<String, String> myLanguages = new HashMap<>();
 	Map<String, Updatable> myUpdatables;
+	Visualizer myVis;
 
-	public CommandFactory(Map<String, Updatable> updatables) {
+	public CommandFactory(Map<String, Updatable> updatables, Visualizer vis) {
 		myUpdatables = updatables;
+		myVis = vis;
 		updateLanguage(DEFAULT);
 	}
 
@@ -32,13 +36,13 @@ public class CommandFactory {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getConstructor(Updatable.class);
-				return (Commandable) ctor.newInstance(myUpdatables.get(id));
+				return (Commandable) ctor.newInstance(myVis, myUpdatables.get(id));
 			} else {
 				Constructor<?> ctor = clazz.getConstructor();
-				return (Commandable) ctor.newInstance();
+				return (Commandable) ctor.newInstance(myVis);
 			}
 		} catch (Exception e) {
-			return new NullCommand();
+			return new NullCommand(myVis);
 		}
 	}
 

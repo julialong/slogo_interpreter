@@ -3,11 +3,12 @@ package commands.math.misc;
 import java.util.List;
 
 import commands.NonUpdatableCommand;
+import view.Visualizer;
 
 public class PowCommand extends NonUpdatableCommand {
 
-	public PowCommand() {
-		super(2);
+	public PowCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

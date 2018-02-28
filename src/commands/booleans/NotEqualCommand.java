@@ -2,10 +2,12 @@ package commands.booleans;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class NotEqualCommand extends BooleanCommand {
 
-	public NotEqualCommand() {
-		super(2);
+	public NotEqualCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

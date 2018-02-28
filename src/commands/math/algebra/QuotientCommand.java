@@ -2,10 +2,12 @@ package commands.math.algebra;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class QuotientCommand extends AlgebraCommand {
 
-	public QuotientCommand() {
-		super(2);
+	public QuotientCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

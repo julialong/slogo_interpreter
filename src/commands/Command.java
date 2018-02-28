@@ -3,13 +3,17 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import view.Visualizer;
+
 public abstract class Command implements Commandable {
 	
 	private int myArgsNeeded;
 	private List<Double> myArgs = new ArrayList<>();
+	private Visualizer myVis;
 
-	public Command(int num_args) {
+	public Command(Visualizer vis, int num_args) {
 		myArgsNeeded = num_args;
+		myVis = vis;
 	}
 
 	@Override
@@ -33,6 +37,10 @@ public abstract class Command implements Commandable {
 	
 	public int getChildren() {
 		return myArgsNeeded;
+	}
+	
+	protected void visCommand(Result result) {
+		myVis.runCommand(result);
 	}
 
 }

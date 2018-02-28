@@ -2,10 +2,12 @@ package commands.math.algebra;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class MinusCommand extends AlgebraCommand {
 	
-	public MinusCommand() {
-		super(1);
+	public MinusCommand(Visualizer vis) {
+		super(vis,  1);
 	}
 
 	@Override

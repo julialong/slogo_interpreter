@@ -7,21 +7,19 @@
 package view;
 
 import java.util.ArrayList;
+
+import commands.Result;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
 import slogo_team07.ChangeListener;
 import slogo_team07.Drawable;
-import slogo_team07.Updatable;
-import slogo_team07.Engine;
 import slogo_team07.Turtle;
-import commands.Result;
 
 public class Visualizer {
 	
