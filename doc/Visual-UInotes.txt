@@ -37,7 +37,7 @@ Jennifer
 * options
 
 Maya
-* drawable (turtle)
+* user-defined commands
 * command console (PRIORITIZE)
 * help pop-up
 * alerts

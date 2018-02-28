@@ -36,8 +36,12 @@ public class Visualizer extends Application{
 	private Toolbar myToolbar;
 	private BorderPane root;
 	private ArrayList<Drawable> myTurtles = new ArrayList<Drawable>();
-	private ChangeListener myEngine;
+	private ChangeListener myChangeListener;
 	private String language = "English";
+	
+	public Visualizer(ChangeListener change_listener) {
+		myChangeListener = change_listener;
+	}
 	
 	/**
 	 * Default application start method that begins to run program
@@ -66,7 +70,7 @@ public class Visualizer extends Application{
 		if (!mySideBar.language.equals(language))	{
 			language = mySideBar.language;
 			myConsole.language = language;
-			myEngine.changeLanguage(language);
+			myChangeListener.changeLanguage(language);
 		}
 	}
 	
@@ -95,10 +99,8 @@ public class Visualizer extends Application{
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
 
-		myEngine = new Engine(this);
-
 		myCanvas.myVBox = mySideBar;
-		((Console)myConsole).myCL = myEngine;
+		((Console)myConsole).myChangeListener = myChangeListener;
 		((SideBar)mySideBar).myTextInput = myConsole;
 		((Console)myConsole).myVBox = mySideBar;
 		

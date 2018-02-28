@@ -19,7 +19,8 @@ public abstract class NonUpdatableCommand extends Command {
 		ans = calcValue(getArgs());
 		return new Result(ans);
 	}
-	
+
+	@Override
 	public Double getAns() {
 		return ans;
 	}

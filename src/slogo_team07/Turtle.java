@@ -4,6 +4,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 import slogo_team07.Drawable;
@@ -11,41 +13,83 @@ import slogo_team07.Updatable;
 
 public class Turtle implements Drawable, Updatable {
 
-	private double myXPos = 0.0;
-	private double myYPos = 0.0;
-	private double myPrevXPos = 0.0;
-	private double myPrevYPos = 0.0;
+	private double myXPos;
+	private double myYPos;
+	private double myPrevXPos;
+	private double myPrevYPos;
+	private double myViewX = 0.0;
+	private double myViewY = 0.0;
+	private double myViewPrevX = 0.0;
+	private double myViewPrevY = 0.0;
 	private boolean isDown = true;
 	private boolean isVisible = true;
-	private Double myDegrees = 90.0;
+	private Double myDegrees = 0.0; //unsure if correct initial value
 	private ImageView myIV;
+	private Pane myPane;
 
 	public Turtle() {
 		Image image = new Image("/view/turtle.jpg");
 		myIV = new ImageView(image);
-		myIV.setX(myXPos);
-		myIV.setY(myYPos);
+		myIV.setX(myViewX);
+		myIV.setY(myViewY);
+	}
+	
+	private void translate(Pane display){
+		double height = display.getHeight();
+		double width = display.getWidth();
+		myViewX = myXPos + width/2;
+		myViewY = -1 * (myYPos - height/2);
+		myViewPrevX = myPrevXPos + width/2;
+		myViewPrevY = -1 * (myPrevYPos  - height/2);
+		myIV.setX(myViewX);
+		myIV.setY(myViewY);
+	}
+	
+	public void setPane(Pane pane){
+		myPane = pane;
 	}
 
+	@Override
+	public boolean getIsVisible(){
+		return isVisible;
+	}
+	
+	@Override
 	public ImageView getView(){
 		return myIV;
 	}
 
+	@Override
 	public void setView(String imagePath){
 		Image image = new Image(imagePath);
 		myIV = new ImageView(image);
 		myIV.setFitHeight(20);
 		myIV.setFitWidth(20);
-		myIV.setX(myXPos);
-		myIV.setY(myYPos);
+		translate(myPane);
+		myIV.setX(myViewX);
+		myIV.setY(myViewY);
 	}
 
 	@Override
-	public Group draw(Group display) {
-		Line trail = new Line(myPrevXPos, myPrevYPos, myXPos, myYPos);
-		display.getChildren().add(myIV);
-		display.getChildren().add(trail);
-		return display;
+	public void draw(Pane display, Color color) {
+		myPane = display;
+		translate(myPane);
+		if (isDown){
+			Line trail = new Line(myViewPrevX, myViewPrevY, myViewX, myViewY);
+			trail.setStroke(color);
+			display.getChildren().add(trail);
+		}
+	}
+	
+	@Override
+	public void test(double x, double y){
+		myPrevXPos = myXPos;
+		myPrevYPos = myYPos;
+		myXPos = x;
+		myYPos = y;
+		translate(myPane);
+		myIV.setX(myViewX);
+		myIV.setY(myViewY);
 	}
 
 	@Override
@@ -55,8 +99,9 @@ public class Turtle implements Drawable, Updatable {
 		myPrevYPos = myYPos;
 		myXPos = x;
 		myYPos = y;
-		myIV.setX(x);
-		myIV.setY(y);
+		translate(myPane);
+		myIV.setX(myViewX);
+		myIV.setY(myViewY);
 		return distance;
 	}
 
@@ -67,20 +112,27 @@ public class Turtle implements Drawable, Updatable {
 		Double radians = degreesToRadians(myDegrees);
 		myXPos += pixels * Math.cos(radians);
 		myYPos += pixels * Math.sin(radians);
+		translate(myPane);
+		myIV.setX(myViewX);
+		myIV.setY(myViewY);
 		return pixels;
 	}
 
 	@Override
 	public Double home() {
 		Double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
+		myPrevXPos = myXPos;
+		myPrevYPos = myYPos;
 		myXPos = 0.0;
 		myYPos = 0.0;
+		translate(myPane);
 		return distance;
 	}
 
 	@Override
 	public Double rotate(Double clockwise) {
 		myDegrees += clockwise;
+		myIV.setRotate(myDegrees);
 		return clockwise;
 	}
 
@@ -88,6 +140,7 @@ public class Turtle implements Drawable, Updatable {
 	public Double setHeading(Double degrees) {
 		Double old = myDegrees;
 		myDegrees = degrees;
+		myIV.setRotate(myDegrees);
 		return degrees - old;
 	}
 
@@ -103,6 +156,7 @@ public class Turtle implements Drawable, Updatable {
 		Point2D new_vec = calcVector(0.0, 0.0, x, y);
 
 		Double ans = calcAngle(old_vec, new_vec);
+		//need to add imageview rotation
 		return ans;
 	}
 
@@ -153,8 +207,12 @@ public class Turtle implements Drawable, Updatable {
 	
 	@Override
 	public Double clear() {
-		// NEEDS TO BE COMPLETED
-		return null;
+		Double dist = this.home();
+		myPane.getChildren().clear();
+		myIV.setFitHeight(20);
+		myIV.setFitWidth(20);
+		myPane.getChildren().add(myIV);
+		return dist;
 	}
 	
 	private Double degreesToRadians(Double degrees) {
