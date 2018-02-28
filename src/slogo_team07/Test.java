@@ -11,7 +11,7 @@ public class Test {
 //		Iterable<Commandable> iterable = p.parse("REPEAT 10. [ lessp 8.0 5.1 ]");
 //		Iterable<Commandable> iterable = p.parse("sum 11 20 REPEAT 4 [ lessp 3.0 5.1 ]");
 //		Iterable<Commandable> iterable = p.parse("sum 10 20 REPEAT sum 2.1 3.2 [ lessp 8.0 5.1 ] sum 10 20");
-//		Iterable<Commandable> iterable = p.parse("sum 2.1 3.2");
+		Iterable<Commandable> iterable = p.parse("sum 2.1 3.2");
 		for (Commandable c : iterable) {
 			System.out.println("in test: " + c.execute());
 		}
