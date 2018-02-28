@@ -16,6 +16,8 @@ import unbundler.Unbundler;
 public class Parser implements Iterable<Commandable> {
 
 	private static final String[] CONTROL_NAMES = { "MAKE", "SET", "FOR", "IFELSE", "IF", "REPEAT", "DOTIMES", "TO" };
+	private static final String NULL = "null";
+	private static final String NUMBER = "number";
 
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
@@ -36,10 +38,9 @@ public class Parser implements Iterable<Commandable> {
 	public Iterable<Commandable> parse(String s) {
 //		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
 		myStringList = new ArrayList<>(Arrays.asList(s.split(" ")));
-		System.out.println(myStringList);
 
 		myDex = 0;
-		myDummyRoot = new Node(myCommandFactory.createCommand("null"));
+		myDummyRoot = new Node(myCommandFactory.createCommand(NULL));
 		myCurrent = myDummyRoot;
 		return () -> iterator();
 	}
@@ -50,7 +51,8 @@ public class Parser implements Iterable<Commandable> {
 
 			@Override
 			public boolean hasNext() {
-				return myCurrent.getParent() != myDummyRoot || myDex < myStringList.size();
+				return (myCurrent.getParent() != myDummyRoot && myCurrent != myDummyRoot)
+						|| myDex < myStringList.size();
 			}
 
 			@Override
@@ -66,19 +68,32 @@ public class Parser implements Iterable<Commandable> {
 						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
 						// need unbundled to rip out the commandflow stuff and return an array of Strings / string most likely
 						String unbundled = unbundler.unbundle(myStringList, myDex);
+						System.out.println("main: " + unbundled);
 						System.out.println(myStringList);
 						Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
 						Double ans = null;
 						for (Commandable c : i) {
-							System.out.println("in parser: " + c.execute());
+							c.execute();
 							ans = c.getAns();
+							System.out.println("in parser next(): " + ans);
 						}
-						myCurrent.inject(ans);
-						return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-					} else {
+						if (ans != null && myCurrent != myDummyRoot) {
+							myCurrent.inject(ans);
+							return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
+						} else {
+							return myCommandFactory.createCommand(NULL);
+						}
+					} else if (isCommand(next)) {
 						myCurrent = createNode(next, myCurrent);
 						myDex += 1;
 						return findNext();
+					} else if (isArgument(next)) {
+						Commandable number = myCommandFactory.createCommand(NUMBER);
+						number.inject(Double.valueOf(next));
+						myDex += 1;
+						return number;
+					} else {
+						return myCommandFactory.createCommand(NULL);
 					}
 				}
 			}
@@ -99,15 +114,22 @@ public class Parser implements Iterable<Commandable> {
 				if (myControlSet.contains(curr)) {
 					Unbundler unbundler = myUnbundlerFactory.createUnbundler(curr, myVarMap, myFuncMap);
 					String unbundled = unbundler.unbundle(myStringList, myDex);
+					System.out.println("next: " + unbundled);
+					System.out.println(myStringList);
 					Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
 					Double ans = null;
 					for (Commandable c : i) {
-						System.out.println("in parser2: " + c.execute());
+						c.execute();
 						ans = c.getAns();
+						System.out.println("in parser findNext(): " + ans);
 					}
-					myCurrent.inject(ans);
-					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-				} else {
+					if (ans != null && myCurrent != myDummyRoot) {
+						myCurrent.inject(ans);
+						return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
+					} else {
+						return myCommandFactory.createCommand(NULL);
+					}
+				} else if (isCommand(curr)) {
 					myCurrent = createNode(curr, myCurrent);
 				}	
 			}

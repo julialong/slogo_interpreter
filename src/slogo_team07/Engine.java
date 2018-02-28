@@ -6,6 +6,7 @@ import java.util.Map;
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
+import parser.Parser;
 import view.SlogoMain;
 
 public class Engine implements ChangeListener {
@@ -31,8 +32,7 @@ public class Engine implements ChangeListener {
 	// should be stored on the front end as ChangeListener.changeInput(String)	
 	@Override
 	public void changeInput(String input) {
-		Iterable<Commandable> iterable = myParser.parse(input);
-		for (Commandable c : iterable) {
+		for (Commandable c : myParser.parse(input)) {
 			Result result = c.execute();
 			myVis.updateView(result);
 		}
