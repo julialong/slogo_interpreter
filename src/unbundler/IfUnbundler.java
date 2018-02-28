@@ -1,25 +1,29 @@
 package unbundler;
 
+import commands.CommandFactory;
+import commands.Commandable;
 import parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class DoTimesUnbundler implements Unbundler{
+public class IfUnbundler implements Unbundler{
 
-    private String variable;
-    private double end;
-
+    private List<String> expression;
     private ArrayList<String> unbundledArray;
+    private CommandFactory commandFactory;
+
+    private boolean executeCommands;
 
     private static final String LEFT_BRACE = "[";
     private static final String RIGHT_BRACE = "]";
 
     /**
-     * Creates an unbundler for the dotimes command
+     * Creates an unbundler for the repeat command
      */
-    public DoTimesUnbundler() {
+    public IfUnbundler(CommandFactory cf) {
+        commandFactory = cf;
     }
 
     /**
@@ -29,24 +33,39 @@ public class DoTimesUnbundler implements Unbundler{
      * @return the String of the unbundled control command
      */
     public String unbundle(List<String> exp, int index) {
-        setNumbers(exp, index + 2);
-        int[] commandIndex = findBrackets(exp, index + 5);
-        System.out.println(index + " " + commandIndex[0] + " " + commandIndex[1]);
+        int[] commandIndex = this.findBrackets(exp, index);
+        expression = new ArrayList<>();
+        buildExpression(exp, index, commandIndex[0]);
+        executeExpression();
         buildCommand(exp, commandIndex[0], commandIndex[1]);
         modifyList(exp, index, commandIndex[1]);
-        System.out.println("final expression:" + exp.toString());
-        System.out.println("unbundled: " + unbundledArray.toString());
+        System.out.println(unbundledArray.toString());
         return String.join(" ", unbundledArray);
     }
 
     /**
-     * Sets the given parameters based on the entries in the first set of brackets
-     * @param exp is is the entire ArrayList of the input commands
-     * @param index is the index of the start of the expression
+     * Builds the expression to be evaluated
+     * @param exp is the entire ArrayList of the input commands
+     * @return the index of the first left bracket
      */
-    private void setNumbers(List<String> exp, int index) {
-        variable = exp.get(index);
-        end = Double.parseDouble(exp.get(index + 1));
+    private void buildExpression(List<String> exp, int start, int end) {
+        for (int i = start + 1; i < end; i++) {
+            String current = exp.get(i);
+            expression.add(current);
+        }
+    }
+
+    private void executeExpression() {
+        if (expression.size() <= 0) {
+            executeCommands = false;
+        } else {
+            Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
+            for (Commandable c : iterable) {
+                c.execute();
+                System.out.println("in unbundler: " + c.getAns());
+                executeCommands = (c.getAns() != 0);
+            }
+        }
     }
 
     /**
@@ -54,19 +73,16 @@ public class DoTimesUnbundler implements Unbundler{
      * @param exp is the entire ArrayList of the input commands
      * @return the index where the command ends, or the last bracket
      */
-    private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
+    private void buildCommand(List<String> exp, int start, int stop) {
         unbundledArray = new ArrayList<>();
-        for (double i = 1; i < end + 1; i++) {
-            for (int j = startIndex + 1; j < stopIndex; j++)
-                unbundledArray.add(replaceVariable(exp.get(j), i));
+        if (executeCommands) {
+            for (int j = start + 1; j < stop; j++) {
+                unbundledArray.add(exp.get(j));
+            }
         }
-    }
-
-    private String replaceVariable(String current, double currentIndex) {
-        if (current.equals(variable)) {
-            return Double.toString(currentIndex);
+        else {
+            unbundledArray.add("#nocommands");
         }
-        else return current;
     }
 
     /**
@@ -74,10 +90,11 @@ public class DoTimesUnbundler implements Unbundler{
      * @param exp is the entire ArrayList of the input commands
      * @param firstIndex is the index where the command begins
      * @param lastIndex is the index where the command ends
+     * @return modified list
      */
     private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
-        for (int i = firstIndex; i < lastIndex + 1; i++) {
-            exp.remove(firstIndex);
+        for (int i=lastIndex; i >= firstIndex; i--) {
+            exp.remove(i);
         }
     }
 
