@@ -7,43 +7,47 @@ import parser.Parser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IfUnbundler extends ControlUnbundler{
+public class IfElseUnbundler extends ControlUnbundler {
 
     private List<String> expression;
-    private ArrayList<String> unbundledArray;
+    private List<String> unbundledArray;
     private CommandFactory commandFactory;
 
     private boolean executeCommands;
 
-    private static final String LEFT_BRACE = "[";
-    private static final String RIGHT_BRACE = "]";
-
     /**
      * Creates an unbundler for the repeat command
      */
-    public IfUnbundler(CommandFactory cf) {
+    public IfElseUnbundler(CommandFactory cf) {
         commandFactory = cf;
     }
 
     /**
      * unbundles the given control command starting at index
-     * @param exp is the entire ArrayList of the input commands
+     *
+     * @param exp   is the entire ArrayList of the input commands
      * @param index is the index that the control command was found
      * @return the String of the unbundled control command
      */
     public String unbundle(List<String> exp, int index) {
-        int[] commandIndex = this.findBrackets(exp, index);
+        System.out.println("start unbundler here");
+        int[] trueCommandIndex = findBrackets(exp, index);
+        int[] falseCommandIndex = findBrackets(exp, trueCommandIndex[1]);
         expression = new ArrayList<>();
-        buildExpression(exp, index, commandIndex[0]);
+        buildExpression(exp, index, trueCommandIndex[0]);
         executeExpression();
-        buildCommand(exp, commandIndex[0], commandIndex[1]);
-        modifyList(exp, index, commandIndex[1]);
-        System.out.println(unbundledArray.toString());
+        unbundledArray = new ArrayList<>();
+        buildCommand(exp, trueCommandIndex[0], trueCommandIndex[1], falseCommandIndex[0], falseCommandIndex[1]);
+        modifyList(exp, index, falseCommandIndex[1]);
+        System.out.println("final expression:" + exp.toString());
+        System.out.println("unbundled: " + unbundledArray.toString());
+        System.out.println("start unbundler here");
         return String.join(" ", unbundledArray);
     }
 
     /**
      * Builds the expression to be evaluated
+     *
      * @param exp is the entire ArrayList of the input commands
      * @return the index of the first left bracket
      */
@@ -69,18 +73,19 @@ public class IfUnbundler extends ControlUnbundler{
 
     /**
      * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
+     *
      * @param exp is the entire ArrayList of the input commands
      * @return the index where the command ends, or the last bracket
      */
-    private void buildCommand(List<String> exp, int start, int stop) {
-        unbundledArray = new ArrayList<>();
+    private void buildCommand(List<String> exp, int startTrue, int stopTrue, int startFalse, int stopFalse) {
         if (executeCommands) {
-            for (int j = start + 1; j < stop; j++) {
+            for (int j = startTrue + 1; j < stopTrue; j++) {
                 unbundledArray.add(exp.get(j));
             }
-        }
-        else {
-            unbundledArray.add("#nocommands");
+        } else {
+            for (int j = startFalse + 1; j < stopFalse; j++) {
+                unbundledArray.add(exp.get(j));
+            }
         }
     }
 }

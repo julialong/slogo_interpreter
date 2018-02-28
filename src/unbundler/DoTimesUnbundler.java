@@ -1,10 +1,11 @@
 package unbundler;
 
+import javax.sound.sampled.Control;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class DoTimesUnbundler implements Unbundler{
+public class DoTimesUnbundler extends ControlUnbundler{
 
     private String variable;
     private double end;
@@ -67,54 +68,4 @@ public class DoTimesUnbundler implements Unbundler{
         }
         else return current;
     }
-
-    /**
-     * Modifies the list and returns a new list without the extracted, unbundled string
-     * @param exp is the entire ArrayList of the input commands
-     * @param firstIndex is the index where the command begins
-     * @param lastIndex is the index where the command ends
-     */
-    private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
-        for (int i = firstIndex; i < lastIndex + 1; i++) {
-            exp.remove(firstIndex);
-        }
-    }
-
-    /**
-     * Finds the beginning and ending brackets for the given control command
-     * @param exp
-     * @param index
-     * @return
-     */
-    private int[] findBrackets(List<String> exp, int index) {
-        int[] answer = new int[2];
-        Stack<Integer> bracketIndex = new Stack<>();
-        for (int i = index; i < exp.size(); i++) {
-            if (!notLeftBracket(exp.get(i))) {
-                bracketIndex.push(i);
-            }
-            else if (!notRightBracket(exp.get(i)) && bracketIndex.size() > 0) {
-                answer[1] = i;
-                answer[0] = bracketIndex.pop();
-            }
-        }
-        return answer;
-    }
-
-    /**
-     * @param current is the current string
-     * @return true if the current string is not a left bracket, false otherwise
-     */
-    private boolean notLeftBracket(String current) {
-        return !current.equals(LEFT_BRACE);
-    }
-
-    /**
-     * @param current is the current string
-     * @return true if the current string is not a right bracket, false otherwise
-     */
-    private boolean notRightBracket(String current) {
-        return !current.equals(RIGHT_BRACE);
-    }
-
 }

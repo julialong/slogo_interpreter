@@ -2,12 +2,13 @@ package unbundler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import commands.CommandFactory;
 import commands.Commandable;
 import parser.Parser;
 
-public class RepeatUnbundler implements Unbundler {
+public class RepeatUnbundler extends ControlUnbundler {
 
 	private double repeat;
 
@@ -15,8 +16,7 @@ public class RepeatUnbundler implements Unbundler {
 	private ArrayList<String> unbundledArray;
 	private CommandFactory commandFactory;
 
-	private static final String LEFT_BRACE = "[";
-	private static final String RIGHT_BRACE = "]";
+
 
 	public RepeatUnbundler() {
 	}
@@ -36,6 +36,7 @@ public class RepeatUnbundler implements Unbundler {
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp, int index) {
+		System.out.println("start unbundler here");
 		int[] commandIndex = findBrackets(exp, index);
 		expression = new ArrayList<>();
 		buildExpression(exp, index, commandIndex[0]);
@@ -44,6 +45,7 @@ public class RepeatUnbundler implements Unbundler {
 		modifyList(exp, index, commandIndex[1]);
 		System.out.println("final expression:" + exp.toString());
 		System.out.println("unbundled: " + unbundledArray.toString());
+		System.out.println("start unbundler here");
 		return String.join(" ", unbundledArray);
 	}
 
@@ -89,58 +91,4 @@ public class RepeatUnbundler implements Unbundler {
 			}
 		}
 	}
-
-		/**
-		 * Modifies the list and returns a new list without the extracted, unbundled string
-		 * @param exp is the entire ArrayList of the input commands
-		 * @param firstIndex is the index where the command begins
-		 * @param lastIndex is the index where the command ends
-		 */
-		private void modifyList (List < String > exp,int firstIndex, int lastIndex){
-			for (int i = lastIndex; i >= firstIndex; i--) {
-				exp.remove(i);
-			}
-		}
-
-		/**
-		 * Finds the beginning and ending brackets for the given control command
-		 * @param exp
-		 * @param index
-		 * @return
-		 */
-		private int[] findBrackets (List < String > exp,int index){
-			int[] answer = new int[]{-1, -1};
-			int unmatched = 0;
-			for (int i = index; i < exp.size(); i++) {
-				if (exp.get(i).equals("[")) {
-					if (answer[0] == -1) {
-						answer[0] = i;
-					}
-					unmatched += 1;
-				} else if (exp.get(i).equals("]")) {
-					unmatched -= 1; // should never be negative; if it is, then it's ill-formatted
-					if (unmatched == 0) {
-						answer[1] = i;
-						return answer;
-					}
-				}
-			}
-			return null;
-		}
-
-		/**
-		 * @param current is the current string
-		 * @return true if the current string is not a left bracket, false otherwise
-		 */
-		private boolean notLeftBracket (String current){
-			return !current.equals(LEFT_BRACE);
-		}
-
-		/**
-		 * @param current is the current string
-		 * @return true if the current string is not a right bracket, false otherwise
-		 */
-		private boolean notRightBracket (String current){
-			return !current.equals(RIGHT_BRACE);
-		}
-	}
+}
