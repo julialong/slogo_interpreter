@@ -4,7 +4,7 @@
  * Interface that allows access and setting of any class containing a TextArea
  */
 
-package src.view;
+package view;
 
 public interface TextInput	{
 	/**
