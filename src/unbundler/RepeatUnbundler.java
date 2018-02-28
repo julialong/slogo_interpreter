@@ -106,11 +106,11 @@ public class RepeatUnbundler implements Unbundler {
 	 * @return
 	 */
 	private int[] findBrackets(List<String> exp, int index) {
-		int[] answer = new int[2];
+		int[] answer = new int[] {-1, -1};
 		int unmatched = 0;
 		for (int i = index; i < exp.size(); i++) {
 			if (exp.get(i).equals("[")) {
-				if  (answer[0] == 0) {
+				if  (answer[0] == -1) {
 					answer[0] = i;
 				}
 				unmatched += 1;

@@ -9,8 +9,8 @@ public class Test {
 		CommandFactory cf = new CommandFactory(null);
 		Parser p = new Parser(cf);
 //		Iterable<Commandable> iterable = p.parse("DOTIMES [ x 4 ] [ sum x x ]");
-		Iterable<Commandable> iterable = p.parse("DOTIMES [ x 4 ] [ REPEAT sum 1 1 [ sum x x ] ]");
-//		Iterable<Commandable> iterable = p.parse("REPEAT sum 1 1 [ sum 1.0 1.0 ] REPEAT sum 1 1 [ sum 2.0 2.0 ]");
+//		Iterable<Commandable> iterable = p.parse("DOTIMES [ x 4 ] [ REPEAT sum 1 1 [ sum x x ] ]");
+		Iterable<Commandable> iterable = p.parse("REPEAT sum 1 1 [ sum 1.0 1.0 ] REPEAT sum 1 1 [ sum 2.0 2.0 ]");
 		for (Commandable c : iterable) {
 			System.out.println("in test: " + c.execute());
 		}
