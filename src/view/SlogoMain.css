@@ -14,25 +14,6 @@
 	-fx-font-weight: bold;
 }
 
-.title2 {
-	-fx-font-family: sans-serif;
-	-fx-font-size: 40px;
-	-fx-font-weight: bold;
-}
-
-.subtitle {
-	-fx-font-family: sans-serif;
-	-fx-font-size: 20px;
-	-fx-font-weight: bold;
-	-fx-fill: #62629d;
-	-fx-text-alignment: center;
-}
-
-.body {
-	-fx-font-family: sans-serif;
-	-fx-font-size: 12px;
-}
-
 .red-back {
 	-fx-background-color: #ff0000;
 }
@@ -89,12 +70,3 @@
 	-fx-background-color: #62629d;
 }
 
-.table-view .column-header{
-	-fx-background-color: #a3a3c2;
-	-fx-border-style: solid;
-	-fx-border-color: black;
-}
-
-.table-view {
-	-fx-background-color: #e0e0eb;
-}

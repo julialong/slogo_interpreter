@@ -25,178 +25,179 @@ import slogo_team07.ChangeListener;
 import slogo_team07.Engine;
 
 public class Console extends AnchorPane implements TextInput {
-    private TextArea console;
-    private TextArea history;
-    private Button runner;
-    private Button clearer;
-    private List<String> pastCommands;
-    protected VBox myVBox;
-    protected ChangeListener myCL;
-    protected String language;
 
-    private int offsetPad = 0;
-    private int width = 700;
-    private int cHeight = 100;
-    private int hHeight = 80;
-    private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt("Inset"))/3;
-    private int bWidth = 80;
-    private int commandIndex = -1;   // will track what command is "last" for scrollability
+	private TextArea console;
+	private TextArea history;
+	private Button runner;
+	private Button clearer;
+	private List<String> pastCommands;
+	protected VBox myVBox;
+	protected ChangeListener myChangeListener;
+	protected String language;
 
-    /**
-     * Constructor for Console
-     */
-    public Console()    {
-        initConsole();
-    }
+	private int offsetPad = 0;
+	private int width = 700;
+	private int cHeight = 100;
+	private int hHeight = 80;
+	private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt("Inset"))/3;
+	private int bWidth = 80;
+	private int commandIndex = -1;   // will track what command is "last" for scrollability
 
-    /**
-     * Initialized this Console with variables/contents
-     */
-    public AnchorPane initConsole() {
-        console = new TextArea();
-        history = new TextArea();
-        runner = setRunner();
-        clearer = setClearer();
-        pastCommands = new ArrayList<>();
-        
-        VBox myButtons = new VBox(Resources.getInt("Inset"));
-        myButtons.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
-        myButtons.getChildren().addAll(runner, clearer);
-        this.getChildren().add(myButtons);
-        addElements();
-        this.setTopAnchor(history, 0.0);
-        this.setBottomAnchor(console, 0.0);
-        this.setRightAnchor(myButtons, 0.0);
+	/**
+	 * Constructor for Console
+	 */
+	public Console()    {
+		initConsole();
+	}
 
-        return this;
-    }
+	/**
+	 * Initialized this Console with variables/contents
+	 */
+	public AnchorPane initConsole() {
+		console = new TextArea();
+		history = new TextArea();
+		runner = setRunner();
+		clearer = setClearer();
+		pastCommands = new ArrayList<>();
 
-     /**
-     * Sends text from console to anything that calls run(), clears text box, and adds command to history
-     */
-    @Override
-    public String run()    {
-        String comm = console.getText();
+		VBox myButtons = new VBox(Resources.getInt("Inset"));
+		myButtons.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
+		myButtons.getChildren().addAll(runner, clearer);
+		this.getChildren().add(myButtons);
+		addElements();
+		this.setTopAnchor(history, 0.0);
+		this.setBottomAnchor(console, 0.0);
+		this.setRightAnchor(myButtons, 0.0);
 
-        pastCommands.add(comm);
-        history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
-        clear();
+		return this;
+	}
 
-        myCL.changeInput(comm);
-        checkSpecial(comm);
+	/**
+	 * Sends text from console to anything that calls run(), clears text box, and adds command to history
+	 */
+	@Override
+	public String run()    {
+		String comm = console.getText();
 
-        return comm;
-    }
-    
-    /**
-     * Clears text in console
-     */
-    @Override
-    public void clear() {
-        console.clear();
-    }
-    
-    /**
-     * Loads a String (pre-determined user command) into console
-     * @param command   pre-set command to insert into console
-     */
-    @Override
-    public void loadInput(String command) {
-        console.appendText(command);    // "types" long command into textbox for the ability to re-use a pre-defined function
-    }
+		pastCommands.add(comm);
+		history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
+		clear();
 
-    private void addElements()  {
-        List<Node> elements = new ArrayList<Node>();
+		myChangeListener.changeInput(comm);
+		checkSpecial(comm);
 
-        addText(elements);
-        //addButtons(elements);
+		return comm;
+	}
 
-        this.getChildren().addAll(elements);
-    }
+	/**
+	 * Clears text in console
+	 */
+	@Override
+	public void clear() {
+		console.clear();
+	}
 
-    protected void printResult(String res)    {
-        history.appendText("\n" + res);
-    }
+	/**
+	 * Loads a String (pre-determined user command) into console
+	 * @param command   pre-set command to insert into console
+	 */
+	@Override
+	public void loadInput(String command) {
+		console.appendText(command);    // "types" long command into textbox for the ability to re-use a pre-defined function
+	}
 
-    private void addText(List<Node> elements)  {
-        history.setEditable(false);
-        history.setPromptText("Command History");
-        history.setPrefWidth(width);
-        history.setPrefHeight(hHeight);
-        history.setMaxHeight(history.USE_PREF_SIZE);
-        elements.add(history);
+	private void addElements()  {
+		List<Node> elements = new ArrayList<Node>();
 
-        console.setPromptText("Enter Commands");
-        console.setPrefWidth(width);
-        console.setPrefHeight(cHeight);
-        console.setLayoutY(Math.max(hHeight, history.getMinHeight()) + offsetPad);
-        elements.add(console);
-    }
+		addText(elements);
+		//addButtons(elements);
 
-    private void checkSpecial(String comm)  {
-        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
-            makeUDI(comm);
-        }
+		this.getChildren().addAll(elements);
+	}
 
-        if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
-          || comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
-            makeVariable(comm);
-        }
-    }
+	protected void printResult(String res)    {
+		history.appendText("\n" + res);
+	}
 
-    private void makeUDI(String comm)  {
-        ((SideBar)myVBox).addButton(comm);
-    }
+	private void addText(List<Node> elements)  {
+		history.setEditable(false);
+		history.setPromptText("Command History");
+		history.setPrefWidth(width);
+		history.setPrefHeight(hHeight);
+		history.setMaxHeight(history.USE_PREF_SIZE);
+		elements.add(history);
 
-    private void makeVariable(String comm) {
-        ((SideBar)myVBox).addVar(comm.split(" ")[1], comm.split(" ")[2]);
-    }
+		console.setPromptText("Enter Commands");
+		console.setPrefWidth(width);
+		console.setPrefHeight(cHeight);
+		console.setLayoutY(Math.max(hHeight, history.getMinHeight()) + offsetPad);
+		elements.add(console);
+	}
 
-    private void addButtons(List<Node> elements)   {
-        elements.add(runner);
-        elements.add(clearer);
-    }
+	private void checkSpecial(String comm)  {
+		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
+			makeUDI(comm);
+		}
 
-    private Button setRunner() {
-        Button aRunner = new Button("Run");
+		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
+				|| comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
+			makeVariable(comm);
+		}
+	}
 
-        aRunner.setLayoutX(width + offsetPad);
-        aRunner.setPrefWidth(bWidth);
-        aRunner.setMaxWidth(runner.USE_PREF_SIZE);
-        aRunner.setPrefHeight(bHeight);
-        aRunner.setMaxHeight(aRunner.USE_PREF_SIZE);
-        aRunner.setTextAlignment(TextAlignment.CENTER);
-        aRunner.setFont(new Font(20));
+	private void makeUDI(String comm)  {
+		((SideBar)myVBox).addButton(comm);
+	}
 
-        aRunner.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                run();
-            }
-        });
+	private void makeVariable(String comm) {
+		((SideBar)myVBox).addVar(comm.split(" ")[1], comm.split(" ")[2]);
+	}
 
-        return aRunner;
-    }
+	private void addButtons(List<Node> elements)   {
+		elements.add(runner);
+		elements.add(clearer);
+	}
 
-    private Button setClearer()    {
-        Button aClearer = new Button("Clear");
+	private Button setRunner() {
+		Button aRunner = new Button("Run");
 
-        aClearer.setLayoutX(width + offsetPad);
-        aClearer.setLayoutY(bHeight + offsetPad);
-        aClearer.setPrefWidth(bWidth);
-        aClearer.setMaxWidth(aClearer.USE_PREF_SIZE);
-        aClearer.setPrefHeight(bHeight);
-        aClearer.setMaxHeight(aClearer.USE_PREF_SIZE);
-        aClearer.setTextAlignment(TextAlignment.CENTER);
-        aClearer.setFont(new Font(20));
+		aRunner.setLayoutX(width + offsetPad);
+		aRunner.setPrefWidth(bWidth);
+		aRunner.setMaxWidth(runner.USE_PREF_SIZE);
+		aRunner.setPrefHeight(bHeight);
+		aRunner.setMaxHeight(aRunner.USE_PREF_SIZE);
+		aRunner.setTextAlignment(TextAlignment.CENTER);
+		aRunner.setFont(new Font(20));
 
-        aClearer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                clear();
-            }
-        });
+		aRunner.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				run();
+			}
+		});
 
-        return aClearer;
-    }
+		return aRunner;
+	}
+
+	private Button setClearer()    {
+		Button aClearer = new Button("Clear");
+
+		aClearer.setLayoutX(width + offsetPad);
+		aClearer.setLayoutY(bHeight + offsetPad);
+		aClearer.setPrefWidth(bWidth);
+		aClearer.setMaxWidth(aClearer.USE_PREF_SIZE);
+		aClearer.setPrefHeight(bHeight);
+		aClearer.setMaxHeight(aClearer.USE_PREF_SIZE);
+		aClearer.setTextAlignment(TextAlignment.CENTER);
+		aClearer.setFont(new Font(20));
+
+		aClearer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				clear();
+			}
+		});
+
+		return aClearer;
+	}
 }

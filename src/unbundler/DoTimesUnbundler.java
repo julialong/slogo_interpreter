@@ -1,7 +1,5 @@
 package unbundler;
 
-import parser.Parser;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -30,7 +28,7 @@ public class DoTimesUnbundler implements Unbundler{
      */
     public String unbundle(List<String> exp, int index) {
         setNumbers(exp, index + 2);
-        int[] commandIndex = findBrackets(exp, index + 5);
+        int[] commandIndex = findBrackets(exp, index + 4);
         System.out.println(index + " " + commandIndex[0] + " " + commandIndex[1]);
         buildCommand(exp, commandIndex[0], commandIndex[1]);
         modifyList(exp, index, commandIndex[1]);
@@ -57,6 +55,7 @@ public class DoTimesUnbundler implements Unbundler{
     private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
         unbundledArray = new ArrayList<>();
         for (double i = 1; i < end + 1; i++) {
+
             for (int j = startIndex + 1; j < stopIndex; j++)
                 unbundledArray.add(replaceVariable(exp.get(j), i));
         }

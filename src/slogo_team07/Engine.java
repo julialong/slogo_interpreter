@@ -6,23 +6,23 @@ import java.util.Map;
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
+import javafx.stage.Stage;
 import parser.Parser;
 import view.Visualizer;
 
 public class Engine implements ChangeListener {
-
+	
+	private Map<String, Updatable> myUpdatables = new HashMap<>();
 	private Visualizer myVis;
-	private Map<String, Updatable> myUpdatables;
 	private Parser myParser;
 	private CommandFactory myCommandFactory;
 
-	public Engine(Visualizer vis) {
-		myVis = vis;
+	public Engine(Stage stage) {
+		myVis = new Visualizer(stage, this);
 		myUpdatables = new HashMap<>();
 		myCommandFactory = new CommandFactory(myUpdatables);
 		myParser = new Parser(myCommandFactory);
 		addTurtle();
-
 	}
 
 	private void addTurtle() {
@@ -31,11 +31,11 @@ public class Engine implements ChangeListener {
 		myUpdatables.put(Integer.toString(0), turtle);
 	}
 
-	// should be stored on the front end as ChangeListener.changeInput(String)
+
 	@Override
 	public void changeInput(String input) {
-		Iterable<Commandable> iterable = myParser.parse(input);
-		for (Commandable c : iterable) {
+		System.out.println(input);
+		for (Commandable c : myParser.parse(input)) {
 			Result result = c.execute();
 			myVis.runCommand(result);
 
