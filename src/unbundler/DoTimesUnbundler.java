@@ -2,22 +2,13 @@ package unbundler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
-public class DoTimesUnbundler implements Unbundler{
+public class DoTimesUnbundler extends ControlUnbundler {
 
     private String variable;
     private double end;
 
     private ArrayList<String> unbundledArray;
-
-    private static final String LEFT_BRACE = "[";
-    private static final String RIGHT_BRACE = "]";
-
-    /**
-     * Creates an unbundler for the dotimes command
-     */
-    public DoTimesUnbundler() {}
 
     /**
      * unbundles the given control command starting at index
@@ -43,7 +34,7 @@ public class DoTimesUnbundler implements Unbundler{
      */
     private void setNumbers(List<String> exp, int index) {
         variable = exp.get(index);
-        end = Double.parseDouble(exp.get(index + 1)) + 1;
+        end = Double.parseDouble(exp.get(index + 1));
     }
 
     /**
@@ -53,7 +44,7 @@ public class DoTimesUnbundler implements Unbundler{
      */
     private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
         unbundledArray = new ArrayList<>();
-        for (double i = 1; i < end; i++) {
+        for (double i = 1; i < end + 1; i++) {
             for (int j = startIndex + 1; j < stopIndex; j++)
                 unbundledArray.add(replaceVariable(exp.get(j), i));
         }
@@ -65,56 +56,4 @@ public class DoTimesUnbundler implements Unbundler{
         }
         else return current;
     }
-
-    /**
-     * Modifies the list and returns a new list without the extracted, unbundled string
-     * @param exp is the entire ArrayList of the input commands
-     * @param firstIndex is the index where the command begins
-     * @param lastIndex is the index where the command ends
-     */
-	private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
-		for (int i=lastIndex; i >= firstIndex; i--) {
-			exp.remove(i);
-		}
-	}
-
-    /**
-     * Finds the beginning and ending brackets for the given control command
-     * @param exp
-     * @param index
-     * @return
-     */
-    private int[] findBrackets(List<String> exp, int index) {
-        int[] answer = new int[2];
-        System.out.println(exp);
-        System.out.println(index);
-        Stack<Integer> bracketIndex = new Stack<>();
-        for (int i = index; i < exp.size(); i++) {
-            if (!notLeftBracket(exp.get(i))) {
-                bracketIndex.push(i);
-            }
-            else if (!notRightBracket(exp.get(i)) && bracketIndex.size() > 0) {
-                answer[1] = i;
-                answer[0] = bracketIndex.pop();
-            }
-        }
-        return answer;
-    }
-
-    /**
-     * @param current is the current string
-     * @return true if the current string is not a left bracket, false otherwise
-     */
-    private boolean notLeftBracket(String current) {
-        return !current.equals(LEFT_BRACE);
-    }
-
-    /**
-     * @param current is the current string
-     * @return true if the current string is not a right bracket, false otherwise
-     */
-    private boolean notRightBracket(String current) {
-        return !current.equals(RIGHT_BRACE);
-    }
-
 }

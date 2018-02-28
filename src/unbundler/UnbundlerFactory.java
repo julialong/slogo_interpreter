@@ -14,22 +14,22 @@ public class UnbundlerFactory {
 	}
 
 	public Unbundler createUnbundler(String control, Map<String, String> var_map, Map<String, Function> func_map) {
-		if (control.equals("REPEAT")) {
+		String lower = control.toLowerCase();
+		if (lower.equals("repeat")) {
 			return new RepeatUnbundler(myCommandFactory);
-		} else if (control.equals("DOTIMES")) {
+		} else if (lower.equals("dotimes")) {
 			return new DoTimesUnbundler();
-		} else if (control.equals("FOR")) {
+		} else if (lower.equals("for")) {
 			return new ForUnbundler();
+		} else if (lower.equals("make") || lower.equals("set")) {
+			return new MakeUnbundler(var_map);
+		} else if (lower.equals("to")) {
+			return new ToUnbundler(func_map);
+		} else if (lower.equals("if")) {
+			return new IfUnbundler(myCommandFactory);
+		} else if (lower.equals("ifelse")) {
+			return new IfElseUnbundler(myCommandFactory);
 		}
-//		} else if (control.equals("FOR")) {
-//			return new ForUnbundler();
-//		} else if (control.equals("DOTIMES")) {
-//			return new DoTimesUnbundler();
-//		} else if (control.equals("MAKE") || control.equals("SET")) {
-//			return new MakeUnbundler(var_map);
-//		} else if (control.equals("TO")) {
-//			return new ToUnbundler(func_map);
-//		}
 		return null;
 	}
 }

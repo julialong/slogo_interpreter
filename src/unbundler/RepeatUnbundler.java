@@ -15,12 +15,6 @@ public class RepeatUnbundler implements Unbundler {
 	private ArrayList<String> unbundledArray;
 	private CommandFactory commandFactory;
 
-	private static final String LEFT_BRACE = "[";
-	private static final String RIGHT_BRACE = "]";
-
-	public RepeatUnbundler() {
-	}
-
 	/**
 	 * Creates an unbundler for the repeat command
 	 */
@@ -123,21 +117,5 @@ public class RepeatUnbundler implements Unbundler {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @param current is the current string
-	 * @return true if the current string is not a left bracket, false otherwise
-	 */
-	private boolean notLeftBracket(String current) {
-		return !current.equals(LEFT_BRACE);
-	}
-
-	/**
-	 * @param current is the current string
-	 * @return true if the current string is not a right bracket, false otherwise
-	 */
-	private boolean notRightBracket(String current) {
-		return !current.equals(RIGHT_BRACE);
 	}
 }
