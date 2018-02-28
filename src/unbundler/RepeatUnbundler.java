@@ -1,9 +1,7 @@
 package unbundler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 
 import commands.CommandFactory;
 import commands.Commandable;
@@ -96,8 +94,8 @@ public class RepeatUnbundler implements Unbundler {
 	 * @param lastIndex is the index where the command ends
 	 */
 	private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
-		for (int i = firstIndex; i < lastIndex + 1; i++) {
-			exp.remove(firstIndex);
+		for (int i=lastIndex; i >= firstIndex; i--) {
+			exp.remove(i);
 		}
 	}
 
@@ -109,17 +107,22 @@ public class RepeatUnbundler implements Unbundler {
 	 */
 	private int[] findBrackets(List<String> exp, int index) {
 		int[] answer = new int[2];
-		Stack<Integer> bracketIndex = new Stack<>();
+		int unmatched = 0;
 		for (int i = index; i < exp.size(); i++) {
-			if (!notLeftBracket(exp.get(i))) {
-				bracketIndex.push(i);
-			}
-			else if (!notRightBracket(exp.get(i)) && bracketIndex.size() > 0) {
-				answer[1] = i;
-				answer[0] = bracketIndex.pop();
+			if (exp.get(i).equals("[")) {
+				if  (answer[0] == 0) {
+					answer[0] = i;
+				}
+				unmatched += 1;
+			} else if (exp.get(i).equals("]")) {
+				unmatched -= 1; // should never be negative; if it is, then it's ill-formatted
+				if (unmatched == 0) {
+					answer[1] = i;
+					return answer;
+				}
 			}
 		}
-		return answer;
+		return null;
 	}
 
 	/**
@@ -136,12 +139,5 @@ public class RepeatUnbundler implements Unbundler {
 	 */
 	private boolean notRightBracket(String current) {
 		return !current.equals(RIGHT_BRACE);
-	}
-
-	public static void main (String[] args) {
-		RepeatUnbundler r = new RepeatUnbundler();
-		String p = "REPEAT random 10 [ lessp 8.0 5.1 ]";
-		int[] a = r.findBrackets(new ArrayList<String>(Arrays.asList(p.split(" "))), 0);
-		System.out.println(a[0] + " " + a[1]);
 	}
 }

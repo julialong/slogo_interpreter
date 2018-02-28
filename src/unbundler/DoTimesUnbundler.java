@@ -43,7 +43,7 @@ public class DoTimesUnbundler implements Unbundler{
      */
     private void setNumbers(List<String> exp, int index) {
         variable = exp.get(index);
-        end = Double.parseDouble(exp.get(index + 1));
+        end = Double.parseDouble(exp.get(index + 1)) + 1;
     }
 
     /**
@@ -72,11 +72,11 @@ public class DoTimesUnbundler implements Unbundler{
      * @param firstIndex is the index where the command begins
      * @param lastIndex is the index where the command ends
      */
-    private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
-        for (int i = firstIndex; i < lastIndex + 1; i++) {
-            exp.remove(firstIndex);
-        }
-    }
+	private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
+		for (int i=lastIndex; i >= firstIndex; i--) {
+			exp.remove(i);
+		}
+	}
 
     /**
      * Finds the beginning and ending brackets for the given control command
@@ -86,6 +86,8 @@ public class DoTimesUnbundler implements Unbundler{
      */
     private int[] findBrackets(List<String> exp, int index) {
         int[] answer = new int[2];
+        System.out.println(exp);
+        System.out.println(index);
         Stack<Integer> bracketIndex = new Stack<>();
         for (int i = index; i < exp.size(); i++) {
             if (!notLeftBracket(exp.get(i))) {

@@ -67,7 +67,6 @@ public class Parser implements Iterable<Commandable> {
 					String next = myStringList.get(myDex);
 					if (myControlSet.contains(next)) {
 						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
-						// need unbundled to rip out the commandflow stuff and return an array of Strings / string most likely
 						String unbundled = unbundler.unbundle(myStringList, myDex);
 						System.out.println("main: " + unbundled);
 						System.out.println(myStringList);
@@ -123,6 +122,7 @@ public class Parser implements Iterable<Commandable> {
 						c.execute();
 						ans = c.getAns();
 						System.out.println("in parser findNext(): " + ans);
+						return null;
 					}
 					if (ans != null && myCurrent != myDummyRoot) {
 						myCurrent.inject(ans);

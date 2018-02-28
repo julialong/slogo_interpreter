@@ -78,11 +78,11 @@ public class ForUnbundler implements  Unbundler{
      * @param firstIndex is the index where the command begins
      * @param lastIndex is the index where the command ends
      */
-    private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
-        for (int i = firstIndex; i < lastIndex + 1; i++) {
-            exp.remove(firstIndex);
-        }
-    }
+	private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
+		for (int i=lastIndex; i >= firstIndex; i--) {
+			exp.remove(i);
+		}
+	}
 
     /**
      * Finds the beginning and ending brackets for the given control command

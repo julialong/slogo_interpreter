@@ -6,8 +6,6 @@ import commands.CommandFactory;
 import parser.Function;
 
 public class UnbundlerFactory {
-	private static final String PREFIX_STRING = "model.Unbundlers.";
-	private static final String SUFFIX_STRING = "Unbundler";
 	
 	private CommandFactory myCommandFactory;
 	
