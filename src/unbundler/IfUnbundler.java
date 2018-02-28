@@ -15,9 +15,6 @@ public class IfUnbundler extends ControlUnbundler{
 
     private boolean executeCommands;
 
-    private static final String LEFT_BRACE = "[";
-    private static final String RIGHT_BRACE = "]";
-
     /**
      * Creates an unbundler for the repeat command
      */
