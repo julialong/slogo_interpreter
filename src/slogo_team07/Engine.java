@@ -6,6 +6,7 @@ import java.util.Map;
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
+import javafx.stage.Stage;
 import parser.Parser;
 import view.Visualizer;
 
@@ -16,8 +17,8 @@ public class Engine implements ChangeListener {
 	private Parser myParser;
 	private CommandFactory myCommandFactory;
 
-	public Engine() {
-		myVis = new Visualizer(this);
+	public Engine(Stage stage) {
+		myVis = new Visualizer(stage, this);
 		myUpdatables = new HashMap<>();
 		myCommandFactory = new CommandFactory(myUpdatables);
 		myParser = new Parser(myCommandFactory);
@@ -33,6 +34,7 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeInput(String input) {
+		System.out.println(input);
 		for (Commandable c : myParser.parse(input)) {
 			Result result = c.execute();
 			myVis.runCommand(result);

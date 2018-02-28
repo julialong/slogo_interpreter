@@ -1,15 +1,11 @@
 package slogo_team07;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-
-import slogo_team07.Drawable;
-import slogo_team07.Updatable;
 
 public class Turtle implements Drawable, Updatable {
 

@@ -23,7 +23,7 @@ import slogo_team07.Engine;
 import slogo_team07.Turtle;
 import commands.Result;
 
-public class Visualizer extends Application{
+public class Visualizer {
 	
 	public static final int FRAMES_PER_SECOND = 5;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -39,8 +39,14 @@ public class Visualizer extends Application{
 	private ChangeListener myChangeListener;
 	private String language = "English";
 	
-	public Visualizer(ChangeListener change_listener) {
+	public Visualizer(Stage stage, ChangeListener change_listener) {
 		myChangeListener = change_listener;
+		
+		Scene myScene = initScreen();
+		stage.setScene(myScene);
+		stage.setTitle(Resources.getString("Title"));
+		stage.show();
+		setupAnimation();
 	}
 	
 	/**
@@ -48,11 +54,7 @@ public class Visualizer extends Application{
 	 */
 	public void start(Stage primaryStage) throws Exception {
 		Stage myStage = primaryStage;
-		Scene myScene = initScreen();
-		myStage.setScene(myScene);
-		myStage.setTitle(Resources.getString("Title"));
-		myStage.show();
-		setupAnimation();
+		
 	}
 	
 	private void setupAnimation(){
@@ -122,13 +124,6 @@ public class Visualizer extends Application{
 	public void runCommand(Result result)	{
 		((Console)myConsole).printResult(Double.toString(result.getRes1()));
 		myCanvas.updateCanvas(result);
-	}
-	
-	/**
-	 * Runs the program
-	 */
-	public static void main(String[] args) {
-		launch(args);
 	}
 
 }
