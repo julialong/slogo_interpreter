@@ -26,9 +26,9 @@ public class UnbundlerFactory {
 			return new IfElseUnbundler(myCommandFactory);
 		} else if (control.equals("MAKE") || control.equals("SET")) {
 			return new MakeUnbundler(var_map);
-		} //else if (control.equals("TO")) {
-//			return new ToUnbundler(func_map);
-//		}
+		} else if (control.equals("TO")) {
+			return new ToUnbundler(func_map);
+		}
 		return null;
 	}
 }

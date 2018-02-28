@@ -28,7 +28,6 @@ public abstract class ControlUnbundler implements Unbundler{
                 valid = true;
             }
             if (valid && bracketIndex.size() == 0) {
-                System.out.println(answer[0] + " " + answer[1]);
                 return answer;
             }
         }
