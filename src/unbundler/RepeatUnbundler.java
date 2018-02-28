@@ -43,6 +43,8 @@ public class RepeatUnbundler implements Unbundler {
 		executeExpression();
 		buildCommand(exp, commandIndex[0], commandIndex[1]);
 		modifyList(exp, index, commandIndex[1]);
+		System.out.println("final expression:" + exp.toString());
+		System.out.println("unbundled: " + unbundledArray.toString());
 		return String.join(" ", unbundledArray);
 	}
 
@@ -52,20 +54,23 @@ public class RepeatUnbundler implements Unbundler {
 	 * @return the index of the first left bracket
 	 */
 	private void buildExpression(List<String> exp, int start, int end) {
+		System.out.println(start + " " + end);
 		for (int i = start + 1; i < end; i++) {
 			String current = exp.get(i);
 			expression.add(current);
 		}
+		System.out.println("expression: " + expression.toString());
 	}
 
 	private void executeExpression() {
 		if (expression.size() <= 0) {
+			System.out.println("expression 0");
 			repeat = 0;
-		} else {
+		}
+		else {
 			Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
 			for (Commandable c : iterable) {
 				c.execute();
-				System.out.println("in unbundler: " + c.getAns());
 				repeat = c.getAns();
 			}
 		}
@@ -78,10 +83,9 @@ public class RepeatUnbundler implements Unbundler {
 	 */
 	private void buildCommand(List<String> exp, int start, int stop) {
 		unbundledArray = new ArrayList<>();
-		for (int i = 0; i < (int) repeat; i++) { 
-			for (int j = start + 1; j < stop; j++) {
+		for (int i = 0; i < repeat; i++) {
+			for (int j = start + 1; j < stop; j++)
 				unbundledArray.add(exp.get(j));
-			}
 		}
 	}
 
@@ -90,11 +94,10 @@ public class RepeatUnbundler implements Unbundler {
 	 * @param exp is the entire ArrayList of the input commands
 	 * @param firstIndex is the index where the command begins
 	 * @param lastIndex is the index where the command ends
-	 * @return modified list
 	 */
 	private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
-		for (int i=lastIndex; i >= firstIndex; i--) {
-			exp.remove(i);
+		for (int i = firstIndex; i < lastIndex + 1; i++) {
+			exp.remove(firstIndex);
 		}
 	}
 
@@ -133,5 +136,12 @@ public class RepeatUnbundler implements Unbundler {
 	 */
 	private boolean notRightBracket(String current) {
 		return !current.equals(RIGHT_BRACE);
+	}
+
+	public static void main (String[] args) {
+		RepeatUnbundler r = new RepeatUnbundler();
+		String p = "REPEAT random 10 [ lessp 8.0 5.1 ]";
+		int[] a = r.findBrackets(new ArrayList<String>(Arrays.asList(p.split(" "))), 0);
+		System.out.println(a[0] + " " + a[1]);
 	}
 }

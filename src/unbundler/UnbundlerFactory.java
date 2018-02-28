@@ -1,10 +1,9 @@
-package parser;
+package unbundler;
 
 import java.util.Map;
 
 import commands.CommandFactory;
-import unbundler.RepeatUnbundler;
-import unbundler.Unbundler;
+import parser.Function;
 
 public class UnbundlerFactory {
 	private static final String PREFIX_STRING = "model.Unbundlers.";
@@ -19,10 +18,11 @@ public class UnbundlerFactory {
 	public Unbundler createUnbundler(String control, Map<String, String> var_map, Map<String, Function> func_map) {
 		if (control.equals("REPEAT")) {
 			return new RepeatUnbundler(myCommandFactory);
-		} // else if (control.equals("IF")) {
-//			return new IfUnbundler();
-//		} else if (control.equals("IFELSE")) {
-//			return new IfElseUnbundler();
+		} else if (control.equals("DOTIMES")) {
+			return new DoTimesUnbundler();
+		} else if (control.equals("FOR")) {
+			return new ForUnbundler();
+		}
 //		} else if (control.equals("FOR")) {
 //			return new ForUnbundler();
 //		} else if (control.equals("DOTIMES")) {
