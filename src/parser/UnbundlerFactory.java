@@ -3,6 +3,7 @@ package parser;
 import java.util.Map;
 
 import commands.CommandFactory;
+import unbundler.DoTimesUnbundler;
 import unbundler.ForUnbundler;
 import unbundler.RepeatUnbundler;
 import unbundler.Unbundler;
@@ -27,9 +28,9 @@ public class UnbundlerFactory {
 //		}
  		else if (control.equals("FOR")) {
 			return new ForUnbundler();
-		} //else if (control.equals("DOTIMES")) {
-//			return new DoTimesUnbundler();
-//		} else if (control.equals("MAKE") || control.equals("SET")) {
+		} else if (control.equals("DOTIMES")) {
+			return new DoTimesUnbundler();
+		} //else if (control.equals("MAKE") || control.equals("SET")) {
 //			return new MakeUnbundler(var_map);
 //		} else if (control.equals("TO")) {
 //			return new ToUnbundler(func_map);
