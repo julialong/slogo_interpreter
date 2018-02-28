@@ -6,7 +6,7 @@ import java.util.Map;
 import commands.CommandFactory;
 import commands.Commandable;
 import commands.Result;
-import model.Parser;
+import parser.Parser;
 import view.Visualizer;
 
 public class Engine implements ChangeListener {

@@ -42,7 +42,7 @@ public class RepeatUnbundler implements Unbundler {
         buildExpression(exp, index, commandIndex[0]);
         executeExpression();
         buildCommand(exp, commandIndex[0], commandIndex[1]);
-        exp.removeAll(modifyList(exp, index, commandIndex[1]));
+        modifyList(exp, index, commandIndex[1]);
         System.out.println("final expression:" + exp.toString());
         System.out.println("unbundled: " + unbundledArray.toString());
         return String.join(" ", unbundledArray);
@@ -64,6 +64,7 @@ public class RepeatUnbundler implements Unbundler {
 
     private void executeExpression() {
         if (expression.size() <= 0) {
+            System.out.println("expression 0");
             repeat = 0;
         }
         else {
@@ -93,11 +94,11 @@ public class RepeatUnbundler implements Unbundler {
      * @param exp is the entire ArrayList of the input commands
      * @param firstIndex is the index where the command begins
      * @param lastIndex is the index where the command ends
-     * @return modified list
      */
-    private List<String> modifyList(List<String> exp, int firstIndex, int lastIndex) {
-        List<String> toRemove = new ArrayList<>(exp.subList(firstIndex, lastIndex + 1));
-        return toRemove;
+    private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
+        for (int i = firstIndex; i < lastIndex + 1; i++) {
+            exp.remove(firstIndex);
+        }
     }
 
     /**

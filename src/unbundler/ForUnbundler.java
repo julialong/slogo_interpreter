@@ -8,46 +8,82 @@ import java.util.Stack;
 
 public class ForUnbundler implements  Unbundler{
 
-    private Parser pr;
 
-    private double repeat;
-
-    private double variable;
+    private String variable;
     private double start;
     private double end;
     private double increment;
-    private double repCount;
 
-    private StringBuilder expression;
     private ArrayList<String> unbundledArray;
 
     private static final String LEFT_BRACE = "[";
     private static final String RIGHT_BRACE = "]";
 
+    /**
+     * Creates an unbundler for the repeat command
+     */
     public ForUnbundler() {
-        repCount = 0;
     }
 
     /**
-     * Creates an unbundler for the repeat command
-     * @param p parser p
+     * Unbun
+     * @param exp
+     * @param index
+     * @return
      */
-    public ForUnbundler(Parser p) {
-        pr = p;
-        repCount = 0;
-    }
-
     public String unbundle(List<String> exp, int index) {
-        setNumbers(exp, index + 1);
-        int[] commandIndex = findBrackets(exp, index + 5);
-        return "";
+        setNumbers(exp, index + 2);
+        int[] commandIndex = findBrackets(exp, index + 6);
+        System.out.println(index + " " + commandIndex[0] + " " + commandIndex[1]);
+        buildCommand(exp, commandIndex[0], commandIndex[1]);
+        modifyList(exp, index, commandIndex[1]);
+        System.out.println("final expression:" + exp.toString());
+        System.out.println("unbundled: " + unbundledArray.toString());
+        return String.join(" ", unbundledArray);
     }
 
+    /**
+     * Sets the given parameters based on the entries in the first set of brackets
+     * @param exp is is the entire ArrayList of the input commands
+     * @param index is the index of the start of the expression
+     */
     private void setNumbers(List<String> exp, int index) {
-        variable = Double.parseDouble(exp.get(index + 1));
-        start = Double.parseDouble(exp.get(index + 2));
-        end = Double.parseDouble(exp.get(index + 3));
-        increment = Double.parseDouble(exp.get(index + 4));
+        variable = exp.get(index);
+        start = Double.parseDouble(exp.get(index + 1));
+        end = Double.parseDouble(exp.get(index + 2));
+        increment = Double.parseDouble(exp.get(index + 3));
+    }
+
+    /**
+     * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
+     * @param exp is the entire ArrayList of the input commands
+     * @return the index where the command ends, or the last bracket
+     */
+    private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
+        unbundledArray = new ArrayList<>();
+        for (double i = start; i < end; i+= increment) {
+            for (int j = startIndex + 1; j < stopIndex; j++)
+                unbundledArray.add(replaceVariable(exp.get(j), i));
+        }
+    }
+
+    private String replaceVariable(String current, double currentIndex) {
+        if (current.equals(variable)) {
+            return Double.toString(currentIndex);
+        }
+        else return current;
+    }
+
+    /**
+     * Modifies the list and returns a new list without the extracted, unbundled string
+     * @param exp is the entire ArrayList of the input commands
+     * @param firstIndex is the index where the command begins
+     * @param lastIndex is the index where the command ends
+     */
+    private void modifyList(List<String> exp, int firstIndex, int lastIndex) {
+        for (int i = firstIndex; i < lastIndex + 1; i++) {
+            exp.remove(firstIndex);
+        }
     }
 
     /**
