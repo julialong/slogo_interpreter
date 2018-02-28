@@ -1,16 +1,15 @@
 package commands;
 
-public class ExceptionCommand extends Command {
 
-	private Double ans;
+public class NullCommand extends Command {
 	
-	public ExceptionCommand() {
+	public NullCommand() {
 		super(Integer.MAX_VALUE);
 	}
 
 	@Override
 	public Result execute() {
-		return new Result(Double.MAX_VALUE);
+		return new Result(null);
 	}
 	
 	@Override 
@@ -20,7 +19,6 @@ public class ExceptionCommand extends Command {
 
 	@Override
 	public Double getAns() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

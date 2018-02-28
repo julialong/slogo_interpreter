@@ -22,6 +22,7 @@ public class Engine implements ChangeListener {
 		myCommandFactory = new CommandFactory(myUpdatables);
 		myParser = new Parser(myCommandFactory);
 		addTurtle();
+
 	}
 
 	private void addTurtle() {
@@ -37,6 +38,7 @@ public class Engine implements ChangeListener {
 		for (Commandable c : iterable) {
 			Result result = c.execute();
 			myVis.runCommand(result);
+
 		}
 	}
 
