@@ -19,7 +19,6 @@ import javafx.util.Duration;
 import resources.keys.Resources;
 import slogo_team07.ChangeListener;
 import slogo_team07.Drawable;
-import slogo_team07.Turtle;
 
 public class Visualizer {
 	
@@ -70,10 +69,6 @@ public class Visualizer {
 		root = new BorderPane();
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
-
-		//hardcoded, need to get from backend
-//		Turtle testTurt = new Turtle();
-//		myTurtles.add(testTurt);
 		
 		myCanvas = new Canvas(myTurtles);
 		myCanvasObjects = myCanvas.initCanvas(); 
