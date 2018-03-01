@@ -128,6 +128,7 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public Double rotate(Double clockwise) {
 		myDegrees += clockwise;
+		System.out.println("degrees: " + myDegrees);
 		myIV.setRotate(myDegrees);
 		return Math.abs(clockwise);
 	}
@@ -136,7 +137,6 @@ public class Turtle implements Drawable, Updatable {
 	public Double setHeading(Double degrees) {
 		Double old = myDegrees;
 		myDegrees = degrees;
-		myIV.setRotate(myDegrees);
 		return degrees - old;
 	}
 

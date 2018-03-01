@@ -37,10 +37,8 @@ public class Parser implements Iterable<Commandable> {
 	}
 
 	public Iterable<Commandable> parse(String s) {
-//		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
-		s.replace("\n", " ");
-		s.replace("\\s+", " ");
-		myStringList = new ArrayList<>(Arrays.asList(s.split(" ")));
+		s = sanitize(s);
+		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
 
 		myDex = 0;
 		myDummyRoot = new Node(myCommandFactory.createCommand(NULL));
@@ -179,6 +177,26 @@ public class Parser implements Iterable<Commandable> {
 			}
 		}
 		return ans;
+	}
+
+	private String sanitize(String s) {
+		StringBuilder formatted = new StringBuilder();
+		boolean seen_space = false;
+		for (int i=0; i < s.length(); i++) {
+			Character curr = s.charAt(i);
+			if (Character.isLetterOrDigit(curr) || curr == '[' || curr == ']') {
+				formatted.append(curr);
+				seen_space = false;
+			} else if (Character.isWhitespace(curr)) {
+				System.out.println(curr);
+				if (!seen_space) {
+					formatted.append(" ");
+					seen_space = true;
+				}
+			}
+		}
+		System.out.println(Arrays.asList(formatted.toString().trim().split(" ")));
+		return formatted.toString().trim();
 	}
 
 	/**
