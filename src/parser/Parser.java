@@ -38,8 +38,9 @@ public class Parser implements Iterable<Commandable> {
 
 	public Iterable<Commandable> parse(String s) {
 //		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
-		s.replace("\n", " ");
-		s.replace("\\s+", " ");
+		s = s.replace("\n", " ");
+		s = s.replace("\\s+", "");
+		s = s.trim();
 		myStringList = new ArrayList<>(Arrays.asList(s.split(" ")));
 
 		myDex = 0;
