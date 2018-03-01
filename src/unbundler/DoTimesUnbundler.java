@@ -1,14 +1,25 @@
 package unbundler;
 
+import javax.sound.sampled.Control;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoTimesUnbundler extends ControlUnbundler {
+
+public class DoTimesUnbundler extends ControlUnbundler{
 
     private String variable;
     private double end;
 
     private ArrayList<String> unbundledArray;
+
+    private static final String LEFT_BRACE = "[";
+    private static final String RIGHT_BRACE = "]";
+
+    /**
+     * Creates an unbundler for the dotimes command
+     */
+    public DoTimesUnbundler() {
+    }
 
     /**
      * unbundles the given control command starting at index
