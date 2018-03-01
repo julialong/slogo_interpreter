@@ -15,14 +15,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 import slogo_team07.ChangeListener;
-import slogo_team07.Engine;
 
 public class Console extends AnchorPane implements TextInput {
 	private TextArea console;
