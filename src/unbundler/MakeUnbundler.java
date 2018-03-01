@@ -1,5 +1,9 @@
 package unbundler;
 
+import commands.CommandFactory;
+import commands.Commandable;
+import parser.Parser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +12,12 @@ public class MakeUnbundler extends ControlUnbundler{
 
     private List<String> expression;
     private Map<String, String> dictionary;
+    private CommandFactory commandFactory;
+    private double answer;
 
-    public MakeUnbundler(Map<String, String> dict) {
+    public MakeUnbundler(Map<String, String> dict, CommandFactory cf) {
         dictionary = dict;
+        commandFactory = cf;
     }
 
     /**
@@ -22,10 +29,11 @@ public class MakeUnbundler extends ControlUnbundler{
     public String unbundle(List<String> exp, int index) {
         String variableName = exp.get(index + 1);
         expression = new ArrayList<>();
-        buildExpression(exp, index + 2, exp.size() - 1);
+        buildExpression(exp, index + 1, exp.size());
+        executeExpression();
         addVariable(variableName);
         modifyList(exp, index, index + 1);
-        return String.join(" ", expression);
+        return "";
     }
 
     /**
@@ -36,7 +44,20 @@ public class MakeUnbundler extends ControlUnbundler{
     private void buildExpression(List<String> exp, int start, int end) {
         for (int i = start + 1; i < end; i++) {
             String current = exp.get(i);
+            System.out.println(current);
             expression.add(current);
+        }
+    }
+
+    private void executeExpression() {
+        if (expression.size() <= 0) {
+            answer = 0;
+        } else {
+            Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
+            for (Commandable c : iterable) {
+                c.execute();
+                answer = c.getAns();
+            }
         }
     }
 
@@ -45,6 +66,6 @@ public class MakeUnbundler extends ControlUnbundler{
      * @param variable string variable name
      */
     private void addVariable(String variable) {
-        dictionary.put(variable, String.join(" ", expression));
+        dictionary.put(variable, String.join(" ", Double.toString(answer)));
     }
 }

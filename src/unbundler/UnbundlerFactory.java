@@ -22,7 +22,7 @@ public class UnbundlerFactory {
 		} else if (lower.equals("for")) {
 			return new ForUnbundler();
 		} else if (lower.equals("make") || lower.equals("set")) {
-			return new MakeUnbundler(var_map);
+			return new MakeUnbundler(var_map, myCommandFactory);
 		} else if (lower.equals("to")) {
 			return new ToUnbundler(func_map);
 		} else if (lower.equals("if")) {
