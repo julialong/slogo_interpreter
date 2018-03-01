@@ -1,6 +1,8 @@
 package view;
 
 import java.util.ArrayList;
+
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
@@ -32,7 +34,8 @@ public class Canvas {
 		return myPane;
 	}
 	
-	public Pane updateCanvas() {		
+	public Pane updateCanvas(ArrayList<Drawable> turtles) {		
+		myTurtles = turtles;
 		for (Drawable turtle: myTurtles){
 			if (! turtle.getIsVisible()){
 				myPane.getChildren().remove(turtle.getView());
@@ -63,11 +66,7 @@ public class Canvas {
   //           ((SideBar)myVBox).addButton(result.toString());
 		// }
 
-		return updateCanvas();
-	}
-	
-	public void addDrawable (Drawable turtle){
-		myTurtles.add(turtle);
+		return updateCanvas(myTurtles);
 	}
 	
 	public void setColor(Color color){

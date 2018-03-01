@@ -33,7 +33,6 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeInput(String input) {
-		System.out.println(synthesize(input));
 		for (Commandable c : myParser.parse(input)) {
 			c.execute();
 		}
@@ -42,10 +41,5 @@ public class Engine implements ChangeListener {
 	@Override
 	public void changeLanguage(String lang) {
 		myCommandFactory.updateLanguage(lang);
-	}
-	
-	// this needs to be a lot more powerful I think
-	private String synthesize(String string) {
-		return string.replaceAll("[\\t\\n\\r]+"," ");
 	}
 }

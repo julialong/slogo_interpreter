@@ -2,7 +2,6 @@ package unbundler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import commands.CommandFactory;
 import commands.Commandable;

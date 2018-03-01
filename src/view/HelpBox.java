@@ -1,6 +1,6 @@
 /**
  * @author Maya Messinger
- * 
+ * Pop-up box that displays all of the commands possible, and based on language, how to input them
  */
 
 package view;
@@ -21,11 +21,14 @@ import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 
 public class HelpBox extends Group {
-	
 	private Scene helpInternal;
 	private Group myGroup;
 	private VBox helpVB;
 	
+    /**
+     * constructor for box
+     * @param language  determines language that commands should be displayed in
+     */
     public HelpBox(String language)    {
         //this.getChildren().add(helpButton());
     	myGroup = help(language);
@@ -37,8 +40,8 @@ public class HelpBox extends Group {
 		helpBox.setTitle(Resources.getString("HelpTitle"));
 		helpBox.show();
     }
-    
-    public void scroll(){
+
+    private void scroll(){
     	ScrollBar sc = new ScrollBar();
     	sc.setLayoutX(helpInternal.getWidth()-sc.getWidth());
         sc.setMin(0);
@@ -54,8 +57,7 @@ public class HelpBox extends Group {
         });
     }
 
-    public Group help(String language){
-    	Group help = new Group();
+    private Group help(String language){
     	helpVB = new VBox(5);
     	helpVB.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
     	
@@ -197,8 +199,8 @@ public class HelpBox extends Group {
     	multBody.getStyleClass().add("body");
     	helpVB.getChildren().add(multBody);
     	
-    	help.getChildren().add(helpVB);
+    	this.getChildren().add(helpVB);
     	
-    	return help;
+    	return this;
     }
 }
