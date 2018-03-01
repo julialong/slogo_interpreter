@@ -133,7 +133,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	private void checkSpecial(String comm)  {
-		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s).*?"))   {
+		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s) .*?"))   {
 			makeUDI(comm);
 		}
 
