@@ -9,18 +9,12 @@ import view.Visualizer;
 public class LeftCommand extends UpdatableCommand {
 
 	public LeftCommand(Visualizer vis, Updatable updatable) {
-		super(vis, updatable, 0);
+		super(vis, updatable, 1);
 	}
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		Double clockwise = convertToClockwise(args.get(0));
-		return updatable.rotate(clockwise);
+		return updatable.rotate(args.get(0));
 	}
-	
-	private Double convertToClockwise(double rotation) {
-		return (-rotation + 90) % 360;
-	}
-
 
 }

@@ -6,15 +6,15 @@ import commands.UpdatableCommand;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class GetHeading extends UpdatableCommand {
+public class IsShowingCommand extends UpdatableCommand {
 
-	public GetHeading(Visualizer vis, Updatable updatable) {
+	public IsShowingCommand(Visualizer vis, Updatable updatable) {
 		super(vis, updatable, 0);
 	}
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.getHeading();
+		return updatable.getVisible();
 	}
 
 }

@@ -6,15 +6,15 @@ import commands.UpdatableCommand;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class GetYCor extends UpdatableCommand {
+public class IsPenDownCommand extends UpdatableCommand {
 
-	public GetYCor(Visualizer vis, Updatable updatable) {
+	public IsPenDownCommand(Visualizer vis, Updatable updatable) {
 		super(vis, updatable, 0);
 	}
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.getY();
+		return updatable.getPendown();
 	}
 
 }

@@ -1,4 +1,4 @@
-package commands.updatable.queries;
+package commands.updatable;
 
 import java.util.List;
 
@@ -6,15 +6,15 @@ import commands.UpdatableCommand;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class GetPendown extends UpdatableCommand {
+public class PenUpCommand extends UpdatableCommand {
 
-	public GetPendown(Visualizer vis, Updatable updatable) {
+	public PenUpCommand(Visualizer vis, Updatable updatable) {
 		super(vis, updatable, 0);
 	}
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.getPendown();
+		return updatable.setPen(false);
 	}
 
 }

@@ -14,6 +14,6 @@ public class RightCommand extends UpdatableCommand {
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.rotate(args.get(0));
+		return updatable.rotate(-args.get(0));
 	}
 }

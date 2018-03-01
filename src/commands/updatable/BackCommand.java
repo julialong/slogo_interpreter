@@ -14,6 +14,6 @@ public class BackCommand extends UpdatableCommand {
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.move(args.get(0));
+		return updatable.move(-args.get(0));
 	}
 }

@@ -33,6 +33,7 @@ public class CommandFactory {
 
 	public Commandable createCommmand(String command, String id) {
 		String keyword = myLanguages.get(command);
+		System.out.println(keyword);
 		try {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
 			if (clazz.getSuperclass() == UpdatableCommand.class) {

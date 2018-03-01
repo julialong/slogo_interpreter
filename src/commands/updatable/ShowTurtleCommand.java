@@ -1,4 +1,4 @@
-package commands.updatable.queries;
+package commands.updatable;
 
 import java.util.List;
 
@@ -6,15 +6,15 @@ import commands.UpdatableCommand;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class GetXCor extends UpdatableCommand {
+public class ShowTurtleCommand extends UpdatableCommand {
 
-	public GetXCor(Visualizer vis, Updatable updatable) {
+	public ShowTurtleCommand(Visualizer vis, Updatable updatable) {
 		super(vis, updatable, 0);
 	}
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.getX();
+		return updatable.setVisible(true);
 	}
 
 }

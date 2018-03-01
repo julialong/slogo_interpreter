@@ -129,7 +129,7 @@ public class Turtle implements Drawable, Updatable {
 	public Double rotate(Double clockwise) {
 		myDegrees += clockwise;
 		myIV.setRotate(myDegrees);
-		return clockwise;
+		return Math.abs(clockwise);
 	}
 
 	@Override
