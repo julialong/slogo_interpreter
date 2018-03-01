@@ -9,7 +9,7 @@ import view.Visualizer;
 public class GetHeading extends UpdatableCommand {
 
 	public GetHeading(Visualizer vis, Updatable updatable) {
-		super(vis, 0, updatable);
+		super(vis, updatable, 0);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package commands;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -35,10 +36,10 @@ public class CommandFactory {
 		try {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
-				Constructor<?> ctor = clazz.getConstructor(Updatable.class);
+				Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
 				return (Commandable) ctor.newInstance(myVis, myUpdatables.get(id));
 			} else {
-				Constructor<?> ctor = clazz.getConstructor();
+				Constructor<?> ctor = clazz.getDeclaredConstructor(Visualizer.class);
 				return (Commandable) ctor.newInstance(myVis);
 			}
 		} catch (Exception e) {

@@ -10,7 +10,7 @@ public abstract class UpdatableCommand extends Command {
 	private Updatable myUpdatable;
 	private Double ans;
 	
-	public UpdatableCommand(Visualizer vis, int num_args, Updatable updatable) {
+	public UpdatableCommand(Visualizer vis, Updatable updatable, int num_args) {
 		super(vis, num_args);
 		myUpdatable = updatable;
 	}

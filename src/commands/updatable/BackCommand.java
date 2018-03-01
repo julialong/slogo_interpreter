@@ -9,7 +9,7 @@ import view.Visualizer;
 public class BackCommand extends UpdatableCommand {
 	
 	public BackCommand(Visualizer vis, Updatable updatable) {
-		super(vis, 1, updatable);
+		super(vis, updatable, 1);
 	}
 
 	@Override

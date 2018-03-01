@@ -9,7 +9,7 @@ import view.Visualizer;
 public class GetPendown extends UpdatableCommand {
 
 	public GetPendown(Visualizer vis, Updatable updatable) {
-		super(vis, 0, updatable);
+		super(vis, updatable, 0);
 	}
 
 	@Override

@@ -87,6 +87,7 @@ public class Parser implements Iterable<Commandable> {
 						}
 					} else if (isCommand(next)) {
 						myCurrent = createNode(next, myCurrent);
+						System.out.println(myCurrent.getCommandable());
 						myDex += 1;
 						return findNext();
 					} else if (isArgument(next)) {
@@ -154,7 +155,6 @@ public class Parser implements Iterable<Commandable> {
 
 	private List<String> replaceUnknowns(String s, Map<String, String> var_map, Map<String, Function> func_map) {
 		String[] arr = s.split(" ");
-		System.out.println(Arrays.toString(arr));
 		List<String> ans = new ArrayList<>();
 		int i=0;
 		while (i < arr.length) {
@@ -175,7 +175,6 @@ public class Parser implements Iterable<Commandable> {
 				i += 1;
 			}
 		}
-		System.out.println(Arrays.toString(ans.toArray()));
 		return ans;
 	}
 

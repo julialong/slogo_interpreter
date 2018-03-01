@@ -9,7 +9,7 @@ import view.Visualizer;
 public class SetXYCommand extends UpdatableCommand {
 
 	public SetXYCommand(Visualizer vis, Updatable updatable) {
-		super(vis, 2, updatable);
+		super(vis, updatable, 2);
 	}
 
 	@Override
