@@ -37,7 +37,10 @@ public class Parser implements Iterable<Commandable> {
 	}
 
 	public Iterable<Commandable> parse(String s) {
-		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
+//		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
+		s.replace("\n", " ");
+		s.replace("\\s+", " ");
+		myStringList = new ArrayList<>(Arrays.asList(s.split(" ")));
 
 		myDex = 0;
 		myDummyRoot = new Node(myCommandFactory.createCommand(NULL));

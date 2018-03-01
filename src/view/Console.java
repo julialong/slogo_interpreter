@@ -23,6 +23,7 @@ import resources.languages.ResourcesLanguages;
 import slogo_team07.ChangeListener;
 
 public class Console extends AnchorPane implements TextInput {
+
 	private TextArea console;
 	private TextArea history;
 	private Button runner;
