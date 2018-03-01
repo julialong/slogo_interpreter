@@ -1,7 +1,6 @@
 package commands;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -33,9 +32,9 @@ public class CommandFactory {
 
 	public Commandable createCommmand(String command, String id) {
 		String keyword = myLanguages.get(command);
-		System.out.println(keyword);
 		try {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
+			System.out.println(clazz);
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
 				return (Commandable) ctor.newInstance(myVis, myUpdatables.get(id));
