@@ -19,7 +19,7 @@ public class Turtle implements Drawable, Updatable {
 	private double myViewPrevY = 0.0;
 	private boolean isDown = true;
 	private boolean isVisible = true;
-	private Double myDegrees = 0.0;
+	private Double myDegrees = 90.0;
 	private ImageView myIV;
 	private Pane myPane;
 
