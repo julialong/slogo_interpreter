@@ -15,6 +15,6 @@ public interface Drawable {
 	
 	public void setPane(Pane pane);
 	
-	public void test(double x, double y);
+//	public void test(double x, double y);
 
 }

@@ -8,9 +8,6 @@
 package view;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,14 +21,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
-import slogo_team07.Turtle;
 
 public class SideBar extends VBox{
 	private VBox myVBox;
@@ -84,19 +79,19 @@ public class SideBar extends VBox{
 		variableTable = new TableView();
 		double colWidth = 250;
 		
-		Button test = new Button("Test");
-		test.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e){
-				double x = 0;
-				double y = 0;
-				for (Drawable turtle: myTurtles){
-					turtle.setPane(myCanvasObjects);
-					turtle.test(100, 100);
-				}
-			}
-		});
-		myVBox.getChildren().add(test);
+//		Button test = new Button("Test");
+//		test.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent e){
+//				double x = 0;
+//				double y = 0;
+//				for (Drawable turtle: myTurtles){
+//					turtle.setPane(myCanvasObjects);
+//					turtle.test(100, 100);
+//				}
+//			}
+//		});
+//		myVBox.getChildren().add(test);
 
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
