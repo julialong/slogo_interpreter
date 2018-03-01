@@ -47,14 +47,6 @@ public class Visualizer {
 		setupAnimation();
 	}
 	
-	/**
-	 * Default application start method that begins to run program
-	 */
-	public void start(Stage primaryStage) throws Exception {
-		Stage myStage = primaryStage;
-		
-	}
-	
 	private void setupAnimation(){
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
 		Timeline animation = new Timeline();
