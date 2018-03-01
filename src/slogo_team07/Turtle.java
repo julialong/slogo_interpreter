@@ -1,6 +1,8 @@
 package slogo_team07;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -22,6 +24,8 @@ public class Turtle implements Drawable, Updatable {
 	private Double myDegrees = 90.0;
 	private ImageView myIV;
 	private Pane myPane;
+	private Group myLines = new Group();
+	private Color myColor = Color.BLACK;
 
 	public Turtle() {
 		Image image = new Image("/view/turtle.jpg");
@@ -68,25 +72,19 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public void draw(Pane display, Color color) {
+		myColor = color;
 		myPane = display;
 		translate(myPane);
 		if (isDown){
+			if (myPane.getChildren().contains(myLines)){
+				myPane.getChildren().remove(myLines);
+			}
 			Line trail = new Line(myViewPrevX, myViewPrevY, myViewX, myViewY);
-			trail.setStroke(color);
-			display.getChildren().add(trail);
+			trail.setStroke(myColor);
+			myLines.getChildren().add(trail);
+			myPane.getChildren().add(myLines);
 		}
 	}
-	
-//	@Override
-//	public void test(double x, double y){
-//		myPrevXPos = myXPos;
-//		myPrevYPos = myYPos;
-//		myXPos = x;
-//		myYPos = y;
-//		translate(myPane);
-//		myIV.setX(myViewX);
-//		myIV.setY(myViewY);
-//	}
 
 	@Override
 	public Double setPosition(Double x, Double y) {
@@ -205,6 +203,12 @@ public class Turtle implements Drawable, Updatable {
 	public Double clear() {
 		Double dist = this.home();
 		myPane.getChildren().clear();
+		myLines.getChildren().clear();
+		translate(myPane);
+		myPrevXPos = myXPos;
+		myPrevYPos = myYPos;
+		myViewPrevX = myViewX;
+		myViewPrevY = myViewY;
 		myIV.setFitHeight(20);
 		myIV.setFitWidth(20);
 		myPane.getChildren().add(myIV);

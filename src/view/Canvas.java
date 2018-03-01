@@ -1,6 +1,8 @@
 package view;
 
 import java.util.ArrayList;
+
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
@@ -66,10 +68,6 @@ public class Canvas {
 
 		return updateCanvas(myTurtles);
 	}
-	
-//	public void addDrawable (Drawable turtle){
-//		myTurtles.add(turtle);
-//	}
 	
 	public void setColor(Color color){
 		myColor = color;
