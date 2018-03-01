@@ -18,7 +18,6 @@ import javafx.util.Duration;
 import resources.keys.Resources;
 import slogo_team07.ChangeListener;
 import slogo_team07.Drawable;
-import slogo_team07.Updatable;
 import slogo_team07.Engine;
 import slogo_team07.Turtle;
 import commands.Result;

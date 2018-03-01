@@ -1,7 +1,6 @@
 package slogo_team07;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -81,16 +80,16 @@ public class Turtle implements Drawable, Updatable {
 		}
 	}
 	
-	@Override
-	public void test(double x, double y){
-		myPrevXPos = myXPos;
-		myPrevYPos = myYPos;
-		myXPos = x;
-		myYPos = y;
-		translate(myPane);
-		myIV.setX(myViewX);
-		myIV.setY(myViewY);
-	}
+//	@Override
+//	public void test(double x, double y){
+//		myPrevXPos = myXPos;
+//		myPrevYPos = myYPos;
+//		myXPos = x;
+//		myYPos = y;
+//		translate(myPane);
+//		myIV.setX(myViewX);
+//		myIV.setY(myViewY);
+//	}
 
 	@Override
 	public Double setPosition(Double x, Double y) {
