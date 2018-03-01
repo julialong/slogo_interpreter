@@ -22,11 +22,8 @@ public class ForUnbundler extends ControlUnbundler{
     public String unbundle(List<String> exp, int index) {
         setNumbers(exp, index + 2);
         int[] commandIndex = findBrackets(exp, index + 6);
-        System.out.println(index + " " + commandIndex[0] + " " + commandIndex[1]);
         buildCommand(exp, commandIndex[0], commandIndex[1]);
         modifyList(exp, index, commandIndex[1]);
-        System.out.println("final expression:" + exp.toString());
-        System.out.println("unbundled: " + unbundledArray.toString());
         return String.join(" ", unbundledArray);
     }
 

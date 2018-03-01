@@ -39,9 +39,6 @@ public class IfElseUnbundler extends ControlUnbundler {
         unbundledArray = new ArrayList<>();
         buildCommand(exp, trueCommandIndex[0], trueCommandIndex[1], falseCommandIndex[0], falseCommandIndex[1]);
         modifyList(exp, index, falseCommandIndex[1]);
-        System.out.println("final expression:" + exp.toString());
-        System.out.println("unbundled: " + unbundledArray.toString());
-        System.out.println("start unbundler here");
         return String.join(" ", unbundledArray);
     }
 
@@ -65,7 +62,6 @@ public class IfElseUnbundler extends ControlUnbundler {
             Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
             for (Commandable c : iterable) {
                 c.execute();
-                System.out.println("in unbundler: " + c.getAns());
                 executeCommands = (c.getAns() != 0);
             }
         }

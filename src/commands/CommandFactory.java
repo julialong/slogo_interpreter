@@ -49,7 +49,6 @@ public class CommandFactory {
 
 	public void updateLanguage(String lang) {
 		String location = String.format("%s%s", LANGUAGE_BASE, lang);
-		System.out.println(location);
 		ResourceBundle rb = ResourceBundle.getBundle(location);
 		for (String key : rb.keySet()) {
 			String[] input = rb.getString(key).split("\\|");

@@ -24,7 +24,6 @@ public class ToUnbundler extends ControlUnbundler{
      * @return the string variable name
      */
     public String unbundle(List<String> exp, int index) {
-        System.out.println("unbundle here");
         commandName = exp.get(index + 1);
         int[] variableIndex = findBrackets(exp, index + 2);
         int[] commandIndex = findBrackets(exp, variableIndex[1]);

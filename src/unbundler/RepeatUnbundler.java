@@ -34,16 +34,12 @@ public class RepeatUnbundler extends ControlUnbundler {
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp, int index) {
-		System.out.println("start unbundler here");
 		int[] commandIndex = findBrackets(exp, index);
 		expression = new ArrayList<>();
 		buildExpression(exp, index, commandIndex[0]);
 		executeExpression();
 		buildCommand(exp, commandIndex[0], commandIndex[1]);
 		modifyList(exp, index, commandIndex[1]);
-		System.out.println("final expression:" + exp.toString());
-		System.out.println("unbundled: " + unbundledArray.toString());
-		System.out.println("start unbundler here");
 		return String.join(" ", unbundledArray);
 	}
 
@@ -54,17 +50,14 @@ public class RepeatUnbundler extends ControlUnbundler {
 	 * @return the index of the first left bracket
 	 */
 	private void buildExpression(List<String> exp, int start, int end) {
-		System.out.println(start + " " + end);
 		for (int i = start + 1; i < end; i++) {
 			String current = exp.get(i);
 			expression.add(current);
 		}
-		System.out.println("expression: " + expression.toString());
 	}
 
 	private void executeExpression() {
 		if (expression.size() <= 0) {
-			System.out.println("expression 0");
 			repeat = 0;
 		} else {
 			Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
