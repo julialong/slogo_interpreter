@@ -137,8 +137,8 @@ public class Console extends AnchorPane implements TextInput {
 			makeUDI(comm);
 		}
 
-		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s).*?")
-				|| comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s).*?"))   {
+		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s) .*?")
+				|| comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s) .*?"))   {
 			makeVariable(comm);
 		}
 	}
