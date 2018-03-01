@@ -122,6 +122,7 @@ public class Turtle implements Drawable, Updatable {
 		myYPos = 0.0;
 		myDegrees = 90.0;
 		myIVDegrees = myDegrees - 90;
+		myIV.setRotate(myIVDegrees);
 		translate(myPane);
 		return distance;
 	}
