@@ -56,7 +56,7 @@ public class Visualizer {
 	}
 	
 	private void step(double cycles){
-		myCanvasObjects = myCanvas.updateCanvas();
+		myCanvasObjects = myCanvas.updateCanvas(myTurtles);
 		root.setCenter(myCanvasObjects);
 
 		if (!mySideBar.language.equals(language))	{
@@ -72,8 +72,8 @@ public class Visualizer {
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 
 		//hardcoded, need to get from backend
-		Turtle testTurt = new Turtle();
-		myTurtles.add(testTurt);
+//		Turtle testTurt = new Turtle();
+//		myTurtles.add(testTurt);
 		
 		myCanvas = new Canvas(myTurtles);
 		myCanvasObjects = myCanvas.initCanvas(); 
@@ -104,7 +104,8 @@ public class Visualizer {
 	 * @param turtle	object to be drawn on canvas
 	 */
 	public void addDrawable(Drawable turtle)	{
-		myCanvas.addDrawable(turtle);
+		//myCanvas.addDrawable(turtle);
+		myTurtles.add(turtle);
 	}
 
 	/**
