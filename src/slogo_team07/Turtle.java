@@ -20,6 +20,7 @@ public class Turtle implements Drawable, Updatable {
 	private boolean isDown = true;
 	private boolean isVisible = true;
 	private Double myDegrees = 90.0;
+	private Double myIVDegrees = myDegrees - 90;
 	private ImageView myIV;
 	private Pane myPane;
 
@@ -128,7 +129,8 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public Double rotate(Double clockwise) {
 		myDegrees += clockwise;
-		myIV.setRotate(myDegrees);
+		myIVDegrees -= clockwise;
+		myIV.setRotate(myIVDegrees);
 		return Math.abs(clockwise);
 	}
 
@@ -136,7 +138,8 @@ public class Turtle implements Drawable, Updatable {
 	public Double setHeading(Double degrees) {
 		Double old = myDegrees;
 		myDegrees = degrees;
-		myIV.setRotate(myDegrees);
+		myIVDegrees = degrees + 90;
+		myIV.setRotate(myIVDegrees);
 		return degrees - old;
 	}
 
