@@ -120,6 +120,8 @@ public class Turtle implements Drawable, Updatable {
 		myPrevYPos = myYPos;
 		myXPos = 0.0;
 		myYPos = 0.0;
+		myDegrees = 90.0;
+		myIVDegrees = myDegrees - 90;
 		translate(myPane);
 		return distance;
 	}
