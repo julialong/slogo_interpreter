@@ -42,9 +42,6 @@ public class Canvas {
 				turtle.getView().setFitWidth(20);
 				myPane.getChildren().add(turtle.getView());
 			}
-//			System.out.println("actual: " + turtle.getView().getX());
-//			System.out.println("actual: " + turtle.getView().getY());
-			//System.out.println("canvas: " + myColor);
 			turtle.draw(myPane, myColor);
 		}
 		return myPane;
