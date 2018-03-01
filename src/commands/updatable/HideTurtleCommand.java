@@ -6,9 +6,9 @@ import commands.UpdatableCommand;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class HideUpdatable extends UpdatableCommand {
+public class HideTurtleCommand extends UpdatableCommand {
 
-	public HideUpdatable(Visualizer vis, Updatable updatable) {
+	public HideTurtleCommand(Visualizer vis, Updatable updatable) {
 		super(vis, updatable, 0);
 	}
 
