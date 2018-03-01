@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
-public class GetHeading extends UpdatableCommand {
+public class HeadingCommand extends UpdatableCommand {
 
-	public GetHeading(Updatable updatable) {
-		super(0, updatable);
+	public HeadingCommand(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 0);
 	}
 
 	@Override

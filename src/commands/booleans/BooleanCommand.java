@@ -1,11 +1,12 @@
 package commands.booleans;
 
 import commands.NonUpdatableCommand;
+import view.Visualizer;
 
 public abstract class BooleanCommand extends NonUpdatableCommand {
 	
-	public BooleanCommand(int num_args) {
-		super(num_args);
+	public BooleanCommand(Visualizer vis, int num_args) {
+		super(vis, num_args);
 	}
 	
 	protected Double boolToDouble(Boolean bool) {

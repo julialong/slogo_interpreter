@@ -7,23 +7,21 @@
 package view;
 
 import java.util.ArrayList;
+
+import commands.Result;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
 import slogo_team07.ChangeListener;
 import slogo_team07.Drawable;
-import slogo_team07.Updatable;
-import slogo_team07.Engine;
 import slogo_team07.Turtle;
-import commands.Result;
 
-public class Visualizer extends Application{
+public class Visualizer {
 	
 	public static final int FRAMES_PER_SECOND = 5;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -36,19 +34,25 @@ public class Visualizer extends Application{
 	private Toolbar myToolbar;
 	private BorderPane root;
 	private ArrayList<Drawable> myTurtles = new ArrayList<Drawable>();
-	private ChangeListener myEngine;
+	private ChangeListener myChangeListener;
 	private String language = "English";
+	
+	public Visualizer(Stage stage, ChangeListener change_listener) {
+		myChangeListener = change_listener;
+		
+		Scene myScene = initScreen();
+		stage.setScene(myScene);
+		stage.setTitle(Resources.getString("Title"));
+		stage.show();
+		setupAnimation();
+	}
 	
 	/**
 	 * Default application start method that begins to run program
 	 */
 	public void start(Stage primaryStage) throws Exception {
 		Stage myStage = primaryStage;
-		Scene myScene = initScreen();
-		myStage.setScene(myScene);
-		myStage.setTitle(Resources.getString("Title"));
-		myStage.show();
-		setupAnimation();
+		
 	}
 	
 	private void setupAnimation(){
@@ -66,7 +70,7 @@ public class Visualizer extends Application{
 		if (!mySideBar.language.equals(language))	{
 			language = mySideBar.language;
 			myConsole.language = language;
-			myEngine.changeLanguage(language);
+			myChangeListener.changeLanguage(language);
 		}
 	}
 	
@@ -76,16 +80,15 @@ public class Visualizer extends Application{
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 
 		//hardcoded, need to get from backend
-		ArrayList<Drawable> test = new ArrayList<Drawable>();
 		Turtle testTurt = new Turtle();
-		test.add(testTurt);
+		myTurtles.add(testTurt);
 		
 		myCanvas = new Canvas(myTurtles);
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, test);
+		mySideBar = new SideBar(myCanvasObjects, myTurtles, myCanvas);
 		((SideBar)mySideBar).language = language;
 		root.setRight(((SideBar)mySideBar).initSideBar());
 
@@ -96,10 +99,8 @@ public class Visualizer extends Application{
 		myToolbar = new Toolbar();
 		root.setTop(myToolbar.initToolbar());
 
-		myEngine = new Engine(this);
-
 		myCanvas.myVBox = mySideBar;
-		((Console)myConsole).myCL = myEngine;
+		((Console)myConsole).myChangeListener = myChangeListener;
 		((SideBar)mySideBar).myTextInput = myConsole;
 		((Console)myConsole).myVBox = mySideBar;
 		
@@ -121,13 +122,6 @@ public class Visualizer extends Application{
 	public void runCommand(Result result)	{
 		((Console)myConsole).printResult(Double.toString(result.getRes1()));
 		myCanvas.updateCanvas(result);
-	}
-	
-	/**
-	 * Runs the program
-	 */
-	public static void main(String[] args) {
-		launch(args);
 	}
 
 }

@@ -4,16 +4,17 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
-public class Pendown extends UpdatableCommand {
+public class ShowTurtleCommand extends UpdatableCommand {
 
-	public Pendown(Updatable updatable) {
-		super(0, updatable);
+	public ShowTurtleCommand(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 0);
 	}
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.setPen(true);
+		return updatable.setVisible(true);
 	}
 
 }

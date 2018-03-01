@@ -5,21 +5,21 @@ import java.util.Map;
 
 import commands.CommandFactory;
 import commands.Commandable;
-import commands.Result;
-import model.Parser;
+import javafx.stage.Stage;
+import parser.Parser;
 import view.Visualizer;
 
 public class Engine implements ChangeListener {
-
+	
+	private Map<String, Updatable> myUpdatables = new HashMap<>();
 	private Visualizer myVis;
-	private Map<String, Updatable> myUpdatables;
 	private Parser myParser;
 	private CommandFactory myCommandFactory;
 
-	public Engine(Visualizer vis) {
-		myVis = vis;
+	public Engine(Stage stage) {
+		myVis = new Visualizer(stage, this);
 		myUpdatables = new HashMap<>();
-		myCommandFactory = new CommandFactory(myUpdatables);
+		myCommandFactory = new CommandFactory(myUpdatables, myVis);
 		myParser = new Parser(myCommandFactory);
 		addTurtle();
 	}
@@ -30,18 +30,22 @@ public class Engine implements ChangeListener {
 		myUpdatables.put(Integer.toString(0), turtle);
 	}
 
-	// should be stored on the front end as PropertyChangeListener.propertyChangeInput(new ChangeListener)
+
 	@Override
 	public void changeInput(String input) {
-		Iterable<Commandable> iterable = myParser.parse(input);
-		for (Commandable c : iterable) {
-			Result result = c.execute();
-			myVis.runCommand(result);
+		System.out.println(synthesize(input));
+		for (Commandable c : myParser.parse(input)) {
+			c.execute();
 		}
 	}
 
 	@Override
 	public void changeLanguage(String lang) {
 		myCommandFactory.updateLanguage(lang);
+	}
+	
+	// this needs to be a lot more powerful I think
+	private String synthesize(String string) {
+		return string.replaceAll("[\\t\\n\\r]+"," ");
 	}
 }

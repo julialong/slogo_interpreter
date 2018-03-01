@@ -2,10 +2,12 @@ package commands.math.algebra;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class SumCommand extends AlgebraCommand {
 
-	public SumCommand() {
-		super(2);
+	public SumCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

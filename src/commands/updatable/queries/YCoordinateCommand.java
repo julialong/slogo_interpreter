@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
-public class GetYCor extends UpdatableCommand {
+public class YCoordinateCommand extends UpdatableCommand {
 
-	public GetYCor(Updatable updatable) {
-		super(0, updatable);
+	public YCoordinateCommand(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 0);
 	}
 
 	@Override

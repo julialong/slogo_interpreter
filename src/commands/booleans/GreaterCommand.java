@@ -2,10 +2,12 @@ package commands.booleans;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public class GreaterCommand extends BooleanCommand {
 	
-	public GreaterCommand() {
-		super(2);
+	public GreaterCommand(Visualizer vis) {
+		super(vis, 2);
 	}
 
 	@Override

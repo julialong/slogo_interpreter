@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
 public class SetHeadingCommand extends UpdatableCommand {
 
-	public SetHeadingCommand(Updatable updatable) {
-		super(1, updatable);
+	public SetHeadingCommand(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 1);
 	}
 
 	@Override

@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
 public class ClearScreenCommand extends UpdatableCommand {
 
-	public ClearScreenCommand(Updatable updatable) {
-		super(0, updatable);
+	public ClearScreenCommand(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 0);
 	}
 
 	@Override

@@ -2,26 +2,28 @@ package commands;
 
 import java.util.List;
 
+import view.Visualizer;
+
 public abstract class NonUpdatableCommand extends Command {
 	
 	private Double ans;
 
-	public NonUpdatableCommand(int num_args) {
-		super(num_args);
+	public NonUpdatableCommand(Visualizer vis, int num_args) {
+		super(vis, num_args);
 	}
 	
 	@Override
-	public Result execute() {
+	public void execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
 		ans = calcValue(getArgs());
-		return new Result(ans);
+		visCommand(new Result(ans));
 	}
 
 	@Override
-	public double getAns() {
+	public Double getAns() {
 		return ans;
 	}
 	

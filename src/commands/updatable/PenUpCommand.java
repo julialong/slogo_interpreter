@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
-public class Penup extends UpdatableCommand {
+public class PenUpCommand extends UpdatableCommand {
 
-	public Penup(Updatable updatable) {
-		super(0, updatable);
+	public PenUpCommand(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 0);
 	}
 
 	@Override

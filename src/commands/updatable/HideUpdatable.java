@@ -4,11 +4,12 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
 public class HideUpdatable extends UpdatableCommand {
 
-	public HideUpdatable(Updatable updatable) {
-		super(0, updatable);
+	public HideUpdatable(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 0);
 	}
 
 	@Override

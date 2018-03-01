@@ -3,11 +3,12 @@ package commands.math.misc;
 import java.util.List;
 
 import commands.NonUpdatableCommand;
+import view.Visualizer;
 
 public class RandomCommand extends NonUpdatableCommand {
 
-	public RandomCommand() {
-		super(1);
+	public RandomCommand(Visualizer vis) {
+		super(vis, 1);
 	}
 
 	@Override

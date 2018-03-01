@@ -1,11 +1,11 @@
 package commands;
 
 public interface Commandable {
-	Result execute();
+	void execute();
+	
+	boolean isReady();
 	
 	void inject(Double arg);
-
-	boolean isReady();
-
-	double getAns();
+	
+	Double getAns();
 }

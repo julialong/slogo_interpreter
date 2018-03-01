@@ -3,11 +3,12 @@ package commands.math.misc;
 import java.util.List;
 
 import commands.NonUpdatableCommand;
+import view.Visualizer;
 
 public class LogCommand extends NonUpdatableCommand {
 	
-	public LogCommand() {
-		super(1);
+	public LogCommand(Visualizer vis) {
+		super(vis, 1);
 	}
 
 	@Override

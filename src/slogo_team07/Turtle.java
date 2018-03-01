@@ -1,14 +1,11 @@
 package slogo_team07;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-
-import slogo_team07.Drawable;
-import slogo_team07.Updatable;
 
 public class Turtle implements Drawable, Updatable {
 
@@ -22,7 +19,7 @@ public class Turtle implements Drawable, Updatable {
 	private double myViewPrevY = 0.0;
 	private boolean isDown = true;
 	private boolean isVisible = true;
-	private Double myDegrees = 0.0; //unsure if correct initial value
+	private Double myDegrees = 90.0;
 	private ImageView myIV;
 	private Pane myPane;
 
@@ -43,6 +40,10 @@ public class Turtle implements Drawable, Updatable {
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 	}
+	
+	public void setPane(Pane pane){
+		myPane = pane;
+	}
 
 	@Override
 	public boolean getIsVisible(){
@@ -60,18 +61,31 @@ public class Turtle implements Drawable, Updatable {
 		myIV = new ImageView(image);
 		myIV.setFitHeight(20);
 		myIV.setFitWidth(20);
+		translate(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 	}
 
 	@Override
-	public void draw(Pane display) {
+	public void draw(Pane display, Color color) {
 		myPane = display;
-		translate(display);
+		translate(myPane);
 		if (isDown){
 			Line trail = new Line(myViewPrevX, myViewPrevY, myViewX, myViewY);
+			trail.setStroke(color);
 			display.getChildren().add(trail);
 		}
+	}
+	
+	@Override
+	public void test(double x, double y){
+		myPrevXPos = myXPos;
+		myPrevYPos = myYPos;
+		myXPos = x;
+		myYPos = y;
+		translate(myPane);
+		myIV.setX(myViewX);
+		myIV.setY(myViewY);
 	}
 
 	@Override
@@ -115,7 +129,7 @@ public class Turtle implements Drawable, Updatable {
 	public Double rotate(Double clockwise) {
 		myDegrees += clockwise;
 		myIV.setRotate(myDegrees);
-		return clockwise;
+		return Math.abs(clockwise);
 	}
 
 	@Override

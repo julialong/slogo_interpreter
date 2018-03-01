@@ -4,16 +4,17 @@ import java.util.List;
 
 import commands.UpdatableCommand;
 import slogo_team07.Updatable;
+import view.Visualizer;
 
-public class GetXCor extends UpdatableCommand {
+public class IsShowingCommand extends UpdatableCommand {
 
-	public GetXCor(Updatable updatable) {
-		super(0, updatable);
+	public IsShowingCommand(Visualizer vis, Updatable updatable) {
+		super(vis, updatable, 0);
 	}
 
 	@Override
 	protected Double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.getX();
+		return updatable.getVisible();
 	}
 
 }
