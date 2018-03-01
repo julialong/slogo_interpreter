@@ -26,15 +26,12 @@ public class ToUnbundler extends ControlUnbundler{
     public String unbundle(List<String> exp, int index) {
         System.out.println("unbundle here");
         commandName = exp.get(index + 1);
-        System.out.println(commandName);
         int[] variableIndex = findBrackets(exp, index + 2);
         int[] commandIndex = findBrackets(exp, variableIndex[1]);
         parameters = new ArrayList<>();
         commands = new ArrayList<>();
         buildExpression(exp, commandIndex[0], commandIndex[1]);
         addVariables(exp, variableIndex[0], variableIndex[1]);
-        System.out.println("parameters: " + parameters.toString());
-        System.out.println("commands: " + commands.toString());
         addFunction(commandName);
         modifyList(exp, index, commandIndex[1]);
         return Integer.toString(1);

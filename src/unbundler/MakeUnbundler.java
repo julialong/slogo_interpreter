@@ -22,7 +22,7 @@ public class MakeUnbundler extends ControlUnbundler{
     public String unbundle(List<String> exp, int index) {
         String variableName = exp.get(index + 1);
         expression = new ArrayList<>();
-        buildExpression(exp, index + 2, exp.size());
+        buildExpression(exp, index + 2, exp.size() - 1);
         addVariable(variableName);
         modifyList(exp, index, index + 1);
         return String.join(" ", expression);
@@ -34,11 +34,10 @@ public class MakeUnbundler extends ControlUnbundler{
      * @return the index of the first left bracket
      */
     private void buildExpression(List<String> exp, int start, int end) {
-        for (int i = start; i < end; i++) {
+        for (int i = start + 1; i < end; i++) {
             String current = exp.get(i);
             expression.add(current);
         }
-        System.out.println("exprezz " + expression);
     }
 
     /**

@@ -32,7 +32,8 @@ public class Canvas {
 		return myPane;
 	}
 	
-	public Pane updateCanvas() {		
+	public Pane updateCanvas(ArrayList<Drawable> turtles) {		
+		myTurtles = turtles;
 		for (Drawable turtle: myTurtles){
 			if (! turtle.getIsVisible()){
 				myPane.getChildren().remove(turtle.getView());
@@ -63,12 +64,12 @@ public class Canvas {
   //           ((SideBar)myVBox).addButton(result.toString());
 		// }
 
-		return updateCanvas();
+		return updateCanvas(myTurtles);
 	}
 	
-	public void addDrawable (Drawable turtle){
-		myTurtles.add(turtle);
-	}
+//	public void addDrawable (Drawable turtle){
+//		myTurtles.add(turtle);
+//	}
 	
 	public void setColor(Color color){
 		myColor = color;

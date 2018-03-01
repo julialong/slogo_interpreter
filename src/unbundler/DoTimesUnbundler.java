@@ -3,12 +3,19 @@ package unbundler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoTimesUnbundler extends ControlUnbundler {
+
+public class DoTimesUnbundler extends ControlUnbundler{
 
     private String variable;
     private double end;
 
     private ArrayList<String> unbundledArray;
+    
+    /**
+     * Creates an unbundler for the dotimes command
+     */
+    public DoTimesUnbundler() {
+    }
 
     /**
      * unbundles the given control command starting at index
@@ -37,6 +44,7 @@ public class DoTimesUnbundler extends ControlUnbundler {
         end = Double.parseDouble(exp.get(index + 1));
     }
 
+   
     /**
      * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
      * @param exp is the entire ArrayList of the input commands
