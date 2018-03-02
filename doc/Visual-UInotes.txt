@@ -31,14 +31,29 @@ Visualizer
 
 Drawable
 
-Jennifer
-* main
-* canvas
-* options
+Sprint 3:
+Jennifer:
+* rearrange buttons
+* animate turtle
+* pause
+* reset
+* pop-up of images and colors with corresponding numbers
+* move turtle graphically
 
-Maya
-* user-defined commands
-* command console (PRIORITIZE)
-* help pop-up
-* alerts
-* languages
+Maya:
+* old commands
+* old variables
+* separate commands (semicolon)
+* step
+
+* pop-up of table of all tables with all their info
+	* buttons for all properties
+HashMap<Drawable, List<String>>
+* id
+* pen color
+* pen thickness
+* image path
+* xpos
+* ypos
+* heading
+* pen up/down
