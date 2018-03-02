@@ -8,6 +8,7 @@
 package view;
 
 import java.util.List;
+import java.util.ArrayList;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -151,10 +152,10 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable(drawables);
+				new DrawablesTable();
 			}
 		});
-		myVBox.getChildren().add(helpButton);
+		myVBox.getChildren().add(allDrawablesButton);
 
 		commandTable.setEditable(false);
 		comText = new TableColumn("User-defined commands");

@@ -6,7 +6,13 @@
 
 package view;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -15,14 +21,24 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import slogo_team07.Drawable;
+
 public class DrawablesTable extends Group	{
 	private VBox myVB;
 	private TableView table = new TableView();
+	double colWidth = 80;
+	double numCols = 9;
 	private ObservableList<ConvertedTurtle> drawables = FXCollections.observableArrayList();
 
-	public DrawablesTable(Map<Drawable, ArrayList<String>> allInfo)	{
-		parseInfo(allInfo);
+	public DrawablesTable()	{
+		// parseInfo(allInfo);
 		makeTable();
+
+		Scene internal = new Scene(this, colWidth * numCols, 400);
+		Stage stage = new Stage();
+		stage.setScene(internal);
+		stage.setTitle("All Drawables");
+		stage.show();
 	}
 
 	private void parseInfo(Map<Drawable, ArrayList<String>> allInfo)	{
@@ -31,49 +47,50 @@ public class DrawablesTable extends Group	{
 	private Group makeTable(){
 		myVB = new VBox();
 
-		double colWidth = 50;
-
 		table.setEditable(false);
-		turtleCol = new TableColumn("Turtles");
-		turtleCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn turtleCol = new TableColumn("Turtles");
+		turtleCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 		turtleCol.setPrefWidth(colWidth);
 		table.getColumns().add(turtleCol);
-		idCol = new TableColumn("Active");
-		idCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn idCol = new TableColumn("Active");
+		idCol.setCellValueFactory(new PropertyValueFactory<>("active"));
 		idCol.setPrefWidth(colWidth);
 		table.getColumns().add(idCol);
-		imageCol = new TableColumn("Image");
-		imageCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn imageCol = new TableColumn("Image");
+		imageCol.setCellValueFactory(new PropertyValueFactory<>("image"));
 		imageCol.setPrefWidth(colWidth);
 		table.getColumns().add(imageCol);
-		penUDCol = new TableColumn("Pen Up/Down");
-		penUDCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn penUDCol = new TableColumn("Pen Up/Down");
+		penUDCol.setCellValueFactory(new PropertyValueFactory<>("penUpDown"));
 		penUDCol.setPrefWidth(colWidth);
 		table.getColumns().add(penUDCol);
-		penColorCol = new TableColumn("Pen Color");
-		penColorCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn penColorCol = new TableColumn("Pen Color");
+		penColorCol.setCellValueFactory(new PropertyValueFactory<>("penColor"));
 		penColorCol.setPrefWidth(colWidth);
 		table.getColumns().add(penColorCol);
-		penWidthCol = new TableColumn("Pen Width");
-		penWidthCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn penWidthCol = new TableColumn("Pen Width");
+		penWidthCol.setCellValueFactory(new PropertyValueFactory<>("penWidth"));
 		penWidthCol.setPrefWidth(colWidth);
 		table.getColumns().add(penWidthCol);
-		xPosCol = new TableColumn("X Position");
-		xPosCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn xPosCol = new TableColumn("X Position");
+		xPosCol.setCellValueFactory(new PropertyValueFactory<>("xPos"));
 		xPosCol.setPrefWidth(colWidth);
 		table.getColumns().add(xPosCol);
-		yPosCol = new TableColumn("Y Position");
-		yPosCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn yPosCol = new TableColumn("Y Position");
+		yPosCol.setCellValueFactory(new PropertyValueFactory<>("yPos"));
 		yPosCol.setPrefWidth(colWidth);
 		table.getColumns().add(yPosCol);
-		headingCol = new TableColumn("Heading");
-		headingCol.setCellValueFactory(new PropertyValueFactory<>("_____"));
+		TableColumn headingCol = new TableColumn("Heading");
+		headingCol.setCellValueFactory(new PropertyValueFactory<>("heading"));
 		headingCol.setPrefWidth(colWidth);
 		table.getColumns().add(headingCol);
 
 		table.setItems(drawables);
 
-		myVBox.getChildren().add(table);
+		myVB.getChildren().add(table);
+		this.getChildren().add(myVB);
+
+		return this;
 	}
 
 	public class ConvertedTurtle	{
@@ -87,9 +104,16 @@ public class DrawablesTable extends Group	{
 		private SimpleObjectProperty yPos;
 		private SimpleObjectProperty heading;
 
-		private LoadButton()	{
-			super();
-			me = new SimpleObjectProperty(this);
+		private ConvertedTurtle(Drawable aDrawable)	{
+			id = new SimpleObjectProperty("1");
+			active = new SimpleObjectProperty("a");
+			image = new SimpleObjectProperty("i");
+			penUpDown = new SimpleObjectProperty("ud");
+			penColor = new SimpleObjectProperty("c");
+			penWidth = new SimpleObjectProperty("w");
+			xPos = new SimpleObjectProperty("x");
+			yPos = new SimpleObjectProperty("y");
+			heading = new SimpleObjectProperty("h");
 		}
 
 		/**
