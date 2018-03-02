@@ -103,7 +103,20 @@ public class Visualizer {
 	 */
 	public void addDrawable(Drawable turtle)	{
 		//myCanvas.addDrawable(turtle);
-		drawables.put(turtle, new ArrayList<String>());
+		List<String> properties = new ArrayList<String>();
+		properties.addAll(
+			Integer.toString(drawables.size()),
+			"true",
+			"turtle.png",
+			"up",
+			"black", 
+			"2",
+			"100",
+			"100",
+			"40"
+			);
+
+		drawables.put(turtle, properties);
 	}
 
 	/**

@@ -75,6 +75,7 @@ public class SideBar extends VBox{
 		ComboBox iconMenu = new ComboBox(iconList);
 		ComboBox penMenu = new ComboBox(penList); 
 		ComboBox langMenu = new ComboBox<String>(langsSupported);
+		Button allDrawablesButton = new Button();
 		commandTable = new TableView();
 		variableTable = new TableView();
 		double colWidth = 250;
@@ -145,6 +146,15 @@ public class SideBar extends VBox{
 			}
 		});
 		myVBox.getChildren().add(langMenu);
+
+		allDrawablesButton.setText("All turtles");
+    	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				new DrawablesTable(drawables);
+			}
+		});
+		myVBox.getChildren().add(helpButton);
 
 		commandTable.setEditable(false);
 		comText = new TableColumn("User-defined commands");

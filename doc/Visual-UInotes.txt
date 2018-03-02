@@ -50,10 +50,11 @@ Maya:
 	* buttons for all properties
 HashMap<Drawable, List<String>>
 * id
+* active
+* image path
+* pen up/down
 * pen color
 * pen thickness
-* image path
 * xpos
 * ypos
 * heading
-* pen up/down
