@@ -1,5 +1,6 @@
 package view;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import javafx.scene.Node;
@@ -18,8 +19,8 @@ public class Canvas {
 	protected VBox myVBox;
 	private Color myColor = Color.BLACK;
 	
-	public Canvas(ArrayList<Drawable> turtles){
-		myTurtles = turtles;
+	public Canvas(List<Drawable> turtles){
+		myTurtles = new ArrayList<Drawable>(turtles);
 	}
 	
 	public Pane initCanvas(){
@@ -34,8 +35,8 @@ public class Canvas {
 		return myPane;
 	}
 	
-	public Pane updateCanvas(ArrayList<Drawable> turtles) {		
-		myTurtles = turtles;
+	public Pane updateCanvas(List<Drawable> turtles) {		
+		myTurtles = new ArrayList<Drawable>(turtles);
 		for (Drawable turtle: myTurtles){
 			if (! turtle.getIsVisible()){
 				myPane.getChildren().remove(turtle.getView());

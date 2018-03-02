@@ -7,6 +7,9 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import commands.Result;
 import javafx.animation.KeyFrame;
@@ -32,7 +35,7 @@ public class Visualizer {
 	private Console myConsole;
 	private Toolbar myToolbar;
 	private BorderPane root;
-	private ArrayList<Drawable> myTurtles = new ArrayList<Drawable>();
+	private Map<Drawable, ArrayList<String>> drawables = new HashMap<>();
 	private ChangeListener myChangeListener;
 	private String language = "English";
 	
@@ -55,7 +58,7 @@ public class Visualizer {
 	}
 	
 	private void step(double cycles){
-		myCanvasObjects = myCanvas.updateCanvas(myTurtles);
+		myCanvasObjects = myCanvas.updateCanvas(new ArrayList<Drawable>(drawables.keySet()));
 		root.setCenter(myCanvasObjects);
 
 		if (!mySideBar.language.equals(language))	{
@@ -70,12 +73,12 @@ public class Visualizer {
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		
-		myCanvas = new Canvas(myTurtles);
+		myCanvas = new Canvas(new ArrayList<Drawable>(drawables.keySet()));
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, myTurtles, myCanvas);
+		mySideBar = new SideBar(myCanvasObjects, new ArrayList<Drawable>(drawables.keySet()), myCanvas);
 		((SideBar)mySideBar).language = language;
 		root.setRight(((SideBar)mySideBar).initSideBar());
 
@@ -100,7 +103,7 @@ public class Visualizer {
 	 */
 	public void addDrawable(Drawable turtle)	{
 		//myCanvas.addDrawable(turtle);
-		myTurtles.add(turtle);
+		drawables.put(turtle, new ArrayList<String>());
 	}
 
 	/**
