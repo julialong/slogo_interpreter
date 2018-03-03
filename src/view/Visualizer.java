@@ -6,8 +6,8 @@
 
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -35,7 +35,7 @@ public class Visualizer {
 	private Console myConsole;
 	private Toolbar myToolbar;
 	private BorderPane root;
-	private Map<Drawable, ArrayList<String>> drawables = new HashMap<>();
+	private Map<Drawable, List<String>> drawables = new HashMap<>();
 	private ChangeListener myChangeListener;
 	private String language = "English";
 	
@@ -106,7 +106,7 @@ public class Visualizer {
 		List<String> properties = new ArrayList<String>();
 		properties.add(Integer.toString(drawables.size()));
 		properties.add("true");
-		properties.add("turtle.png");
+		properties.add("Turtle");
 		properties.add("up");
 		properties.add("black");
 		properties.add("2");
@@ -114,7 +114,7 @@ public class Visualizer {
 		properties.add("400");
 		properties.add("40");
 
-		drawables.put(turtle, (ArrayList)properties);
+		drawables.put(turtle, properties);
 	}
 
 	/**

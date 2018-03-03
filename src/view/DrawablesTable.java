@@ -7,10 +7,7 @@
 package view;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -18,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -30,8 +28,8 @@ public class DrawablesTable extends Group	{
 	private double numCols = 9;
 	private ObservableList<ConvertedTurtle> drawables = FXCollections.observableArrayList();
 
-	public DrawablesTable(Map<Drawable, ArrayList<String>> allInfo)	{
-		parseInfo(allInfo);
+	public DrawablesTable(Map<Drawable, List<String>> allInfo, Pane c)	{
+		parseInfo(allInfo, c);
 		makeTable();
 
 		Scene internal = new Scene(this, colWidth * numCols, 400);
@@ -41,9 +39,9 @@ public class DrawablesTable extends Group	{
 		stage.show();
 	}
 
-	private void parseInfo(Map<Drawable, ArrayList<String>> allInfo)	{
-		for (Drawable figure:allInfo.keySet())	{
-			drawables.add(new ConvertedTurtle(allInfo.get(figure)));
+	private void parseInfo(Map<Drawable, List<String>> allInfo, Pane c)	{
+		for (Map.Entry figure:allInfo.entrySet())	{
+			drawables.add(new ConvertedTurtle(figure, c));
 		}
 	}
 
@@ -51,7 +49,7 @@ public class DrawablesTable extends Group	{
 		myVB = new VBox();
 
 		table.setEditable(false);
-		TableColumn turtleCol = new TableColumn("Turtles");
+		TableColumn turtleCol = new TableColumn("Turtle");
 		turtleCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 		turtleCol.setPrefWidth(colWidth);
 		table.getColumns().add(turtleCol);
@@ -94,92 +92,5 @@ public class DrawablesTable extends Group	{
 		this.getChildren().add(myVB);
 
 		return this;
-	}
-
-	public class ConvertedTurtle	{
-		private SimpleObjectProperty id;
-		private SimpleObjectProperty active;
-		private SimpleObjectProperty image;
-		private SimpleObjectProperty penUpDown;
-		private SimpleObjectProperty penColor;
-		private SimpleObjectProperty penWidth;
-		private SimpleObjectProperty xPos;
-		private SimpleObjectProperty yPos;
-		private SimpleObjectProperty heading;
-
-		private ConvertedTurtle(ArrayList<String> properties)	{
-			id = new SimpleObjectProperty(properties.get(0));
-			active = new SimpleObjectProperty(properties.get(1));
-			image = new SimpleObjectProperty(properties.get(2));
-			penUpDown = new SimpleObjectProperty(properties.get(3));
-			penColor = new SimpleObjectProperty(properties.get(4));
-			penWidth = new SimpleObjectProperty(properties.get(5));
-			xPos = new SimpleObjectProperty(properties.get(6));
-			yPos = new SimpleObjectProperty(properties.get(7));
-			heading = new SimpleObjectProperty(properties.get(8));
-		}
-
-		/**
-		 * Returns this turtle's id
-		 */
-		public SimpleObjectProperty idProperty()	{
-			return id;
-		}
-
-		/**
-		 * Returns whether turtle is active or not
-		 */
-		public SimpleObjectProperty activeProperty()	{
-			return active;
-		}
-
-		/**
-		 * Returns this turtle'image
-		 */
-		public SimpleObjectProperty imageProperty()	{
-			return image;
-		}
-
-		/**
-		 * Returns whether pen for turtle is drawing a path or not
-		 */
-		public SimpleObjectProperty penUpDownProperty()	{
-			return penUpDown;
-		}
-
-		/**
-		 * Returns this turtle's pen color
-		 */
-		public SimpleObjectProperty penColorProperty()	{
-			return penColor;
-		}
-
-		/**
-		 * Returns this turtle's pen's width
-		 */
-		public SimpleObjectProperty penWidthProperty()	{
-			return penWidth;
-		}
-
-		/**
-		 * Returns this turtle's x position on canvas
-		 */
-		public SimpleObjectProperty xPosProperty()	{
-			return xPos;
-		}
-
-		/**
-		 * Returns this turtle's y position on canvas
-		 */
-		public SimpleObjectProperty yPosProperty()	{
-			return yPos;
-		}
-
-		/**
-		 * Returns this turtle's heading on canvas
-		 */
-		public SimpleObjectProperty headingProperty()	{
-			return heading;
-		}
 	}
 }

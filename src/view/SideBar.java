@@ -8,7 +8,6 @@
 package view;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -34,7 +33,7 @@ public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
 	private Canvas myCanvas;
-	private Map<Drawable, ArrayList<String>> myTurtles;
+	private Map<Drawable, List<String>> myTurtles;
 	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
@@ -59,7 +58,7 @@ public class SideBar extends VBox{
 	 * @param canvas	canvas of program, where turtles are displayed
 	 * @param turtles	list of all the movers in the canvas
 	 */
-	public SideBar(Pane canvas, Map<Drawable, ArrayList<String>> turtles, Canvas c){
+	public SideBar(Pane canvas, Map<Drawable, List<String>> turtles, Canvas c){
 		myCanvasObjects = canvas;
 		myTurtles = turtles;
 		myCanvas = c;
@@ -153,7 +152,7 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable(myTurtles);
+				new DrawablesTable(myTurtles, myCanvasObjects);
 			}
 		});
 		myVBox.getChildren().add(allDrawablesButton);

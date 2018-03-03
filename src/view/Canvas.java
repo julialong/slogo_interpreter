@@ -1,7 +1,6 @@
 package view;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.scene.Node;
@@ -16,11 +15,11 @@ import commands.Result;
 public class Canvas {
 
 	private Pane myPane;
-	private Map<Drawable, ArrayList<String>> myTurtles;
+	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
 	private Color myColor = Color.BLACK;
 	
-	public Canvas(Map<Drawable, ArrayList<String>> turtles){
+	public Canvas(Map<Drawable, List<String>> turtles){
 		myTurtles = turtles;
 	}
 	
@@ -36,7 +35,7 @@ public class Canvas {
 		return myPane;
 	}
 	
-	public Pane updateCanvas(Map<Drawable, ArrayList<String>> turtles) {		
+	public Pane updateCanvas(Map<Drawable, List<String>> turtles) {		
 		myTurtles = turtles;
 		for (Drawable turtle: myTurtles.keySet()){
 			if (! turtle.getIsVisible()){
