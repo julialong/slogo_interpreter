@@ -14,6 +14,12 @@ public interface Drawable {
 	public boolean getIsVisible();
 	
 	public void setPane(Pane pane);
+
+	public Double getX();
+
+	public Double getY();
+
+	public Double getHeading();
 	
 //	public void test(double x, double y);
 

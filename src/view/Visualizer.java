@@ -110,9 +110,6 @@ public class Visualizer {
 		properties.add("up");
 		properties.add("black");
 		properties.add("2");
-		properties.add("100");
-		properties.add("400");
-		properties.add("40");
 
 		drawables.put(turtle, properties);
 	}

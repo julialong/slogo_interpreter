@@ -52,9 +52,6 @@ public class ConvertedTurtle	{
 		propertyNames.add("penDown");
 		propertyNames.add("penColor");
 		propertyNames.add("penWidth");
-		propertyNames.add("xPos");
-		propertyNames.add("yPos");
-		propertyNames.add("heading");
 
 		id = makeID(properties.get(propertyNames.indexOf("id")));
 		active = makeActive(properties.get(propertyNames.indexOf("active")));
@@ -62,9 +59,9 @@ public class ConvertedTurtle	{
 		penDown = makepenDown(properties.get(propertyNames.indexOf("penDown")));
 		penColor = makePenColor(properties.get(propertyNames.indexOf("penColor")));
 		penWidth = makePenWidth(properties.get(propertyNames.indexOf("penWidth")));
-		xPos = makeXPos(properties.get(propertyNames.indexOf("xPos")));
-		yPos = makeXPos(properties.get(propertyNames.indexOf("yPos")));
-		heading = makeHeading(properties.get(propertyNames.indexOf("heading")));
+		xPos = makeXPos();
+		yPos = makeXPos();
+		heading = makeHeading();
 	}
 
 	private SimpleObjectProperty makeID(String idString)	{
@@ -159,16 +156,16 @@ public class ConvertedTurtle	{
 		return new SimpleObjectProperty(penWidthString);
 	}
 
-	private SimpleObjectProperty makeXPos(String xPosString)	{
-		return new SimpleObjectProperty(xPosString);
+	private SimpleObjectProperty makeXPos()	{
+		return new SimpleObjectProperty(Double.toString(thisTurtle.getX()));
 	}
 
-	private SimpleObjectProperty makeYPos(String yPosString)	{
-		return new SimpleObjectProperty(yPosString);
+	private SimpleObjectProperty makeYPos()	{
+		return new SimpleObjectProperty(Double.toString(thisTurtle.getY()));
 	}
 
-	private SimpleObjectProperty makeHeading(String headingString)	{
-		return new SimpleObjectProperty(headingString);
+	private SimpleObjectProperty makeHeading()	{
+		return new SimpleObjectProperty(Double.toString(thisTurtle.getHeading()));
 	}
 
 	/**
