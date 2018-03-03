@@ -43,7 +43,7 @@ public class DrawablesTable extends Group	{
 
 	private void parseInfo(Map<Drawable, ArrayList<String>> allInfo)	{
 		for (Drawable figure:allInfo.keySet())	{
-			drawables.add(new ConvertedTurtle(figure));
+			drawables.add(new ConvertedTurtle(allInfo.get(figure)));
 		}
 	}
 
@@ -107,16 +107,16 @@ public class DrawablesTable extends Group	{
 		private SimpleObjectProperty yPos;
 		private SimpleObjectProperty heading;
 
-		private ConvertedTurtle(Drawable aDrawable)	{
-			id = new SimpleObjectProperty("1");
-			active = new SimpleObjectProperty("a");
-			image = new SimpleObjectProperty("i");
-			penUpDown = new SimpleObjectProperty("ud");
-			penColor = new SimpleObjectProperty("c");
-			penWidth = new SimpleObjectProperty("w");
-			xPos = new SimpleObjectProperty("x");
-			yPos = new SimpleObjectProperty("y");
-			heading = new SimpleObjectProperty("h");
+		private ConvertedTurtle(ArrayList<String> properties)	{
+			id = new SimpleObjectProperty(properties.get(0));
+			active = new SimpleObjectProperty(properties.get(1));
+			image = new SimpleObjectProperty(properties.get(2));
+			penUpDown = new SimpleObjectProperty(properties.get(3));
+			penColor = new SimpleObjectProperty(properties.get(4));
+			penWidth = new SimpleObjectProperty(properties.get(5));
+			xPos = new SimpleObjectProperty(properties.get(6));
+			yPos = new SimpleObjectProperty(properties.get(7));
+			heading = new SimpleObjectProperty(properties.get(8));
 		}
 
 		/**
