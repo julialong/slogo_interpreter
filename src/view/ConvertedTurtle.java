@@ -17,6 +17,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+
 import resources.keys.Resources;
 import slogo_team07.Drawable;
 
@@ -24,28 +26,30 @@ public class ConvertedTurtle	{
 	private Drawable thisTurtle;
 	private List<String> properties;
 	private List<String> propertyNames;
-	private Pane myCanvas;
+	private Canvas myCanvas;
+	private Pane myPane;
 
 	private SimpleObjectProperty id;
 	private SimpleObjectProperty active;
 	private SimpleObjectProperty image;
-	private SimpleObjectProperty penUpDown;
+	private SimpleObjectProperty penDown;
 	private SimpleObjectProperty penColor;
 	private SimpleObjectProperty penWidth;
 	private SimpleObjectProperty xPos;
 	private SimpleObjectProperty yPos;
 	private SimpleObjectProperty heading;
 
-	public ConvertedTurtle(Map.Entry turtle, Pane canvas)	{
+	public ConvertedTurtle(Map.Entry turtle, Canvas canvas, Pane pane)	{
 		thisTurtle = (Drawable)turtle.getKey();
 		properties = (List<String>)turtle.getValue();
 		propertyNames = new ArrayList<String>();
 		myCanvas = canvas;
+		myPane = pane;
 
 		propertyNames.add("id");
 		propertyNames.add("active");
 		propertyNames.add("image");
-		propertyNames.add("penUpDown");
+		propertyNames.add("penDown");
 		propertyNames.add("penColor");
 		propertyNames.add("penWidth");
 		propertyNames.add("xPos");
@@ -55,7 +59,7 @@ public class ConvertedTurtle	{
 		id = makeID(properties.get(propertyNames.indexOf("id")));
 		active = makeActive(properties.get(propertyNames.indexOf("active")));
 		image = makeImage(properties.get(propertyNames.indexOf("image")));
-		penUpDown = makePenUpDown(properties.get(propertyNames.indexOf("penUpDown")));
+		penDown = makepenDown(properties.get(propertyNames.indexOf("penDown")));
 		penColor = makePenColor(properties.get(propertyNames.indexOf("penColor")));
 		penWidth = makePenWidth(properties.get(propertyNames.indexOf("penWidth")));
 		xPos = makeXPos(properties.get(propertyNames.indexOf("xPos")));
@@ -98,10 +102,10 @@ public class ConvertedTurtle	{
 			public void handle(ActionEvent e){
 				String newImage = imageMenu.getSelectionModel().getSelectedItem().toString();
 
-				myCanvas.getChildren().remove(thisTurtle.getView());
-				thisTurtle.setPane(myCanvas);
+				myPane.getChildren().remove(thisTurtle.getView());
+				thisTurtle.setPane(myPane);
 				thisTurtle.setView(Resources.getString(newImage));
-				myCanvas.getChildren().add(thisTurtle.getView());
+				myPane.getChildren().add(thisTurtle.getView());
 
 				properties.set(propertyNames.indexOf("image"), newImage);
 			}
@@ -110,16 +114,45 @@ public class ConvertedTurtle	{
 		return new SimpleObjectProperty(imageMenu);
 	}
 
-	private SimpleObjectProperty makePenUpDown(String penUpDownString)	{	
+	private SimpleObjectProperty makepenDown(String penDownString)	{
+		CheckBox penDownBox = new CheckBox();
+		penDownBox.setSelected(penDownString.equals("down"));
+		penDownBox.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if (penDownBox.isSelected())	{
+					// enable pen
+					properties.set(propertyNames.indexOf("penDown"), "down");
+				}
+				else	{
+					// disable pen
+					properties.set(propertyNames.indexOf("penDown"), "up");
+				}
+			}
+		});
 
-		return new SimpleObjectProperty(penUpDownString);
+		return new SimpleObjectProperty(penDownBox);
 	}
 
 	private SimpleObjectProperty makePenColor(String penColorString)	{
 		ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
 		"Yellow", "Green", "Blue", "Purple", "Pink");
 
-		return new SimpleObjectProperty(penColorString);
+		ComboBox penColorMenu = new ComboBox(penList);
+
+		penColorMenu.setPromptText(penColorString);
+		penColorMenu.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent e){
+				String newColor = penColorMenu.getSelectionModel().getSelectedItem().toString();
+
+				myCanvas.setColor(Color.valueOf(newColor));
+
+				properties.set(propertyNames.indexOf("penColor"), newColor);
+			}
+		});
+
+		return new SimpleObjectProperty(penColorMenu);
 	}
 
 	private SimpleObjectProperty makePenWidth(String penWidthString)	{
@@ -162,8 +195,8 @@ public class ConvertedTurtle	{
 	/**
 	 * Returns whether pen for turtle is drawing a path or not
 	 */
-	public SimpleObjectProperty penUpDownProperty()	{
-		return penUpDown;
+	public SimpleObjectProperty penDownProperty()	{
+		return penDown;
 	}
 
 	/**

@@ -28,8 +28,8 @@ public class DrawablesTable extends Group	{
 	private double numCols = 9;
 	private ObservableList<ConvertedTurtle> drawables = FXCollections.observableArrayList();
 
-	public DrawablesTable(Map<Drawable, List<String>> allInfo, Pane c)	{
-		parseInfo(allInfo, c);
+	public DrawablesTable(Map<Drawable, List<String>> allInfo, Canvas c, Pane p)	{
+		parseInfo(allInfo, c, p);
 		makeTable();
 
 		Scene internal = new Scene(this, colWidth * numCols, 400);
@@ -39,9 +39,9 @@ public class DrawablesTable extends Group	{
 		stage.show();
 	}
 
-	private void parseInfo(Map<Drawable, List<String>> allInfo, Pane c)	{
+	private void parseInfo(Map<Drawable, List<String>> allInfo, Canvas c, Pane p)	{
 		for (Map.Entry figure:allInfo.entrySet())	{
-			drawables.add(new ConvertedTurtle(figure, c));
+			drawables.add(new ConvertedTurtle(figure, c, p));
 		}
 	}
 
@@ -61,8 +61,8 @@ public class DrawablesTable extends Group	{
 		imageCol.setCellValueFactory(new PropertyValueFactory<>("image"));
 		imageCol.setPrefWidth(colWidth);
 		table.getColumns().add(imageCol);
-		TableColumn penUDCol = new TableColumn("Pen Up/Down");
-		penUDCol.setCellValueFactory(new PropertyValueFactory<>("penUpDown"));
+		TableColumn penUDCol = new TableColumn("Pen Down");
+		penUDCol.setCellValueFactory(new PropertyValueFactory<>("penDown"));
 		penUDCol.setPrefWidth(colWidth);
 		table.getColumns().add(penUDCol);
 		TableColumn penColorCol = new TableColumn("Pen Color");

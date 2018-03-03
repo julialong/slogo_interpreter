@@ -152,7 +152,7 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable(myTurtles, myCanvasObjects);
+				new DrawablesTable(myTurtles, myCanvas, myCanvasObjects);
 			}
 		});
 		myVBox.getChildren().add(allDrawablesButton);
