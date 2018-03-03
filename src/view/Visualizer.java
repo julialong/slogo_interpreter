@@ -58,7 +58,7 @@ public class Visualizer {
 	}
 	
 	private void step(double cycles){
-		myCanvasObjects = myCanvas.updateCanvas(new ArrayList<Drawable>(drawables.keySet()));
+		myCanvasObjects = myCanvas.updateCanvas(drawables);
 		root.setCenter(myCanvasObjects);
 
 		if (!mySideBar.language.equals(language))	{
@@ -73,12 +73,12 @@ public class Visualizer {
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		
-		myCanvas = new Canvas(new ArrayList<Drawable>(drawables.keySet()));
+		myCanvas = new Canvas(drawables);
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, new ArrayList<Drawable>(drawables.keySet()), myCanvas);
+		mySideBar = new SideBar(myCanvasObjects, drawables, myCanvas);
 		((SideBar)mySideBar).language = language;
 		root.setRight(((SideBar)mySideBar).initSideBar());
 

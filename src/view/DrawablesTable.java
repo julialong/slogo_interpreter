@@ -26,12 +26,12 @@ import slogo_team07.Drawable;
 public class DrawablesTable extends Group	{
 	private VBox myVB;
 	private TableView table = new TableView();
-	double colWidth = 80;
-	double numCols = 9;
+	private double colWidth = 80;
+	private double numCols = 9;
 	private ObservableList<ConvertedTurtle> drawables = FXCollections.observableArrayList();
 
-	public DrawablesTable()	{
-		// parseInfo(allInfo);
+	public DrawablesTable(Map<Drawable, ArrayList<String>> allInfo)	{
+		parseInfo(allInfo);
 		makeTable();
 
 		Scene internal = new Scene(this, colWidth * numCols, 400);
@@ -42,6 +42,9 @@ public class DrawablesTable extends Group	{
 	}
 
 	private void parseInfo(Map<Drawable, ArrayList<String>> allInfo)	{
+		for (Drawable figure:allInfo.keySet())	{
+			drawables.add(new ConvertedTurtle(figure));
+		}
 	}
 
 	private Group makeTable(){

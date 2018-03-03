@@ -9,6 +9,7 @@ package view;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -33,7 +34,7 @@ public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
 	private Canvas myCanvas;
-	private List<Drawable> myTurtles;
+	private Map<Drawable, ArrayList<String>> myTurtles;
 	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
@@ -58,7 +59,7 @@ public class SideBar extends VBox{
 	 * @param canvas	canvas of program, where turtles are displayed
 	 * @param turtles	list of all the movers in the canvas
 	 */
-	public SideBar(Pane canvas, List<Drawable> turtles, Canvas c){
+	public SideBar(Pane canvas, Map<Drawable, ArrayList<String>> turtles, Canvas c){
 		myCanvasObjects = canvas;
 		myTurtles = turtles;
 		myCanvas = c;
@@ -120,7 +121,7 @@ public class SideBar extends VBox{
 			@Override public void handle(ActionEvent e){
 				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
 				//right now will change icon of all turtles
-				for (Drawable turtle: myTurtles){
+				for (Drawable turtle: myTurtles.keySet()){
 					myCanvasObjects.getChildren().remove(turtle.getView());
 					turtle.setPane(myCanvasObjects);
 					turtle.setView(Resources.getString(tempIcon));
@@ -152,7 +153,7 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable();
+				new DrawablesTable(myTurtles);
 			}
 		});
 		myVBox.getChildren().add(allDrawablesButton);

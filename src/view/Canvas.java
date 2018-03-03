@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -15,17 +16,17 @@ import commands.Result;
 public class Canvas {
 
 	private Pane myPane;
-	private ArrayList<Drawable> myTurtles;
+	private Map<Drawable, ArrayList<String>> myTurtles;
 	protected VBox myVBox;
 	private Color myColor = Color.BLACK;
 	
-	public Canvas(List<Drawable> turtles){
-		myTurtles = new ArrayList<Drawable>(turtles);
+	public Canvas(Map<Drawable, ArrayList<String>> turtles){
+		myTurtles = turtles;
 	}
 	
 	public Pane initCanvas(){
 		myPane = new Pane();
-		for (Drawable turtle: myTurtles){ 
+		for (Drawable turtle: myTurtles.keySet()){
 			//turtle.setPane(myPane);
 			turtle.getView().setFitHeight(20);
 			turtle.getView().setFitWidth(20);
@@ -35,9 +36,9 @@ public class Canvas {
 		return myPane;
 	}
 	
-	public Pane updateCanvas(List<Drawable> turtles) {		
-		myTurtles = new ArrayList<Drawable>(turtles);
-		for (Drawable turtle: myTurtles){
+	public Pane updateCanvas(Map<Drawable, ArrayList<String>> turtles) {		
+		myTurtles = turtles;
+		for (Drawable turtle: myTurtles.keySet()){
 			if (! turtle.getIsVisible()){
 				myPane.getChildren().remove(turtle.getView());
 			}
