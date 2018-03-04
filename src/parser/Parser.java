@@ -42,7 +42,7 @@ public class Parser {
 	}
 
 	public Double traverse(List<String> input) {
-		if (input.size() == 0) {
+		if (input.isEmpty()) {
 			return Double.MAX_VALUE;
 		}
 
