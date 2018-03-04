@@ -45,7 +45,7 @@ public class Parser {
 		if (input.size() == 0) {
 			return Double.MAX_VALUE;
 		}
-		
+
 		String next = input.remove(0);
 		if (isArgument(next)) {
 			return Double.valueOf(next);
@@ -56,7 +56,7 @@ public class Parser {
 			System.out.println(unbundled);
 			return parse(unbundled);
 		}
-		
+
 		// I believe next should be a command at this point, if it's not an arg or controlflow
 		// comments should have already been stripped
 		Commandable node = myCommandFactory.createCommand(next);
@@ -96,8 +96,9 @@ public class Parser {
 	// also needs to strip out comments
 	private String sanitize(String s) {
 		String commentless = stripComments(s);
-		
+
 		StringBuilder formatted = new StringBuilder();
+
 		boolean seen_space = false;
 		for (int i=0; i < commentless.length(); i++) {
 			Character curr = commentless.charAt(i);
@@ -117,7 +118,7 @@ public class Parser {
 	private String stripComments(String s) {
 		return Arrays.asList(s.split("\n")).stream()
 				.filter(line -> !line.startsWith("#"))
-		        	.collect(Collectors.joining());
+				.collect(Collectors.joining());
 	}
 
 	/**
