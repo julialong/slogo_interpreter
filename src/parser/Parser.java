@@ -93,15 +93,12 @@ public class Parser {
 		return ans;
 	}
 
-	// also needs to strip out comments
 	private String sanitize(String s) {
 		String commentless = stripComments(s);
-
 		StringBuilder formatted = new StringBuilder();
 
 		boolean seen_space = false;
-		for (int i=0; i < commentless.length(); i++) {
-			Character curr = commentless.charAt(i);
+		for (Character curr : commentless.toCharArray()) {
 			if (!Character.isWhitespace(curr)) {
 				formatted.append(curr);
 				seen_space = false;
