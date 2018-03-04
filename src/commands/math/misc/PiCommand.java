@@ -12,7 +12,7 @@ public class PiCommand extends NonUpdatableCommand {
 	}
 
 	@Override
-	protected Double calcValue(List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		return Math.PI;
 	}
 

@@ -34,7 +34,6 @@ public class CommandFactory {
 		String keyword = myLanguages.get(command);
 		try {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
-			System.out.println(clazz);
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
 				return (Commandable) ctor.newInstance(myVis, myUpdatables.get(id));

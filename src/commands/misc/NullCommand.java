@@ -10,17 +10,12 @@ public class NullCommand extends Command {
 	}
 
 	@Override
-	public void execute() {
-		// do nothing
+	public double execute() {
+		return Double.MAX_VALUE;
 	}
 	
 	@Override 
 	public boolean isReady() {
 		return false;
-	}
-
-	@Override
-	public Double getAns() {
-		return null;
 	}
 }

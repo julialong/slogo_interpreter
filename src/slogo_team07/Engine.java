@@ -32,7 +32,7 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeInput(String input) {
-		Double useless = myParser.parse(input);
+		double useless = myParser.parse(input);
 	}
 
 	@Override

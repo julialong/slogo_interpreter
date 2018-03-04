@@ -12,7 +12,7 @@ public class PowCommand extends NonUpdatableCommand {
 	}
 
 	@Override
-	protected Double calcValue(List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		return Math.pow(getArgs().get(0), getArgs().get(1));
 	}
 

@@ -2,16 +2,17 @@ package commands.math.algebra;
 
 import java.util.List;
 
+import commands.NonUpdatableCommand;
 import view.Visualizer;
 
-public class SumCommand extends AlgebraCommand {
+public class SumCommand extends NonUpdatableCommand {
 
 	public SumCommand(Visualizer vis) {
 		super(vis, 2);
 	}
 
 	@Override
-	protected Double calcValue(List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		return args.get(0) + args.get(1);
 	}
 }

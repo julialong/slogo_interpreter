@@ -12,7 +12,7 @@ public class LogCommand extends NonUpdatableCommand {
 	}
 
 	@Override
-	protected Double calcValue(List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		return Math.log(getArgs().get(0));
 	}
 }

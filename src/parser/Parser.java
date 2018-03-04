@@ -30,19 +30,19 @@ public class Parser {
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
 	}
 
-	public Double parse(String s) {
+	public double parse(String s) {
 		s = sanitize(s);
 		List<String> input = replaceUnknowns(s);
 
 		Double ans = null;
 		while (!input.isEmpty()) {
-			ans = traverse(input, null);
+			ans = traverse(input);
 		}
 		return ans;
 	}
 
-	private Double traverse(List<String> input, Commandable current) {
-		if (input.size() == 0) {
+	public double traverse(List<String> input) {
+		if (input.isEmpty()) {
 			return Double.MAX_VALUE;
 		}
 
@@ -51,9 +51,7 @@ public class Parser {
 			return Double.valueOf(next);
 		} else if (myControlSet.contains(next.toLowerCase())) {
 			Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
-			System.out.println(input);
 			String unbundled = unbundler.unbundle(input);
-			System.out.println(unbundled);
 			return parse(unbundled);
 		}
 
@@ -61,10 +59,10 @@ public class Parser {
 		// comments should have already been stripped
 		Commandable node = myCommandFactory.createCommand(next);
 		while (!node.isReady()) {
-			node.inject(traverse(input, node));
+			node.inject(traverse(input));
 		}
-		node.execute();
-		return node.getAns();
+		
+		return node.execute();
 	}
 
 
