@@ -16,14 +16,13 @@ public class ForUnbundler extends ControlUnbundler{
     /**
      * Unbun
      * @param exp
-     * @param index
      * @return
      */
-    public String unbundle(List<String> exp, int index) {
-        setNumbers(exp, index + 2);
-        int[] commandIndex = findBrackets(exp, index + 6);
+    public String unbundle(List<String> exp) {
+        setNumbers(exp, 1);
+        int[] commandIndex = findBrackets(exp);
         buildCommand(exp, commandIndex[0], commandIndex[1]);
-        modifyList(exp, index, commandIndex[1]);
+        modifyList(exp, commandIndex[1]);
         return String.join(" ", unbundledArray);
     }
 

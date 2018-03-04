@@ -25,8 +25,7 @@ public class RepeatUnbundler extends ControlUnbundler {
 	/**
 	 * unbundles the given control command starting at index
 	 *
-	 * @param exp   is the entire ArrayList of the input commands
-	 * @param index is the index that the control command was found
+	 * @param exp is the entire ArrayList of the input commands
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp) {

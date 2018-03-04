@@ -20,15 +20,14 @@ public class MakeUnbundler extends ControlUnbundler{
         /**
          * unbundles the given control command starting at index to crete a new variable
          * @param exp is the entire ArrayList of the input commands
-         * @param index is the index that the control command was found
          * @return the string variable name
          */
-        public String unbundle(List<String> exp, int index) {
-            String variableName = exp.get(index + 1);
+        public String unbundle(List<String> exp) {
+            String variableName = exp.get(1);
             expression = new ArrayList<>();
-            buildExpression(exp, index + 2, exp.size() - 1);
+            buildExpression(exp, 2, exp.size() - 1);
             addVariable(variableName);
-            modifyList(exp, index, index + 1);
+            modifyList(exp, 1);
             return String.join(" ", expression);
         }
 

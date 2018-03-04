@@ -41,7 +41,7 @@ public class Parser {
 		return ans;
 	}
 
-	public Double traverse(List<String> input, Commandable current) {
+	private Double traverse(List<String> input, Commandable current) {
 		if (input.size() == 0) {
 			return Double.MAX_VALUE;
 		}

@@ -25,16 +25,15 @@ public class IfUnbundler extends ControlUnbundler{
     /**
      * unbundles the given control command starting at index
      * @param exp is the entire ArrayList of the input commands
-     * @param index is the index that the control command was found
      * @return the String of the unbundled control command
      */
-    public String unbundle(List<String> exp, int index) {
-        int[] commandIndex = this.findBrackets(exp, index);
+    public String unbundle(List<String> exp) {
+        int[] commandIndex = this.findBrackets(exp);
         expression = new ArrayList<>();
-        buildExpression(exp, index, commandIndex[0]);
-        executeExpression();
+        buildExpression(exp, commandIndex[0]);
+        executeExpression(expression, executeCommands, commandFactory);
         buildCommand(exp, commandIndex[0], commandIndex[1]);
-        modifyList(exp, index, commandIndex[1]);
+        modifyList(exp, commandIndex[1]);
         return String.join(" ", unbundledArray);
     }
 
@@ -43,22 +42,10 @@ public class IfUnbundler extends ControlUnbundler{
      * @param exp is the entire ArrayList of the input commands
      * @return the index of the first left bracket
      */
-    private void buildExpression(List<String> exp, int start, int end) {
-        for (int i = start + 1; i < end; i++) {
+    private void buildExpression(List<String> exp, int end) {
+        for (int i = 1; i < end; i++) {
             String current = exp.get(i);
             expression.add(current);
-        }
-    }
-
-    private void executeExpression() {
-        if (expression.size() <= 0) {
-            executeCommands = false;
-        } else {
-            Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
-            for (Commandable c : iterable) {
-                c.execute();
-                executeCommands = (c.getAns() != 0);
-            }
         }
     }
 

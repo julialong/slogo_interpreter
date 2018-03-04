@@ -27,29 +27,27 @@ public class DoTimesUnbundler extends ControlUnbundler{
     /**
      * unbundles the given control command starting at index
      * @param exp is the entire ArrayList of the input commands
-     * @param index is the index that the control command was found
      * @return the String of the unbundled control command
      */
-    public String unbundle(List<String> exp, int index) {
-        int[] commandIndex = findBrackets(exp, index + 4);
-        setNumbers(exp, index + 2, commandIndex[0] - 1);
+    public String unbundle(List<String> exp) {
+        int[] commandIndex = findBrackets(exp);
+        setNumbers(exp, commandIndex[0] - 1);
         buildCommand(exp, commandIndex[0], commandIndex[1]);
-        modifyList(exp, index, commandIndex[1]);
+        modifyList(exp, commandIndex[1]);
         return String.join(" ", unbundledArray);
     }
 
     /**
      * Sets the given parameters based on the entries in the first set of brackets
      * @param exp is is the entire ArrayList of the input commands
-     * @param startIndex is the index of the start of the expression
      */
-    private void setNumbers(List<String> exp, int startIndex, int stopIndex) {
-        variable = exp.get(startIndex);
+    private void setNumbers(List<String> exp, int stopIndex) {
+        variable = exp.get(0);
         try {
-            end = Double.parseDouble(exp.get(startIndex + 1));
+            end = Double.parseDouble(exp.get(1));
         }
         catch (Exception e) {
-            end = evaluateExpression(exp, startIndex, stopIndex);
+            end = evaluateExpression(exp, stopIndex);
         }
     }
 
@@ -73,13 +71,12 @@ public class DoTimesUnbundler extends ControlUnbundler{
      * @param exp is the entire ArrayList of the input commands
      * @return the index of the first left bracket
      */
-    private double evaluateExpression(List<String> exp, int start, int end) {
+    private double evaluateExpression(List<String> exp, int end) {
         List<String> expression = new ArrayList<>();
-        for (int i = start + 1; i < end; i++) {
+        for (int i = 1; i < end; i++) {
             String current = exp.get(i);
             expression.add(current);
         }
-        System.out.println("expression: " + expression.toString());
         return executeExpression(expression);
     }
 
@@ -91,11 +88,7 @@ public class DoTimesUnbundler extends ControlUnbundler{
     private double executeExpression(List<String> expression) {
         double answer = 0;
         if (expression.size() > 0){
-            Iterable<Commandable> iterable = new Parser(commandFactory).parse(String.join(" ", expression));
-            for (Commandable c : iterable) {
-                c.execute();
-                answer = c.getAns();
-            }
+            answer = new Parser(commandFactory).parse(String.join(" ", expression));
         }
         return answer;
     }

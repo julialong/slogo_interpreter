@@ -1,9 +1,12 @@
 package parser.unbundler;
 
+import commands.CommandFactory;
+import parser.Parser;
+
 import java.util.List;
 import java.util.Stack;
 
-public abstract class ControlUnbundler implements Unbundler{
+abstract class ControlUnbundler implements Unbundler{
 
     private static final String LEFT_BRACE = "[";
     private static final String RIGHT_BRACE = "]";
@@ -11,14 +14,13 @@ public abstract class ControlUnbundler implements Unbundler{
     /**
      * Finds the beginning and ending brackets for the given control command
      * @param exp
-     * @param index
      * @return
      */
-    protected int[] findBrackets (List< String > exp) {
+    int[] findBrackets(List<String> exp, int start) {
         int[] answer = new int[2];
         boolean valid = false;
         Stack<Integer> bracketIndex = new Stack<>();
-        for (int i = 0; i < exp.size(); i++) {
+        for (int i = start; i < exp.size(); i++) {
             if (!notLeftBracket(exp.get(i))) {
                 bracketIndex.push(i);
             }
@@ -34,15 +36,27 @@ public abstract class ControlUnbundler implements Unbundler{
         return answer;
     }
 
+    int[] findBrackets(List<String> exp) {
+        return findBrackets(exp, 0);
+    }
+
     /**
      * Modifies the list and returns a new list without the extracted, unbundled string
      * @param exp is the entire ArrayList of the input commands
-     * @param firstIndex is the index where the command begins
      * @param lastIndex is the index where the command ends
      */
     protected void modifyList (List < String > exp, int lastIndex) {
         for (int i = lastIndex; i >= 0; i--) {
             exp.remove(i);
+        }
+    }
+
+    protected void executeExpression(List<String> expression, boolean executeCommands, CommandFactory commandFactory) {
+        if (expression.size() <= 0) {
+            executeCommands = false;
+        } else {
+            double answer = new Parser(commandFactory).parse(String.join(" ", expression));
+            executeCommands = (answer != 0);
         }
     }
 
