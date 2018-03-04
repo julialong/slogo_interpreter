@@ -51,9 +51,7 @@ public class Parser {
 			return Double.valueOf(next);
 		} else if (myControlSet.contains(next.toLowerCase())) {
 			Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
-			System.out.println(input);
 			String unbundled = unbundler.unbundle(input);
-			System.out.println(unbundled);
 			return parse(unbundled);
 		}
 
