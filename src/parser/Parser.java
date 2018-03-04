@@ -36,12 +36,12 @@ public class Parser {
 
 		Double ans = null;
 		while (!input.isEmpty()) {
-			ans = traverse(input, null);
+			ans = traverse(input);
 		}
 		return ans;
 	}
 
-	public Double traverse(List<String> input, Commandable current) {
+	public Double traverse(List<String> input) {
 		if (input.size() == 0) {
 			return Double.MAX_VALUE;
 		}
@@ -61,7 +61,7 @@ public class Parser {
 		// comments should have already been stripped
 		Commandable node = myCommandFactory.createCommand(next);
 		while (!node.isReady()) {
-			node.inject(traverse(input, node));
+			node.inject(traverse(input));
 		}
 		node.execute();
 		return node.getAns();
