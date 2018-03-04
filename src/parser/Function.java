@@ -36,4 +36,9 @@ public class Function {
 		myArgs.clear();
 		return replaced;
 	}
+
+	@Override
+	public String toString() {
+		return myParams.toString() + " | " + myCommands.toString();
+	}
 }
