@@ -15,7 +15,7 @@ public abstract class UpdatableCommand extends Command {
 	}
 	
 	@Override
-	public Double execute() {
+	public double execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
@@ -25,5 +25,5 @@ public abstract class UpdatableCommand extends Command {
 		return ans;
 	}
 
-	protected abstract Double calcValues(Updatable updatable, List<Double> args);
+	protected abstract double calcValues(Updatable updatable, List<Double> args);
 }

@@ -10,7 +10,7 @@ public class NullCommand extends Command {
 	}
 
 	@Override
-	public Double execute() {
+	public double execute() {
 		return Double.MAX_VALUE;
 	}
 	

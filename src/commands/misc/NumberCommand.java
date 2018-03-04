@@ -13,7 +13,7 @@ public class NumberCommand extends NonUpdatableCommand {
 	}
 	
 	@Override
-	public Double execute() {
+	public double execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
@@ -22,7 +22,7 @@ public class NumberCommand extends NonUpdatableCommand {
 	}
 	
 	@Override
-	protected Double calcValue(List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		return args.get(0);
 	}
 

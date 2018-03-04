@@ -11,7 +11,7 @@ public class SinCommand extends TrigCommand {
 	}
 
 	@Override
-	protected Double calcValue(List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		return Math.sin(args.get(0));
 	}
 

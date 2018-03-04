@@ -11,16 +11,16 @@ public abstract class NonUpdatableCommand extends Command {
 	}
 	
 	@Override
-	public Double execute() {
+	public double execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		Double ans = calcValue(getArgs());
+		double ans = calcValue(getArgs());
 		visCommand(new Result(ans));
 		return ans;
 	}
 	
-	protected abstract Double calcValue(List<Double> args);
+	protected abstract double calcValue(List<Double> args);
 
 }

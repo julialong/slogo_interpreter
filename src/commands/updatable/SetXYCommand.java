@@ -13,7 +13,7 @@ public class SetXYCommand extends UpdatableCommand {
 	}
 
 	@Override
-	protected Double calcValues(Updatable updatable, List<Double> args) {
+	protected double calcValues(Updatable updatable, List<Double> args) {
 		return updatable.setPosition(args.get(0), args.get(1));
 	}
 }

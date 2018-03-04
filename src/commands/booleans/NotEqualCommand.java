@@ -11,7 +11,7 @@ public class NotEqualCommand extends BooleanCommand {
 	}
 
 	@Override
-	protected Double calcValue(List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		Boolean b = args.get(0) != args.get(1);
 		return boolToDouble(b);
 	}
