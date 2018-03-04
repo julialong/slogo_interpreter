@@ -12,8 +12,9 @@ public class ExceptionCommand extends Command {
 	}
 
 	@Override
-	public void execute() {
+	public Double execute() {
 		// do nothing for now, maybe pass an error message later
+		return Double.MAX_VALUE;
 	}
 
 	public Double getAns()	{

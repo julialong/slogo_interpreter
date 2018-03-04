@@ -17,7 +17,7 @@ public abstract class Command implements Commandable {
 	}
 
 	@Override
-	public void inject(Double arg) {
+	public void inject(double arg) {
 		if (isReady()) {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
@@ -28,8 +28,6 @@ public abstract class Command implements Commandable {
 	public boolean isReady() {
 		return myArgs.size() == myArgsNeeded;
 	}
-
-	public abstract Double getAns();
 	
 	protected List<Double> getArgs() {
 		return myArgs;

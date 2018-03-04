@@ -61,8 +61,8 @@ public class Parser {
 		while (!node.isReady()) {
 			node.inject(traverse(input));
 		}
-		node.execute();
-		return node.getAns();
+		
+		return node.execute();
 	}
 
 
