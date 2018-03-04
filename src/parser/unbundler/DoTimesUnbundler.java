@@ -1,4 +1,4 @@
-package unbundler;
+package parser.unbundler;
 
 import commands.Command;
 import commands.CommandFactory;

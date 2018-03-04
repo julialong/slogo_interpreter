@@ -1,4 +1,4 @@
-package unbundler;
+package parser.unbundler;
 
 import parser.Function;
 
