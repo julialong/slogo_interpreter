@@ -1,31 +1,25 @@
 package parser;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import commands.CommandFactory;
 import commands.Commandable;
 import unbundler.Unbundler;
 import unbundler.UnbundlerFactory;
 
-public class Parser implements Iterable<Commandable> {
+public class Parser {
 
 	private static final String[] CONTROL_NAMES = { "make", "set", "for", "ifelse", "if", "repeat", "dotimes", "to" };
-	private static final String NULL = "null";
-	private static final String NUMBER = "number";
 
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
-	private List<String> myStringList;
-	private int myDex;
-	private Node myDummyRoot;
-	private Node myCurrent;
 	private Set<String> myControlSet;
 	private Map<String, String> myVarMap = new HashMap<>();
 	private Map<String, Function> myFuncMap = new HashMap<>();
@@ -36,136 +30,56 @@ public class Parser implements Iterable<Commandable> {
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
 	}
 
-	public Iterable<Commandable> parse(String s) {
+	public Double parse(String s) {
 		s = sanitize(s);
-		myStringList = replaceUnknowns(s, myVarMap, myFuncMap);
+		List<String> input = replaceUnknowns(s);
 
-		myDex = 0;
-		myDummyRoot = new Node(myCommandFactory.createCommand(NULL));
-		myCurrent = myDummyRoot;
-		return () -> iterator();
-	}
-
-	@Override
-	public Iterator<Commandable> iterator() {
-		return new Iterator<Commandable>() {
-
-			@Override
-			public boolean hasNext() {
-				return (myCurrent.getParent() != myDummyRoot && myCurrent != myDummyRoot)
-						|| myDex < myStringList.size();
-			}
-
-			@Override
-			public Commandable next() {
-				if (myCurrent.isReady() && myCurrent != myDummyRoot) { // means that we just executed a command we need the result of
-					Double ans = myCurrent.getAns();
-					myCurrent = myCurrent.getParent();
-					myCurrent.inject(ans);
-					return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-				} else {
-					String next = myStringList.get(myDex);
-					if (myControlSet.contains(next.toLowerCase())) {
-						Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
-						String unbundled = unbundler.unbundle(myStringList, myDex);
-						System.out.println("main: " + unbundled);
-						System.out.println(myStringList);
-						if (unbundled.length() == 0) {
-							return myCommandFactory.createCommand(NULL);
-						}
-						Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
-						Double ans = null;
-						for (Commandable c : i) {
-							c.execute();
-							ans = c.getAns();
-							System.out.println(c + " in parser findNext(): " + ans);
-						}
-						if (ans != null && myCurrent != myDummyRoot) {
-							myCurrent.inject(ans);
-							return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-						} else {
-							return myCommandFactory.createCommand(NULL);
-						}
-					} else if (isCommand(next)) {
-						myCurrent = createNode(next, myCurrent);
-						System.out.println(myCurrent.getCommandable());
-						myDex += 1;
-						return findNext();
-					} else if (isArgument(next)) {
-						Commandable number = myCommandFactory.createCommand(NUMBER);
-						number.inject(Double.valueOf(next));
-						myDex += 1;
-						return number;
-					} else {
-						return myCommandFactory.createCommand(NULL);
-					}
-				}
-			}
-
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-
-	private Commandable findNext() {
-		while (!myCurrent.isReady()) {
-			String curr = myStringList.get(myDex);
-			if (isArgument(curr)) {
-				myCurrent.inject(Double.parseDouble(curr));
-			} else if (isCommand(curr)) {
-				if (myControlSet.contains(curr)) {
-					Unbundler unbundler = myUnbundlerFactory.createUnbundler(curr, myVarMap, myFuncMap);
-					String unbundled = unbundler.unbundle(myStringList, myDex);
-					System.out.println("next: " + unbundled);
-					System.out.println(myStringList);
-					if (unbundled.length() == 0) {
-						return myCommandFactory.createCommand(NULL);
-					}
-					Iterable<Commandable> i = new Parser(myCommandFactory).parse(unbundled);
-					Double ans = null;
-					for (Commandable c : i) {
-						c.execute();
-						ans = c.getAns();
-						System.out.println(c + " in parser findNext(): " + ans);
-					}
-					if (ans != null && myCurrent != myDummyRoot) {
-						myCurrent.inject(ans);
-						return myCurrent.isReady() ? myCurrent.getCommandable() : findNext();
-					} else {
-						return myCommandFactory.createCommand(NULL);
-					}
-				} else if (isCommand(curr)) {
-					myCurrent = createNode(curr, myCurrent);
-				}	
-			}
-			myDex += 1;
+		Double ans = null;
+		while (!input.isEmpty()) {
+			ans = traverse(input, null);
 		}
-		return myCurrent.getCommandable();
+		return ans;
 	}
 
-	private Node createNode(String command, Node parent) {
-		Commandable c = myCommandFactory.createCommand(command);
-		Node new_node = new Node(c);
-		new_node.setParent(myCurrent);
-		parent.addToChildren(new_node);
-		return new_node;
+	public Double traverse(List<String> input, Commandable current) {
+		if (input.size() == 0) {
+			return Double.MAX_VALUE;
+		}
+		
+		String next = input.remove(0);
+		if (isArgument(next)) {
+			return Double.valueOf(next);
+		} else if (myControlSet.contains(next.toLowerCase())) {
+			Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
+			System.out.println(input);
+			String unbundled = unbundler.unbundle(input);
+			System.out.println(unbundled);
+			return parse(unbundled);
+		}
+		
+		// I believe next should be a command at this point, if it's not an arg or controlflow
+		// comments should have already been stripped
+		Commandable node = myCommandFactory.createCommand(next);
+		while (!node.isReady()) {
+			node.inject(traverse(input, node));
+		}
+		node.execute();
+		return node.getAns();
 	}
 
 
-	private List<String> replaceUnknowns(String s, Map<String, String> var_map, Map<String, Function> func_map) {
+	private List<String> replaceUnknowns(String s) {
 		String[] arr = s.split(" ");
-		List<String> ans = new ArrayList<>();
+		List<String> ans = new LinkedList<>();
 		int i=0;
 		while (i < arr.length) {
 			String curr = arr[i];
-			if (var_map.containsKey(curr)) {
-				String replaced = var_map.get(curr);
+			if (myVarMap.containsKey(curr)) {
+				String replaced = myVarMap.get(curr);
 				ans.add(replaced);
 				i += 1;
-			} else if (func_map.containsKey(curr)) {
-				Function func = func_map.get(curr);
+			} else if (myFuncMap.containsKey(curr)) {
+				Function func = myFuncMap.get(curr);
 				for (int j=0; j < func.numArgs(); j++) {
 					func.inject(arr[i + j + 1]);
 				}
@@ -179,33 +93,31 @@ public class Parser implements Iterable<Commandable> {
 		return ans;
 	}
 
+	// also needs to strip out comments
 	private String sanitize(String s) {
+		String commentless = stripComments(s);
+		
 		StringBuilder formatted = new StringBuilder();
 		boolean seen_space = false;
-		for (int i=0; i < s.length(); i++) {
-			Character curr = s.charAt(i);
-			if (Character.isLetterOrDigit(curr) || curr == '[' || curr == ']') {
+		for (int i=0; i < commentless.length(); i++) {
+			Character curr = commentless.charAt(i);
+			if (!Character.isWhitespace(curr)) {
 				formatted.append(curr);
 				seen_space = false;
-			} else if (Character.isWhitespace(curr)) {
-				System.out.println(curr);
+			} else {
 				if (!seen_space) {
 					formatted.append(" ");
 					seen_space = true;
 				}
 			}
 		}
-		System.out.println(Arrays.asList(formatted.toString().trim().split(" ")));
 		return formatted.toString().trim();
 	}
 
-	/**
-	 * Checks to determine if the given string is a command
-	 * @param string is the argument
-	 * @return true if the string is a Command
-	 */
-	private Boolean isCommand(String string) {
-		return string.matches("[a-zA-Z_]+(\\?)?");
+	private String stripComments(String s) {
+		return Arrays.asList(s.split("\n")).stream()
+				.filter(line -> !line.startsWith("#"))
+		        	.collect(Collectors.joining());
 	}
 
 	/**

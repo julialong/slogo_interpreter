@@ -14,11 +14,11 @@ public abstract class ControlUnbundler implements Unbundler{
      * @param index
      * @return
      */
-    protected int[] findBrackets (List< String > exp, int index) {
+    protected int[] findBrackets (List< String > exp) {
         int[] answer = new int[2];
         boolean valid = false;
         Stack<Integer> bracketIndex = new Stack<>();
-        for (int i = index; i < exp.size(); i++) {
+        for (int i = 0; i < exp.size(); i++) {
             if (!notLeftBracket(exp.get(i))) {
                 bracketIndex.push(i);
             }
@@ -40,8 +40,8 @@ public abstract class ControlUnbundler implements Unbundler{
      * @param firstIndex is the index where the command begins
      * @param lastIndex is the index where the command ends
      */
-    protected void modifyList (List < String > exp, int firstIndex, int lastIndex){
-        for (int i = lastIndex; i >= firstIndex; i--) {
+    protected void modifyList (List < String > exp, int lastIndex) {
+        for (int i = lastIndex; i >= 0; i--) {
             exp.remove(i);
         }
     }

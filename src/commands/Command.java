@@ -40,7 +40,8 @@ public abstract class Command implements Commandable {
 	}
 	
 	protected void visCommand(Result result) {
-		myVis.runCommand(result);
+		System.out.println("Visualizing: " + result.toString());
+//		myVis.runCommand(result);
 	}
 
 }
