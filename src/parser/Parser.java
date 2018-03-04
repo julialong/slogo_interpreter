@@ -30,7 +30,7 @@ public class Parser {
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
 	}
 
-	public Double parse(String s) {
+	public double parse(String s) {
 		s = sanitize(s);
 		List<String> input = replaceUnknowns(s);
 
@@ -41,7 +41,7 @@ public class Parser {
 		return ans;
 	}
 
-	public Double traverse(List<String> input) {
+	public double traverse(List<String> input) {
 		if (input.isEmpty()) {
 			return Double.MAX_VALUE;
 		}
