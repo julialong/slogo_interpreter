@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import commands.CommandFactory;
-import commands.Commandable;
 import javafx.stage.Stage;
 import parser.Parser;
 import view.Visualizer;
@@ -33,9 +32,7 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeInput(String input) {
-		for (Commandable c : myParser.parse(input)) {
-			c.execute();
-		}
+		Double useless = myParser.parse(input);
 	}
 
 	@Override
