@@ -15,10 +15,6 @@ public class RepeatUnbundler extends ControlUnbundler {
 	private LinkedList<String> unbundledArray;
 	private CommandFactory commandFactory;
 
-
-	public RepeatUnbundler() {
-	}
-
 	/**
 	 * Creates an unbundler for the repeat command
 	 */
