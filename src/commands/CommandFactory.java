@@ -17,26 +17,20 @@ public class CommandFactory {
 
 	ResourceBundle myCommands = ResourceBundle.getBundle(COMMANDS);
 	Map<String, String> myLanguages = new HashMap<>();
-	Map<String, Updatable> myUpdatables;
 	Visualizer myVis;
 
-	public CommandFactory(Map<String, Updatable> updatables, Visualizer vis) {
-		myUpdatables = updatables;
+	public CommandFactory(Visualizer vis) {
 		myVis = vis;
 		updateLanguage(DEFAULT);
 	}
 
-	public Commandable createCommand(String command) {
-		return createCommmand(command, "0");
-	}
-
-	public Commandable createCommmand(String command, String id) {
+	public Commandable createCommand(String command, Updatable updatable) {
 		String keyword = myLanguages.get(command);
 		try {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
-				return (Commandable) ctor.newInstance(myVis, myUpdatables.get(id));
+				return (Commandable) ctor.newInstance(myVis, updatable);
 			} else {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(Visualizer.class);
 				return (Commandable) ctor.newInstance(myVis);

@@ -11,8 +11,11 @@ import java.util.stream.Collectors;
 
 import commands.CommandFactory;
 import commands.Commandable;
+import multiples.Multiple;
+import multiples.MultipleFactory;
 import parser.unbundler.Unbundler;
 import parser.unbundler.UnbundlerFactory;
+import slogo_team07.Updatable;
 
 public class Parser {
 
@@ -21,22 +24,24 @@ public class Parser {
 
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
+	private MultipleFactory myMultipleFactory;
 	private Set<String> myControlSet;
-	private Set<String> myManagerSet;
+	private Set<String> myMultiplesSet;
 	private Map<String, String> myVarMap = new HashMap<>();
 	private Map<String, Function> myFuncMap = new HashMap<>();
 
-	public Parser(CommandFactory cf) {
+	public Parser(CommandFactory cf, MultipleFactory mf) {
 		myCommandFactory = cf;
+		myMultipleFactory = mf;
 		myUnbundlerFactory = new UnbundlerFactory(myCommandFactory, this);
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
-		myManagerSet = new HashSet<>(Arrays.asList(MANAGER_NAMES));
+		myMultiplesSet = new HashSet<>(Arrays.asList(MANAGER_NAMES));
 	}
 
 	public double parse(String s) {
 		s = sanitize(s);
+		
 		List<String> input = replaceUnknowns(s);
-
 		Double ans = 0.0;
 		while (!input.isEmpty()) {
 			ans = traverse(input);
@@ -56,15 +61,24 @@ public class Parser {
 			Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
 			String unbundled = unbundler.unbundle(input);
 			return parse(unbundled);
-		} else if (myManagerSet.contains(next)) {
-			
+		} else if (myMultiplesSet.contains(next)) {
+			Multiple multiple = myMultipleFactory.createMultiple(next);
+			return multiple.manage(input);
 		}
 		
-		Commandable node = myCommandFactory.createCommand(next);
-		while (!node.isReady()) {
-			node.inject(traverse(input));
+		List<Updatable> actives = myMultipleFactory.getActives();
+		double ans = Double.MAX_VALUE;
+		List<String> temp = input;
+		for (Updatable active : actives) {
+			Commandable node = myCommandFactory.createCommand(next, active);
+			temp = new LinkedList<>(input);
+			while (!node.isReady()) {
+				node.inject(traverse(temp));
+			}
+			ans = node.execute();
 		}
-		return node.execute();
+		input = temp;
+		return ans;
 	}
 
 
@@ -119,7 +133,7 @@ public class Parser {
 	private String stripComments(String s) {
 		return Arrays.asList(s.split("\n")).stream()
 				.filter(line -> !line.startsWith("#"))
-				.collect(Collectors.joining());
+				.collect(Collectors.joining(" "));
 	}
 
 	/**

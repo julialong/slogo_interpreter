@@ -6,8 +6,8 @@ import parser.Parser;
 public class Test {
 	
 	public static void main(String[] args){
-		CommandFactory cf = new CommandFactory(null, null);
-		Parser p = new Parser(cf);
+//		CommandFactory cf = new CommandFactory(null);
+//		Parser p = new Parser(cf);
 //		Double d = p.parse("DOTIMES [ x 4 ] [ ifelse sum 1.0 0.0 [ lessp 4.0 5.0 ] [ lessp 5.0 4.0 ] ]");
 //		Double d = p.parse("DOTIMES [ x 0 ] [ sum 1 1 ] DOTIMES [ x 4 ] [ sum x x ]");
 //		Double d = p.parse("REPEAT sum 1 1 [ sum 2.0 2.0 ]");
