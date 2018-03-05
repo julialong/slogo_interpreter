@@ -1,0 +1,5 @@
+VARIABLES
+Deutsch : Hallo
+English : Hello
+Francais : Alo
+Espanol : Hola

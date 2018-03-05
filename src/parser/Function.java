@@ -1,6 +1,7 @@
 package parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Function {
@@ -39,6 +40,6 @@ public class Function {
 
 	@Override
 	public String toString() {
-		return myParams.toString() + " | " + myCommands.toString();
+		return String.join(" ", myParams) + " | " + String.join(" ", myParams);
 	}
 }
