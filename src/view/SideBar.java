@@ -70,31 +70,23 @@ public class SideBar extends VBox{
 	public VBox initSideBar(){
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
-		
-		Button helpButton = new Button();
-		ComboBox colorMenu = new ComboBox(colorList);
-		ComboBox iconMenu = new ComboBox(iconList);
-		ComboBox penMenu = new ComboBox(penList); 
-		ComboBox langMenu = new ComboBox<String>(langsSupported);
-		Button allDrawablesButton = new Button();
-		commandTable = new TableView();
-		variableTable = new TableView();
 		double colWidth = 250;
-		
-//		Button test = new Button("Test");
-//		test.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e){
-//				double x = 0;
-//				double y = 0;
-//				for (Drawable turtle: myTurtles){
-//					turtle.setPane(myCanvasObjects);
-//					turtle.test(100, 100);
-//				}
-//			}
-//		});
-//		myVBox.getChildren().add(test);
 
+		Button helpButton = helpButton();
+		myVBox.getChildren().add(helpButton);
+		myVBox.getChildren().add(colorMenu());
+		myVBox.getChildren().add(iconMenu());
+		myVBox.getChildren().add(penMenu());
+		myVBox.getChildren().add(langMenu(helpButton));		
+		myVBox.getChildren().add(allDrawablesButton());
+		myVBox.getChildren().add(commandTable(colWidth));
+		myVBox.getChildren().add(variableTable(colWidth));
+
+		return myVBox;
+	}
+
+	private Button helpButton()	{
+		Button helpButton = new Button();
 		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
     	helpButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -102,8 +94,12 @@ public class SideBar extends VBox{
 				new HelpBox(language);
 			}
 		});
-		myVBox.getChildren().add(helpButton);
 
+		return helpButton;
+	}
+
+	private ComboBox colorMenu()	{
+		ComboBox colorMenu = new ComboBox(colorList);
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -113,8 +109,12 @@ public class SideBar extends VBox{
 				myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
 			}
 		});
-		myVBox.getChildren().add(colorMenu);
-		
+
+		return colorMenu;
+	}
+
+	private ComboBox iconMenu()	{
+		ComboBox iconMenu = new ComboBox(iconList);
 		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
 		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -128,8 +128,12 @@ public class SideBar extends VBox{
 				}
 			}
 		});
-		myVBox.getChildren().add(iconMenu);
-		
+
+		return iconMenu;
+	}
+
+	private ComboBox penMenu()	{
+		ComboBox penMenu = new ComboBox(penList);
 		penMenu.setPromptText(Resources.getString("PenMenu"));
 		penMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -137,8 +141,12 @@ public class SideBar extends VBox{
 				myCanvas.setColor(Color.valueOf(tempPen));
 			}
 		});
-		myVBox.getChildren().add(penMenu);
-		
+
+		return penMenu;
+	}
+
+	private ComboBox langMenu(Button helpButton)	{
+		ComboBox langMenu = new ComboBox<String>(langsSupported);
 		langMenu.setPromptText(Resources.getString("LangMenu"));
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
@@ -146,8 +154,12 @@ public class SideBar extends VBox{
 				helpButton.setText(ResourcesLanguages.getString(language, "Help"));
 			}
 		});
-		myVBox.getChildren().add(langMenu);
 
+		return langMenu;
+	}
+
+	private Button allDrawablesButton()	{
+		Button allDrawablesButton = new Button();
 		allDrawablesButton.setText("All turtles");
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -155,17 +167,25 @@ public class SideBar extends VBox{
 				new DrawablesTable(myTurtles, myCanvas, myCanvasObjects);
 			}
 		});
-		myVBox.getChildren().add(allDrawablesButton);
 
+		return allDrawablesButton;
+	}
+
+	private TableView commandTable(double colWidth)	{
+		commandTable = new TableView();
 		commandTable.setEditable(false);
 		comText = new TableColumn("User-defined commands");
 		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
 		comText.setMinWidth(colWidth);
         commandTable.getColumns().add(comText);
         commandTable.setItems(uDefCommands);
-		myVBox.getChildren().add(commandTable);
 
-		variableTable.setEditable(false);
+        return commandTable;
+	}
+
+	private TableView variableTable(double colWidth)	{
+		variableTable = new TableView();
+		variableTable.setEditable(true);
 		vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
@@ -177,12 +197,11 @@ public class SideBar extends VBox{
 		vars.getColumns().addAll(varName, varValue);
 		variableTable.getColumns().add(vars);
 		variableTable.setItems(setVariables);
-		myVBox.getChildren().add(variableTable);
-				
-		return myVBox;
+
+		return variableTable;
 	}
 
-	protected void addButton(String text)	{
+	protected void addUDIButton(String text)	{
 		if (buttonExists(text))	{
 			return;
 		}
@@ -200,7 +219,7 @@ public class SideBar extends VBox{
 		uDefCommands.add(udc);
 	}
 
-	protected void addVar(String var, String value)	{
+	protected void addUDVar(String var, String value)	{
 		if (varExists(var) != null)	{
 			varExists(var).value.set(value);
 		}
