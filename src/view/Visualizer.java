@@ -86,7 +86,7 @@ public class Visualizer {
 		((Console)myConsole).language = language;
 		root.setBottom(((Console)myConsole));
 
-		myToolbar = new Toolbar();
+		myToolbar = new Toolbar(myCanvasObjects);
 		root.setTop(myToolbar.initToolbar());
 
 		myCanvas.myVBox = mySideBar;
@@ -98,7 +98,8 @@ public class Visualizer {
 	}
 
 	/**
-	 * Called by Engine, takes in a drawable made in Engine and sends to canvas to draw. This is another middle man to separate model and view
+	 * Called by Engine, takes in a drawable made in Engine and sends to canvas to draw. This is another 
+	 * middle man to separate model and view
 	 * @param turtle	object to be drawn on canvas
 	 */
 	public void addDrawable(Drawable turtle)	{
