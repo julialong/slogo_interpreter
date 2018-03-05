@@ -12,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -81,8 +83,22 @@ public class Console extends AnchorPane implements TextInput {
 		history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
 		clear();
 
-		myChangeListener.changeInput(comm);
-		checkSpecial(comm);
+		if (comm.indexOf("past(") >= 0)	{
+			try	{
+				int pastIndex = Character.getNumericValue(comm.charAt(comm.indexOf("past(") + "past(".length()));
+				myChangeListener.changeInput(pastCommands.get(pastIndex - 1));
+			}
+			catch (IndexOutOfBoundsException e)	{
+				 Alert alert = new Alert(AlertType.INFORMATION);
+		        alert.setTitle("No Such Past Command");
+		        alert.setContentText("There is no previous command with that ID.\nCheck history box for possible past commands to run.");
+		        alert.show();
+			}
+		}
+		else	{
+			myChangeListener.changeInput(comm);
+			checkSpecial(comm);
+		}
 
 		return comm;
 	}
@@ -133,12 +149,12 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	private void checkSpecial(String comm)  {
-		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeUserInstruction") +"(?s) .*?"))   {
+		if (comm.indexOf(ResourcesLanguages.getString(language, "MakeUserInstruction") + " ") >= 0)   {
 			makeUDI(comm);
 		}
 
-		if (comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] +"(?s) .*?")
-				|| comm.matches("^(?i)" + ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] +"(?s) .*?"))   {
+		if (comm.indexOf(ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] + " ") >= 0
+				|| comm.indexOf(ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] + " ") >= 0)   {
 			makeVariable(comm);
 		}
 	}
