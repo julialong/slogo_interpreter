@@ -27,8 +27,8 @@ public class DoTimesUnbundler extends ControlUnbundler {
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp) {
-		int[] expressionIndex = findBrackets(exp, 1);
-		int[] commandIndex = findBrackets(exp, 2);
+		int[] expressionIndex = findBrackets(exp, 0);
+		int[] commandIndex = findBrackets(exp, 1);
 		setNumbers(exp, expressionIndex[1]);
 		buildCommand(exp, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);

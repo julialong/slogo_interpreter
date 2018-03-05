@@ -24,8 +24,8 @@ public class ToUnbundler extends ControlUnbundler{
      */
     public String unbundle(List<String> exp) {
         commandName = exp.get(1);
-        int[] variableIndex = findBrackets(exp, 2);
-        int[] commandIndex = findBrackets(exp, variableIndex[1]);
+        int[] variableIndex = findBrackets(exp, 0);
+        int[] commandIndex = findBrackets(exp, 1);
         parameters = new ArrayList<>();
         commands = new ArrayList<>();
         buildExpression(exp, commandIndex[0], commandIndex[1]);

@@ -17,7 +17,6 @@ abstract class ControlUnbundler implements Unbundler{
 	 * @return
 	 */
 	protected int[] findBrackets(List<String> exp, int pair_num) {
-		pair_num -= 1;
 		int[] answer = new int[] {-1, -1};
 		int unmatched = 0;
 		for (int i = 0; i < exp.size(); i++) {
@@ -40,7 +39,6 @@ abstract class ControlUnbundler implements Unbundler{
 		}
 		// well-formatted input should never reach here
 		return null;
-
 	}
 
 	/**

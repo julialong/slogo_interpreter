@@ -27,8 +27,8 @@ public class IfElseUnbundler extends ControlUnbundler {
      * @return the String of the unbundled control command
      */
     public String unbundle(List<String> exp) {
-        int[] trueCommandIndex = findBrackets(exp, 1);
-        int[] falseCommandIndex = findBrackets(exp, 2);
+        int[] trueCommandIndex = findBrackets(exp, 0);
+        int[] falseCommandIndex = findBrackets(exp, 1);
         expression = new ArrayList<>();
         buildExpression(exp, trueCommandIndex[0]);
         executeCommands = executeExpression(expression);
