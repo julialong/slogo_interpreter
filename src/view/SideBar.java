@@ -69,13 +69,11 @@ public class SideBar extends VBox{
 	public VBox initSideBar(){
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
+		
 		double colWidth = 250;
 
 		Button helpButton = helpButton();
 		myVBox.getChildren().add(helpButton);
-		myVBox.getChildren().add(colorMenu());
-		myVBox.getChildren().add(iconMenu());
-		myVBox.getChildren().add(penMenu());
 		myVBox.getChildren().add(langMenu(helpButton));		
 		myVBox.getChildren().add(allDrawablesButton());
 		myVBox.getChildren().add(commandTable(colWidth));
@@ -92,32 +90,13 @@ public class SideBar extends VBox{
 			public void handle(ActionEvent e) {
 				new HelpBox(language);
 			}
-		});		
-		
-//		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
-//		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
-//			@Override public void handle(ActionEvent e){
-//				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
-//				//right now will change icon of all turtles
-//				for (Drawable turtle: myTurtles.keySet()){
-//					myCanvasObjects.getChildren().remove(turtle.getView());
-//					turtle.setPane(myCanvasObjects);
-//					turtle.setView(Resources.getString(tempIcon));
-//					myCanvasObjects.getChildren().add(turtle.getView());
-//				}
-//			}
-//		});
-//		myVBox.getChildren().add(iconMenu);
-		
-//		penMenu.setPromptText(Resources.getString("PenMenu"));
-//		penMenu.setOnAction(new EventHandler<ActionEvent>(){
-//			@Override public void handle(ActionEvent e){
-//				String tempPen = penMenu.getSelectionModel().getSelectedItem().toString();
-//				myCanvas.setColor(Color.valueOf(tempPen));
-//			}
-//		});
-//		myVBox.getChildren().add(penMenu);
-		
+		});
+
+		return helpButton;
+	}
+
+	private ComboBox langMenu(Button helpButton)	{
+		ComboBox langMenu = new ComboBox<String>(langsSupported);
 		langMenu.setPromptText(Resources.getString("LangMenu"));
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
