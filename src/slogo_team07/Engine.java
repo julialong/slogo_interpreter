@@ -1,34 +1,27 @@
 package slogo_team07;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import commands.CommandFactory;
 import javafx.stage.Stage;
 import parser.Parser;
 import view.Visualizer;
 
 public class Engine implements ChangeListener {
 	
-	private Map<String, Updatable> myUpdatables = new HashMap<>();
 	private Visualizer myVis;
 	private Parser myParser;
-	private CommandFactory myCommandFactory;
+	private TurtleManager myTurtleManager;
 
 	public Engine(Stage stage) {
 		myVis = new Visualizer(stage, this);
-		myUpdatables = new HashMap<>();
-		myCommandFactory = new CommandFactory(myUpdatables, myVis);
-		myParser = new Parser(myCommandFactory);
+		myTurtleManager = new TurtleManager(myVis, this);
+		myParser = new Parser(myTurtleManager);
 		addTurtle();
 	}
 
 	private void addTurtle() {
 		Turtle turtle = new Turtle();
 		myVis.addDrawable(turtle);
-		myUpdatables.put(Integer.toString(0), turtle);
+		myTurtleManager.addUpdatable(turtle);
 	}
-
 
 	@Override
 	public void changeInput(String input) {
@@ -37,6 +30,6 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeLanguage(String lang) {
-		myCommandFactory.updateLanguage(lang);
+		myTurtleManager.updateLanguage(lang);
 	}
 }

@@ -17,59 +17,65 @@ import parser.unbundler.UnbundlerFactory;
 public class Parser {
 
 	private static final String[] CONTROL_NAMES = { "make", "set", "for", "ifelse", "if", "repeat", "dotimes", "to" };
+	private static final String[] MANAGER_NAMES = { "tell", "ask", "askwith", "turtles", "id" };
 
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;
 	private Set<String> myControlSet;
+	private Set<String> myManagerSet;
 	private Map<String, String> myVarMap = new HashMap<>();
 	private Map<String, Function> myFuncMap = new HashMap<>();
 
 	public Parser(CommandFactory cf) {
 		myCommandFactory = cf;
-		myUnbundlerFactory = new UnbundlerFactory(myCommandFactory);
+		myUnbundlerFactory = new UnbundlerFactory(myCommandFactory, this);
 		myControlSet = new HashSet<>(Arrays.asList(CONTROL_NAMES));
+		myManagerSet = new HashSet<>(Arrays.asList(MANAGER_NAMES));
 	}
 
 	public double parse(String s) {
 		s = sanitize(s);
 		List<String> input = replaceUnknowns(s);
 
-		Double ans = null;
+		Double ans = 0.0;
 		while (!input.isEmpty()) {
 			ans = traverse(input);
 		}
 		return ans;
 	}
 
-	public double traverse(List<String> input) {
+	private double traverse(List<String> input) {
 		if (input.isEmpty()) {
 			return Double.MAX_VALUE;
 		}
 
-		String next = input.remove(0);
+		String next = input.remove(0).toLowerCase();
 		if (isArgument(next)) {
 			return Double.valueOf(next);
-		} else if (myControlSet.contains(next.toLowerCase())) {
+		} else if (myControlSet.contains(next)) {
 			Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
 			String unbundled = unbundler.unbundle(input);
 			return parse(unbundled);
+		} else if (myManagerSet.contains(next)) {
+			
 		}
-
-		// I believe next should be a command at this point, if it's not an arg or controlflow
-		// comments should have already been stripped
+		
 		Commandable node = myCommandFactory.createCommand(next);
 		while (!node.isReady()) {
 			node.inject(traverse(input));
 		}
-		
 		return node.execute();
 	}
 
 
 	private List<String> replaceUnknowns(String s) {
-		String[] arr = s.split(" ");
 		List<String> ans = new LinkedList<>();
-		int i=0;
+		if (s.length() == 0) {
+			return ans;
+		}
+		
+		String[] arr = s.split(" ");
+		int i = 0;
 		while (i < arr.length) {
 			String curr = arr[i];
 			if (myVarMap.containsKey(curr)) {

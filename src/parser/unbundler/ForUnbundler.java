@@ -20,7 +20,7 @@ public class ForUnbundler extends ControlUnbundler{
      */
     public String unbundle(List<String> exp) {
         setNumbers(exp, 1);
-        int[] commandIndex = findBrackets(exp);
+        int[] commandIndex = findBrackets(exp, 2);
         buildCommand(exp, commandIndex[0], commandIndex[1]);
         modifyList(exp, commandIndex[1]);
         return String.join(" ", unbundledArray);

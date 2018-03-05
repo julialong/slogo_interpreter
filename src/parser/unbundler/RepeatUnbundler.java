@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import commands.CommandFactory;
 import parser.Parser;
 
 public class RepeatUnbundler extends ControlUnbundler {
@@ -13,13 +12,13 @@ public class RepeatUnbundler extends ControlUnbundler {
 
 	private List<String> expression;
 	private LinkedList<String> unbundledArray;
-	private CommandFactory commandFactory;
+	private Parser parser;
 
 	/**
 	 * Creates an unbundler for the repeat command
 	 */
-	public RepeatUnbundler(CommandFactory cf) {
-		commandFactory = cf;
+	public RepeatUnbundler(Parser p) {
+		parser = p;
 	}
 
 	/**
@@ -29,7 +28,7 @@ public class RepeatUnbundler extends ControlUnbundler {
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp) {
-		int[] commandIndex = findBrackets(exp);
+		int[] commandIndex = findBrackets(exp, 1);
 		expression = new ArrayList<>();
 		buildExpression(exp, commandIndex[0]);
 		executeExpression();
@@ -55,7 +54,7 @@ public class RepeatUnbundler extends ControlUnbundler {
 		if (expression.size() <= 0) {
 			repeat = 0;
 		} else {
-			repeat = new Parser(commandFactory).parse(String.join(" ", expression));
+			repeat = parser.parse(String.join(" ", expression));
 		}
 	}
 
