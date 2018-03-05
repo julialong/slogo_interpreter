@@ -26,6 +26,8 @@ public class MultipleFactory {
 	public Multiple createMultiple(String command) {
 		if (command.equals("tell")) {
 			return new TellMultiple(myUpdatables, myVis, myActives);
+		} else if (command.equals("turtles")) {
+			return new TurtlesMultiple(myUpdatables);
 		}
 		return null;
 	}

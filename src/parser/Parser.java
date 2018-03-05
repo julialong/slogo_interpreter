@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import commands.CommandFactory;
 import commands.Commandable;
+import commands.UpdatableCommand;
 import multiples.Multiple;
 import multiples.MultipleFactory;
 import parser.unbundler.Unbundler;
@@ -76,6 +77,9 @@ public class Parser {
 				node.inject(traverse(temp));
 			}
 			ans = node.execute();
+			if (node.getClass().getSuperclass() != UpdatableCommand.class) {
+				break;
+			}
 		}
 		input = temp;
 		return ans;
