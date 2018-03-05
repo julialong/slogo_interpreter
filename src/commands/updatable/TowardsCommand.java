@@ -9,7 +9,7 @@ import view.Visualizer;
 public class TowardsCommand extends UpdatableCommand {
 
 	public TowardsCommand(Visualizer vis, Updatable updatable) {
-		super(vis, updatable, 2);
+		super(vis, 2, updatable);
 	}
 
 	@Override

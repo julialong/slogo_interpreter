@@ -9,7 +9,7 @@ import view.Visualizer;
 public class ClearScreenCommand extends UpdatableCommand {
 
 	public ClearScreenCommand(Visualizer vis, Updatable updatable) {
-		super(vis, updatable, 0);
+		super(vis, 0, updatable);
 	}
 
 	@Override

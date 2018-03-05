@@ -9,7 +9,7 @@ import view.Visualizer;
 public class RightCommand extends UpdatableCommand {
 
 	public RightCommand(Visualizer vis, Updatable updatable) {
-		super(vis, updatable, 1);
+		super(vis, 1, updatable);
 	}
 
 	@Override

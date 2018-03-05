@@ -9,7 +9,7 @@ import view.Visualizer;
 public class IsShowingCommand extends UpdatableCommand {
 
 	public IsShowingCommand(Visualizer vis, Updatable updatable) {
-		super(vis, updatable, 0);
+		super(vis, 0, updatable);
 	}
 
 	@Override
