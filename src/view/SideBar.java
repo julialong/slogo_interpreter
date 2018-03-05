@@ -34,8 +34,7 @@ public class SideBar extends VBox{
 	private Pane myCanvasObjects;
 	private Canvas myCanvas;
 	private Map<Drawable, List<String>> myTurtles;
-	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
+	
 	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
 	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
@@ -93,60 +92,32 @@ public class SideBar extends VBox{
 			public void handle(ActionEvent e) {
 				new HelpBox(language);
 			}
-		});
-
-		return helpButton;
-	}
-
-	private ComboBox colorMenu()	{
-		ComboBox colorMenu = new ComboBox(colorList);
-		colorMenu.setPromptText(Resources.getString("ColorMenu"));
-		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();
-				myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back", 
-						"green-back", "blue-back", "purple-back", "pink-back");
-				myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
-			}
-		});
-
-		return colorMenu;
-	}
-
-	private ComboBox iconMenu()	{
-		ComboBox iconMenu = new ComboBox(iconList);
-		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
-		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
-				//right now will change icon of all turtles
-				for (Drawable turtle: myTurtles.keySet()){
-					myCanvasObjects.getChildren().remove(turtle.getView());
-					turtle.setPane(myCanvasObjects);
-					turtle.setView(Resources.getString(tempIcon));
-					myCanvasObjects.getChildren().add(turtle.getView());
-				}
-			}
-		});
-
-		return iconMenu;
-	}
-
-	private ComboBox penMenu()	{
-		ComboBox penMenu = new ComboBox(penList);
-		penMenu.setPromptText(Resources.getString("PenMenu"));
-		penMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				String tempPen = penMenu.getSelectionModel().getSelectedItem().toString();
-				myCanvas.setColor(Color.valueOf(tempPen));
-			}
-		});
-
-		return penMenu;
-	}
-
-	private ComboBox langMenu(Button helpButton)	{
-		ComboBox langMenu = new ComboBox<String>(langsSupported);
+		});		
+		
+//		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
+//		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
+//			@Override public void handle(ActionEvent e){
+//				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
+//				//right now will change icon of all turtles
+//				for (Drawable turtle: myTurtles.keySet()){
+//					myCanvasObjects.getChildren().remove(turtle.getView());
+//					turtle.setPane(myCanvasObjects);
+//					turtle.setView(Resources.getString(tempIcon));
+//					myCanvasObjects.getChildren().add(turtle.getView());
+//				}
+//			}
+//		});
+//		myVBox.getChildren().add(iconMenu);
+		
+//		penMenu.setPromptText(Resources.getString("PenMenu"));
+//		penMenu.setOnAction(new EventHandler<ActionEvent>(){
+//			@Override public void handle(ActionEvent e){
+//				String tempPen = penMenu.getSelectionModel().getSelectedItem().toString();
+//				myCanvas.setColor(Color.valueOf(tempPen));
+//			}
+//		});
+//		myVBox.getChildren().add(penMenu);
+		
 		langMenu.setPromptText(Resources.getString("LangMenu"));
 		langMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
