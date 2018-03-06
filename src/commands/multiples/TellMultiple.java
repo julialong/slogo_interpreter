@@ -1,4 +1,4 @@
-package multiples;
+package commands.multiples;
 
 import java.util.List;
 import java.util.Map;
