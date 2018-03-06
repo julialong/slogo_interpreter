@@ -105,12 +105,12 @@ public class Visualizer {
 	public void addDrawable(Drawable turtle)	{
 		//myCanvas.addDrawable(turtle);
 		List<String> properties = new ArrayList<String>();
-		// id
-		// add active
-		// add image (ex. Turtle, not extension)
-		// pen (up or down)
-		// pen color
-		// pen width
+		properties.add(String.valueOf(drawables.size())); // id
+		properties.add("Active"); // add active
+		properties.add("Turtle"); // add image (ex. Turtle, not extension)
+		properties.add("Down");// pen (up or down)
+		properties.add("Black");// pen color
+		properties.add("1.0"); // pen width
 
 		drawables.put(turtle, properties);
 	}

@@ -78,42 +78,7 @@ public class SideBar extends VBox{
 		myVBox.getChildren().add(variableTable(colWidth));
 
 		return myVBox;
-	}
-
-
-//	private ComboBox iconMenu()	{
-//		ComboBox iconMenu = new ComboBox(iconList);
-//		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
-//		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
-//			@Override public void handle(ActionEvent e){
-//				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
-//				//right now will change icon of all turtles
-//				for (Drawable turtle: myTurtles.keySet()){
-//					myCanvasObjects.getChildren().remove(turtle.getView());
-//					turtle.setPane(myCanvasObjects);
-//					turtle.setView(Resources.getString(tempIcon));
-//					myCanvasObjects.getChildren().add(turtle.getView());
-//				}
-//			}
-//		});
-//
-//		return iconMenu;
-//	}
-//
-//	private ComboBox penMenu()	{
-//		ComboBox penMenu = new ComboBox(penList);
-//		penMenu.setPromptText(Resources.getString("PenMenu"));
-//		penMenu.setOnAction(new EventHandler<ActionEvent>(){
-//			@Override public void handle(ActionEvent e){
-//				String tempPen = penMenu.getSelectionModel().getSelectedItem().toString();
-//				myCanvas.setColor(Color.valueOf(tempPen));
-//			}
-//		});
-//
-//		return penMenu;
-//	}
-
-	
+	}	
 	
 	private Button allDrawablesButton()	{
 		Button allDrawablesButton = new Button("Turtle Information");

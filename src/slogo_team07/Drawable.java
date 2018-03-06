@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public interface Drawable {
-	public void draw(Pane display, Color color);
+	public void draw(Pane display, Color color, double penWidth);
 	
 	public ImageView getView();
 	

@@ -24,6 +24,7 @@ public class Canvas {
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
 	private Color myColor = Color.BLACK;
+	private double myPenWidth = 1.0;
 	
 	
 	public Canvas(Map<Drawable, List<String>> turtles){
@@ -37,7 +38,7 @@ public class Canvas {
 			turtle.getView().setFitHeight(20);
 			turtle.getView().setFitWidth(20);
 			myPane.getChildren().add(turtle.getView());
-			turtle.draw(myPane, myColor);
+			turtle.draw(myPane, myColor, myPenWidth);
 		}
 		return myPane;
 	}
@@ -53,7 +54,8 @@ public class Canvas {
 				turtle.getView().setFitWidth(20);
 				myPane.getChildren().add(turtle.getView());
 			}
-			turtle.draw(myPane, myColor);
+			//draw will also need to take in stroke width
+			turtle.draw(myPane, myColor, myPenWidth);
 		}
 		return myPane;
 	}
@@ -70,6 +72,10 @@ public class Canvas {
 	
 	protected void setColor(Color color){
 		myColor = color;
+	}
+	
+	protected void setPenWidth(double width){
+		myPenWidth = width;
 	}
 	
 }

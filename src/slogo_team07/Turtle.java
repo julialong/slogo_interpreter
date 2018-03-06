@@ -26,6 +26,7 @@ public class Turtle implements Drawable, Updatable {
 	private Pane myPane;
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
+	private double myPenWidth = 1.0;
 
 	public Turtle() {
 		Image image = new Image("/view/turtle.jpg");
@@ -71,7 +72,8 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public void draw(Pane display, Color color) {
+	public void draw(Pane display, Color color, double penWidth) {
+		myPenWidth = penWidth;
 		myColor = color;
 		myPane = display;
 		translate(myPane);
@@ -81,6 +83,7 @@ public class Turtle implements Drawable, Updatable {
 			}
 			Line trail = new Line(myViewPrevX, myViewPrevY, myViewX, myViewY);
 			trail.setStroke(myColor);
+			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
 		}
