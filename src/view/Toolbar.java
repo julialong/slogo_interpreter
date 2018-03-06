@@ -18,7 +18,6 @@ import resources.languages.ResourcesLanguages;
 public class Toolbar extends AnchorPane {
 	
 	private AnchorPane myPane;
-	private HBox myHBox;
 	private Pane myCanvasObjects;
 	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
@@ -32,8 +31,6 @@ public class Toolbar extends AnchorPane {
 	
 	public AnchorPane initToolbar(){
 		myPane = new AnchorPane();
-		myHBox = new HBox(Resources.getInt("Inset"));
-		myHBox.setPadding(new Insets(Resources.getInt("Inset")));
 		
 		Text title = new Text(Resources.getString("Title"));
 		title.getStyleClass().add("title");
@@ -41,17 +38,9 @@ public class Toolbar extends AnchorPane {
 		myPane.setLeftAnchor(title, 10.0);
 		myPane.setTopAnchor(title, 10.0);
 		
-		Button helpButton = helpButton();
-		myHBox.getChildren().add(helpButton);
-		myHBox.getChildren().add(colorMenu());
-		myHBox.getChildren().add(langMenu(helpButton));
-		myHBox.getChildren().add(windowButton());
-		myHBox.getChildren().add(saveButton());
-		myHBox.getChildren().add(loadButton());
-		
-		myPane.getChildren().add(myHBox);
-		myPane.setRightAnchor(myHBox, 10.0);
-		
+		VBox myButtons = initButtons();
+		myPane.getChildren().add(myButtons);
+		myPane.setRightAnchor(myButtons, 10.0);
 		return myPane;
 	}
 	
@@ -127,6 +116,110 @@ public class Toolbar extends AnchorPane {
 			}
 		});
     	return loadButton;
+    }
+	
+	private VBox initButtons(){
+		HBox myHBox = new HBox(Resources.getInt("Inset"));
+		Button helpButton = helpButton();
+		myHBox.getChildren().add(helpButton);
+		myHBox.getChildren().add(colorMenu());
+		myHBox.getChildren().add(langMenu(helpButton));
+		myHBox.getChildren().add(windowButton());
+		myHBox.getChildren().add(saveButton());
+		myHBox.getChildren().add(loadButton());
+		
+		HBox buttons = new HBox(Resources.getInt("Inset"));
+		buttons.getChildren().add(pauseButton());
+		buttons.getChildren().add(stepButton());
+		buttons.getChildren().add(resetButton());
+		buttons.getChildren().add(undoButton());
+		buttons.getChildren().add(speedUpButton());
+		buttons.getChildren().add(slowDownButton());
+		buttons.getChildren().add(addDrawableButton());
+		
+		VBox myVBox = new VBox(Resources.getInt("Inset"));
+		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
+		myVBox.getChildren().add(myHBox);
+		myVBox.getChildren().add(buttons);
+		
+		return myVBox;
+	}
+	
+	//need to link w visualizer class somehow
+	private Button addDrawableButton()	{
+		Button addDrawableButton = new Button("Add Turtle");
+	    addDrawableButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+			}
+		});
+		return addDrawableButton;
+	}
+	
+	private Button pauseButton()	{
+		Button pauseButton = new Button("Pause");
+    	pauseButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+			}
+		});
+    	return pauseButton;
+    }
+	
+	private Button stepButton()	{
+		Button stepButton = new Button("Step");
+    	stepButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+			}
+		});
+    	return stepButton;
+    }
+	
+	private Button resetButton()	{
+		Button resetButton = new Button("Reset");
+    	resetButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+			}
+		});
+    	return resetButton;
+    }
+	
+	private Button undoButton()	{
+		Button undoButton = new Button("Undo");
+    	undoButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+			}
+		});
+    	return undoButton;
+    }
+	
+	private Button speedUpButton()	{
+		Button speedUpButton = new Button("Speed Up");
+    	speedUpButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+			}
+		});
+    	return speedUpButton;
+    }
+	
+	private Button slowDownButton()	{
+		Button slowDownButton = new Button("SlowDown");
+    	slowDownButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+			}
+		});
+    	return slowDownButton;
     }
 	
 	public void setLanguage(String lang){

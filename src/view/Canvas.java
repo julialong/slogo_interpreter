@@ -3,12 +3,18 @@ package view;
 import java.util.List;
 import java.util.Map;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import resources.keys.Resources;
 import slogo_team07.Drawable;
 import commands.Result;
 
@@ -19,11 +25,12 @@ public class Canvas {
 	protected VBox myVBox;
 	private Color myColor = Color.BLACK;
 	
+	
 	public Canvas(Map<Drawable, List<String>> turtles){
 		myTurtles = turtles;
 	}
 	
-	public Pane initCanvas(){
+	protected Pane initCanvas(){
 		myPane = new Pane();
 		for (Drawable turtle: myTurtles.keySet()){
 			//turtle.setPane(myPane);
@@ -35,7 +42,7 @@ public class Canvas {
 		return myPane;
 	}
 	
-	public Pane updateCanvas(Map<Drawable, List<String>> turtles) {		
+	protected Pane updateCanvas(Map<Drawable, List<String>> turtles) {		
 		myTurtles = turtles;
 		for (Drawable turtle: myTurtles.keySet()){
 			if (! turtle.getIsVisible()){
@@ -51,26 +58,17 @@ public class Canvas {
 		return myPane;
 	}
 
-	public Pane updateCanvas(Result result) {
+	protected Pane updateCanvas(Result result) {
 		if (result.getRes1() == Double.MAX_VALUE)	{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Improper command");
 			alert.setContentText("The command " + result.toString() + " is not supported.");
 			alert.show();
 		}
-
-		// if (result.getRes1() == varRetVal)	{
-  //           ((SideBar)myVBox).addButton(result.toString());
-  //       }
-
-  //       if (result.getRes1() == udcRetVal)   {
-  //           ((SideBar)myVBox).addButton(result.toString());
-		// }
-
 		return updateCanvas(myTurtles);
 	}
 	
-	public void setColor(Color color){
+	protected void setColor(Color color){
 		myColor = color;
 	}
 	

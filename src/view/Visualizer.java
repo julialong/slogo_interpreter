@@ -79,7 +79,6 @@ public class Visualizer {
 		root.setCenter(myCanvasObjects);
 		
 		mySideBar = new SideBar(myCanvasObjects, drawables, myCanvas);
-		//((SideBar)mySideBar).language = language;
 		root.setRight(mySideBar.initSideBar());
 
 		myConsole = new Console();

@@ -68,18 +68,18 @@ public class SideBar extends VBox{
 	public VBox initSideBar(){
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
-		 
+
 		commandTable = new TableView();
 		variableTable = new TableView();
 		double colWidth = 250;
 	
-		myVBox.getChildren().add(addDrawableButton());
 		myVBox.getChildren().add(allDrawablesButton());
 		myVBox.getChildren().add(commandTable(colWidth));
 		myVBox.getChildren().add(variableTable(colWidth));
 
 		return myVBox;
 	}
+
 
 //	private ComboBox iconMenu()	{
 //		ComboBox iconMenu = new ComboBox(iconList);
@@ -113,17 +113,7 @@ public class SideBar extends VBox{
 //		return penMenu;
 //	}
 
-	//need to link w visualizer class somehow
-	private Button addDrawableButton()	{
-		Button addDrawableButton = new Button("Add Turtle");
-    	addDrawableButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
-		return addDrawableButton;
-	}
+	
 	
 	private Button allDrawablesButton()	{
 		Button allDrawablesButton = new Button("Turtle Information");
