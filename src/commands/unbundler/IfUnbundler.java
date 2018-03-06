@@ -15,8 +15,8 @@ public class IfUnbundler extends ControlUnbundler{
 
 	private boolean executeCommands;
 
-	public IfUnbundler(Visualizer vis, int num_args, Parser p) {
-		super(vis, num_args, p);
+	public IfUnbundler(Visualizer vis, Parser p) {
+		super(vis, 2, p);
 	}
 
 	/**

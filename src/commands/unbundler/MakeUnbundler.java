@@ -12,8 +12,8 @@ public class MakeUnbundler extends ControlUnbundler{
 	private List<String> expression;
 	private Map<String, String> dictionary;
 	
-	public MakeUnbundler(Visualizer vis, int num_args, Parser p, Map<String, String> dict) {
-		super(vis, num_args, p);
+	public MakeUnbundler(Visualizer vis, Parser p, Map<String, String> dict) {
+		super(vis, 2, p);
 		dictionary = dict;
 	}
 

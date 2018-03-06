@@ -15,8 +15,8 @@ public class ToUnbundler extends ControlUnbundler{
     private List<String> commands;
     private Map<String, Function> dictionary;
     
-    public ToUnbundler(Visualizer vis, int num_args, Parser p, Map<String, Function> dict) {
-		super(vis, num_args, p);
+    public ToUnbundler(Visualizer vis, Parser p, Map<String, Function> dict) {
+		super(vis, 3, p);
 		dictionary = dict;
 	}
 

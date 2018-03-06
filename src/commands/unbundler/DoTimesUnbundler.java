@@ -14,8 +14,8 @@ public class DoTimesUnbundler extends ControlUnbundler {
 
 	private ArrayList<String> unbundledArray;
 	
-	public DoTimesUnbundler(Visualizer vis, int num_args, Parser p) {
-		super(vis, num_args, p);
+	public DoTimesUnbundler(Visualizer vis, Parser p) {
+		super(vis, 2, p);
 	}
 	
 

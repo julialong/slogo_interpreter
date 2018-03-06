@@ -8,7 +8,7 @@ import commands.NonUpdatableStringArgs;
 import parser.Parser;
 import view.Visualizer;
 
-abstract class ControlUnbundler extends NonUpdatableStringArgs {
+public abstract class ControlUnbundler extends NonUpdatableStringArgs {
 	
 	private Parser parser;
 

@@ -15,8 +15,8 @@ public class RepeatUnbundler extends ControlUnbundler {
 	private LinkedList<String> unbundledArray;
 	
 
-	public RepeatUnbundler(Visualizer vis, int num_args, Parser p) {
-		super(vis, num_args, p);
+	public RepeatUnbundler(Visualizer vis, Parser p) {
+		super(vis, 2, p);
 	}
 
 	/**

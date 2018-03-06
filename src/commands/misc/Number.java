@@ -17,7 +17,7 @@ public class Number extends NonUpdatableDoubleArgs {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
-		double ans = calcValue(parseToDouble(getArgs()));
+		double ans = calcValue(getDoubleArgs());
 		return Double.toString(ans);
 	}
 	
