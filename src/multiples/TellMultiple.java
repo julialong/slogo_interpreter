@@ -40,7 +40,7 @@ public class TellMultiple extends Multiple {
 	}
 
 	private void addTurtle(String id) {
-		Turtle turtle = new Turtle();
+		Turtle turtle = new Turtle(id);
 		myUpdatables.put(id, turtle);
 		myVis.addDrawable(turtle);
 	}

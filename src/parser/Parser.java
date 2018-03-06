@@ -20,7 +20,7 @@ import slogo_team07.Updatable;
 public class Parser {
 
 	private static final String[] CONTROL_NAMES = { "make", "set", "for", "ifelse", "if", "repeat", "dotimes", "to" };
-	private static final String[] MANAGER_NAMES = { "tell", "ask", "askwith", "turtles", "id" };
+	private static final String[] MANAGER_NAMES = { "tell", "ask", "askwith", "turtles" };
 
 	private CommandFactory myCommandFactory;
 	private UnbundlerFactory myUnbundlerFactory;

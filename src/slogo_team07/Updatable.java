@@ -1,31 +1,33 @@
 package slogo_team07;
 
 public interface Updatable {
-	Double setPosition(Double x, Double y);
+	double setPosition(double x, double y);
 	
-	Double move(Double delta);
+	double move(double delta);
 	
-	Double rotate(Double clockwise);
+	double rotate(double clockwise);
 	
-	Double setHeading(Double degrees);
+	double setHeading(double degrees);
 	
-	Double setFacing(Double x, Double y);
+	double setFacing(double x, double y);
 	
-	Double setVisible(boolean isVisible);
+	double setVisible(boolean isVisible);
 	
-	Double getY();
+	double getY();
 	
-	Double getX();
+	double getX();
 	
-	Double getHeading();
+	double getHeading();
 	
-	Double getPendown();
+	double getPendown();
 	
-	Double getVisible();
+	double getVisible();
 	
-	Double home();
+	double home();
 	
-	Double setPen(boolean down);
+	double setPen(boolean down);
 	
-	Double clear();
+	double clear();
+	
+	double getId();
 }
