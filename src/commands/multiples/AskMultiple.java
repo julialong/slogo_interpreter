@@ -2,14 +2,17 @@ package commands.multiples;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import parser.Parser;
+import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class AskMultiple extends Multiple {
 
-	public AskMultiple(Visualizer vis, Parser parser, List<String> actives, int num_args) {
-		super(vis, parser, actives, 2);
+
+	public AskMultiple(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+		super(vis, parser, actives, updatables, 2);
 	}
 
 	@Override

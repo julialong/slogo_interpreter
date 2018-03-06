@@ -50,7 +50,7 @@ public class CommandFactory {
 				// THEY SHOULD ALMSOT CERTAINLY BE SUBCLASSED
 				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, parser.Parser.class});
 				commandables.add((Command) ctor.newInstance(myVis, myParser));
-			} else if (clazz.getSuperclass().equals(multiples.Multiple.class)) {
+			} else if (clazz.getSuperclass().equals(commands.multiples.Multiple.class)) {
 				// CURRENTLY TELL AND TURTLES ARE BROKEN
 				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, parser.Parser.class});
 				commandables.add((Command) ctor.newInstance(myVis, myParser, myActives));

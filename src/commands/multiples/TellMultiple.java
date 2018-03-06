@@ -2,7 +2,6 @@ package commands.multiples;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import parser.Parser;
 import slogo_team07.Turtle;
@@ -12,8 +11,9 @@ import view.Visualizer;
 public class TellMultiple extends Multiple {
 	
 
-	public TellMultiple(Visualizer vis, Parser parser, List<String> actives) {
-		super(vis, parser, actives, 1);
+	public TellMultiple(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+		super(vis, parser, actives, updatables, 2);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class TellMultiple extends Multiple {
 		String num = "0";
 		for (int i=1; i < brackets[1]; i++) {
 			num = input.get(i);
-			if (!myUpdatables.containsKey(num)) {
+			if (!getUpdatables().containsKey(num)) {
 				addTurtle(num);
 			}
 			getActives().add(num);
@@ -37,7 +37,7 @@ public class TellMultiple extends Multiple {
 
 	private void addTurtle(String id) {
 		Turtle turtle = new Turtle(id);
-		myUpdatables.put(id, turtle);
+		getUpdatables().put(id, turtle);
 		getVis().addDrawable(turtle);
 	}
 }

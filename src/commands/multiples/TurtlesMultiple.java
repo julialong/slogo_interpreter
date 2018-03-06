@@ -8,14 +8,14 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class TurtlesMultiple extends Multiple {
-	
-	public TurtlesMultiple(Visualizer vis, Parser parser, List<String> actives) {
-		super(vis, parser, actives, 0);
+
+	public TurtlesMultiple(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+		super(vis, parser, actives, updatables, 0);
 	}
 
 	@Override
 	public double manage(List<String> input) {
-		return myUpdatables.size();
+		return getUpdatables().size();
 	}
 
 }
