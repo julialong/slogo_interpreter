@@ -12,29 +12,28 @@ public class WriterTest {
         test.put("Espanol", "Hola");
         test.put("Deutsch", "Hallo");
         test.put("Francais", "Alo");
-        ArrayList<String> params = new ArrayList<>();
-        ArrayList<String> commands = new ArrayList<>();
         String[] a = {"a","b","c","d"};
-        for (String s : a) {
-            params.add(s);
-        }
+        ArrayList<String> params = new ArrayList<>(Arrays.asList(a));
         String[] b = {"1","2","3","4"};
-        for (String s : b) {
-            commands.add(s);
-        }
+        ArrayList<String> commands = new ArrayList<>(Arrays.asList(b));
         Function f = new Function(params, commands);
         Map<String, Function> test2 = new HashMap<>();
         test2.put("alpha", f);
         ContentWriter cw = new ContentWriter();
-        cw.writeVariables(test);
-        cw.writeCommands(test2);
+        cw.writeAll(test, test2, "data/TEST.txt");
 
         Map<String, String> testVars = new HashMap<>();
         Map<String, Function> testFunc = new HashMap<>();
         ContentReader cr = new ContentReader();
         String filename = "TEST.txt";
-        cr.readFile(testVars, testFunc, filename);
+        try {
+            cr.readFile(testVars, testFunc, filename);
             System.out.println(testVars.toString());
             System.out.println(testFunc.toString());
+        }
+        catch(Exception e) {
+            //System.out.println("Bad file.");
+            e.printStackTrace();
+        }
         }
     }

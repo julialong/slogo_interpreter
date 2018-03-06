@@ -40,6 +40,6 @@ public class Function {
 
 	@Override
 	public String toString() {
-		return String.join(" ", myParams) + " | " + String.join(" ", myParams);
+		return String.join(" ", myParams) + " | " + String.join(" ", myCommands);
 	}
 }
