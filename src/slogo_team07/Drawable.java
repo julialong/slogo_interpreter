@@ -22,7 +22,10 @@ public interface Drawable {
 	public Double getHeading();
 	
 	public boolean getIsDown();
+
+	public Color getColor();
+
+	public Double getPenWidth();
 	
 	public boolean getStatus();
-
 }

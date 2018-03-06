@@ -113,7 +113,7 @@ public class ConvertedTurtle	{
 
 	private SimpleObjectProperty makepenDown(String penDownString)	{
 		CheckBox penDownBox = new CheckBox();
-		penDownBox.setSelected(penDownString.equals("down"));
+		penDownBox.setSelected(Boolean.valueOf(penDownString));
 		penDownBox.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

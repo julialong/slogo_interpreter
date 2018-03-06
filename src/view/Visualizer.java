@@ -17,6 +17,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
@@ -106,11 +107,11 @@ public class Visualizer {
 		//myCanvas.addDrawable(turtle);
 		List<String> properties = new ArrayList<String>();
 		properties.add(String.valueOf(drawables.size())); // id
-		properties.add("Active"); // add active
+		properties.add(String.valueOf(turtle.getStatus())); // add active
 		properties.add("Turtle"); // add image (ex. Turtle, not extension)
-		properties.add("Down");// pen (up or down)
+		properties.add(String.valueOf(turtle.getIsDown()));// pen (up or down)
 		properties.add("Black");// pen color
-		properties.add("1.0"); // pen width
+		properties.add(Double.toString(turtle.getPenWidth())); // pen width
 
 		drawables.put(turtle, properties);
 	}

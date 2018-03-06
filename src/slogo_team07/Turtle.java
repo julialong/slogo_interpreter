@@ -60,6 +60,15 @@ public class Turtle implements Drawable, Updatable {
 	public boolean getIsDown(){
 		return isDown;
 	}
+
+	public Color getColor()	{
+		return myColor;
+	}
+
+	@Override
+	public Double getPenWidth()	{
+		return myPenWidth;
+	}
 	
 	@Override
 	public boolean getStatus(){
