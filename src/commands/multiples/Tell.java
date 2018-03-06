@@ -13,7 +13,7 @@ public class Tell extends Multiple {
 	
 
 	public Tell(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
-		super(vis, parser, actives, updatables, 2);
+		super(vis, parser, actives, updatables, 1);
 	}
 
 	@Override
