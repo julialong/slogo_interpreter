@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import commands.misc.NullCommand;
+import commands.misc.Null;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
@@ -30,7 +30,7 @@ public class CommandFactory {
 		String keyword = myLanguages.get(command);
 		List<Command> commandables = new ArrayList<>();
 		try {
-			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
+			Class<?> clazz = Class.forName(myCommands.getString(keyword));
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
 				for (Updatable active : actives) {
@@ -41,7 +41,7 @@ public class CommandFactory {
 				commandables.add((Command) ctor.newInstance(myVis));
 			}
 		} catch (Exception e) {
-			commandables.add(new NullCommand(myVis));
+			commandables.add(new Null(myVis));
 		}
 		
 		return commandables;
