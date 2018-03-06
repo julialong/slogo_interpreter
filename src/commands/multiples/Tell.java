@@ -2,6 +2,7 @@ package commands.multiples;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import parser.Parser;
 import slogo_team07.Turtle;
@@ -11,9 +12,8 @@ import view.Visualizer;
 public class Tell extends Multiple {
 	
 
-	public Tell(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+	public Tell(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
 		super(vis, parser, actives, updatables, 2);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

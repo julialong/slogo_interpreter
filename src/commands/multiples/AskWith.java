@@ -3,6 +3,7 @@ package commands.multiples;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import parser.Parser;
 import slogo_team07.Updatable;
@@ -10,7 +11,7 @@ import view.Visualizer;
 
 public class AskWith extends Multiple {
 
-	public AskWith(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+	public AskWith(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
 		super(vis, parser, actives, updatables, 2);
 	}
 

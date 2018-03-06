@@ -43,19 +43,19 @@ public class CommandFactory {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword));
 			Constructor<?> ctor;
 			if (clazz.getSuperclass().equals(UpdatableCommand.class)) {
-				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
+				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Updatable.class });
 				for (Updatable active : actives) {
 					commandables.add((Command) ctor.newInstance(myVis, active));
 				}
 			} else if (clazz.getSuperclass().equals(ControlUnbundler.class)) {
 				// CURRENTLY DOESN'T HANDLE TO AND MAKE/SET, BECAUSE THOSE CONSTRUCTORS ARE DIFFERENT
-				// THEY SHOULD ALMSOT CERTAINLY BE SUBCLASSED
-				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Parser.class});
+				// THEY SHOULD ALMOST CERTAINLY BE SUBCLASSED
+				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Parser.class });
 				commandables.add((Command) ctor.newInstance(myVis, myParser));
 			} else if (clazz.getSuperclass().equals(Multiple.class)) {
 				// CURRENTLY TELL AND TURTLES ARE BROKEN
 				System.out.println("clazz: " + clazz);
-				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Parser.class});
+				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Parser.class, Set.class, Map.class });
 				System.out.println("ctor: " + ctor);
 				commandables.add((Command) ctor.newInstance(myVis, myParser, myActives, myUpdatables));
 			}
@@ -64,6 +64,7 @@ public class CommandFactory {
 				commandables.add((Command) ctor.newInstance(myVis));
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			commandables.add(new Null(myVis));
 		}
 
