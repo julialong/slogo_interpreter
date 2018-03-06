@@ -35,12 +35,11 @@ public class SideBar extends VBox{
 	private Canvas myCanvas;
 	private Map<Drawable, List<String>> myTurtles;
 	
-	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
-			"Octopus", "Bird", "Butterfly");
-	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
-	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
-			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
+//	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
+//			"Octopus", "Bird", "Butterfly");
+//	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
+//			"Yellow", "Green", "Blue", "Purple", "Pink");
+	
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
 	private TableView commandTable;
@@ -50,7 +49,7 @@ public class SideBar extends VBox{
 	private TableColumn varName;
 	private TableColumn varValue;
 	protected TextInput myTextInput;
-	protected String language;
+	
 	
 	/**
 	 * Constructor for sidebar of program that contains buttons/options
@@ -69,42 +68,21 @@ public class SideBar extends VBox{
 	public VBox initSideBar(){
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
-		
-		Button helpButton = new Button();
-		
-		ComboBox iconMenu = new ComboBox(iconList);
-		ComboBox penMenu = new ComboBox(penList); 
-		ComboBox langMenu = new ComboBox<String>(langsSupported);
-		Button allDrawablesButton = new Button();
+		 
 		commandTable = new TableView();
 		variableTable = new TableView();
 		double colWidth = 250;
-		
-//		Button test = new Button("Test");
-//		test.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e){
-//				double x = 0;
-//				double y = 0;
-//				for (Drawable turtle: myTurtles){
-//					turtle.setPane(myCanvasObjects);
-//					turtle.test(100, 100);
-//				}
-//			}
-//		});
-//		myVBox.getChildren().add(test);
+	
+		myVBox.getChildren().add(addDrawableButton());
+		myVBox.getChildren().add(allDrawablesButton());
+		myVBox.getChildren().add(commandTable(colWidth));
+		myVBox.getChildren().add(variableTable(colWidth));
 
-		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
-    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				new HelpBox(language);
-			}
-		});
-		myVBox.getChildren().add(helpButton);
+		return myVBox;
+	}
 
-		
-		
+//	private ComboBox iconMenu()	{
+//		ComboBox iconMenu = new ComboBox(iconList);
 //		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
 //		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
 //			@Override public void handle(ActionEvent e){
@@ -118,8 +96,12 @@ public class SideBar extends VBox{
 //				}
 //			}
 //		});
-//		myVBox.getChildren().add(iconMenu);
-		
+//
+//		return iconMenu;
+//	}
+//
+//	private ComboBox penMenu()	{
+//		ComboBox penMenu = new ComboBox(penList);
 //		penMenu.setPromptText(Resources.getString("PenMenu"));
 //		penMenu.setOnAction(new EventHandler<ActionEvent>(){
 //			@Override public void handle(ActionEvent e){
@@ -127,35 +109,48 @@ public class SideBar extends VBox{
 //				myCanvas.setColor(Color.valueOf(tempPen));
 //			}
 //		});
-//		myVBox.getChildren().add(penMenu);
-		
-		langMenu.setPromptText(Resources.getString("LangMenu"));
-		langMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				language = (String)(langMenu.getValue());
-				helpButton.setText(ResourcesLanguages.getString(language, "Help"));
+//
+//		return penMenu;
+//	}
+
+	//need to link w visualizer class somehow
+	private Button addDrawableButton()	{
+		Button addDrawableButton = new Button("Add Turtle");
+    	addDrawableButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
 			}
 		});
-		myVBox.getChildren().add(langMenu);
-
-		allDrawablesButton.setText("All turtles");
+		return addDrawableButton;
+	}
+	
+	private Button allDrawablesButton()	{
+		Button allDrawablesButton = new Button("Turtle Information");
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				new DrawablesTable(myTurtles, myCanvas, myCanvasObjects);
 			}
 		});
-		myVBox.getChildren().add(allDrawablesButton);
+		return allDrawablesButton;
+	}
 
+	private TableView commandTable(double colWidth)	{
+		commandTable = new TableView();
 		commandTable.setEditable(false);
 		comText = new TableColumn("User-defined commands");
 		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
 		comText.setMinWidth(colWidth);
         commandTable.getColumns().add(comText);
         commandTable.setItems(uDefCommands);
-		myVBox.getChildren().add(commandTable);
 
-		variableTable.setEditable(false);
+        return commandTable;
+	}
+
+	private TableView variableTable(double colWidth)	{
+		variableTable = new TableView();
+		variableTable.setEditable(true);
 		vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
@@ -167,12 +162,11 @@ public class SideBar extends VBox{
 		vars.getColumns().addAll(varName, varValue);
 		variableTable.getColumns().add(vars);
 		variableTable.setItems(setVariables);
-		myVBox.getChildren().add(variableTable);
-				
-		return myVBox;
+
+		return variableTable;
 	}
 
-	protected void addButton(String text)	{
+	protected void addUDIButton(String text)	{
 		if (buttonExists(text))	{
 			return;
 		}
@@ -190,7 +184,7 @@ public class SideBar extends VBox{
 		uDefCommands.add(udc);
 	}
 
-	protected void addVar(String var, String value)	{
+	protected void addUDVar(String var, String value)	{
 		if (varExists(var) != null)	{
 			varExists(var).value.set(value);
 		}

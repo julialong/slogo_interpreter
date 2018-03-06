@@ -61,8 +61,8 @@ public class Visualizer {
 		myCanvasObjects = myCanvas.updateCanvas(drawables);
 		root.setCenter(myCanvasObjects);
 
-		if (!mySideBar.language.equals(language))	{
-			language = mySideBar.language;
+		if (!myToolbar.getLanguage().equals(language))	{
+			language = myToolbar.getLanguage();
 			myConsole.language = language;
 			myChangeListener.changeLanguage(language);
 		}
@@ -79,20 +79,21 @@ public class Visualizer {
 		root.setCenter(myCanvasObjects);
 		
 		mySideBar = new SideBar(myCanvasObjects, drawables, myCanvas);
-		((SideBar)mySideBar).language = language;
-		root.setRight(((SideBar)mySideBar).initSideBar());
+		//((SideBar)mySideBar).language = language;
+		root.setRight(mySideBar.initSideBar());
 
 		myConsole = new Console();
-		((Console)myConsole).language = language;
-		root.setBottom(((Console)myConsole));
+		myConsole.language = language;
+		root.setBottom(myConsole);
 
 		myToolbar = new Toolbar(myCanvasObjects);
+		myToolbar.setLanguage(language);
 		root.setTop(myToolbar.initToolbar());
 
 		myCanvas.myVBox = mySideBar;
-		((Console)myConsole).myChangeListener = myChangeListener;
-		((SideBar)mySideBar).myTextInput = myConsole;
-		((Console)myConsole).myVBox = mySideBar;
+		myConsole.myChangeListener = myChangeListener;
+		mySideBar.myTextInput = myConsole;
+		myConsole.myVBox = mySideBar;
 		
 		return scene;
 	}
@@ -105,12 +106,12 @@ public class Visualizer {
 	public void addDrawable(Drawable turtle)	{
 		//myCanvas.addDrawable(turtle);
 		List<String> properties = new ArrayList<String>();
-		properties.add(Integer.toString(drawables.size()));
-		properties.add("true");
-		properties.add("Turtle");
-		properties.add("up");
-		properties.add("black");
-		properties.add("2");
+		// id
+		// add active
+		// add image (ex. Turtle, not extension)
+		// pen (up or down)
+		// pen color
+		// pen width
 
 		drawables.put(turtle, properties);
 	}
@@ -120,7 +121,7 @@ public class Visualizer {
 	 * @param result	Result ojbect passed back from Engine that gives a double return value
 	 */
 	public void runCommand(Result result)	{
-		((Console)myConsole).printResult(Double.toString(result.getRes1()));
+		myConsole.printResult(Double.toString(result.getRes1()));
 		myCanvas.updateCanvas(result);
 	}
 
