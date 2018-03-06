@@ -11,9 +11,8 @@ import java.util.stream.Collectors;
 
 import commands.Command;
 import commands.CommandFactory;
-import multiples.Multiple;
+import commands.unbundler.Unbundler;
 import multiples.MultipleFactory;
-import parser.unbundler.Unbundler;
 import parser.unbundler.UnbundlerFactory;
 import slogo_team07.Updatable;
 
@@ -59,10 +58,7 @@ public class Parser {
 		} else if (myControlSet.contains(next)) {
 			Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
 			String unbundled = unbundler.unbundle(input);
-			return parse(unbundled);
-		} else if (myMultiplesSet.contains(next)) {
-			Multiple multiple = myMultipleFactory.createMultiple(next);
-			return multiple.manage(input);
+			return String.valueOf(parse(unbundled));
 		}
 
 		List<Updatable> actives = myMultipleFactory.getActives();

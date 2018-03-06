@@ -3,10 +3,16 @@ package commands.unbundler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForUnbundler extends ControlUnbundler{
+import parser.Parser;
+import view.Visualizer;
 
+public class ForUnbundler extends ControlUnbundler {
+	
+    public ForUnbundler(Visualizer vis, Parser p) {
+		super(vis, 2, p);
+	}
 
-    private String variable;
+	private String variable;
     private double start;
     private double end;
     private double increment;
@@ -18,7 +24,8 @@ public class ForUnbundler extends ControlUnbundler{
      * @param exp
      * @return
      */
-    public String unbundle(List<String> exp) {
+    @Override
+    protected String unbundle(List<String> exp) {
         setNumbers(exp, 1);
         int[] commandIndex = findBrackets(exp, 1);
         buildCommand(exp, commandIndex[0], commandIndex[1]);
@@ -57,4 +64,5 @@ public class ForUnbundler extends ControlUnbundler{
         }
         else return current;
     }
+
 }

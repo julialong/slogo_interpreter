@@ -1,6 +1,8 @@
 package commands.unbundler;
 
 import parser.Function;
+import parser.Parser;
+import view.Visualizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +10,15 @@ import java.util.Map;
 
 public class ToUnbundler extends ControlUnbundler{
 
-    private String commandName;
+	private String commandName;
     private List<String> parameters;
     private List<String> commands;
     private Map<String, Function> dictionary;
-
-    public ToUnbundler(Map<String, Function> dict) {
-        dictionary = dict;
-    }
+    
+    public ToUnbundler(Visualizer vis, int num_args, Parser p, Map<String, Function> dict) {
+		super(vis, num_args, p);
+		dictionary = dict;
+	}
 
     /**
      * unbundles the given control command starting at index to crete a new variable

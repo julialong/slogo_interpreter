@@ -1,8 +1,21 @@
 package commands.unbundler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-abstract class ControlUnbundler implements Unbundler{
+import commands.NonUpdatableStringArgs;
+import parser.Parser;
+import view.Visualizer;
+
+abstract class ControlUnbundler extends NonUpdatableStringArgs {
+	
+	private Parser parser;
+
+	public ControlUnbundler(Visualizer vis, int num_args, Parser p) {
+		super(vis, num_args);
+		parser = p;
+	}
 
 	private static final String LEFT_BRACE = "[";
 	private static final String RIGHT_BRACE = "]";
@@ -64,4 +77,27 @@ abstract class ControlUnbundler implements Unbundler{
 	protected boolean notRightBracket (String current){
 		return !current.equals(RIGHT_BRACE);
 	}
+	
+	protected List<String> argsToExp(List<String> args) {
+		List<String> exp = new ArrayList<>();
+		for (String arg : args) {
+			exp.addAll(Arrays.asList(arg.split(" ")));
+		}
+		
+		return exp;
+	}
+	
+	protected Parser getParser() {
+		return parser;
+	}
+	
+
+	@Override
+	protected double calcValue(List<String> args) {
+		String unbundled = unbundle(argsToExp(args));
+		return parser.parse(unbundled);
+	}
+	
+	protected abstract String unbundle(List<String> exp);
+
 }

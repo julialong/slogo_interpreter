@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import parser.Parser;
+import view.Visualizer;
 
 public class RepeatUnbundler extends ControlUnbundler {
 
@@ -12,13 +13,10 @@ public class RepeatUnbundler extends ControlUnbundler {
 
 	private List<String> expression;
 	private LinkedList<String> unbundledArray;
-	private Parser parser;
+	
 
-	/**
-	 * Creates an unbundler for the repeat command
-	 */
-	public RepeatUnbundler(Parser p) {
-		parser = p;
+	public RepeatUnbundler(Visualizer vis, int num_args, Parser p) {
+		super(vis, num_args, p);
 	}
 
 	/**
@@ -54,7 +52,7 @@ public class RepeatUnbundler extends ControlUnbundler {
 		if (expression.size() <= 0) {
 			repeat = 0;
 		} else {
-			repeat = parser.parse(String.join(" ", expression));
+			repeat = getParser().parse(String.join(" ", expression));
 		}
 	}
 

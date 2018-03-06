@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import parser.Parser;
+import view.Visualizer;
 
 public class IfUnbundler extends ControlUnbundler{
+
 
 	private List<String> expression;
 	private ArrayList<String> unbundledArray;
@@ -13,11 +15,8 @@ public class IfUnbundler extends ControlUnbundler{
 
 	private boolean executeCommands;
 
-	/**
-	 * Creates an unbundler for the repeat command
-	 */
-	public IfUnbundler(Parser p) {
-		parser = p;
+	public IfUnbundler(Visualizer vis, int num_args, Parser p) {
+		super(vis, num_args, p);
 	}
 
 	/**

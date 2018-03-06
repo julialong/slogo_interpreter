@@ -4,21 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import parser.Parser;
+import view.Visualizer;
 
 public class IfElseUnbundler extends ControlUnbundler {
+	
 
-    private List<String> expression;
+	private List<String> expression;
     private List<String> unbundledArray;
 
     private boolean executeCommands;
     private Parser parser;
 
-    /**
-     * Creates an unbundler for the repeat command
-     */
-    public IfElseUnbundler(Parser p) {
-        parser = p;
-    }
+    public IfElseUnbundler(Visualizer vis, int num_args, Parser p) {
+		super(vis, num_args, p);
+	}
 
     /**
      * unbundles the given control command starting at index

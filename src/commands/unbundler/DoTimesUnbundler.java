@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import parser.Parser;
+import view.Visualizer;
 
 
 public class DoTimesUnbundler extends ControlUnbundler {
@@ -12,14 +13,11 @@ public class DoTimesUnbundler extends ControlUnbundler {
 	private double end;
 
 	private ArrayList<String> unbundledArray;
-	private Parser parser;
-
-	/**
-	 * Creates an unbundler for the dotimes command
-	 */
-	public DoTimesUnbundler(Parser p) {
-		parser = p;
+	
+	public DoTimesUnbundler(Visualizer vis, int num_args, Parser p) {
+		super(vis, num_args, p);
 	}
+	
 
 	/**
 	 * unbundles the given control command starting at index
@@ -81,7 +79,7 @@ public class DoTimesUnbundler extends ControlUnbundler {
 	private double executeExpression(List<String> expression) {
 		double answer = 0;
 		if (expression.size() > 0){
-			answer = parser.parse(String.join(" ", expression));
+			answer = getParser().parse(String.join(" ", expression));
 		}
 		return answer;
 	}
