@@ -45,12 +45,17 @@ public class CommandFactory {
 				for (Updatable active : actives) {
 					commandables.add((Command) ctor.newInstance(myVis, active));
 				}
-			} else if (clazz.getSuperclass() == commands.unbundler.ControlUnbundler.class) {
+			} else if (clazz.getSuperclass().equals(commands.unbundler.ControlUnbundler.class)) {
 				// CURRENTLY DOESN'T HANDLE TO AND MAKE/SET, BECAUSE THOSE CONSTRUCTORS ARE DIFFERENT
 				// THEY SHOULD ALMSOT CERTAINLY BE SUBCLASSED
 				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, parser.Parser.class});
 				commandables.add((Command) ctor.newInstance(myVis, myParser));
-			} else {
+			} else if (clazz.getSuperclass().equals(multiples.Multiple.class)) {
+				// CURRENTLY TELL AND TURTLES ARE BROKEN
+				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, parser.Parser.class});
+				commandables.add((Command) ctor.newInstance(myVis, myParser, myActives));
+			}
+			else {
 				ctor = clazz.getDeclaredConstructor(Visualizer.class);
 				commandables.add((Command) ctor.newInstance(myVis));
 			}
