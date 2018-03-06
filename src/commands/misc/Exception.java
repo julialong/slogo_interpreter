@@ -10,8 +10,8 @@ public class Exception extends Command {
 	}
 
 	@Override
-	public double execute() {
+	public String execute() {
 		// do nothing for now, maybe pass an error message later
-		return Double.MAX_VALUE;
+		return null;
 	}
 }

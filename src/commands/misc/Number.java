@@ -13,12 +13,12 @@ public class Number extends NonUpdatableDoubleArgs {
 	}
 	
 	@Override
-	public double execute() {
+	public String execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
-
-		return calcValue(parseToDouble(getArgs()));
+		double ans = calcValue(parseToDouble(getArgs()));
+		return Double.toString(ans);
 	}
 	
 	@Override

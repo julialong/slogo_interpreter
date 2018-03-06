@@ -10,8 +10,8 @@ public class Null extends Command {
 	}
 
 	@Override
-	public double execute() {
-		return Double.MAX_VALUE;
+	public String execute() {
+		return null;
 	}
 	
 	@Override 
