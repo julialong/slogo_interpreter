@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import commands.CommandFactory;
 import commands.Commandable;
-import commands.UpdatableCommand;
 import multiples.Multiple;
 import multiples.MultipleFactory;
 import parser.unbundler.Unbundler;
@@ -66,20 +65,17 @@ public class Parser {
 			Multiple multiple = myMultipleFactory.createMultiple(next);
 			return multiple.manage(input);
 		}
-		
+
 		List<Updatable> actives = myMultipleFactory.getActives();
 		double ans = Double.MAX_VALUE;
 		List<String> temp = input;
-		for (Updatable active : actives) {
-			Commandable node = myCommandFactory.createCommand(next, active);
+		List<Commandable> commandables = myCommandFactory.createCommands(next, actives);
+		for (Commandable node : commandables) {
 			temp = new LinkedList<>(input);
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
 			}
 			ans = node.execute();
-			if (node.getClass().getSuperclass() != UpdatableCommand.class) {
-				break;
-			}
 		}
 		input = temp;
 		return ans;

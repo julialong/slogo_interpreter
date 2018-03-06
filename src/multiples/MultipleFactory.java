@@ -7,17 +7,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import commands.CommandFactory;
+import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class MultipleFactory {
 
-	private int myIdCount = 0;
 	private Set<String> myActives = new HashSet<>();
 	private Map<String, Updatable> myUpdatables = new HashMap<>();
 	private Visualizer myVis;
-	private CommandFactory myCommandFactory;
+	private Parser myParser;
 	
 	public MultipleFactory(Visualizer vis) {
 		myVis = vis;
@@ -28,6 +27,8 @@ public class MultipleFactory {
 			return new TellMultiple(myUpdatables, myVis, myActives);
 		} else if (command.equals("turtles")) {
 			return new TurtlesMultiple(myUpdatables);
+		} else if (command.equals("ask")) {
+			return new AskMultiple(myActives, myParser);
 		}
 		return null;
 	}
@@ -37,5 +38,9 @@ public class MultipleFactory {
 				.filter(myActives::contains)
 				.map(myUpdatables::get)
 				.collect(Collectors.toList());
+	}
+
+	public void injectParser(Parser parser) {
+		myParser = parser;
 	}
 }

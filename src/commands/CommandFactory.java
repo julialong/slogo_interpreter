@@ -1,7 +1,9 @@
 package commands;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -23,21 +25,26 @@ public class CommandFactory {
 		myVis = vis;
 		updateLanguage(DEFAULT);
 	}
-
-	public Commandable createCommand(String command, Updatable updatable) {
+	
+	public List<Commandable> createCommands(String command, List<Updatable> actives) {
 		String keyword = myLanguages.get(command);
+		List<Commandable> commandables = new ArrayList<>();
 		try {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
-				return (Commandable) ctor.newInstance(myVis, updatable);
+				for (Updatable active : actives) {
+					commandables.add((Commandable) ctor.newInstance(myVis, active));
+				}
 			} else {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(Visualizer.class);
-				return (Commandable) ctor.newInstance(myVis);
+				commandables.add((Commandable) ctor.newInstance(myVis));
 			}
 		} catch (Exception e) {
-			return new NullCommand(myVis);
+			commandables.add(new NullCommand(myVis));
 		}
+		
+		return commandables;
 	}
 
 	public void updateLanguage(String lang) {

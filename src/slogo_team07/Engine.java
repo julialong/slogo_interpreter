@@ -20,6 +20,7 @@ public class Engine implements ChangeListener {
 		myCommandFactory = new CommandFactory(myVis);
 		MultipleFactory mf = new MultipleFactory(myVis);
 		myParser = new Parser(myCommandFactory, mf);
+		mf.injectParser(myParser);
 		
 		changeInput(INIT_TURTLE);
 	}
