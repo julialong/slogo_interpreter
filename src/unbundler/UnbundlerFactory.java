@@ -18,7 +18,7 @@ public class UnbundlerFactory {
 		if (lower.equals("repeat")) {
 			return new RepeatUnbundler(myCommandFactory);
 		} else if (lower.equals("dotimes")) {
-			return new DoTimesUnbundler();
+			return new DoTimesUnbundler(myCommandFactory);
 		} else if (lower.equals("for")) {
 			return new ForUnbundler();
 		} else if (lower.equals("make") || lower.equals("set")) {
