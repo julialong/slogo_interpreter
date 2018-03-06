@@ -14,7 +14,6 @@ public abstract class UpdatableCommand extends Command {
 		myUpdatable = updatable;
 	}
 	
-	@Override
 	public double execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");

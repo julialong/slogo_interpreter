@@ -10,7 +10,6 @@ public abstract class NonUpdatableCommand extends Command {
 		super(vis, num_args);
 	}
 	
-	@Override
 	public double execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");

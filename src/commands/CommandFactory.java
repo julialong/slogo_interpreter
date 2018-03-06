@@ -26,19 +26,19 @@ public class CommandFactory {
 		updateLanguage(DEFAULT);
 	}
 	
-	public List<Commandable> createCommands(String command, List<Updatable> actives) {
+	public List<Command> createCommands(String command, List<Updatable> actives) {
 		String keyword = myLanguages.get(command);
-		List<Commandable> commandables = new ArrayList<>();
+		List<Command> commandables = new ArrayList<>();
 		try {
 			Class<?> clazz = Class.forName(myCommands.getString(keyword) + "Command");
 			if (clazz.getSuperclass() == UpdatableCommand.class) {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Updatable.class});
 				for (Updatable active : actives) {
-					commandables.add((Commandable) ctor.newInstance(myVis, active));
+					commandables.add((Command) ctor.newInstance(myVis, active));
 				}
 			} else {
 				Constructor<?> ctor = clazz.getDeclaredConstructor(Visualizer.class);
-				commandables.add((Commandable) ctor.newInstance(myVis));
+				commandables.add((Command) ctor.newInstance(myVis));
 			}
 		} catch (Exception e) {
 			commandables.add(new NullCommand(myVis));

@@ -5,7 +5,7 @@ import java.util.List;
 
 import view.Visualizer;
 
-public abstract class Command implements Commandable {
+public abstract class Command {
 	
 	private int myArgsNeeded;
 	private List<Double> myArgs = new ArrayList<>();
@@ -16,7 +16,6 @@ public abstract class Command implements Commandable {
 		myVis = vis;
 	}
 
-	@Override
 	public void inject(double arg) {
 		if (isReady()) {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
@@ -41,4 +40,5 @@ public abstract class Command implements Commandable {
 		myVis.runCommand(result);
 	}
 
+	public abstract double execute();
 }

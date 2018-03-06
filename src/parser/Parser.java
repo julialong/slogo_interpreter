@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import commands.Command;
 import commands.CommandFactory;
-import commands.Commandable;
 import multiples.Multiple;
 import multiples.MultipleFactory;
 import parser.unbundler.Unbundler;
@@ -69,8 +69,8 @@ public class Parser {
 		List<Updatable> actives = myMultipleFactory.getActives();
 		double ans = Double.MAX_VALUE;
 		List<String> temp = input;
-		List<Commandable> commandables = myCommandFactory.createCommands(next, actives);
-		for (Commandable node : commandables) {
+		List<Command> commandables = myCommandFactory.createCommands(next, actives);
+		for (Command node : commandables) {
 			temp = new LinkedList<>(input);
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
