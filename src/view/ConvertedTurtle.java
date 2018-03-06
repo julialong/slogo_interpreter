@@ -153,7 +153,24 @@ public class ConvertedTurtle	{
 	}
 
 	private SimpleObjectProperty makePenWidth(String penWidthString)	{
-		return new SimpleObjectProperty(penWidthString);
+		ObservableList<String> penWidthList = FXCollections.observableArrayList("0.5", "1.0", "1.5", "2.0", "2.5",
+		"3.0", "4.0", "5.0");
+
+		ComboBox penWidthMenu = new ComboBox(penWidthList);
+
+		penWidthMenu.setPromptText(penWidthString);
+		penWidthMenu.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent e){
+				String newWidth = penWidthMenu.getSelectionModel().getSelectedItem().toString();
+
+				myCanvas.setPenWidth(Double.parseDouble(newWidth));
+
+				properties.set(propertyNames.indexOf("penWidth"), newWidth);
+			}
+		});
+
+		return new SimpleObjectProperty(penWidthMenu);
 	}
 
 	private SimpleObjectProperty makeXPos()	{
