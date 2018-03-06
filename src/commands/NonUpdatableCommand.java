@@ -19,7 +19,7 @@ public abstract class NonUpdatableCommand extends Command {
 		visCommand(new Result(ans));
 		return ans;
 	}
-	
+
 	protected abstract double calcValue(List<Double> args);
 
 }
