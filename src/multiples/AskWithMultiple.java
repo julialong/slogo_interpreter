@@ -2,32 +2,23 @@ package multiples;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import parser.Parser;
-
-//askwith [ greater? xcor 50 ] [
-//                              lt random 360
-//                              bk 100
-//                        ]
+import view.Visualizer;
 
 public class AskWithMultiple extends Multiple {
-	
-	private Set<String> myActives;
-	private Parser myParser;
-	
-	public AskWithMultiple(Set<String> actives, Parser p) {
-		myActives = actives;
-		myParser = p;
+
+	public AskWithMultiple(Visualizer vis, Parser parser, List<String> actives) {
+		super(vis, parser, actives, 2);
 	}
 
 	@Override
 	public double manage(List<String> input) {
-		List<String> old_actives = new ArrayList<>(myActives);
+		List<String> old_actives = new ArrayList<>(getActives());
 		int[] condition = findBrackets(input, 0);
 		int[] commands = findBrackets(input, 1); 
 		double ans = -1.0;
-		for (String active : new ArrayList<>(myActives)) {
+		for (String active : new ArrayList<>(getActives())) {
 			replaceActives(active);
 			if (evaluate(input, condition) == 1.0) {
 				ans = evaluate(input, commands);
@@ -40,7 +31,7 @@ public class AskWithMultiple extends Multiple {
 	
 	private double evaluate(List<String> input, int[] brackets) {
 		List<String> temp = new ArrayList<>(input);
-		return myParser.parse(String.join(" ", temp.subList(brackets[0] + 1, brackets[1])));
+		return getParser().parse(String.join(" ", temp.subList(brackets[0] + 1, brackets[1])));
 	}
 
 	private void replaceActives(String word) {
@@ -50,9 +41,9 @@ public class AskWithMultiple extends Multiple {
 	}
 	
 	private void replaceActives(List<String> replace) {
-		myActives.clear();
+		getActives().clear();
 		for (int i=0; i < replace.size(); i++) {
-			myActives.add(replace.get(i));
+			getActives().add(replace.get(i));
 		}
 	}
 	

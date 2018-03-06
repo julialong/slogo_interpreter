@@ -2,7 +2,6 @@ package slogo_team07;
 
 import commands.CommandFactory;
 import javafx.stage.Stage;
-import multiples.MultipleFactory;
 import parser.Parser;
 import view.Visualizer;
 
@@ -16,11 +15,7 @@ public class Engine implements ChangeListener {
 
 	public Engine(Stage stage) {
 		myVis = new Visualizer(stage, this);
-		
-		myCommandFactory = new CommandFactory(myVis);
-		MultipleFactory mf = new MultipleFactory(myVis);
-		myParser = new Parser(myCommandFactory, mf);
-		mf.injectParser(myParser);
+		myParser = new Parser(myVis);
 		
 		changeInput(INIT_TURTLE);
 	}
