@@ -77,7 +77,10 @@ public class Parser {
 			}
 			ans = node.execute();
 		}
-		input = temp;
+		input.clear();
+		for (String s : temp) {
+			input.add(s);
+		}
 		return ans;
 	}
 

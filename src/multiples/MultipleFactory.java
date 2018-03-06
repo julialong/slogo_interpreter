@@ -29,6 +29,8 @@ public class MultipleFactory {
 			return new TurtlesMultiple(myUpdatables);
 		} else if (command.equals("ask")) {
 			return new AskMultiple(myActives, myParser);
+		} else if (command.equals("askwith")) {
+			return new AskWithMultiple(myActives, myParser);
 		}
 		return null;
 	}
