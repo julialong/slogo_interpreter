@@ -8,9 +8,9 @@ import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class AskWithMultiple extends Multiple {
+public class AskWith extends Multiple {
 
-	public AskWithMultiple(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+	public AskWith(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
 		super(vis, parser, actives, updatables, 2);
 	}
 

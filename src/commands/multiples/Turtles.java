@@ -7,9 +7,9 @@ import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class TurtlesMultiple extends Multiple {
+public class Turtles extends Multiple {
 
-	public TurtlesMultiple(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+	public Turtles(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
 		super(vis, parser, actives, updatables, 0);
 	}
 

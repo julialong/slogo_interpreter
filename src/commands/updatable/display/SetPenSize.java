@@ -1,4 +1,4 @@
-package commands.updatable;
+package commands.updatable.display;
 
 import java.util.List;
 
@@ -6,15 +6,15 @@ import commands.UpdatableCommand;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class SetPenColor extends UpdatableCommand {
+public class SetPenSize extends UpdatableCommand {
 
-	public SetPenColor(Visualizer vis, Updatable updatable) {
+	public SetPenSize(Visualizer vis, Updatable updatable) {
 		super(vis, 1, updatable);
 	}
 
 	@Override
 	protected double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.setPenColor(args.get(0).intValue());
+		return updatable.setPenSize(args.get(0));
 	}
 
 }

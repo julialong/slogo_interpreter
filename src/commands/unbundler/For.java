@@ -6,9 +6,9 @@ import java.util.List;
 import parser.Parser;
 import view.Visualizer;
 
-public class ForUnbundler extends ControlUnbundler {
+public class For extends ControlUnbundler {
 	
-    public ForUnbundler(Visualizer vis, Parser p) {
+    public For(Visualizer vis, Parser p) {
 		super(vis, 2, p);
 	}
 

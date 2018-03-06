@@ -8,10 +8,10 @@ import slogo_team07.Turtle;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class TellMultiple extends Multiple {
+public class Tell extends Multiple {
 	
 
-	public TellMultiple(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+	public Tell(Visualizer vis, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
 		super(vis, parser, actives, updatables, 2);
 		// TODO Auto-generated constructor stub
 	}

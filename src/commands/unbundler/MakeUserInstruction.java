@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ToUnbundler extends ControlUnbundler{
+public class MakeUserInstruction extends ControlUnbundler{
 
 	private String commandName;
     private List<String> parameters;
     private List<String> commands;
     private Map<String, Function> dictionary;
     
-    public ToUnbundler(Visualizer vis, Parser p, Map<String, Function> dict) {
+    public MakeUserInstruction(Visualizer vis, Parser p, Map<String, Function> dict) {
 		super(vis, 3, p);
 		dictionary = dict;
 	}

@@ -7,14 +7,14 @@ import parser.Parser;
 import view.Visualizer;
 
 
-public class DoTimesUnbundler extends ControlUnbundler {
+public class DoTimes extends ControlUnbundler {
 
 	private String variable;
 	private double end;
 
 	private ArrayList<String> unbundledArray;
 	
-	public DoTimesUnbundler(Visualizer vis, Parser p) {
+	public DoTimes(Visualizer vis, Parser p) {
 		super(vis, 2, p);
 	}
 	

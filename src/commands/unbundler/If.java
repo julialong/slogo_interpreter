@@ -6,7 +6,7 @@ import java.util.List;
 import parser.Parser;
 import view.Visualizer;
 
-public class IfUnbundler extends ControlUnbundler{
+public class If extends ControlUnbundler{
 
 
 	private List<String> expression;
@@ -15,7 +15,7 @@ public class IfUnbundler extends ControlUnbundler{
 
 	private boolean executeCommands;
 
-	public IfUnbundler(Visualizer vis, Parser p) {
+	public If(Visualizer vis, Parser p) {
 		super(vis, 2, p);
 	}
 

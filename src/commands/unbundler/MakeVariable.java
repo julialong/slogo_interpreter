@@ -7,12 +7,12 @@ import java.util.Map;
 import parser.Parser;
 import view.Visualizer;
 
-public class MakeUnbundler extends ControlUnbundler{
+public class MakeVariable extends ControlUnbundler{
 
 	private List<String> expression;
 	private Map<String, String> dictionary;
 	
-	public MakeUnbundler(Visualizer vis, Parser p, Map<String, String> dict) {
+	public MakeVariable(Visualizer vis, Parser p, Map<String, String> dict) {
 		super(vis, 2, p);
 		dictionary = dict;
 	}

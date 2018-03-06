@@ -7,7 +7,7 @@ import java.util.List;
 import parser.Parser;
 import view.Visualizer;
 
-public class RepeatUnbundler extends ControlUnbundler {
+public class Repeat extends ControlUnbundler {
 
 	private double repeat;
 
@@ -15,7 +15,7 @@ public class RepeatUnbundler extends ControlUnbundler {
 	private LinkedList<String> unbundledArray;
 	
 
-	public RepeatUnbundler(Visualizer vis, Parser p) {
+	public Repeat(Visualizer vis, Parser p) {
 		super(vis, 2, p);
 	}
 
