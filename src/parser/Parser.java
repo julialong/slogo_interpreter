@@ -38,12 +38,12 @@ public class Parser {
 		myMultiplesSet = new HashSet<>(Arrays.asList(MANAGER_NAMES));
 	}
 
-	public String parse(String s) {
+	public double parse(String s) {
 		List<String> input = sanitize(s);
 		
-		String ans = null;
+		double ans = 0.0;
 		while (!input.isEmpty()) {
-			ans = traverse(input);
+			ans = Double.parseDouble(traverse(input));
 		}
 		return ans;
 	}

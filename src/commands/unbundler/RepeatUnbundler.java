@@ -1,36 +1,37 @@
-package parser.unbundler;
+package commands.unbundler;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import parser.Parser;
 
-public class IfUnbundler extends ControlUnbundler{
+public class RepeatUnbundler extends ControlUnbundler {
+
+	private double repeat;
 
 	private List<String> expression;
-	private ArrayList<String> unbundledArray;
+	private LinkedList<String> unbundledArray;
 	private Parser parser;
-
-	private boolean executeCommands;
 
 	/**
 	 * Creates an unbundler for the repeat command
 	 */
-	public IfUnbundler(Parser p) {
+	public RepeatUnbundler(Parser p) {
 		parser = p;
 	}
 
 	/**
 	 * unbundles the given control command starting at index
+	 *
 	 * @param exp is the entire ArrayList of the input commands
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp) {
 		int[] commandIndex = findBrackets(exp, 0);
 		expression = new ArrayList<>();
-		System.out.println(exp);
 		buildExpression(exp, commandIndex[0]);
-		executeCommands = executeExpression(expression);
+		executeExpression();
 		buildCommand(exp, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);
 		return String.join(" ", unbundledArray);
@@ -38,6 +39,7 @@ public class IfUnbundler extends ControlUnbundler{
 
 	/**
 	 * Builds the expression to be evaluated
+	 *
 	 * @param exp is the entire ArrayList of the input commands
 	 * @return the index of the first left bracket
 	 */
@@ -48,31 +50,26 @@ public class IfUnbundler extends ControlUnbundler{
 		}
 	}
 
-	private boolean executeExpression(List<String> expression) {
-		boolean executeCommands;
+	private void executeExpression() {
 		if (expression.size() <= 0) {
-			executeCommands = false;
+			repeat = 0;
 		} else {
-			double answer = parser.parse(String.join(" ", expression));
-			executeCommands = (answer != 0.0);
+			repeat = parser.parse(String.join(" ", expression));
 		}
-		return executeCommands;
 	}
 
 	/**
 	 * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
+	 *
 	 * @param exp is the entire ArrayList of the input commands
 	 * @return the index where the command ends, or the last bracket
 	 */
 	private void buildCommand(List<String> exp, int start, int stop) {
-		unbundledArray = new ArrayList<>();
-		if (executeCommands) {
+		unbundledArray = new LinkedList<>();
+		for (int i = 0; i < (int) repeat; i++) {
 			for (int j = start + 1; j < stop; j++) {
 				unbundledArray.add(exp.get(j));
 			}
-		}
-		else {
-			unbundledArray.add("#nocommands");
 		}
 	}
 }
