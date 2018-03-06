@@ -46,6 +46,7 @@ public class Parser {
 		String ans = null;
 		List<String> temp = input;
 		List<Command> commandables = myCommandFactory.createCommands(next, actives);
+		System.out.println(commandables);
 		for (Command node : commandables) {
 			temp = new LinkedList<>(input);
 			while (!node.isReady()) {

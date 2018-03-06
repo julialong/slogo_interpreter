@@ -14,6 +14,8 @@ import commands.misc.Null;
 import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;
+import commands.unbundler.ControlUnbundler;
+import commands.multiples.Multiple;
 
 public class CommandFactory {
 
@@ -45,15 +47,17 @@ public class CommandFactory {
 				for (Updatable active : actives) {
 					commandables.add((Command) ctor.newInstance(myVis, active));
 				}
-			} else if (clazz.getSuperclass().equals(commands.unbundler.ControlUnbundler.class)) {
+			} else if (clazz.getSuperclass().equals(ControlUnbundler.class)) {
 				// CURRENTLY DOESN'T HANDLE TO AND MAKE/SET, BECAUSE THOSE CONSTRUCTORS ARE DIFFERENT
 				// THEY SHOULD ALMSOT CERTAINLY BE SUBCLASSED
-				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, parser.Parser.class});
+				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Parser.class});
 				commandables.add((Command) ctor.newInstance(myVis, myParser));
-			} else if (clazz.getSuperclass().equals(commands.multiples.Multiple.class)) {
+			} else if (clazz.getSuperclass().equals(Multiple.class)) {
 				// CURRENTLY TELL AND TURTLES ARE BROKEN
-				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, parser.Parser.class});
-				commandables.add((Command) ctor.newInstance(myVis, myParser, myActives));
+				System.out.println("clazz: " + clazz);
+				ctor = clazz.getDeclaredConstructor(new Class[] {Visualizer.class, Parser.class});
+				System.out.println("ctor: " + ctor);
+				commandables.add((Command) ctor.newInstance(myVis, myParser, myActives, myUpdatables));
 			}
 			else {
 				ctor = clazz.getDeclaredConstructor(Visualizer.class);
