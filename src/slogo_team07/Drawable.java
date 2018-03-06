@@ -21,6 +21,8 @@ public interface Drawable {
 
 	public Double getHeading();
 	
-//	public void test(double x, double y);
+	public boolean getIsDown();
+	
+	public boolean getStatus();
 
 }

@@ -27,6 +27,7 @@ public class Turtle implements Drawable, Updatable {
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
 	private double myPenWidth = 1.0;
+	private boolean myStatus = true; //need to coordinate w back end?
 
 	public Turtle() {
 		Image image = new Image("/view/turtle.jpg");
@@ -53,6 +54,16 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public boolean getIsVisible(){
 		return isVisible;
+	}
+	
+	@Override
+	public boolean getIsDown(){
+		return isDown;
+	}
+	
+	@Override
+	public boolean getStatus(){
+		return myStatus;
 	}
 	
 	@Override
