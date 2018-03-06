@@ -29,7 +29,11 @@ public abstract class Command {
 		return myArgs.size() == myArgsNeeded;
 	}
 	
-	protected List<String> getArgs() {
+	protected List<Double> getDoubleArgs() {
+		return parseToDouble(myArgs);
+	}
+	
+	protected List<String> getStringArgs() {
 		return myArgs;
 	}
 	
@@ -41,7 +45,7 @@ public abstract class Command {
 		myVis.runCommand(result);
 	}
 
-	protected List<Double> parseToDouble(List<String> args) {
+	private List<Double> parseToDouble(List<String> args) {
 		return args.stream()
 				.map(Double::parseDouble)
 				.collect(Collectors.toList());
