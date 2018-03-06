@@ -30,4 +30,16 @@ public interface Updatable {
 	double clear();
 	
 	double getId();
+
+	double getShape();
+
+	double getPenColor();
+
+	double setPenSize(double pixels);
+
+	double setPenColor(int dex);
+
+	double setShape(int dex);
+
+	double setPalette(int dex, double r, double g, double b);
 }

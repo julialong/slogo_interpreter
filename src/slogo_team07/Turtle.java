@@ -243,4 +243,41 @@ public class Turtle implements Drawable, Updatable {
 	public double getId() {
 		return myId;
 	}
+
+	@Override
+	public double getShape() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getPenColor() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPenSize(double pixels) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPenColor(int dex) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setShape(int dex) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPalette(int dex, double r, double g, double b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 }
