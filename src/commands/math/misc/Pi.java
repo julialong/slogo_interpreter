@@ -2,10 +2,10 @@ package commands.math.misc;
 
 import java.util.List;
 
-import commands.NonUpdatableCommand;
+import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
-public class Pi extends NonUpdatableCommand {
+public class Pi extends NonUpdatableDoubleArgs {
 
 	public Pi(Visualizer vis) {
 		super(vis, 0);

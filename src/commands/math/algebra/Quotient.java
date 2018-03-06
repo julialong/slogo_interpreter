@@ -2,10 +2,10 @@ package commands.math.algebra;
 
 import java.util.List;
 
-import commands.NonUpdatableCommand;
+import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
-public class Quotient extends NonUpdatableCommand {
+public class Quotient extends NonUpdatableDoubleArgs {
 
 	public Quotient(Visualizer vis) {
 		super(vis, 2);

@@ -2,10 +2,10 @@ package commands.math.algebra;
 
 import java.util.List;
 
-import commands.NonUpdatableCommand;
+import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
-public class Sum extends NonUpdatableCommand {
+public class Sum extends NonUpdatableDoubleArgs {
 
 	public Sum(Visualizer vis) {
 		super(vis, 2);

@@ -3,10 +3,10 @@ package commands.misc;
 import java.util.List;
 
 import commands.CommandArgsUnfilledException;
-import commands.NonUpdatableCommand;
+import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
-public class Number extends NonUpdatableCommand {
+public class Number extends NonUpdatableDoubleArgs {
 
 	public Number(Visualizer vis) {
 		super(vis, 1);
@@ -18,7 +18,7 @@ public class Number extends NonUpdatableCommand {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		return calcValue(getArgs());
+		return calcValue(parseToDouble(getArgs()));
 	}
 	
 	@Override

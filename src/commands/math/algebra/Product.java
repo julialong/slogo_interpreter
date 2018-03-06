@@ -2,10 +2,10 @@ package commands.math.algebra;
 
 import java.util.List;
 
-import commands.NonUpdatableCommand;
+import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
-public class Product extends NonUpdatableCommand {
+public class Product extends NonUpdatableDoubleArgs {
 
 	public Product(Visualizer vis) {
 		super(vis, 2);

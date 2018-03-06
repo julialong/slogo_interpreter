@@ -2,13 +2,14 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import view.Visualizer;
 
 public abstract class Command {
 	
 	private int myArgsNeeded;
-	private List<Double> myArgs = new ArrayList<>();
+	private List<String> myArgs = new ArrayList<>();
 	private Visualizer myVis;
 
 	public Command(Visualizer vis, int num_args) {
@@ -16,7 +17,7 @@ public abstract class Command {
 		myVis = vis;
 	}
 
-	public void inject(double arg) {
+	public void inject(String arg) {
 		if (isReady()) {
 			throw new CommandArgsFullException("This Command object already has a sufficient number of arguments.");
 		}
@@ -28,7 +29,7 @@ public abstract class Command {
 		return myArgs.size() == myArgsNeeded;
 	}
 	
-	protected List<Double> getArgs() {
+	protected List<String> getArgs() {
 		return myArgs;
 	}
 	
@@ -40,5 +41,11 @@ public abstract class Command {
 		myVis.runCommand(result);
 	}
 
-	public abstract double execute();
+	protected List<Double> parseToDouble(List<String> args) {
+		return args.stream()
+				.map(Double::parseDouble)
+				.collect(Collectors.toList());
+	}
+
+	public abstract String execute();
 }

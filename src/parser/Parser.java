@@ -38,25 +38,24 @@ public class Parser {
 		myMultiplesSet = new HashSet<>(Arrays.asList(MANAGER_NAMES));
 	}
 
-	public double parse(String s) {
-		s = sanitize(s);
+	public String parse(String s) {
+		List<String> input = sanitize(s);
 		
-		List<String> input = replaceUnknowns(s);
-		Double ans = 0.0;
+		String ans = null;
 		while (!input.isEmpty()) {
 			ans = traverse(input);
 		}
 		return ans;
 	}
 
-	private double traverse(List<String> input) {
+	private String traverse(List<String> input) {
 		if (input.isEmpty()) {
-			return Double.MAX_VALUE;
+			return null;
 		}
 
 		String next = input.remove(0).toLowerCase();
 		if (isArgument(next)) {
-			return Double.valueOf(next);
+			return next;
 		} else if (myControlSet.contains(next)) {
 			Unbundler unbundler = myUnbundlerFactory.createUnbundler(next, myVarMap, myFuncMap);
 			String unbundled = unbundler.unbundle(input);
@@ -67,7 +66,7 @@ public class Parser {
 		}
 
 		List<Updatable> actives = myMultipleFactory.getActives();
-		double ans = Double.MAX_VALUE;
+		String ans = null;
 		List<String> temp = input;
 		List<Command> commandables = myCommandFactory.createCommands(next, actives);
 		for (Command node : commandables) {
@@ -84,14 +83,20 @@ public class Parser {
 		return ans;
 	}
 
-
-	private List<String> replaceUnknowns(String s) {
+	private List<String> sanitize(String s) {
+		String commentless = stripComments(s);
+		String whitespaced = handleWhitespace(commentless);
+		String replaced = replaceUnknowns(whitespaced);
+		return splitAroundBrackets(replaced);
+	}
+	
+	private String replaceUnknowns(String whitespaced) {
 		List<String> ans = new LinkedList<>();
-		if (s.length() == 0) {
-			return ans;
+		if (whitespaced.length() == 0) {
+			String.join(" ", ans);
 		}
 		
-		String[] arr = s.split(" ");
+		String[] arr = whitespaced.split(" ");
 		int i = 0;
 		while (i < arr.length) {
 			String curr = arr[i];
@@ -111,11 +116,48 @@ public class Parser {
 				i += 1;
 			}
 		}
-		return ans;
+		return String.join(" ", ans);
+	}
+	
+	private List<String> splitAroundBrackets(String whitespaced) {
+		List<String> split_brackets = new LinkedList<>();
+		String[] white_arr = whitespaced.split(" ");
+		int i = 0;
+		while (i < white_arr.length) {
+			String curr = white_arr[i];
+			if (curr.equals("[")) {
+				int j = zoomAhead(white_arr, i);
+				String[] copied = Arrays.copyOfRange(white_arr, i, j + 1);
+				split_brackets.add(String.join(" ", copied));
+				i = j;
+			} else {
+				split_brackets.add(curr);
+			}
+			
+			i += 1;
+		}
+		return split_brackets;
 	}
 
-	private String sanitize(String s) {
-		String commentless = stripComments(s);
+	private int zoomAhead(String[] white_arr, int i) {
+		int unmatched = 0;
+		int j = i;
+		while (j < white_arr.length) {
+			String curr = white_arr[j];
+			if (curr.equals("[")) {
+				unmatched += 1;
+			} else if (curr.equals("]")) {
+				unmatched -= 1;
+				if (unmatched == 0) {
+					return j;
+				}
+			}
+			j += 1;
+		}
+		return -1;
+	}
+
+	private String handleWhitespace(String commentless) {
 		StringBuilder formatted = new StringBuilder();
 
 		boolean seen_space = false;

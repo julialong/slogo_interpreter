@@ -15,4 +15,5 @@ public class And extends Boolean {
 		boolean b = (args.get(0) != 0.0) && (args.get(1) != 0.0);
 		return boolToDouble(b);
 	}
+
 }

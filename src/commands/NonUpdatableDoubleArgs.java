@@ -4,22 +4,21 @@ import java.util.List;
 
 import view.Visualizer;
 
-public abstract class NonUpdatableCommand extends Command {
-
-	public NonUpdatableCommand(Visualizer vis, int num_args) {
+public abstract class NonUpdatableDoubleArgs extends Command {
+	
+	public NonUpdatableDoubleArgs(Visualizer vis, int num_args) {
 		super(vis, num_args);
 	}
 	
-	public double execute() {
+	public String execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		double ans = calcValue(getArgs());
+		double ans = calcValue(parseToDouble(getArgs()));
 		visCommand(new Result(ans));
-		return ans;
+		return Double.toString(ans);
 	}
-
+	
 	protected abstract double calcValue(List<Double> args);
-
 }

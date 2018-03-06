@@ -2,10 +2,10 @@ package commands.misc;
 
 import java.util.List;
 
-import commands.NonUpdatableCommand;
+import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
-public class SetBackground extends NonUpdatableCommand {
+public class SetBackground extends NonUpdatableDoubleArgs {
 	
 	private Visualizer myVis;
 

@@ -10,9 +10,9 @@ public class MultipleCommand extends Command {
 	}
 
 	@Override
-	public double execute() {
+	public String execute() {
 		// TODO Auto-generated method stub
-		return 0;
+		return "";
 	}
 
 }
