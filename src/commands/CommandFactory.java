@@ -55,7 +55,6 @@ public class CommandFactory {
 				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Parser.class });
 				commandables.add((Command) ctor.newInstance(myVis, myParser));
 			} else if (clazz.getSuperclass().equals(Multiple.class)) {
-				// CURRENTLY TELL AND TURTLES ARE BROKEN
 				System.out.println("clazz: " + clazz);
 				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Parser.class, Set.class, Map.class });
 				System.out.println("ctor: " + ctor);

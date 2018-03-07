@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import commands.BracketFinder;
-import commands.ListDeleter;
+import commands.ListModifier;
 import commands.NonUpdatableStringArgs;
 import parser.Parser;
 import view.Visualizer;
 
-public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListDeleter, BracketFinder {
+public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
 	
 	private static final String LEFT_BRACE = "[";
 	private static final String RIGHT_BRACE = "]";

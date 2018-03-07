@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Set;
 
 import commands.BracketFinder;
-import commands.ListDeleter;
+import commands.ListModifier;
 import commands.NonUpdatableStringArgs;
 import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public abstract class Multiple extends NonUpdatableStringArgs implements ListDeleter, BracketFinder {
+public abstract class Multiple extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
 	
 	private Parser myParser;
 	private Set<String> myActives;
