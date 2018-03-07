@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class Canvas {
 	private Pane myPane;
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
-	private Color myColor = Color.BLACK;
-	private double myPenWidth = 1.0;
+//	private Color myColor = Color.BLACK;
+//	private double myPenWidth = 1.0;
 	
 	
 	public Canvas(Map<Drawable, List<String>> turtles){
@@ -38,7 +39,10 @@ public class Canvas {
 			turtle.getView().setFitHeight(20);
 			turtle.getView().setFitWidth(20);
 			myPane.getChildren().add(turtle.getView());
-			turtle.draw(myPane, myColor, myPenWidth);
+			List<String> properties = myTurtles.get(turtle);
+			Color color = Color.valueOf(properties.get(4));
+			double penWidth = Double.parseDouble(properties.get(5));
+			turtle.draw(myPane, color, penWidth);
 		}
 		return myPane;
 	}
@@ -54,8 +58,10 @@ public class Canvas {
 				turtle.getView().setFitWidth(20);
 				myPane.getChildren().add(turtle.getView());
 			}
-			//draw will also need to take in stroke width
-			turtle.draw(myPane, myColor, myPenWidth);
+			List<String> properties = myTurtles.get(turtle);
+			Color color = Color.valueOf(properties.get(4));
+			double penWidth = Double.parseDouble(properties.get(5));
+			turtle.draw(myPane, color, penWidth);
 		}
 		return myPane;
 	}
@@ -70,12 +76,12 @@ public class Canvas {
 		return updateCanvas(myTurtles);
 	}
 	
-	protected void setColor(Color color){
-		myColor = color;
-	}
-	
-	protected void setPenWidth(double width){
-		myPenWidth = width;
-	}
+//	protected void setColor(Color color){
+//		myColor = color;
+//	}
+//	
+//	protected void setPenWidth(double width){
+//		myPenWidth = width;
+//	}
 	
 }
