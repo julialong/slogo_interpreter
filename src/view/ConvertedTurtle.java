@@ -76,10 +76,12 @@ public class ConvertedTurtle	{
 			public void handle(ActionEvent e) {
 				if (activeBox.isSelected())	{
 					// thisTurtle is active
+					// tel all turtles active
 					properties.set(propertyNames.indexOf("active"), "true");
 				}
 				else	{
 					// thisTurtle is not active
+					// tell every other turtle active
 					properties.set(propertyNames.indexOf("active"), "false");
 				}
 			}
@@ -118,11 +120,11 @@ public class ConvertedTurtle	{
 			@Override
 			public void handle(ActionEvent e) {
 				if (penDownBox.isSelected())	{
-					// enable pen
+					thisTurtle.setPenDown(true);
 					properties.set(propertyNames.indexOf("penDown"), "down");
 				}
 				else	{
-					// disable pen
+					thisTurtle.setPenDown(false);
 					properties.set(propertyNames.indexOf("penDown"), "up");
 				}
 			}
@@ -137,13 +139,13 @@ public class ConvertedTurtle	{
 
 		ComboBox penColorMenu = new ComboBox(penList);
 
-		penColorMenu.setPromptText(penColorString);
+		penColorMenu.setPromptText(penList.get(Integer.parseInt(penColorString)));
 		penColorMenu.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent e){
 				String newColor = penColorMenu.getSelectionModel().getSelectedItem().toString();
 
-				myCanvas.setColor(Color.valueOf(newColor));
+				thisTurtle.setPenColor(penList.indexOf(newColor));
 
 				properties.set(propertyNames.indexOf("penColor"), newColor);
 			}
@@ -164,7 +166,7 @@ public class ConvertedTurtle	{
 			public void handle(ActionEvent e){
 				String newWidth = penWidthMenu.getSelectionModel().getSelectedItem().toString();
 
-				myCanvas.setPenWidth(Double.parseDouble(newWidth));
+				thisTurtle.setPenWidth(Double.parseDouble(newWidth));
 
 				properties.set(propertyNames.indexOf("penWidth"), newWidth);
 			}

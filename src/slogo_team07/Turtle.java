@@ -1,5 +1,8 @@
 package slogo_team07;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -65,18 +68,9 @@ public class Turtle implements Drawable, Updatable {
 		return isDown;
 	}
 
-	public Color getColor()	{
-		return myColor;
-	}
-
 	@Override
 	public double getPenWidth()	{
 		return myPenWidth;
-	}
-	
-	@Override
-	public boolean getStatus(){
-		return myStatus;
 	}
 	
 	@Override
@@ -212,7 +206,7 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public double setPen(boolean down) {
+	public double setPenDown(boolean down) {
 		isDown = down;
 		return isDown ? 1.0 : 0.0;
 	}
@@ -278,12 +272,29 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double getPenColor() {
-		// TODO Auto-generated method stub
+		List<String> myColors = new ArrayList<>()	{{
+			add("Black");
+			add("White");
+			add("Red");
+			add("Orange");
+			add("Yellow");
+			add("Green");
+			add("Blue");
+			add("Purple");
+			add("Pink");
+		}};
+
+		for (int i = 0; i < myColors.size(); i++)	{
+			if (Color.valueOf(myColors.get(i)) == myColor)	{
+				return (double)i;
+			}
+		}
+
 		return 0;
 	}
 
 	@Override
-	public double setPenSize(double pixels) {
+	public double setPenWidth(double pixels) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

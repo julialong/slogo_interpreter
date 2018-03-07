@@ -19,9 +19,8 @@ public class Toolbar extends AnchorPane {
 	
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
-	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
-	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
+	private static ObservableList<String> colorList = Canvas.colorList;
+	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
 	

@@ -7,6 +7,8 @@ import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
@@ -24,7 +26,8 @@ public class Canvas {
 	private Pane myPane;
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
-//	private Color myColor = Color.BLACK;
+	protected static ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
+			"Yellow", "Green", "Blue", "Purple", "Pink");
 //	private double myPenWidth = 1.0;
 	
 	
@@ -41,7 +44,7 @@ public class Canvas {
 			myPane.getChildren().add(turtle.getView());
 			List<String> properties = myTurtles.get(turtle);
 			Color color = Color.valueOf(properties.get(4));
-			double penWidth = Double.parseDouble(properties.get(5));
+			double penWidth = turtle.getPenWidth();
 			turtle.draw(myPane, color, penWidth);
 		}
 		return myPane;
@@ -59,7 +62,19 @@ public class Canvas {
 				myPane.getChildren().add(turtle.getView());
 			}
 			List<String> properties = myTurtles.get(turtle);
-			Color color = Color.valueOf(properties.get(4));
+			List<String> possColors = new ArrayList<>()	{{
+				add("Black");
+				add("White");
+				add("Red");
+				add("Orange");
+				add("Yellow");
+				add("Green");
+				add("Blue");
+				add("Purple");
+				add("Pink");
+			}};
+
+			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(4))));
 			double penWidth = Double.parseDouble(properties.get(5));
 			turtle.draw(myPane, color, penWidth);
 		}
