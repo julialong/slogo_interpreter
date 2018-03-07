@@ -10,15 +10,15 @@ import view.Visualizer;
 
 public abstract class ControlUnbundler extends NonUpdatableStringArgs {
 	
+	private static final String LEFT_BRACE = "[";
+	private static final String RIGHT_BRACE = "]";
+	
 	private Parser parser;
 
 	public ControlUnbundler(Visualizer vis, int num_args, Parser p) {
 		super(vis, num_args);
 		parser = p;
 	}
-
-	private static final String LEFT_BRACE = "[";
-	private static final String RIGHT_BRACE = "]";
 	
 	/**
 	 * Finds the beginning and ending brackets for the given control command

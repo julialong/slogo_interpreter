@@ -40,6 +40,8 @@ public class CommandFactory {
 		String keyword = myLanguages.get(command);
 		List<Command> commandables = new ArrayList<>();
 		try {
+			System.out.println("keyword: " + keyword);
+			System.out.println("command: " + command);
 			Class<?> clazz = Class.forName(myCommands.getString(keyword));
 			Constructor<?> ctor;
 			if (clazz.getSuperclass().equals(UpdatableCommand.class)) {
