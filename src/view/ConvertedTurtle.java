@@ -147,7 +147,7 @@ public class ConvertedTurtle	{
 
 				thisTurtle.setPenColor(penList.indexOf(newColor));
 
-				properties.set(propertyNames.indexOf("penColor"), newColor);
+				properties.set(propertyNames.indexOf("penColor"), Integer.toString(penList.indexOf(newColor)));
 			}
 		});
 

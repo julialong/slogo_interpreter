@@ -62,19 +62,19 @@ public class Canvas {
 				myPane.getChildren().add(turtle.getView());
 			}
 			List<String> properties = myTurtles.get(turtle);
-			List<String> possColors = new ArrayList<>()	{{
-				add("Black");
-				add("White");
-				add("Red");
-				add("Orange");
-				add("Yellow");
-				add("Green");
-				add("Blue");
-				add("Purple");
-				add("Pink");
+			List<Color> possColors = new ArrayList<>()	{{
+				add(Color.BLACK);
+				add(Color.WHITE);
+				add(Color.RED);
+				add(Color.ORANGE);
+				add(Color.YELLOW);
+				add(Color.GREEN);
+				add(Color.BLUE);
+				add(Color.PURPLE);
+				add(Color.PINK);
 			}};
 
-			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(4))));
+			Color color = possColors.get(Integer.parseInt(properties.get(4)));
 			double penWidth = Double.parseDouble(properties.get(5));
 			turtle.draw(myPane, color, penWidth);
 		}
