@@ -1,0 +1,7 @@
+Variables
+Deutsch : Hallo
+English : Hello
+Francais : Alo
+Espanol : Hola
+Commands
+alpha : a b c d | 1 2 3 4
