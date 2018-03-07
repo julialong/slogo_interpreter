@@ -40,7 +40,7 @@ public class Toolbar extends AnchorPane {
 		
 		VBox myButtons = initButtons();
 		myPane.getChildren().add(myButtons);
-		myPane.setRightAnchor(myButtons, 10.0);
+		myPane.setRightAnchor(myButtons, 0.0);
 		return myPane;
 	}
 	
@@ -136,6 +136,7 @@ public class Toolbar extends AnchorPane {
 		buttons.getChildren().add(speedUpButton());
 		buttons.getChildren().add(slowDownButton());
 		buttons.getChildren().add(addDrawableButton());
+		buttons.getChildren().add(colorButton());
 		
 		VBox myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
@@ -221,6 +222,17 @@ public class Toolbar extends AnchorPane {
 		});
     	return slowDownButton;
     }
+	
+	private Button colorButton() {
+		Button colorButton = new Button("Color Indices");
+		colorButton.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent e){
+				new ColorPalettes();
+			}
+		});
+		return colorButton;
+	}
 	
 	public void setLanguage(String lang){
 		myLanguage = lang;
