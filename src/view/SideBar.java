@@ -8,6 +8,7 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -32,15 +33,13 @@ public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
 	private Canvas myCanvas;
-	private List<Drawable> myTurtles;
-	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
-	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
-			"Octopus", "Bird", "Butterfly");
-	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
-	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
-			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
+	private Map<Drawable, List<String>> myTurtles;
+	
+//	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
+//			"Octopus", "Bird", "Butterfly");
+//	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
+//			"Yellow", "Green", "Blue", "Purple", "Pink");
+	
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
 	private TableView commandTable;
@@ -50,14 +49,14 @@ public class SideBar extends VBox{
 	private TableColumn varName;
 	private TableColumn varValue;
 	protected TextInput myTextInput;
-	protected String language;
+	
 	
 	/**
 	 * Constructor for sidebar of program that contains buttons/options
 	 * @param canvas	canvas of program, where turtles are displayed
 	 * @param turtles	list of all the movers in the canvas
 	 */
-	public SideBar(Pane canvas, List<Drawable> turtles, Canvas c){
+	public SideBar(Pane canvas, Map<Drawable, List<String>> turtles, Canvas c){
 		myCanvasObjects = canvas;
 		myTurtles = turtles;
 		myCanvas = c;
@@ -69,92 +68,44 @@ public class SideBar extends VBox{
 	public VBox initSideBar(){
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
-		
-		Button helpButton = new Button();
-		ComboBox colorMenu = new ComboBox(colorList);
-		ComboBox iconMenu = new ComboBox(iconList);
-		ComboBox penMenu = new ComboBox(penList); 
-		ComboBox langMenu = new ComboBox<String>(langsSupported);
+
 		commandTable = new TableView();
 		variableTable = new TableView();
 		double colWidth = 250;
-		
-//		Button test = new Button("Test");
-//		test.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e){
-//				double x = 0;
-//				double y = 0;
-//				for (Drawable turtle: myTurtles){
-//					turtle.setPane(myCanvasObjects);
-//					turtle.test(100, 100);
-//				}
-//			}
-//		});
-//		myVBox.getChildren().add(test);
+	
+		myVBox.getChildren().add(allDrawablesButton());
+		myVBox.getChildren().add(commandTable(colWidth));
+		myVBox.getChildren().add(variableTable(colWidth));
 
-		helpButton.setText(ResourcesLanguages.getString(language, "Help"));
-    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
+		return myVBox;
+	}	
+	
+	private Button allDrawablesButton()	{
+		Button allDrawablesButton = new Button("Turtle Information");
+    	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new HelpBox(language);
+				new DrawablesTable(myTurtles, myCanvas, myCanvasObjects);
 			}
 		});
-		myVBox.getChildren().add(helpButton);
+		return allDrawablesButton;
+	}
 
-		colorMenu.setPromptText(Resources.getString("ColorMenu"));
-		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();
-				myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back", 
-						"green-back", "blue-back", "purple-back", "pink-back");
-				myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
-			}
-		});
-		myVBox.getChildren().add(colorMenu);
-		
-		iconMenu.setPromptText(Resources.getString("TurtleMenu"));
-		iconMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				String tempIcon = iconMenu.getSelectionModel().getSelectedItem().toString();
-				//right now will change icon of all turtles
-				for (Drawable turtle: myTurtles){
-					myCanvasObjects.getChildren().remove(turtle.getView());
-					turtle.setPane(myCanvasObjects);
-					turtle.setView(Resources.getString(tempIcon));
-					myCanvasObjects.getChildren().add(turtle.getView());
-				}
-			}
-		});
-		myVBox.getChildren().add(iconMenu);
-		
-		penMenu.setPromptText(Resources.getString("PenMenu"));
-		penMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				String tempPen = penMenu.getSelectionModel().getSelectedItem().toString();
-				myCanvas.setColor(Color.valueOf(tempPen));
-			}
-		});
-		myVBox.getChildren().add(penMenu);
-		
-		langMenu.setPromptText(Resources.getString("LangMenu"));
-		langMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				language = (String)(langMenu.getValue());
-				helpButton.setText(ResourcesLanguages.getString(language, "Help"));
-			}
-		});
-		myVBox.getChildren().add(langMenu);
-
+	private TableView commandTable(double colWidth)	{
+		commandTable = new TableView();
 		commandTable.setEditable(false);
 		comText = new TableColumn("User-defined commands");
 		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
 		comText.setMinWidth(colWidth);
         commandTable.getColumns().add(comText);
         commandTable.setItems(uDefCommands);
-		myVBox.getChildren().add(commandTable);
 
-		variableTable.setEditable(false);
+        return commandTable;
+	}
+
+	private TableView variableTable(double colWidth)	{
+		variableTable = new TableView();
+		variableTable.setEditable(true);
 		vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
@@ -166,12 +117,11 @@ public class SideBar extends VBox{
 		vars.getColumns().addAll(varName, varValue);
 		variableTable.getColumns().add(vars);
 		variableTable.setItems(setVariables);
-		myVBox.getChildren().add(variableTable);
-				
-		return myVBox;
+
+		return variableTable;
 	}
 
-	protected void addButton(String text)	{
+	protected void addUDIButton(String text)	{
 		if (buttonExists(text))	{
 			return;
 		}
@@ -189,7 +139,7 @@ public class SideBar extends VBox{
 		uDefCommands.add(udc);
 	}
 
-	protected void addVar(String var, String value)	{
+	protected void addUDVar(String var, String value)	{
 		if (varExists(var) != null)	{
 			varExists(var).value.set(value);
 		}

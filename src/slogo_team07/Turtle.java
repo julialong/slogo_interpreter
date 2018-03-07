@@ -20,14 +20,20 @@ public class Turtle implements Drawable, Updatable {
 	private double myViewPrevY = 0.0;
 	private boolean isDown = true;
 	private boolean isVisible = true;
-	private Double myDegrees = 90.0;
-	private Double myIVDegrees = myDegrees - 90;
+	private double myDegrees = 90.0;
+	private double myIVDegrees = myDegrees - 90;
 	private ImageView myIV;
 	private Pane myPane;
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
+	private double myId;
+	private double myPenWidth = 1.0;
+	private boolean myStatus = true; //need to coordinate w back end?
 
-	public Turtle() {
+
+
+	public Turtle(String id) {
+		myId = Double.parseDouble(id);
 		Image image = new Image("/view/turtle.jpg");
 		myIV = new ImageView(image);
 		myIV.setX(myViewX);
@@ -55,6 +61,25 @@ public class Turtle implements Drawable, Updatable {
 	}
 	
 	@Override
+	public boolean getIsDown(){
+		return isDown;
+	}
+
+	public Color getColor()	{
+		return myColor;
+	}
+
+	@Override
+	public double getPenWidth()	{
+		return myPenWidth;
+	}
+	
+	@Override
+	public boolean getStatus(){
+		return myStatus;
+	}
+	
+	@Override
 	public ImageView getView(){
 		return myIV;
 	}
@@ -71,7 +96,8 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public void draw(Pane display, Color color) {
+	public void draw(Pane display, Color color, double penWidth) {
+		myPenWidth = penWidth;
 		myColor = color;
 		myPane = display;
 		translate(myPane);
@@ -81,14 +107,16 @@ public class Turtle implements Drawable, Updatable {
 			}
 			Line trail = new Line(myViewPrevX, myViewPrevY, myViewX, myViewY);
 			trail.setStroke(myColor);
+			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
 		}
 	}
 
+
 	@Override
-	public Double setPosition(Double x, Double y) {
-		Double distance = calcDistance(x, y, myXPos, myYPos); // calc distance moved;
+	public double setPosition(double x, double y) {
+		double distance = calcDistance(x, y, myXPos, myYPos); // calc distance moved;
 		myPrevXPos = myXPos;
 		myPrevYPos = myYPos;
 		myXPos = x;
@@ -100,10 +128,10 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public Double move(Double pixels) {
+	public double move(double pixels) {
 		myPrevXPos = myXPos;
 		myPrevYPos = myYPos;
-		Double radians = degreesToRadians(myDegrees);
+		double radians = degreesToRadians(myDegrees);
 		myXPos += pixels * Math.cos(radians);
 		myYPos += pixels * Math.sin(radians);
 		translate(myPane);
@@ -113,8 +141,8 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public Double home() {
-		Double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
+	public double home() {
+		double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
 		myPrevXPos = myXPos;
 		myPrevYPos = myYPos;
 		myXPos = 0.0;
@@ -127,7 +155,7 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public Double rotate(Double clockwise) {
+	public double rotate(double clockwise) {
 		myDegrees += clockwise;
 		myIVDegrees -= clockwise;
 		myIV.setRotate(myIVDegrees);
@@ -135,8 +163,8 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public Double setHeading(Double degrees) {
-		Double old = myDegrees;
+	public double setHeading(double degrees) {
+		double old = myDegrees;
 		myDegrees = degrees;
 		myIVDegrees = degrees + 90;
 		myIV.setRotate(myIVDegrees);
@@ -146,20 +174,20 @@ public class Turtle implements Drawable, Updatable {
 	// THIS METHOD IS BROKEN....IT'S TOO LATE AND I'M TOO TIRED TO DO THIS
 	// MATH
 	@Override
-	public Double setFacing(Double x, Double y) {
-		Double radians = degreesToRadians(myDegrees);
+	public double setFacing(double x, double y) {
+		double radians = degreesToRadians(myDegrees);
 		Point2D old_vec = calcVector(myXPos, 
 				myYPos,
 				myXPos + Math.cos(radians), 
 				myYPos + Math.sin(radians));
 		Point2D new_vec = calcVector(0.0, 0.0, x, y);
 
-		Double ans = calcAngle(old_vec, new_vec);
+		double ans = calcAngle(old_vec, new_vec);
 		//need to add imageview rotation
 		return ans;
 	}
 
-	private Double calcAngle(Point2D old_vec, Point2D new_vec) {
+	private double calcAngle(Point2D old_vec, Point2D new_vec) {
 		double numer = old_vec.getX() * new_vec.getX() + old_vec.getY() * new_vec.getY();
 		double denom = Math.sqrt(old_vec.getX() * old_vec.getX() + old_vec.getY() * old_vec.getY())
 				* Math.sqrt(new_vec.getX() * new_vec.getX() + new_vec.getY() * new_vec.getY());
@@ -168,45 +196,45 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public Double setVisible(boolean visible) {
+	public double setVisible(boolean visible) {
 		isVisible = visible;
 		return isVisible ? 1.0 : 0.0;
 	}
 
 	@Override
-	public Double getY() {
+	public double getY() {
 		return myYPos;
 	}
 
 	@Override
-	public Double getX() {
+	public double getX() {
 		return myXPos;
 	}
 
 	@Override
-	public Double setPen(boolean down) {
+	public double setPen(boolean down) {
 		isDown = down;
 		return isDown ? 1.0 : 0.0;
 	}
 
 	@Override
-	public Double getHeading() {
+	public double getHeading() {
 		return myDegrees;
 	}
 
 	@Override
-	public Double getPendown() {
+	public double getPendown() {
 		return isDown ? 1.0 : 0.0;
 	}
 
 	@Override
-	public Double getVisible() {
+	public double getVisible() {
 		return isVisible ? 1.0 : 0.0;
 	}
 	
 	@Override
-	public Double clear() {
-		Double dist = this.home();
+	public double clear() {
+		double dist = this.home();
 		myPane.getChildren().clear();
 		myLines.getChildren().clear();
 		translate(myPane);
@@ -220,20 +248,62 @@ public class Turtle implements Drawable, Updatable {
 		return dist;
 	}
 	
-	private Double degreesToRadians(Double degrees) {
+	private double degreesToRadians(double degrees) {
 		return (degrees * Math.PI) / 180.0;
 	}
 
-	private Double calcDistance(Double x1, Double y1, Double x2, Double y2) {
-		Double a = Math.abs(x2 - x1);
-		Double b = Math.abs(y2 - y1);
+	private double calcDistance(double x1, double y1, double x2, double y2) {
+		double a = Math.abs(x2 - x1);
+		double b = Math.abs(y2 - y1);
 		return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 	}
 
 
-	private Point2D calcVector(Double x1, Double y1, Double x2, Double y2) {
-		Double x = x2 - x1;
-		Double y = y2 - y1;
+	private Point2D calcVector(double x1, double y1, double x2, double y2) {
+		double x = x2 - x1;
+		double y = y2 - y1;
 		return new Point2D(x, y);
 	}
+
+	@Override
+	public double getId() {
+		return myId;
+	}
+
+	@Override
+	public double getShape() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getPenColor() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPenSize(double pixels) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPenColor(int dex) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setShape(int dex) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPalette(int dex, double r, double g, double b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 }

@@ -6,7 +6,10 @@
 
 package view;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 import commands.Result;
 import javafx.animation.KeyFrame;
@@ -14,6 +17,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
@@ -32,7 +36,7 @@ public class Visualizer {
 	private Console myConsole;
 	private Toolbar myToolbar;
 	private BorderPane root;
-	private ArrayList<Drawable> myTurtles = new ArrayList<Drawable>();
+	private Map<Drawable, List<String>> drawables = new HashMap<>();
 	private ChangeListener myChangeListener;
 	private String language = "English";
 	
@@ -55,11 +59,11 @@ public class Visualizer {
 	}
 	
 	private void step(double cycles){
-		myCanvasObjects = myCanvas.updateCanvas(myTurtles);
+		myCanvasObjects = myCanvas.updateCanvas(drawables);
 		root.setCenter(myCanvasObjects);
 
-		if (!mySideBar.language.equals(language))	{
-			language = mySideBar.language;
+		if (!myToolbar.getLanguage().equals(language))	{
+			language = myToolbar.getLanguage();
 			myConsole.language = language;
 			myChangeListener.changeLanguage(language);
 		}
@@ -70,37 +74,46 @@ public class Visualizer {
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		
-		myCanvas = new Canvas(myTurtles);
+		myCanvas = new Canvas(drawables);
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, myTurtles, myCanvas);
-		((SideBar)mySideBar).language = language;
-		root.setRight(((SideBar)mySideBar).initSideBar());
+		mySideBar = new SideBar(myCanvasObjects, drawables, myCanvas);
+		root.setRight(mySideBar.initSideBar());
 
 		myConsole = new Console();
-		((Console)myConsole).language = language;
-		root.setBottom(((Console)myConsole));
+		myConsole.language = language;
+		root.setBottom(myConsole);
 
-		myToolbar = new Toolbar();
+		myToolbar = new Toolbar(myCanvasObjects);
+		myToolbar.setLanguage(language);
 		root.setTop(myToolbar.initToolbar());
 
 		myCanvas.myVBox = mySideBar;
-		((Console)myConsole).myChangeListener = myChangeListener;
-		((SideBar)mySideBar).myTextInput = myConsole;
-		((Console)myConsole).myVBox = mySideBar;
+		myConsole.myChangeListener = myChangeListener;
+		mySideBar.myTextInput = myConsole;
+		myConsole.myVBox = mySideBar;
 		
 		return scene;
 	}
 
 	/**
-	 * Called by Engine, takes in a drawable made in Engine and sends to canvas to draw. This is another middle man to separate model and view
+	 * Called by Engine, takes in a drawable made in Engine and sends to canvas to draw. This is another 
+	 * middle man to separate model and view
 	 * @param turtle	object to be drawn on canvas
 	 */
 	public void addDrawable(Drawable turtle)	{
 		//myCanvas.addDrawable(turtle);
-		myTurtles.add(turtle);
+		List<String> properties = new ArrayList<String>();
+		properties.add(String.valueOf(drawables.size())); // id
+		properties.add(String.valueOf(turtle.getStatus())); // add active
+		properties.add("Turtle"); // add image (ex. Turtle, not extension)
+		properties.add(String.valueOf(turtle.getIsDown()));// pen (up or down)
+		properties.add("Black");// pen color
+		properties.add(Double.toString(turtle.getPenWidth())); // pen width
+
+		drawables.put(turtle, properties);
 	}
 
 	/**
@@ -108,7 +121,7 @@ public class Visualizer {
 	 * @param result	Result ojbect passed back from Engine that gives a double return value
 	 */
 	public void runCommand(Result result)	{
-		((Console)myConsole).printResult(Double.toString(result.getRes1()));
+		myConsole.printResult(Double.toString(result.getRes1()));
 		myCanvas.updateCanvas(result);
 	}
 
