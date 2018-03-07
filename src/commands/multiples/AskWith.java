@@ -2,24 +2,27 @@ package commands.multiples;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import parser.Parser;
-import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class AskWith extends Multiple {
 	
 	private static final int NUM_ARGS = 2;
+	
+	private Parser myParser;
+	private Set<String> myActives;
 
-	public AskWith(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
-		super(vis, parser, actives, updatables, NUM_ARGS);
+	public AskWith(Visualizer vis, Parser parser, Set<String> actives) {
+		super(vis, NUM_ARGS);
+		myParser = parser;
+		myActives = actives;
 	}
 	
 	private double checkAndEval(List<String> input, int[] condition, int[] commands) {
 		double ans = -1.0;
-		for (String active : new ArrayList<>(getActives())) {
+		for (String active : new ArrayList<>(myActives)) {
 			activate(active);
 			if (evaluate(input, condition) == 1.0) {
 				ans = evaluate(input, commands);
@@ -30,7 +33,7 @@ public class AskWith extends Multiple {
 	
 	private double evaluate(List<String> input, int[] brackets) {
 		List<String> temp = new ArrayList<>(input);
-		return getParser().parse(String.join(" ", temp.subList(brackets[0] + 1, brackets[1])));
+		return myParser.parse(String.join(" ", temp.subList(brackets[0] + 1, brackets[1])));
 	}
 
 	private void activate(String word) {
@@ -40,16 +43,16 @@ public class AskWith extends Multiple {
 	}
 	
 	private void activate(List<String> replace) {
-		getActives().clear();
+		myActives.clear();
 		for (int i=0; i < replace.size(); i++) {
-			getActives().add(replace.get(i));
+			myActives.add(replace.get(i));
 		}
 	}
 
 	@Override
 	protected double calcValue(List<String> args) {
 		List<String> input = argsToList(args);
-		List<String> old_actives = new ArrayList<>(getActives());
+		List<String> old_actives = new ArrayList<>(myActives);
 		int[] condition = findBrackets(input, 0);
 		int[] commands = findBrackets(input, 1); 
 		double ans = checkAndEval(input, condition, commands);

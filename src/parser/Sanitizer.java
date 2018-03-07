@@ -24,6 +24,8 @@ public class Sanitizer {
 	}
 	
 	private String replaceUnknowns(String whitespaced) {
+		System.out.println("here: " + whitespaced);
+		System.out.println("here1: " + myVarMap);
 		List<String> ans = new LinkedList<>();
 		if (whitespaced.length() == 0) {
 			String.join(" ", ans);
@@ -49,18 +51,23 @@ public class Sanitizer {
 				i += 1;
 			}
 		}
+		System.out.println("here2: " + ans);
 		return String.join(" ", ans);
 	}
 	
-	private List<String> splitAroundBrackets(String whitespaced) {
+	private List<String> splitAroundBrackets(String replaced) {
 		List<String> split_brackets = new LinkedList<>();
-		String[] white_arr = whitespaced.split(" ");
+		if (replaced.length() == 0) {
+			return split_brackets;
+		}
+		
+		String[] replaced_arr = replaced.split(" ");
 		int i = 0;
-		while (i < white_arr.length) {
-			String curr = white_arr[i];
+		while (i < replaced_arr.length) {
+			String curr = replaced_arr[i];
 			if (curr.equals("[")) {
-				int j = zoomAhead(white_arr, i);
-				String[] copied = Arrays.copyOfRange(white_arr, i, j + 1);
+				int j = zoomAhead(replaced_arr, i);
+				String[] copied = Arrays.copyOfRange(replaced_arr, i, j + 1);
 				split_brackets.add(String.join(" ", copied));
 				i = j;
 			} else {

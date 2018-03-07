@@ -3,29 +3,16 @@ package commands.multiples;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import commands.BracketFinder;
 import commands.ListModifier;
 import commands.NonUpdatableStringArgs;
-import parser.Parser;
-import slogo_team07.Updatable;
 import view.Visualizer;
 
 public abstract class Multiple extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
 	
-	private Parser myParser;
-	private Set<String> myActives;
-	private Visualizer myVis;
-	private Map<String, Updatable> myUpdatables;
-	
-	public Multiple(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables, int num_args) {
+	public Multiple(Visualizer vis, int num_args) {
 		super(vis, num_args);
-		myParser = parser;
-		myActives = actives;
-		myVis = vis;
-		myUpdatables = updatables;
 	}
 	
 	protected List<String> argsToList(List<String> args) {
@@ -37,19 +24,4 @@ public abstract class Multiple extends NonUpdatableStringArgs implements ListMod
 		return input;
 	}
 	
-	protected Parser getParser() {
-		return myParser;
-	}
-	
-	protected Set<String> getActives() {
-		return myActives;
-	}
-	
-	protected Visualizer getVis() {
-		return myVis;
-	}
-	
-	protected Map<String, Updatable> getUpdatables() {
-		return myUpdatables;
-	}
 }

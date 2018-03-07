@@ -1,6 +1,6 @@
 package slogo_team07;
 
-import commands.CommandFactory;
+import commands.factory.CommandFactory;
 import javafx.stage.Stage;
 import parser.Parser;
 import view.Visualizer;

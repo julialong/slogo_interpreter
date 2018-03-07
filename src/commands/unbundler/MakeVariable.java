@@ -25,9 +25,10 @@ public class MakeVariable extends ControlUnbundler{
 	 * @return the string variable name
 	 */
 	public String unbundle(List<String> exp) {
-		String variableName = exp.get(1);
+		System.out.println("exp: " + exp);
+		String variableName = exp.get(0);
 		expression = new ArrayList<>();
-		buildExpression(exp, 2, exp.size() - 1);
+		buildExpression(exp, 1, exp.size());
 		addVariable(variableName);
 		modifyList(exp, 1);
 		return String.join(" ", expression);
@@ -39,7 +40,7 @@ public class MakeVariable extends ControlUnbundler{
 	 * @return the index of the first left bracket
 	 */
 	private void buildExpression(List<String> exp, int start, int end) {
-		for (int i = start + 1; i < end; i++) {
+		for (int i = start; i < end; i++) {
 			String current = exp.get(i);
 			expression.add(current);
 		}

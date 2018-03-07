@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import commands.Command;
-import commands.CommandFactory;
+import commands.factory.CommandFactory;
 import view.Visualizer;
 
 public class Parser {
@@ -17,14 +17,14 @@ public class Parser {
 	private Sanitizer mySanitizer;
 
 	public Parser(Visualizer vis) {
-		myCommandFactory = new CommandFactory(vis, this);
+		myCommandFactory = new CommandFactory(myVarMap, myFuncMap, vis, this);
 		mySanitizer = new Sanitizer(myVarMap, myFuncMap);
 	}
 
 	public double parse(String s) {
 		List<String> input = mySanitizer.sanitize(s);
 
-		double ans = 0.0;
+		double ans = -1;
 		while (!input.isEmpty()) {
 			ans = Double.parseDouble(traverse(input));
 		}
@@ -48,6 +48,7 @@ public class Parser {
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
 			}
+			System.out.println("executing");
 			ans = node.execute();
 		}
 		clearAndAdd(input, temp);	
@@ -62,6 +63,8 @@ public class Parser {
 	}
 
 	private Boolean isArgument(String string) {
-		return string.matches("-?[0-9]+\\.?[0-9]*") || string.matches("^\\[.*]$");
+		return string.matches("-?[0-9]+\\.?[0-9]*") 
+				|| string.matches("^\\[.*]$")
+				|| string.matches(":[a-zA-Z]+");
 	}
 }

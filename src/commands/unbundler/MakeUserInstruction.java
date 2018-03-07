@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class MakeUserInstruction extends ControlUnbundler {
 	
-	private static final int NUM_ARGS = 3;
+	private static final int NUM_ARGS = 0;
 
 	private String commandName;
     private List<String> parameters;
@@ -28,6 +28,7 @@ public class MakeUserInstruction extends ControlUnbundler {
      * @return the string variable name
      */
     public String unbundle(List<String> exp) {
+    		System.out.println("exp: " + exp);
         commandName = exp.get(1);
         int[] variableIndex = findBrackets(exp, 0);
         int[] commandIndex = findBrackets(exp, 1);
