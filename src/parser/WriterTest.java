@@ -8,13 +8,13 @@ import java.util.Map;
 public class WriterTest {
     public static void main(String[] args) {
         Map<String, String> test = new HashMap<>();
-        test.put("English", "Hello");
-        test.put("Espanol", "Hola");
-        test.put("Deutsch", "Hallo");
-        test.put("Francais", "Alo");
-        String[] a = {"a","b","c","d"};
+        test.put(":x", "30");
+        test.put(":y", "400");
+        test.put(":z", "2");
+        test.put(":w", "5");
+        String[] a = {":a",":b"};
         ArrayList<String> params = new ArrayList<>(Arrays.asList(a));
-        String[] b = {"1","2","3","4"};
+        String[] b = {"sum :a :b","product :b :a"};
         ArrayList<String> commands = new ArrayList<>(Arrays.asList(b));
         Function f = new Function(params, commands);
         Map<String, Function> test2 = new HashMap<>();
@@ -32,8 +32,7 @@ public class WriterTest {
             System.out.println(testFunc.toString());
         }
         catch(Exception e) {
-            //System.out.println("Bad file.");
-            e.printStackTrace();
+            System.out.println("Bad file.");
         }
         }
     }
