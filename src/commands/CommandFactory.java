@@ -40,8 +40,6 @@ public class CommandFactory {
 		String keyword = myLanguages.get(command);
 		List<Command> commandables = new ArrayList<>();
 		try {
-			System.out.println("keyword: " + keyword);
-			System.out.println("command: " + command);
 			Class<?> clazz = Class.forName(myCommands.getString(keyword));
 			Constructor<?> ctor;
 			if (clazz.getSuperclass().equals(UpdatableCommand.class)) {
@@ -55,9 +53,7 @@ public class CommandFactory {
 				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Parser.class });
 				commandables.add((Command) ctor.newInstance(myVis, myParser));
 			} else if (clazz.getSuperclass().equals(Multiple.class)) {
-				System.out.println("clazz: " + clazz);
 				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Parser.class, Set.class, Map.class });
-				System.out.println("ctor: " + ctor);
 				commandables.add((Command) ctor.newInstance(myVis, myParser, myActives, myUpdatables));
 			}
 			else {

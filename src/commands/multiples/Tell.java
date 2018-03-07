@@ -28,7 +28,7 @@ public class Tell extends Multiple {
 		List<String> input = argsToList(args);
 		int[] brackets = findBrackets(input, 0);
 		getActives().clear();
-		String num = "0";
+		String num = null;
 		for (int i=1; i < brackets[1]; i++) {
 			num = input.get(i);
 			if (!getUpdatables().containsKey(num)) {
