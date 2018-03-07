@@ -24,8 +24,8 @@ public class Canvas {
 	private Pane myPane;
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
-//	private Color myColor = Color.BLACK;
-//	private double myPenWidth = 1.0;
+	private Color myColor = Color.BLACK;
+	private double myPenWidth = 1.0;
 	
 	
 	public Canvas(Map<Drawable, List<String>> turtles){
@@ -76,12 +76,12 @@ public class Canvas {
 		return updateCanvas(myTurtles);
 	}
 	
-//	protected void setColor(Color color){
-//		myColor = color;
-//	}
-//	
-//	protected void setPenWidth(double width){
-//		myPenWidth = width;
-//	}
+	protected void setColor(Color color){
+		myColor = color;
+	}
+
+	protected void setPenWidth(double width){
+		myPenWidth = width;
+	}
 	
 }

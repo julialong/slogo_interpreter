@@ -30,7 +30,6 @@ public class IfElseUnbundler extends ControlUnbundler {
      * @return the String of the unbundled control command
      */
     public String unbundle(List<String> exp, int index) {
-        System.out.println("start unbundler here");
         int[] trueCommandIndex = findBrackets(exp, index);
         int[] falseCommandIndex = findBrackets(exp, trueCommandIndex[1]);
         expression = new ArrayList<>();
