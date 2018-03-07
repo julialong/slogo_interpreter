@@ -6,8 +6,10 @@ import view.Visualizer;
 
 public class Equal extends Boolean {
 	
+	private static final int NUM_ARGS = 2;
+	
 	public Equal(Visualizer vis) {
-		super(vis, 2);
+		super(vis, NUM_ARGS);
 	}
 
 	@Override

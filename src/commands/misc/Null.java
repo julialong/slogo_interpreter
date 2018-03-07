@@ -5,8 +5,10 @@ import view.Visualizer;
 
 public class Null extends Command {
 	
+	private static final int NUM_ARGS = Integer.MAX_VALUE;
+	
 	public Null(Visualizer vis) {
-		super(vis, Integer.MAX_VALUE);
+		super(vis, NUM_ARGS);
 	}
 
 	@Override

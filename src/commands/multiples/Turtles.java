@@ -9,9 +9,11 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class Turtles extends Multiple {
+	
+	private static final int NUM_ARGS = 2;
 
 	public Turtles(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
-		super(vis, parser, actives, updatables, 0);
+		super(vis, parser, actives, updatables, NUM_ARGS);
 	}
 
 	@Override

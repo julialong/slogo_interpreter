@@ -8,8 +8,10 @@ import view.Visualizer;
 
 public class Back extends UpdatableCommand {
 	
+	private static final int NUM_ARGS = 1;
+	
 	public Back(Visualizer vis, Updatable updatable) {
-		super(vis, 1, updatable);
+		super(vis, NUM_ARGS, updatable);
 	}
 
 	@Override

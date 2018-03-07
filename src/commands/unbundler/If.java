@@ -7,7 +7,8 @@ import parser.Parser;
 import view.Visualizer;
 
 public class If extends ControlUnbundler{
-
+	
+	private static final int NUM_ARGS = 2;
 
 	private List<String> expression;
 	private ArrayList<String> unbundledArray;
@@ -16,7 +17,7 @@ public class If extends ControlUnbundler{
 	private boolean executeCommands;
 
 	public If(Visualizer vis, Parser p) {
-		super(vis, 2, p);
+		super(vis, NUM_ARGS, p);
 	}
 
 	/**

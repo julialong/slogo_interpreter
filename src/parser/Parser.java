@@ -50,11 +50,15 @@ public class Parser {
 			}
 			ans = node.execute();
 		}
-		input.clear();
-		for (String s : temp) {
-			input.add(s);
-		}
+		clearAndAdd(input, temp);	
 		return ans;
+	}
+
+	private void clearAndAdd(List<String> target, List<String> source) {
+		target.clear();
+		for (String current : source) {
+			target.add(current);
+		}
 	}
 
 	private Boolean isArgument(String string) {

@@ -7,8 +7,10 @@ import view.Visualizer;
 
 public class Sum extends NonUpdatableDoubleArgs {
 
+	private static final int NUM_ARGS = 2;
+	
 	public Sum(Visualizer vis) {
-		super(vis, 2);
+		super(vis, NUM_ARGS);
 	}
 
 	@Override

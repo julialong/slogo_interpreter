@@ -11,9 +11,10 @@ import view.Visualizer;
 
 public class Tell extends Multiple {
 	
+	private static final int NUM_ARGS = 1;
 
 	public Tell(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
-		super(vis, parser, actives, updatables, 1);
+		super(vis, parser, actives, updatables, NUM_ARGS);
 	}
 
 	@Override

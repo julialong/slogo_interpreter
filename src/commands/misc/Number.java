@@ -7,9 +7,11 @@ import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
 public class Number extends NonUpdatableDoubleArgs {
+	
+	private static final int NUM_ARGS = 1;
 
 	public Number(Visualizer vis) {
-		super(vis, 1);
+		super(vis, NUM_ARGS);
 	}
 	
 	@Override

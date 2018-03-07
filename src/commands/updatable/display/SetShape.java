@@ -8,8 +8,10 @@ import view.Visualizer;
 
 public class SetShape extends UpdatableCommand {
 	
+	private static final int NUM_ARGS = 1;
+	
 	public SetShape(Visualizer vis, Updatable updatable) {
-		super(vis, 1, updatable);
+		super(vis, NUM_ARGS, updatable);
 	}
 
 	@Override

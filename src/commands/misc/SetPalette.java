@@ -8,10 +8,12 @@ import view.Visualizer;
 
 public class SetPalette extends UpdatableCommand {
 	
+	private static final int NUM_ARGS = 4;
+	
 	private Visualizer myVis;
 
 	public SetPalette(Visualizer vis, Updatable updatable) {
-		super(vis, 4, updatable);
+		super(vis, NUM_ARGS, updatable);
 		myVis = vis;
 	}
 

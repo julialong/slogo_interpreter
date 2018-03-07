@@ -8,8 +8,10 @@ import view.Visualizer;
 
 public class Forward extends UpdatableCommand {
 	
+	private static final int NUM_ARGS = 1;
+	
 	public Forward(Visualizer vis, Updatable updatable) {
-		super(vis, 1, updatable);
+		super(vis, NUM_ARGS, updatable);
 	}
 
 	@Override

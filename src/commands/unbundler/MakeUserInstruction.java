@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MakeUserInstruction extends ControlUnbundler{
+public class MakeUserInstruction extends ControlUnbundler {
+	
+	private static final int NUM_ARGS = 3;
 
 	private String commandName;
     private List<String> parameters;
@@ -16,7 +18,7 @@ public class MakeUserInstruction extends ControlUnbundler{
     private Map<String, Function> dictionary;
     
     public MakeUserInstruction(Visualizer vis, Parser p, Map<String, Function> dict) {
-		super(vis, 3, p);
+		super(vis, NUM_ARGS, p);
 		dictionary = dict;
 	}
 

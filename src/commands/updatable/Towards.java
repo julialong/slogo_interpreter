@@ -7,9 +7,11 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class Towards extends UpdatableCommand {
+	
+	private static final int NUM_ARGS = 2;
 
 	public Towards(Visualizer vis, Updatable updatable) {
-		super(vis, 2, updatable);
+		super(vis, NUM_ARGS, updatable);
 	}
 
 	@Override

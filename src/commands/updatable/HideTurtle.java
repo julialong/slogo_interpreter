@@ -7,9 +7,11 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class HideTurtle extends UpdatableCommand {
+	
+	private static final int NUM_ARGS = 0;
 
 	public HideTurtle(Visualizer vis, Updatable updatable) {
-		super(vis, 0, updatable);
+		super(vis, NUM_ARGS, updatable);
 	}
 
 	@Override

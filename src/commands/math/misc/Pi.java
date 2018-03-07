@@ -6,9 +6,11 @@ import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
 public class Pi extends NonUpdatableDoubleArgs {
+	
+	private static final int NUM_ARGS = 0;
 
 	public Pi(Visualizer vis) {
-		super(vis, 0);
+		super(vis, NUM_ARGS);
 	}
 
 	@Override

@@ -7,9 +7,11 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class SetPenSize extends UpdatableCommand {
+	
+	private static final int NUM_ARGS = 1;
 
 	public SetPenSize(Visualizer vis, Updatable updatable) {
-		super(vis, 1, updatable);
+		super(vis, NUM_ARGS, updatable);
 	}
 
 	@Override

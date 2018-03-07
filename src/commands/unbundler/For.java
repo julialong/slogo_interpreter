@@ -8,8 +8,10 @@ import view.Visualizer;
 
 public class For extends ControlUnbundler {
 	
+	private static final int NUM_ARGS = 2;
+	
     public For(Visualizer vis, Parser p) {
-		super(vis, 2, p);
+		super(vis, NUM_ARGS, p);
 	}
 
 	private String variable;

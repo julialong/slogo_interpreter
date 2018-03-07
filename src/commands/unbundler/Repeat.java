@@ -8,15 +8,16 @@ import parser.Parser;
 import view.Visualizer;
 
 public class Repeat extends ControlUnbundler {
+	
+	private static final int NUM_ARGS = 2;
 
 	private double repeat;
-
 	private List<String> expression;
 	private LinkedList<String> unbundledArray;
 	
 
 	public Repeat(Visualizer vis, Parser p) {
-		super(vis, 2, p);
+		super(vis, NUM_ARGS, p);
 	}
 
 	/**

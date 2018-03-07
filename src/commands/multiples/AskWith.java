@@ -10,9 +10,11 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class AskWith extends Multiple {
+	
+	private static final int NUM_ARGS = 2;
 
 	public AskWith(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
-		super(vis, parser, actives, updatables, 2);
+		super(vis, parser, actives, updatables, NUM_ARGS);
 	}
 
 	@Override

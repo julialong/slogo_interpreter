@@ -5,8 +5,10 @@ import view.Visualizer;
 
 public class Exception extends Command {
 	
+	private static final int NUM_ARGS = 0;
+	
 	public Exception(Visualizer vis) {
-		super(vis, 0);
+		super(vis, NUM_ARGS);
 	}
 
 	@Override

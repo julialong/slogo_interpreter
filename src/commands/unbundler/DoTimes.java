@@ -8,14 +8,15 @@ import view.Visualizer;
 
 
 public class DoTimes extends ControlUnbundler {
+	
+	private static final int NUM_ARGS = 2;
 
 	private String variable;
 	private double end;
-
 	private ArrayList<String> unbundledArray;
 	
 	public DoTimes(Visualizer vis, Parser p) {
-		super(vis, 2, p);
+		super(vis, NUM_ARGS, p);
 	}
 	
 

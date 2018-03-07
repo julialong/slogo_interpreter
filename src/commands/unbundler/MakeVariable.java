@@ -8,12 +8,14 @@ import parser.Parser;
 import view.Visualizer;
 
 public class MakeVariable extends ControlUnbundler{
+	
+	private static final int NUM_ARGS = 2;
 
 	private List<String> expression;
 	private Map<String, String> dictionary;
 	
 	public MakeVariable(Visualizer vis, Parser p, Map<String, String> dict) {
-		super(vis, 2, p);
+		super(vis, NUM_ARGS, p);
 		dictionary = dict;
 	}
 

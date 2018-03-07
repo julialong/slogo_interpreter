@@ -7,10 +7,12 @@ import view.Visualizer;
 
 public class SetBackground extends NonUpdatableDoubleArgs {
 	
+	private static final int NUM_ARGS = 1;
+	
 	private Visualizer myVis;
 
 	public SetBackground(Visualizer vis, int num_args) {
-		super(vis, 1);
+		super(vis, NUM_ARGS);
 		myVis = vis;
 	}
 

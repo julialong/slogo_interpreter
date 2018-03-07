@@ -6,9 +6,11 @@ import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
 public class Pow extends NonUpdatableDoubleArgs {
+	
+	private static final int NUM_ARGS = 2;
 
 	public Pow(Visualizer vis) {
-		super(vis, 2);
+		super(vis, NUM_ARGS);
 	}
 
 	@Override

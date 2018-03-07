@@ -5,9 +5,11 @@ import java.util.List;
 import view.Visualizer;
 
 public class Or extends Boolean {
+	
+	private static final int NUM_ARGS = 2;
 
 	public Or(Visualizer vis) {
-		super(vis, 2);
+		super(vis, NUM_ARGS);
 	}
 
 	@Override

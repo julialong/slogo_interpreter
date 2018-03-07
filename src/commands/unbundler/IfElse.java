@@ -8,15 +8,16 @@ import view.Visualizer;
 
 public class IfElse extends ControlUnbundler {
 	
+	private static final int NUM_ARGS = 3;
+	
 
 	private List<String> expression;
     private List<String> unbundledArray;
-
     private boolean executeCommands;
     private Parser parser;
 
     public IfElse(Visualizer vis, Parser p) {
-		super(vis, 3, p);
+		super(vis, NUM_ARGS, p);
 	}
 
     /**

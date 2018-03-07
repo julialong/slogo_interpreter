@@ -6,8 +6,10 @@ import view.Visualizer;
 
 public class Not extends Boolean {
 	
+	private static final int NUM_ARGS = 1;
+	
 	public Not(Visualizer vis) {
-		super(vis, 1);
+		super(vis, NUM_ARGS);
 	}
 	
 	@Override
