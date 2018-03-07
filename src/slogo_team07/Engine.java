@@ -25,7 +25,7 @@ public class Engine implements ChangeListener {
 	}
 
 	private void addTurtle() {
-		Turtle turtle = new Turtle();
+		Turtle turtle = new Turtle("0");
 		myVis.addDrawable(turtle);
 		myUpdatables.put(Integer.toString(0), turtle);
 	}

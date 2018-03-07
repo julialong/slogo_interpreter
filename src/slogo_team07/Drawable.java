@@ -15,17 +15,17 @@ public interface Drawable {
 	
 	public void setPane(Pane pane);
 
-	public Double getX();
+	public double getX();
 
-	public Double getY();
+	public double getY();
 
-	public Double getHeading();
+	public double getHeading();
 	
 	public boolean getIsDown();
 
 	public Color getColor();
 
-	public Double getPenWidth();
+	public double getPenWidth();
 	
 	public boolean getStatus();
 }
