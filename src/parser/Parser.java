@@ -7,7 +7,6 @@ import java.util.Map;
 
 import commands.Command;
 import commands.CommandFactory;
-import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class Parser {
@@ -42,18 +41,13 @@ public class Parser {
 			return next;
 		}
 
-		List<Updatable> actives = myCommandFactory.getActiveUpdatables();
 		String ans = null;
 		List<String> temp = input;
-		List<Command> commandables = myCommandFactory.createCommands(next, actives);
-		System.out.println(commandables);
-		System.out.println(commandables.size());
-		for (Command node : commandables) {
+		for (Command node : myCommandFactory.createCommands(next)) {
 			temp = new LinkedList<>(input);
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
 			}
-			System.out.println("executing2");
 			ans = node.execute();
 		}
 		input.clear();

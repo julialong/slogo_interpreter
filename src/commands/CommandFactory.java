@@ -36,7 +36,7 @@ public class CommandFactory {
 		updateLanguage(DEFAULT);
 	}
 
-	public List<Command> createCommands(String command, List<Updatable> actives) {
+	public List<Command> createCommands(String command) {
 		String keyword = myLanguages.get(command);
 		List<Command> commandables = new ArrayList<>();
 		try {
@@ -46,7 +46,7 @@ public class CommandFactory {
 			Constructor<?> ctor;
 			if (clazz.getSuperclass().equals(UpdatableCommand.class)) {
 				ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, Updatable.class });
-				for (Updatable active : actives) {
+				for (Updatable active : getActiveUpdatables()) {
 					commandables.add((Command) ctor.newInstance(myVis, active));
 				}
 			} else if (clazz.getSuperclass().equals(ControlUnbundler.class)) {
@@ -84,7 +84,7 @@ public class CommandFactory {
 		}
 	}
 
-	public List<Updatable> getActiveUpdatables() {
+	private List<Updatable> getActiveUpdatables() {
 		return myUpdatables.keySet().stream()
 				.filter(myActives::contains)
 				.map(myUpdatables::get)
