@@ -28,12 +28,7 @@ public abstract class Multiple extends NonUpdatableStringArgs implements ListMod
 		myUpdatables = updatables;
 	}
 	
-	@Override
-	protected double calcValue(List<String> args) {
-		return manage(argsToList(args));
-	}
-	
-	private List<String> argsToList(List<String> args) {
+	protected List<String> argsToList(List<String> args) {
 		List<String> input = new ArrayList<>();
 		for (String arg : args) {
 			input.addAll(Arrays.asList(arg.split(" ")));
@@ -57,6 +52,4 @@ public abstract class Multiple extends NonUpdatableStringArgs implements ListMod
 	protected Map<String, Updatable> getUpdatables() {
 		return myUpdatables;
 	}
-	
-	protected abstract double manage(List<String> input);
 }

@@ -17,8 +17,15 @@ public class Tell extends Multiple {
 		super(vis, parser, actives, updatables, NUM_ARGS);
 	}
 
+	private void addTurtle(String id) {
+		Turtle turtle = new Turtle(id);
+		getUpdatables().put(id, turtle);
+		getVis().addDrawable(turtle);
+	}
+
 	@Override
-	public double manage(List<String> input) {
+	protected double calcValue(List<String> args) {
+		List<String> input = argsToList(args);
 		int[] brackets = findBrackets(input, 0);
 		getActives().clear();
 		String num = "0";
@@ -32,13 +39,6 @@ public class Tell extends Multiple {
 		
 		modifyList(input, brackets[1]);
 		
-		double ans = Double.parseDouble(num);
-		return ans;
-	}
-
-	private void addTurtle(String id) {
-		Turtle turtle = new Turtle(id);
-		getUpdatables().put(id, turtle);
-		getVis().addDrawable(turtle);
+		return Double.parseDouble(num);
 	}
 }

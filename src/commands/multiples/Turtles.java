@@ -15,9 +15,9 @@ public class Turtles extends Multiple {
 	public Turtles(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
 		super(vis, parser, actives, updatables, NUM_ARGS);
 	}
-
+	
 	@Override
-	public double manage(List<String> input) {
+	protected double calcValue(List<String> args) {
 		return getUpdatables().size();
 	}
 
