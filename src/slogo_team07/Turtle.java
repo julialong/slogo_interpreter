@@ -291,6 +291,11 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
+	public double setPenSize(double pixels) {
+		return 0;
+	}
+
+	@Override
 	public double setPenWidth(double pixels) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -307,4 +312,21 @@ public class Turtle implements Drawable, Updatable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public double setPalette(int dex, double r, double g, double b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPen(boolean b) {
+		return 0;
+	}
+
+	@Override
+	public double setPenSize(Double aDouble) {
+		return 0;
+	}
+
 }

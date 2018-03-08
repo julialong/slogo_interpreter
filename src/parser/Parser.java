@@ -19,7 +19,6 @@ public class Parser {
 
 	public double parse(String s) {
 		List<String> input = mySanitizer.sanitize(s);
-
 		double ans = -1;
 		while (!input.isEmpty()) {
 			ans = Double.parseDouble(traverse(input));

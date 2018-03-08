@@ -80,7 +80,7 @@ public class DoTimes extends ControlUnbundler {
 	private double executeExpression(List<String> expression) {
 		double answer = 0;
 		if (expression.size() > 0){
-			answer = getParser().parse(String.join(" ", expression));
+			answer = getMyParser().parse(String.join(" ", expression));
 		}
 		return answer;
 	}
