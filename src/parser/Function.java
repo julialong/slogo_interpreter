@@ -14,6 +14,7 @@ public class Function {
 	}
 	
 	public void inject(String arg) {
+		System.out.println("arg: " + arg);
 		myArgs.add(arg);
 	}
 	
@@ -22,10 +23,10 @@ public class Function {
 	}
 	
 	public List<String> replaceParams() {
-		List<String> replaced = new ArrayList<String>();
+		List<String> replaced = new ArrayList<>(myCommands);
 		for (int i=0; i < myParams.size(); i++) {
 			String param = myParams.get(i);
-			for (String command : myCommands) {
+			for (String command : replaced) {
 				if (command.equals(param)) {
 					replaced.add(myArgs.get(i));
 				} else {

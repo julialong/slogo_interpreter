@@ -33,6 +33,7 @@ public class Sanitizer {
 		
 		String[] arr = whitespaced.split(" ");
 		int i = 0;
+		System.out.println(myFuncMap);
 		while (i < arr.length) {
 			String curr = arr[i];
 			if (myVarMap.containsKey(curr)) {
@@ -40,6 +41,7 @@ public class Sanitizer {
 				ans.add(replaced);
 				i += 1;
 			} else if (myFuncMap.containsKey(curr)) {
+				System.out.println("inside " + curr);
 				Function func = myFuncMap.get(curr);
 				for (int j=0; j < func.numArgs(); j++) {
 					func.inject(arr[i + j + 1]);

@@ -72,7 +72,6 @@ public class CommandFactory {
 
 	public Set<String> getActives() {
 		return myActives;
-
 	}
 
 	public Visualizer getVis() {
@@ -106,5 +105,9 @@ public class CommandFactory {
 		factory_map.put("Updatable", new UpdatableFactory(this));
 		factory_map.put("Unbundler", new UnbundlerFactory(this));
 		return factory_map;
+	}
+
+	public boolean isCommand(String string) {
+		return myLanguages.containsKey(string);
 	}
 }

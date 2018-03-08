@@ -65,6 +65,7 @@ public class Parser {
 	private Boolean isArgument(String string) {
 		return string.matches("-?[0-9]+\\.?[0-9]*") 
 				|| string.matches("^\\[.*]$")
-				|| string.matches(":[a-zA-Z]+");
+				|| string.matches(":[a-zA-Z]+")
+				|| !myCommandFactory.isCommand(string);
 	}
 }
