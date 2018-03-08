@@ -3,16 +3,22 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Function {
+import commands.NonUpdatableDoubleArgs;
+import view.Visualizer;
+
+public class Function extends NonUpdatableDoubleArgs {
 	private List<String> myArgs = new ArrayList<>();
 	private List<String> myParams;
 	private List<String> myCommands;
+	private Parser myParser;
 	
-	public Function(List<String> params, List<String> commands) {
+	public Function(Parser parser, Visualizer vis, List<String> params, List<String> commands) {
+		super(vis, params.size());
 		myParams = params;
 		myCommands = commands;
 	}
 	
+	@Override
 	public void inject(String arg) {
 		myArgs.add(arg);
 	}
@@ -34,5 +40,11 @@ public class Function {
 		}
 		myArgs.clear();
 		return replaced;
+	}
+
+	@Override
+	protected double calcValue(List<Double> args) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
