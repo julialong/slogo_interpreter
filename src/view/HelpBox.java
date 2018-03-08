@@ -59,7 +59,7 @@ public class HelpBox extends Group {
 
     private Group help(String language){
     	helpVB = new VBox(5);
-    	helpVB.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
+    	helpVB.setPadding(new Insets(Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset)));
     	
     	Text title = new Text(Resources.getString("HelpTitle"));
     	title.getStyleClass().add("title2");

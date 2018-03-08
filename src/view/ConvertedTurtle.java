@@ -137,8 +137,7 @@ public class ConvertedTurtle	{
 	}
 
 	private SimpleObjectProperty makePenColor(String penColorString)	{
-		ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-		"Yellow", "Green", "Blue", "Purple", "Pink");
+		ObservableList<String> penList = Visualizer.possPenColors;
 
 		ComboBox penColorMenu = new ComboBox(penList);
 

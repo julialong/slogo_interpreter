@@ -39,7 +39,7 @@ public class Console extends AnchorPane implements TextInput {
 	private int width = 700;
 	private int cHeight = 100;
 	private int hHeight = 80;
-	private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt("Inset"))/3;
+	private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt(Visualizer.inset))/3;
 	private int bWidth = 80;
 	private int commandIndex = -1;   // will track what command is "last" for scrollability
 
@@ -60,8 +60,8 @@ public class Console extends AnchorPane implements TextInput {
 		clearer = setClearer();
 		pastCommands = new ArrayList<>();
 
-		VBox myButtons = new VBox(Resources.getInt("Inset"));
-		myButtons.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
+		VBox myButtons = new VBox(Resources.getInt(Visualizer.inset));
+		myButtons.setPadding(new Insets(Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset)));
 		myButtons.getChildren().addAll(runner, clearer);
 		this.getChildren().add(myButtons);
 		addElements();
