@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
+	private Visualizer myVis;
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
 	private Stage myStage;
@@ -35,7 +36,8 @@ public class Toolbar extends AnchorPane {
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
 	
-	public Toolbar(Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
+	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
+		myVis = v;
 		myCanvasObjects = canvas;
 		myFileWriter = fileWriter;
 		myFileReader = fileReader;
@@ -199,7 +201,7 @@ public class Toolbar extends AnchorPane {
 	
 	private Button colorButton() {
 		Button colorButton = new Button("Color Indices");
-		colorButton.setOnAction(e -> new ColorPalettes());
+		colorButton.setOnAction(e -> new ColorPalettes(myVis));
 		return colorButton;
 	}
 	
