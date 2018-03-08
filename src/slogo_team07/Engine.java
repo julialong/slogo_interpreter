@@ -19,7 +19,7 @@ public class Engine implements ChangeListener {
 		
 		changeInput(INIT_TURTLE);
 	}
-	
+
 	@Override
 	public void changeInput(String input) {
 		myParser.parse(input);

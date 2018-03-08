@@ -34,12 +34,8 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
 	@Override
 	protected double calcValue(List<String> args) {
 		String unbundled = unbundle(argsToExp(args));
-<<<<<<< HEAD
 		System.out.println("unbundled: " + unbundled);
 		return myParser.parse(unbundled);
-=======
-		return parser.parse(unbundled);
->>>>>>> ben
 	}
 	
 	protected abstract String unbundle(List<String> exp);
