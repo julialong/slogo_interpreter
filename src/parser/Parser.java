@@ -1,9 +1,7 @@
 package parser;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import commands.Command;
 import commands.factory.CommandFactory;
@@ -12,13 +10,11 @@ import view.Visualizer;
 public class Parser {
 
 	private CommandFactory myCommandFactory;
-	private Map<String, String> myVarMap = new HashMap<>();
-	private Map<String, Function> myFuncMap = new HashMap<>();
 	private Sanitizer mySanitizer;
 
 	public Parser(Visualizer vis) {
-		myCommandFactory = new CommandFactory(myVarMap, myFuncMap, vis, this);
-		mySanitizer = new Sanitizer(myVarMap, myFuncMap);
+		myCommandFactory = new CommandFactory(vis, this);
+		mySanitizer = new Sanitizer();
 	}
 
 	public double parse(String s) {
@@ -34,12 +30,14 @@ public class Parser {
 		if (input.isEmpty()) {
 			return null;
 		}
-		
+
 		String next = input.remove(0).toLowerCase();
-		if (isArgument(next)) {
+		if (isVariable(next)) {
+			return isRegistered(next) ? myCommandFactory.getVar(next) : next;
+		} else if (isArgument(next) || !isRegistered(next)) {
 			return next;
 		}
-		
+
 		String ans = null;
 		List<String> temp = input;
 		for (Command node : myCommandFactory.createCommands(next)) {
@@ -47,7 +45,6 @@ public class Parser {
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
 			}
-			System.out.println("executing");
 			ans = node.execute();
 		}
 		clearAndAdd(input, temp);	
@@ -63,8 +60,14 @@ public class Parser {
 
 	private Boolean isArgument(String string) {
 		return string.matches("-?[0-9]+\\.?[0-9]*") 
-				|| string.matches("^\\[.*]$")
-				|| string.matches(":[a-zA-Z]+")
-				|| !myCommandFactory.isCommand(string);
+				|| string.matches("^\\[.*]$");
+	}
+
+	private boolean isVariable(String string) {
+		return string.matches(":[a-zA-Z]+");
+	}
+
+	private boolean isRegistered(String var) {
+		return myCommandFactory.isRegistered(var);
 	}
 }

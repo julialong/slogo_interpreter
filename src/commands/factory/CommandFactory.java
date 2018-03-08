@@ -28,21 +28,23 @@ public class CommandFactory {
 	private Map<String, String> myLanguages = new HashMap<>();
 	private Set<String> myActives = new HashSet<>();
 	private Map<String, Updatable> myUpdatables = new HashMap<>();
+	private Map<String, Function> myFuncMap = new HashMap<>();
+	private Map<String, String> myVarMap = new HashMap<>();
 	private Visualizer myVis;
 	private Parser myParser;
-	private Map<String, String> myVarMap;
-	private Map<String, Function> myFuncMap;
 	
-	public CommandFactory(Map<String, String> var_map, Map<String, Function> func_map, Visualizer vis, Parser parser) {
+	public CommandFactory(Visualizer vis, Parser parser) {
 		myVis = vis;
 		myParser = parser;
-		myVarMap = var_map;
-		myFuncMap = func_map;
 		
 		updateLanguage(DEFAULT);
 	}
 
 	public List<Command> createCommands(String command) {
+		if (myFuncMap.containsKey(command)) {
+			return Arrays.asList(myFuncMap.get(command));
+		}
+		
 		String keyword = myLanguages.get(command);
 		Factory factory = myFactoryMap.get(myFactories.getString(keyword));
 		try {
@@ -106,5 +108,15 @@ public class CommandFactory {
 
 	public boolean isCommand(String string) {
 		return myLanguages.containsKey(string);
+	}
+
+	public String getVar(String variable) {
+		return myVarMap.get(variable);
+	}
+
+	public boolean isRegistered(String string) {
+		return myVarMap.containsKey(string) 
+				|| myLanguages.containsKey(string)
+				|| myFuncMap.containsKey(string);
 	}
 }
