@@ -1,5 +1,8 @@
 package slogo_team07;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.animation.Animation;
 import javafx.animation.PathTransition;
 import javafx.geometry.Point2D;
@@ -317,7 +320,7 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double getPenColor() {
-		List<String> myColors = new ArrayList<>()	{{
+		List<String> myColors = new ArrayList<String>()	{{
 			add("Black");
 			add("White");
 			add("Red");

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import commands.Result;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;

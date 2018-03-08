@@ -31,7 +31,6 @@ public class Toolbar extends AnchorPane {
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
-	private Visualizer myVis;
 	
 	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
 		myVis = v;
@@ -88,11 +87,8 @@ public class Toolbar extends AnchorPane {
 	//need to send tell command to create initial turtle on new window
 	private Button windowButton()	{
 		Button windowButton = new Button("New Window");
-    	windowButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				new Visualizer(new Stage(), myVis.getChangeListener());
-			}
+    	windowButton.setOnAction(e -> {
+			new Visualizer(new Stage(), myVis.getChangeListener());
 		});
     	return windowButton;
     }
@@ -109,13 +105,10 @@ public class Toolbar extends AnchorPane {
 	//what does julia want me to do with chosen file
 	private Button loadButton()	{
 		Button loadButton = new Button("Load");
-    	loadButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				FileChooser fc = new FileChooser();
-				fc.setTitle(Resources.getString("ChooserTitle"));
-				File file = fc.showOpenDialog(new Stage());
-			}
+    	loadButton.setOnAction(e -> {
+			FileChooser fc = new FileChooser();
+			fc.setTitle(Resources.getString("ChooserTitle"));
+			File file = fc.showOpenDialog(new Stage());
 		});
     	return loadButton;
     }
