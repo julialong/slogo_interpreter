@@ -47,7 +47,6 @@ public class MakeVariable extends ControlUnbundler{
 	}
 
 	/**
-	 * TODO: Unsure if this correctly modifies map
 	 * @param variable string variable name
 	 */
 	private void addVariable(String variable) {

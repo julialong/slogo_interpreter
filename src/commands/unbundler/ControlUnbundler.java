@@ -12,30 +12,11 @@ import view.Visualizer;
 
 public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
 	
-	private static final String LEFT_BRACE = "[";
-	private static final String RIGHT_BRACE = "]";
-	
-	private Parser parser;
+	private Parser myParser;
 
-	public ControlUnbundler(Visualizer vis, int num_args, Parser p) {
+	ControlUnbundler(Visualizer vis, int num_args, Parser p) {
 		super(vis, num_args);
-		parser = p;
-	}
-
-	/**
-	 * @param current is the current string
-	 * @return true if the current string is not a left bracket, false otherwise
-	 */
-	protected boolean notLeftBracket (String current){
-		return !current.equals(LEFT_BRACE);
-	}
-
-	/**
-	 * @param current is the current string
-	 * @return true if the current string is not a right bracket, false otherwise
-	 */
-	protected boolean notRightBracket (String current){
-		return !current.equals(RIGHT_BRACE);
+		myParser = p;
 	}
 	
 	private List<String> argsToExp(List<String> args) {
@@ -43,12 +24,11 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
 		for (String arg : args) {
 			exp.addAll(Arrays.asList(arg.split(" ")));
 		}
-		
 		return exp;
 	}
 	
-	protected Parser getParser() {
-		return parser;
+	Parser getMyParser() {
+		return myParser;
 	}
 
 	@Override
@@ -56,7 +36,7 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
 		System.out.println(args);
 		String unbundled = unbundle(argsToExp(args));
 		System.out.println("unbundled: " + unbundled);
-		return parser.parse(unbundled);
+		return myParser.parse(unbundled);
 	}
 	
 	protected abstract String unbundle(List<String> exp);

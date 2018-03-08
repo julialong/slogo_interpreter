@@ -1,4 +1,6 @@
-package parser;
+package file_managers;
+
+import parser.Function;
 
 import java.io.*;
 import java.util.Map;
@@ -28,14 +30,14 @@ public class ContentWriter {
      * @param functionMap is the map of function names to values
      * @param filename is the name of the file we want to write to
      */
-    public void writeAll(Map<String,String> variableMap, Map<String,Function> functionMap, String filename) {
+    public void writeAll(Map<String,String> variableMap, Map<String, Function> functionMap, String filename) throws IOException {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "utf-8"))){
             myWriter = writer;
             writeVariables(variableMap);
             writeCommands(functionMap);
             }
         catch (Exception e) {
-            e.printStackTrace();
+            throw new IOException("Bad input.");
         }
     }
 

@@ -1,4 +1,6 @@
-package parser;
+package file_managers;
+
+import parser.Function;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +22,12 @@ public class WriterTest {
         Map<String, Function> test2 = new HashMap<>();
         test2.put("alpha", f);
         ContentWriter cw = new ContentWriter();
-        cw.writeAll(test, test2, "data/TEST.txt");
+        try {
+            cw.writeAll(test, test2, "data/TEST.txt");
+        }
+        catch (Exception e) {
+            System.out.print("Bad input.");
+        }
 
         Map<String, String> testVars = new HashMap<>();
         Map<String, Function> testFunc = new HashMap<>();

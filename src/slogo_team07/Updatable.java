@@ -42,4 +42,8 @@ public interface Updatable {
 	double setShape(int dex);
 
 	double setPalette(int dex, double r, double g, double b);
+
+	double setPen(boolean b);
+
+	double setPenSize(Double aDouble);
 }

@@ -125,4 +125,7 @@ public class Visualizer {
 		myCanvas.updateCanvas(result);
 	}
 
+	public double setPalette(int i, Double aDouble, Double aDouble1, Double aDouble2) {
+		return 0.0;
+	}
 }

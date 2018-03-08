@@ -52,7 +52,7 @@ public class If extends ControlUnbundler{
 		if (expression.size() <= 0) {
 			executeCommands = false;
 		} else {
-			double answer = getParser().parse(String.join(" ", expression));
+			double answer = getMyParser().parse(String.join(" ", expression));
 			executeCommands = (answer != 0.0);
 		}
 		return executeCommands;
