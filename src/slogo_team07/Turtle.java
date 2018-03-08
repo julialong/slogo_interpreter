@@ -29,7 +29,10 @@ public class Turtle implements Drawable, Updatable {
 	private Pane myPane;
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
+<<<<<<< HEAD
 	private double myPenWidth = 1.0;
+=======
+>>>>>>> ben
 	private double myId;
 
 	public Turtle(String id) {
@@ -203,7 +206,11 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public double setPenDown(boolean down) {
+=======
+	public double setPen(boolean down) {
+>>>>>>> ben
 		isDown = down;
 		return isDown ? 1.0 : 0.0;
 	}
@@ -269,6 +276,7 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double getPenColor() {
+<<<<<<< HEAD
 		List<String> myColors = new ArrayList<>()	{{
 			add("Black");
 			add("White");
@@ -287,11 +295,18 @@ public class Turtle implements Drawable, Updatable {
 			}
 		}
 
+=======
+		// TODO Auto-generated method stub
+>>>>>>> ben
 		return 0;
 	}
 
 	@Override
+<<<<<<< HEAD
 	public double setPenWidth(double pixels) {
+=======
+	public double setPenSize(double pixels) {
+>>>>>>> ben
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -307,11 +322,14 @@ public class Turtle implements Drawable, Updatable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+<<<<<<< HEAD
 
 	@Override
 	public double setPalette(int dex, double r, double g, double b) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+=======
+>>>>>>> ben
 	
 }
