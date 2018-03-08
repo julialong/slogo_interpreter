@@ -30,7 +30,8 @@ public class ColorPalettes extends Group {
 	private Scene initPage(){
 		Group root = new Group();
 		root.getChildren().add(makeVBox());
-		Scene scene = new Scene(root, 600, Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
+		int sceneSize = 600;
+		Scene scene = new Scene(root, sceneSize, Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		return scene;
 	}

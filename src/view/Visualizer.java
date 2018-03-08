@@ -213,7 +213,8 @@ public class Visualizer {
 
 		private IndCol(int anInd, Color aColor)	{
 			ind = new SimpleIntegerProperty(anInd);
-			Shape colorBox = new Rectangle(15, 15, aColor);
+			int boxDim = 15;
+			Shape colorBox = new Rectangle(boxDim, boxDim, aColor);
 			color = new SimpleObjectProperty(colorBox);
 		}
 

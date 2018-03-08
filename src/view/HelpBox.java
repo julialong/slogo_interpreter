@@ -30,7 +30,9 @@ public class HelpBox extends Group {
      */
     public HelpBox(String language)    {
     	myGroup = help(language);
-		helpInternal = new Scene(myGroup, 600, 800);
+        int helpWidth = 600;
+        int helpHeight = 800;
+		helpInternal = new Scene(myGroup, helpWidth, helpHeight);
 		helpInternal.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		scroll();
 		Stage helpBox = new Stage();
@@ -43,15 +45,18 @@ public class HelpBox extends Group {
     	ScrollBar sc = new ScrollBar();
     	sc.setLayoutX(helpInternal.getWidth()-sc.getWidth());
         sc.setMin(0);
-        sc.setPrefHeight(800);
+        int prefHeight = 800;
+        sc.setPrefHeight(prefHeight);
         sc.setOrientation(Orientation.VERTICAL);
         myGroup.getChildren().add(sc);
         
-        sc.valueProperty().addListener((ov, old_val, new_val) -> helpVB.setLayoutY(-5 * new_val.doubleValue()));
+        int scrollScale = -5;
+        sc.valueProperty().addListener((ov, old_val, new_val) -> helpVB.setLayoutY(scrollScale * new_val.doubleValue()));
     }
 
     private Group help(String language){
-    	helpVB = new VBox(5);
+        int vbSpacing = 5;
+    	helpVB = new VBox(vbSpacing);
     	helpVB.setPadding(new Insets(Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset)));
     	
     	Text title = new Text(Resources.getString("HelpTitle"));
