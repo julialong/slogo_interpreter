@@ -14,9 +14,9 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
 	
 	private Parser myParser;
 
-	ControlUnbundler(Visualizer vis, int num_args, Parser p) {
-		super(vis, num_args);
-		myParser = p;
+	ControlUnbundler(Visualizer vis, int numArgs, Parser parser) {
+		super(vis, numArgs);
+		myParser = parser;
 	}
 	
 	private List<String> argsToExp(List<String> args) {

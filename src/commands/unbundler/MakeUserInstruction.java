@@ -18,8 +18,11 @@ public class MakeUserInstruction extends ControlUnbundler {
 	private Map<String, Function> dictionary;
 	private Visualizer visualizer;
 
-	public MakeUserInstruction(Visualizer vis, Parser p, Map<String, Function> dict) {
-		super(vis, NUM_ARGS, p);
+	private int[] variableIndex;
+	private int[] commandIndex;
+
+	public MakeUserInstruction(Visualizer vis, Parser parser, Map<String, Function> dict) {
+		super(vis, NUM_ARGS, parser);
 		dictionary = dict;
 		visualizer = vis;
 	}
@@ -31,15 +34,23 @@ public class MakeUserInstruction extends ControlUnbundler {
 	 */
 	public String unbundle(List<String> exp) {
 		commandName = exp.get(0);
-		int[] variableIndex = findBrackets(exp, 0);
-		int[] commandIndex = findBrackets(exp, 1);
-		parameters = new ArrayList<>();
-		commands = new ArrayList<>();
+		getIndex(exp);
+		setUpLists();
 		buildExpression(exp, commandIndex[0], commandIndex[1]);
 		addVariables(exp, variableIndex[0], variableIndex[1]);
-		addFunction(commandName);
+		addFunction();
 		modifyList(exp, commandIndex[1]);
 		return Integer.toString(1);
+	}
+
+	private void getIndex(List<String> exp) {
+		variableIndex = findBrackets(exp, 0);
+		commandIndex = findBrackets(exp, 1);
+	}
+
+	private void setUpLists() {
+		parameters = new ArrayList<>();
+		commands = new ArrayList<>();
 	}
 
 	private void addVariables(List<String> exp, int start, int end) {
@@ -62,11 +73,10 @@ public class MakeUserInstruction extends ControlUnbundler {
 	}
 
 	/**
-	 * TODO: Unsure if this correctly modifies map
-	 * @param variable string variable name
+	 * Adds the current function to the map for use later
 	 */
-	private void addFunction(String variable) {
-		dictionary.put(commandName, new Function(visualizer, getParser(), parameters, commands));
+	private void addFunction() {
+		dictionary.put(commandName, new Function(visualizer, getMyParser(), parameters, commands));
 	}
 
 

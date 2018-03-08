@@ -155,12 +155,7 @@ public class SideBar extends VBox{
 		LoadButton udc = new LoadButton();
 		udc.setText(text);
 
-		udc.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				myTextInput.loadInput("\n" + udc.getText());
-			}
-		});
+		udc.setOnAction(e -> myTextInput.loadInput("\n" + udc.getText()));
 
 		uDefCommands.add(udc);
 	}

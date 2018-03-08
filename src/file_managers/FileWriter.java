@@ -1,7 +1,11 @@
 package file_managers;
 
+import javafx.scene.control.TextInputDialog;
+import view.SideBar;
+
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Writes the current states of the session to a text file so that they may be read in later
@@ -10,32 +14,46 @@ import java.util.List;
  */
 public class FileWriter {
 
-    Writer myWriter;
+    private Writer myWriter;
+    private SideBar mySideBar;
 
     /**
      * Creates a new instance of the FileWriter object
      */
-    public FileWriter() {
-
+    public FileWriter(SideBar sideBar) {
+        mySideBar = sideBar;
     }
 
     /**
      * Writes a List of Strings to a file that can be read back in later.
      * @param filename is the name of the file to be written
-     * @param type is the type of the file
-     * @param toWrite is the list of strings to write
      * @throws IOException when input is invalid
      */
-    public void writeToFile(String filename, String type, List<String> toWrite) throws IOException {
-        try {
+    public void writeToFile(String filename) throws IOException {
             myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "utf-8"));
-            myWriter.write(type);
-            writeList(toWrite);
+            writeCommands();
+            writeVariables();
             myWriter.close();
-        }
-        catch (Exception e) {
-            throw new IOException("Bad input");
-        }
+    }
+
+    /**
+     * Writes commands taken from the sidebar to the given file
+     * @throws IOException when input is invalid
+     */
+    private void writeCommands() throws IOException {
+        myWriter.write("Commands\n");
+        List<String> commands = mySideBar.exportCommands();
+        writeList(commands);
+    }
+
+    /**
+     * Writes variables taken from the sidebar to the given file
+     * @throws IOException when input is invalid
+     */
+    private void writeVariables() throws IOException {
+        myWriter.write("Variables\n");
+        List<String> variables = mySideBar.exportVariables();
+        writeList(variables);
     }
 
     /**
