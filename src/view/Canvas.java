@@ -77,12 +77,4 @@ public class Canvas {
 		return updateCanvas(myTurtles);
 	}
 	
-	protected void setColor(Color color){
-		myColor = color;
-	}
-
-	protected void setPenWidth(double width){
-		myPenWidth = width;
-	}
-	
 }
