@@ -28,8 +28,8 @@ public class DrawablesTable extends Group	{
 	private double numCols = 9;
 	private ObservableList<ConvertedTurtle> drawables = FXCollections.observableArrayList();
 
-	public DrawablesTable(Map<Drawable, List<String>> allInfo, Canvas c, Pane p)	{
-		parseInfo(allInfo, c, p);
+	public DrawablesTable(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
+		parseInfo(allInfo, v, c, p);
 		makeTable();
 
 		Scene internal = new Scene(this, colWidth * numCols, 400);
@@ -39,9 +39,9 @@ public class DrawablesTable extends Group	{
 		stage.show();
 	}
 
-	private void parseInfo(Map<Drawable, List<String>> allInfo, Canvas c, Pane p)	{
+	private void parseInfo(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
 		for (Map.Entry figure:allInfo.entrySet())	{
-			drawables.add(new ConvertedTurtle(figure, c, p));
+			drawables.add(new ConvertedTurtle(figure, v, c, p));
 		}
 	}
 

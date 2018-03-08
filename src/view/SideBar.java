@@ -34,6 +34,7 @@ public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
 	private Canvas myCanvas;
+	private Visualizer myVis;
 	private Map<Drawable, List<String>> myTurtles;
 	
 //	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
@@ -57,8 +58,9 @@ public class SideBar extends VBox{
 	 * @param canvas	canvas of program, where turtles are displayed
 	 * @param turtles	list of all the movers in the canvas
 	 */
-	public SideBar(Pane canvas, Map<Drawable, List<String>> turtles, Canvas c){
+	public SideBar(Pane canvas, Visualizer v, Map<Drawable, List<String>> turtles, Canvas c){
 		myCanvasObjects = canvas;
+		myVis = v;
 		myTurtles = turtles;
 		myCanvas = c;
 	}
@@ -86,7 +88,7 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable(myTurtles, myCanvas, myCanvasObjects);
+				new DrawablesTable(myTurtles, myVis, myCanvas, myCanvasObjects);
 				exportCommands();
 				exportVariables();
 			}

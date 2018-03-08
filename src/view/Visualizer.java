@@ -79,7 +79,7 @@ public class Visualizer {
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, drawables, myCanvas);
+		mySideBar = new SideBar(myCanvasObjects, this, drawables, myCanvas);
 		root.setRight(mySideBar.initSideBar());
 
 		myConsole = new Console();
