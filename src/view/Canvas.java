@@ -6,26 +6,17 @@
 
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.collections.FXCollections;
+import commands.Result;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import resources.keys.Resources;
 import slogo_team07.Drawable;
-import commands.Result;
 
 public class Canvas {
 	private Pane myPane;
