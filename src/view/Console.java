@@ -39,7 +39,6 @@ public class Console extends AnchorPane implements TextInput {
 	private int hHeight = 80;
 	private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt(Visualizer.inset))/3;
 	private int bWidth = 80;
-	private int commandIndex = -1;   // will track what command is "last" for scrollability
 
 	/**
 	 * Constructor for Console
