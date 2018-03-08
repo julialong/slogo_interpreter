@@ -29,9 +29,8 @@ public class Turtle implements Drawable, Updatable {
 	private Pane myPane;
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
+	private double myPenWidth;
 	private double myId;
-	private double myPenWidth = 1.0;
-	private boolean myStatus = true; //need to coordinate w back end?
 
 
 
