@@ -19,13 +19,12 @@ public class Sanitizer {
 	public List<String> sanitize(String s) {
 		String commentless = stripComments(s);
 		String whitespaced = handleWhitespace(commentless);
+		System.out.println("WHITESPACED2: " + whitespaced);
 		String replaced = replaceUnknowns(whitespaced);
 		return splitAroundBrackets(replaced);
 	}
 	
 	private String replaceUnknowns(String whitespaced) {
-		System.out.println("here: " + whitespaced);
-		System.out.println("here1: " + myVarMap);
 		List<String> ans = new LinkedList<>();
 		if (whitespaced.length() == 0) {
 			String.join(" ", ans);
@@ -34,6 +33,7 @@ public class Sanitizer {
 		String[] arr = whitespaced.split(" ");
 		int i = 0;
 		System.out.println(myFuncMap);
+		System.out.println(myVarMap);
 		while (i < arr.length) {
 			String curr = arr[i];
 			if (myVarMap.containsKey(curr)) {
@@ -41,7 +41,6 @@ public class Sanitizer {
 				ans.add(replaced);
 				i += 1;
 			} else if (myFuncMap.containsKey(curr)) {
-				System.out.println("inside " + curr);
 				Function func = myFuncMap.get(curr);
 				for (int j=0; j < func.numArgs(); j++) {
 					func.inject(arr[i + j + 1]);
@@ -53,7 +52,7 @@ public class Sanitizer {
 				i += 1;
 			}
 		}
-		System.out.println("here2: " + ans);
+		System.out.println("ANS: " + ans);
 		return String.join(" ", ans);
 	}
 	

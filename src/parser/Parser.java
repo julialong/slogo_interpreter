@@ -35,12 +35,12 @@ public class Parser {
 		if (input.isEmpty()) {
 			return null;
 		}
-
+		
 		String next = input.remove(0).toLowerCase();
 		if (isArgument(next)) {
 			return next;
 		}
-
+		
 		String ans = null;
 		List<String> temp = input;
 		for (Command node : myCommandFactory.createCommands(next)) {

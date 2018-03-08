@@ -12,7 +12,6 @@ public class If extends ControlUnbundler{
 
 	private List<String> expression;
 	private ArrayList<String> unbundledArray;
-	private Parser parser;
 
 	private boolean executeCommands;
 
@@ -53,7 +52,7 @@ public class If extends ControlUnbundler{
 		if (expression.size() <= 0) {
 			executeCommands = false;
 		} else {
-			double answer = parser.parse(String.join(" ", expression));
+			double answer = getParser().parse(String.join(" ", expression));
 			executeCommands = (answer != 0.0);
 		}
 		return executeCommands;

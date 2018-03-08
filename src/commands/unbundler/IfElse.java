@@ -14,7 +14,6 @@ public class IfElse extends ControlUnbundler {
 	private List<String> expression;
     private List<String> unbundledArray;
     private boolean executeCommands;
-    private Parser parser;
 
     public IfElse(Visualizer vis, Parser p) {
 		super(vis, NUM_ARGS, p);
@@ -44,7 +43,7 @@ public class IfElse extends ControlUnbundler {
 		if (expression.size() <= 0) {
 			executeCommands = false;
 		} else {
-			double answer = parser.parse(String.join(" ", expression));
+			double answer = getParser().parse(String.join(" ", expression));
 			executeCommands = (answer != 0.0);
 		}
 		return executeCommands;

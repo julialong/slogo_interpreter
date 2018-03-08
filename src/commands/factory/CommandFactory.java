@@ -44,9 +44,6 @@ public class CommandFactory {
 
 	public List<Command> createCommands(String command) {
 		String keyword = myLanguages.get(command);
-		System.out.println("command: " + command);
-		System.out.println("keyword: " + keyword);
-		System.out.println("factoryL " + myFactories.getString(keyword));
 		Factory factory = myFactoryMap.get(myFactories.getString(keyword));
 		try {
 			return factory.create(keyword);
