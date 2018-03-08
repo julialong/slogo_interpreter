@@ -17,18 +17,15 @@ import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 import resources.keys.Resources;
 import slogo_team07.Drawable;
-import slogo_team07.Updatable;
 
 public class DrawableAttributes	{
 	private Drawable thisTurtle;
 	private List<String> properties;
 	private List<String> propertyNames;
 	private Visualizer myVis;
-	private Canvas myCanvas;
 	private Pane myPane;
 
 	private SimpleObjectProperty id;
@@ -46,7 +43,6 @@ public class DrawableAttributes	{
 		properties = (List<String>)turtle.getValue();
 		propertyNames = new ArrayList<>();
 		myVis = vis;
-		myCanvas = canvas;
 		myPane = pane;
 
 		propertyNames.add("id");

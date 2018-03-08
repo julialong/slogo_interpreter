@@ -31,7 +31,6 @@ public class Turtle implements Drawable, Updatable {
 	private Color myColor = Color.BLACK;
 	private double myId;
 	private double myPenWidth = 1.0;
-	private boolean myStatus = true; //need to coordinate w back end?
 
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);
