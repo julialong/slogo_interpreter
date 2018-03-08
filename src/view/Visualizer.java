@@ -39,6 +39,7 @@ public class Visualizer {
 	public static final int FRAMES_PER_SECOND = 5;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+	public static final String inset = "Inset";
 	public static final ObservableList<String> possBackgroundColors = FXCollections.observableArrayList("White", "Red", "Orange",
 			"Yellow", "Green", "Blue", "Purple", "Pink");
 	public static final ObservableList<String> possPenColors = FXCollections.observableArrayList("Black", "White", "Red", "Orange",

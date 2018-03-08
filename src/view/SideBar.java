@@ -37,11 +37,6 @@ public class SideBar extends VBox{
 	private Visualizer myVis;
 	private Map<Drawable, List<String>> myTurtles;
 	
-//	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
-//			"Octopus", "Bird", "Butterfly");
-//	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-//			"Yellow", "Green", "Blue", "Purple", "Pink");
-	
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
 	private TableView commandTable;

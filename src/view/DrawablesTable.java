@@ -26,7 +26,7 @@ public class DrawablesTable extends Group	{
 	private TableView table = new TableView();
 	private double colWidth = 80;
 	private double numCols = 9;
-	private ObservableList<ConvertedTurtle> drawables = FXCollections.observableArrayList();
+	private ObservableList<DrawableAttributes> drawables = FXCollections.observableArrayList();
 
 	public DrawablesTable(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
 		parseInfo(allInfo, v, c, p);
@@ -41,7 +41,7 @@ public class DrawablesTable extends Group	{
 
 	private void parseInfo(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
 		for (Map.Entry figure:allInfo.entrySet())	{
-			drawables.add(new ConvertedTurtle(figure, v, c, p));
+			drawables.add(new DrawableAttributes(figure, v, c, p));
 		}
 	}
 
