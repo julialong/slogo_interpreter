@@ -37,6 +37,10 @@ public class Visualizer {
 	public static final int FRAMES_PER_SECOND = 5;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+	public static final List<String> possBackgroundColors = FXCollections.observableArrayList("White", "Red", "Orange",
+			"Yellow", "Green", "Blue", "Purple", "Pink");
+	public static final List<String> possPenColors = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
+			"Yellow", "Green", "Blue", "Purple", "Pink");
 	
 	private Canvas myCanvas;
 	private Pane myCanvasObjects;
@@ -48,11 +52,8 @@ public class Visualizer {
 	private ChangeListener myChangeListener;
 	private String language = "English";
 
-	protected ObservableList<IndCol> bgColors = FXCollections.observableArrayList(new IndCol(0, Color.WHITE), new IndCol(1, Color.RED), new IndCol(2, Color.ORANGE), new IndCol(3, Color.YELLOW), new IndCol(4, Color.GREEN),
-		new IndCol(5, Color.BLUE), new IndCol(6, Color.PURPLE), new IndCol(7, Color.PINK));
-
-	protected ObservableList<IndCol> penColors = FXCollections.observableArrayList( new IndCol(0, Color.BLACK), new IndCol(1, Color.WHITE), new IndCol(2, Color.RED), new IndCol(3, Color.ORANGE), new IndCol(4, Color.YELLOW),
-		new IndCol(5, Color.GREEN), new IndCol(6, Color.BLUE), new IndCol(7, Color.PURPLE), new IndCol(8, Color.PINK));
+	protected ObservableList<IndCol> bgColors = FXCollections.observableArrayList();
+	protected ObservableList<IndCol> penColors = FXCollections.observableArrayList();
 	
 	public Visualizer(Stage stage, ChangeListener change_listener) {
 		myChangeListener = change_listener;
@@ -62,6 +63,14 @@ public class Visualizer {
 		stage.setTitle(Resources.getString("Title"));
 		stage.show();
 		setupAnimation();
+
+		for (int i = 0; i < possBackgroundColors.size(); i++)	{
+			bgColors.add(new IndCol(i, Color.valueOf(possBackgroundColors.get(i))));
+		}
+
+		for (int i = 0; i < possPenColors.size(); i++)	{
+			penColors.add(new IndCol(i, Color.valueOf(possPenColors.get(i))));
+		}
 	}
 	
 	private void setupAnimation(){
@@ -100,7 +109,7 @@ public class Visualizer {
 		myConsole.language = language;
 		root.setBottom(myConsole);
 
-		myToolbar = new Toolbar(this, myCanvasObjects);
+		myToolbar = new Toolbar(myCanvasObjects);
 		myToolbar.setLanguage(language);
 		root.setTop(myToolbar.initToolbar());
 
@@ -131,12 +140,38 @@ public class Visualizer {
 	}
 
 	/**
-	 * Controller functionality that passes visual elements the necessary info to update them
+	 * Default method - Controller functionality that passes visual elements the necessary info to update them
 	 * @param result	Result ojbect passed back from Engine that gives a double return value
 	 */
 	public void runCommand(Result result)	{
-		myConsole.printResult(Double.toString(result.getRes1()));
+		runCommand(result, false);
+	}
+
+	/**
+	 * Controller functionality that passes visual elements the necessary info to update them
+	 * @param result	Result ojbect passed back from Engine that gives a double return value
+	 * @param isLast	Whether command is last in serires - only want to actually print last command result (recursive commands get long)
+	 */
+	public void runCommand(Result result, boolean isLast) {
 		myCanvas.updateCanvas(result);
+
+		if (isLast)	{
+			myConsole.printResult(Double.toString(result.getRes1()));
+		}
+	}
+
+	/**
+	 * Called by a TO command, in order to send a user-defined function to the table of user-defined functions
+	 */
+	public void addNewFunc(String functionText)	{
+		myConsole.makeUDI(functionText);
+	}
+
+	/**
+	 * Called by a MAKE or SET command, in order to send a user-defined variable to the table of variables
+	 */
+	public void addNewVar(String variable, String value)	{
+		myConsole.makeVariable(variable, value);
 	}
 
 	/**
@@ -144,7 +179,7 @@ public class Visualizer {
 	 * @param index	index within possible colors to set background to
 	 */
 	public void setBackground(int index)	{
-		
+		System.out.println("background");
 	}
 
 	/**
@@ -174,7 +209,7 @@ public class Visualizer {
 		}
 
 		/**
-		 * Returns the name of a variable, as a property
+		 * Returns the index of a variable, as a property
 		 */
     	public IntegerProperty indProperty() {
 	        return ind;

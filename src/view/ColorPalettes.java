@@ -1,3 +1,9 @@
+/**
+ * @author Maya messinger
+ * @author Jennifer Chin
+ * Pop-up box that just displays all of the possible colors for canvas background and pen colors
+ */
+
 package view;
 
 import java.util.List;
@@ -21,13 +27,7 @@ import javafx.scene.shape.Rectangle;
 import resources.keys.Resources;
 
 public class ColorPalettes extends Group {
-	private ObservableList<Visualizer.IndCol> bgColors;
-	private ObservableList<Visualizer.IndCol> penColors;
-	
-	public ColorPalettes(ObservableList<Visualizer.IndCol> bgc, ObservableList<Visualizer.IndCol> penc) {
-		bgColors = bgc;
-		penColors = penc;
-
+	public ColorPalettes() {
 		Scene myScene = initPage();
 		Stage myStage = new Stage();
 		myStage.setScene(myScene);
@@ -54,7 +54,7 @@ public class ColorPalettes extends Group {
         TableColumn bgColorCol = new TableColumn("BackgroundColor");
 		bgColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
         bgColorTable.getColumns().add(bgColorCol);
-        bgColorTable.setItems(bgColors);
+        bgColorTable.setItems(Visualizer.bgColors);
         myVBox.getChildren().add(bgColorTable);
 
         TableView penColorTable = new TableView();
@@ -65,7 +65,7 @@ public class ColorPalettes extends Group {
         TableColumn penColorCol = new TableColumn("Pen Color");
 		penColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
         penColorTable.getColumns().add(penColorCol);
-        penColorTable.setItems(penColors);
+        penColorTable.setItems(Visualizer.penColors);
         myVBox.getChildren().add(penColorTable);
 
         return myVBox;
