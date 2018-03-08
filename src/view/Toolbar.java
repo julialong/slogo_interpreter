@@ -241,7 +241,7 @@ public class Toolbar extends AnchorPane {
 			myFileWriter.writeToFile(filename);
 		}
 		catch (Exception e) {
-			//TODO: HANDLE THIS
+			// TODO: HANDLE THIS
 		}
 	}
 	
