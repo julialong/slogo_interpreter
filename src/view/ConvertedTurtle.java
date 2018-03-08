@@ -22,8 +22,6 @@ import javafx.scene.paint.Color;
 import resources.keys.Resources;
 import slogo_team07.Drawable;
 import slogo_team07.Updatable;
-import commands.updatable.PenDownCommand;
-import commands.updatable.PenUpCommand;
 
 public class ConvertedTurtle	{
 	private Drawable thisTurtle;

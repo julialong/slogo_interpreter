@@ -125,4 +125,23 @@ public class Visualizer {
 		myCanvas.updateCanvas(result);
 	}
 
+	/**
+	 * Called by SetBackground command, sets canvas pane background to one based on index in ColorPalette
+	 * @param index	index within possible colors to set background to
+	 */
+	public void setBackground(int index)	{
+		// ColorPalettes.backgroundColors.get(index)
+		// myCanvasObjects.getStyleClass().add(Resources.getString());
+	}
+
+	/**
+	 * Called by SetPalette command, changes the color value in color palete at index to new RGB color
+	 * @param index	index of color to set in palette
+	 * @param r		red amount of new color
+	 * @param g		green amount of new color
+	 * @paran b		blue amount of new color
+	 */
+	public double setPalette(int index, Double r, Double g, Double b)	{
+		return index;
+	}
 }
