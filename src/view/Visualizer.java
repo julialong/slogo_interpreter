@@ -14,7 +14,14 @@ import java.util.HashMap;
 import commands.Result;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -61,6 +68,7 @@ public class Visualizer {
 	private void step(double cycles){
 		myCanvasObjects = myCanvas.updateCanvas(drawables);
 		root.setCenter(myCanvasObjects);
+		//dragAndDrop();
 
 		if (!myToolbar.getLanguage().equals(language))	{
 			language = myToolbar.getLanguage();
@@ -86,7 +94,7 @@ public class Visualizer {
 		myConsole.language = language;
 		root.setBottom(myConsole);
 
-		myToolbar = new Toolbar(myCanvasObjects);
+		myToolbar = new Toolbar(myCanvasObjects, this);
 		myToolbar.setLanguage(language);
 		root.setTop(myToolbar.initToolbar());
 
@@ -107,7 +115,7 @@ public class Visualizer {
 		//myCanvas.addDrawable(turtle);
 		List<String> properties = new ArrayList<String>();
 		properties.add(String.valueOf(drawables.size())); // id
-		properties.add(String.valueOf(turtle.getStatus())); // add active
+		properties.add(String.valueOf("Active")); // add active
 		properties.add("Turtle"); // add image (ex. Turtle, not extension)
 		properties.add(String.valueOf(turtle.getIsDown()));// pen (up or down)
 		properties.add("Black");// pen color
@@ -124,5 +132,34 @@ public class Visualizer {
 		myConsole.printResult(Double.toString(result.getRes1()));
 		myCanvas.updateCanvas(result);
 	}
+	
+	protected ChangeListener getChangeListener(){
+		return myChangeListener;
+	}
+	
+//	protected void dragAndDrop(){
+//		for (Drawable turtle: drawables.keySet()){
+//			ImageView source = turtle.getView();
+//			source.setOnDragDetected(new EventHandler<MouseEvent>(){
+//				public void handle(MouseEvent e){
+//					System.out.println("drag detected");
+//					Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+//					ClipboardContent content = new ClipboardContent();
+//					content.putImage(turtle.getImage());
+//					db.setContent(content);
+//					e.consume();
+//				}
+//			});
+//			
+//			Pane target = myCanvasObjects;
+//			target.setOnDragOver(new EventHandler<DragEvent>(){
+//				public void handle(DragEvent e){
+//					System.out.println("dragging");
+//					e.acceptTransferModes(TransferMode.ANY);
+//					e.consume();
+//				}
+//			});
+//		}
+//	}
 
 }

@@ -1,5 +1,6 @@
 package slogo_team07;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -27,5 +28,11 @@ public interface Drawable {
 
 	public double getPenWidth();
 	
-	public boolean getStatus();
+	public double getViewX();
+	
+	public double getViewY();
+	
+	public void setViewX(double x);
+	
+	public void setViewY(double y);
 }

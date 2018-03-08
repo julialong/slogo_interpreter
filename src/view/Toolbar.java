@@ -1,5 +1,7 @@
 package view;
 
+import java.io.File;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 
@@ -24,9 +28,11 @@ public class Toolbar extends AnchorPane {
 	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
+	private Visualizer myVis;
 	
-	public Toolbar(Pane canvas){
+	public Toolbar(Pane canvas, Visualizer vis){
 		myCanvasObjects = canvas;
+		myVis = vis;
 	}
 	
 	public AnchorPane initToolbar(){
@@ -82,13 +88,13 @@ public class Toolbar extends AnchorPane {
 		return langMenu;
 	}
 	
-	//need to write
+	//need to send tell command to create initial turtle on new window
 	private Button windowButton()	{
 		Button windowButton = new Button("New Window");
     	windowButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
+				new Visualizer(new Stage(), myVis.getChangeListener());
 			}
 		});
     	return windowButton;
@@ -106,13 +112,15 @@ public class Toolbar extends AnchorPane {
     	return saveButton;
     }
 	
-	//need to sync w parser
+	//what does julia want me to do with chosen file
 	private Button loadButton()	{
 		Button loadButton = new Button("Load");
     	loadButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
+				FileChooser fc = new FileChooser();
+				fc.setTitle(Resources.getString("ChooserTitle"));
+				File file = fc.showOpenDialog(new Stage());
 			}
 		});
     	return loadButton;

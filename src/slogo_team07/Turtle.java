@@ -1,12 +1,19 @@
 package slogo_team07;
 
+import javafx.animation.Animation;
+import javafx.animation.PathTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
 public class Turtle implements Drawable, Updatable {
 
@@ -28,9 +35,7 @@ public class Turtle implements Drawable, Updatable {
 	private Color myColor = Color.BLACK;
 	private double myId;
 	private double myPenWidth = 1.0;
-	private boolean myStatus = true; //need to coordinate w back end?
-
-
+	private Image myImage;
 
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);
@@ -49,6 +54,15 @@ public class Turtle implements Drawable, Updatable {
 		myViewPrevY = -1 * (myPrevYPos  - height/2);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
+	}
+	
+	private void opptranslate(Pane display){
+		double height = display.getHeight();
+		double width = display.getWidth();
+		myXPos = myViewX - width/2;
+		myYPos = height/2 - myViewY;
+		myPrevXPos = myViewPrevX - width/2;
+		myPrevYPos = height/2 - myViewPrevY;	
 	}
 	
 	public void setPane(Pane pane){
@@ -75,24 +89,43 @@ public class Turtle implements Drawable, Updatable {
 	}
 	
 	@Override
-	public boolean getStatus(){
-		return myStatus;
-	}
-	
-	@Override
 	public ImageView getView(){
 		return myIV;
 	}
 
 	@Override
 	public void setView(String imagePath){
-		Image image = new Image(imagePath);
-		myIV = new ImageView(image);
+		myImage = new Image(imagePath);
+		myIV = new ImageView(myImage);
 		myIV.setFitHeight(20);
 		myIV.setFitWidth(20);
 		translate(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
+	}
+	
+	@Override 
+	public double getViewX(){
+		return myViewX;
+	}
+	
+	@Override 
+	public double getViewY(){
+		return myViewY;
+	}
+	
+	@Override
+	public void setViewX(double x){
+		myViewPrevX = myViewX;
+		myViewX = x;
+		opptranslate(myPane);
+	}
+	
+	@Override
+	public void setViewY(double y){
+		myViewPrevY = myViewY;
+		myViewY = y;
+		opptranslate(myPane);
 	}
 
 	@Override
@@ -110,9 +143,18 @@ public class Turtle implements Drawable, Updatable {
 			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
+			//lineAnimation(myIV);
 		}
 	}
 
+//	private void lineAnimation(Node iv){
+//		Path path = new Path();
+//		path.getElements().add(new MoveTo(myViewX, myViewY));
+//		path.getElements().add(new LineTo(myViewX, myViewY));
+//		//will need to change duration.millis to variable to change speed
+//		PathTransition pt = new PathTransition(Duration.millis(4000), path, iv);
+//		pt.play();
+//	}
 
 	@Override
 	public double setPosition(double x, double y) {
