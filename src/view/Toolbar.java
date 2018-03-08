@@ -31,7 +31,6 @@ public class Toolbar extends AnchorPane {
 	private Stage myStage;
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
-	private static ObservableList<String> colorList = Canvas.colorList;
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
