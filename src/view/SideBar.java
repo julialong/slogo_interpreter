@@ -115,13 +115,14 @@ public class SideBar extends VBox{
 	private TableView variableTable(double colWidth)	{
 		variableTable = new TableView();
 		variableTable.setEditable(true);
+		int numVarCols = 2;
 		vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
 		varName.setCellValueFactory(new PropertyValueFactory<>("key"));
-		varName.setPrefWidth(colWidth/2);
+		varName.setPrefWidth(colWidth/numVarCols);
 		varValue = new TableColumn("Value");
-		varValue.setPrefWidth(colWidth/2);
+		varValue.setPrefWidth(colWidth/numVarCols);
 		varValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 		vars.getColumns().addAll(varName, varValue);
 		variableTable.getColumns().add(vars);

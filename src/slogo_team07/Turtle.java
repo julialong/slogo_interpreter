@@ -79,8 +79,9 @@ public class Turtle implements Drawable, Updatable {
 	public void setView(String imagePath){
 		Image image = new Image(imagePath);
 		myIV = new ImageView(image);
-		myIV.setFitHeight(20);
-		myIV.setFitWidth(20);
+		int ivDim = 20;
+		myIV.setFitHeight(ivDim);
+		myIV.setFitWidth(ivDim);
 		translate(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);

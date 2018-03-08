@@ -33,9 +33,9 @@ public class Canvas {
 	protected Pane initCanvas(){
 		myPane = new Pane();
 		for (Drawable turtle: myTurtles.keySet()){
-			//turtle.setPane(myPane);
-			turtle.getView().setFitHeight(20);
-			turtle.getView().setFitWidth(20);
+			int turtleImgDim = 20;
+			turtle.getView().setFitHeight(turtleImgDim);
+			turtle.getView().setFitWidth(turtleImgDim);
 			myPane.getChildren().add(turtle.getView());
 			List<String> properties = myTurtles.get(turtle);
 			Color color = Color.valueOf(properties.get(4));
@@ -52,8 +52,9 @@ public class Canvas {
 				myPane.getChildren().remove(turtle.getView());
 			}
 			else if (! myPane.getChildren().contains(turtle.getView())){
-				turtle.getView().setFitHeight(20);
-				turtle.getView().setFitWidth(20);
+				int turtleImgDim = 20;
+				turtle.getView().setFitHeight(turtleImgDim);
+				turtle.getView().setFitWidth(turtleImgDim);
 				myPane.getChildren().add(turtle.getView());
 			}
 			List<String> properties = myTurtles.get(turtle);

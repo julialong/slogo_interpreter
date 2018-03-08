@@ -37,7 +37,9 @@ public class Console extends AnchorPane implements TextInput {
 	private int width = 700;
 	private int cHeight = 100;
 	private int hHeight = 80;
-	private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt(Visualizer.inset))/3;
+	private int buttonheightPadding = 3;
+	private int buttonWidthPadding = 50;
+	private int bHeight = (cHeight + hHeight + offsetPad + buttonWidthPadding)/buttonheightPadding;
 	private int bWidth = 80;
 
 	/**
