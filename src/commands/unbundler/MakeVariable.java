@@ -13,10 +13,12 @@ public class MakeVariable extends ControlUnbundler{
 
 	private List<String> expression;
 	private Map<String, String> dictionary;
+	private Visualizer myVis;
 	
 	public MakeVariable(Visualizer vis, Parser p, Map<String, String> dict) {
 		super(vis, NUM_ARGS, p);
 		dictionary = dict;
+		myVis = vis;
 	}
 
 	/**
@@ -51,6 +53,16 @@ public class MakeVariable extends ControlUnbundler{
 	 */
 	private void addVariable(String variable) {
 		dictionary.put(variable, String.join(" ", expression));
+	}
+	
+	@Override
+	protected double calcValue(List<String> args) {
+		List<String> input = argsToExp(args);
+		String variable = input.get(0);
+		String unbundled = unbundle(input);
+		double value = getParser().parse(unbundled);
+		myVis.addNewVar(variable, Double.toString(value));
+		return value;
 	}
 }
 

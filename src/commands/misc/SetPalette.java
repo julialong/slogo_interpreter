@@ -18,7 +18,6 @@ public class SetPalette extends NonUpdatableDoubleArgs {
 
 	@Override
 	protected double calcValue(List<Double> args) {
-		System.out.println("setting: " + args);
 		return myVis.setPalette(args.get(0).intValue(),
 				args.get(1),
 				args.get(2),

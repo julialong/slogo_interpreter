@@ -17,6 +17,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 	private List<String> commands;
 	private Map<String, Function> dictionary;
 	private Visualizer visualizer;
+	private Function func;
 
 	public MakeUserInstruction(Visualizer vis, Parser p, Map<String, Function> dict) {
 		super(vis, NUM_ARGS, p);
@@ -37,7 +38,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 		commands = new ArrayList<>();
 		buildExpression(exp, commandIndex[0], commandIndex[1]);
 		addVariables(exp, variableIndex[0], variableIndex[1]);
-		addFunction(commandName);
+		addFunction();
 		modifyList(exp, commandIndex[1]);
 		return Integer.toString(1);
 	}
@@ -65,9 +66,16 @@ public class MakeUserInstruction extends ControlUnbundler {
 	 * TODO: Unsure if this correctly modifies map
 	 * @param variable string variable name
 	 */
-	private void addFunction(String variable) {
-		dictionary.put(commandName, new Function(visualizer, getParser(), parameters, commands));
+	private void addFunction() {
+		func = new Function(visualizer, getParser(), commandName, parameters, commands);
+		dictionary.put(commandName, func);
 	}
-
+	
+	@Override
+	protected double calcValue(List<String> args) {
+		String unbundled = unbundle(argsToExp(args));
+		visualizer.addNewFunc(func.toString());
+		return getParser().parse(unbundled);
+	}
 
 }

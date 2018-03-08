@@ -38,7 +38,7 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
 		return !current.equals(RIGHT_BRACE);
 	}
 	
-	private List<String> argsToExp(List<String> args) {
+	protected List<String> argsToExp(List<String> args) {
 		List<String> exp = new ArrayList<>();
 		for (String arg : args) {
 			exp.addAll(Arrays.asList(arg.split(" ")));
