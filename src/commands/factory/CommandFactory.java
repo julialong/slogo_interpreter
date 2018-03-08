@@ -47,6 +47,9 @@ public class CommandFactory {
 		
 		String keyword = myLanguages.get(command);
 		Factory factory = myFactoryMap.get(myFactories.getString(keyword));
+		System.out.println(command);
+		System.out.println(keyword);
+		System.out.println(factory);
 		try {
 			return factory.create(keyword);
 		} catch (CommandNotFoundException e) {
@@ -66,6 +69,7 @@ public class CommandFactory {
 	}
 
 	public String getBundleValue(String keyword) {
+		System.out.println("inside bundle value: " + keyword);
 		return myCommands.getString(keyword);
 	}
 

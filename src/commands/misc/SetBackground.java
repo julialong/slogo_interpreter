@@ -11,7 +11,7 @@ public class SetBackground extends NonUpdatableDoubleArgs {
 	
 	private Visualizer myVis;
 
-	public SetBackground(Visualizer vis, int num_args) {
+	public SetBackground(Visualizer vis) {
 		super(vis, NUM_ARGS);
 		myVis = vis;
 	}

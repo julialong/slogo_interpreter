@@ -155,8 +155,9 @@ public class Visualizer {
 	 * @paran b		blue amount of new color
 	 */
 	public double setPalette(int index, Double r, Double g, Double b)	{
+		System.out.println("inside setPalette: " + index + " " + r + " " + g + " " + b);
 		bgColors.set(index, new IndCol(index, Color.rgb(r.intValue(), g.intValue(), b.intValue())));
-
+		System.out.println("after bgColors: " + index + " " + r + " " + g + " " + b);
 		return index;
 	}
 
