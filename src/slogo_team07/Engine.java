@@ -20,16 +20,6 @@ public class Engine implements ChangeListener {
 		changeInput(INIT_TURTLE);
 	}
 
-<<<<<<< HEAD
-	private void addTurtle() {
-		Turtle turtle = new Turtle("0");
-		myVis.addDrawable(turtle);
-		myUpdatables.put(Integer.toString(0), turtle);
-	}
-
-
-=======
->>>>>>> ben
 	@Override
 	public void changeInput(String input) {
 		myParser.parse(input);
