@@ -204,7 +204,11 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public double setPen(boolean down) {
+=======
+	public double setPenDown(boolean down) {
+>>>>>>> maya_adv
 		isDown = down;
 		return isDown ? 1.0 : 0.0;
 	}
@@ -287,7 +291,10 @@ public class Turtle implements Drawable, Updatable {
 				return (double)i;
 			}
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> maya_adv
 		return 0;
 	}
 
@@ -314,5 +321,8 @@ public class Turtle implements Drawable, Updatable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> maya_adv
 }

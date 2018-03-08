@@ -16,7 +16,7 @@ public class PenDown extends UpdatableCommand {
 
 	@Override
 	protected double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.setPen(true);
+		return updatable.setPenDown(true);
 	}
 
 }
