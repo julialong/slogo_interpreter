@@ -15,8 +15,7 @@ public class DoTimes extends ControlUnbundler {
 	private double end;
 	private ArrayList<String> unbundledArray;
 
-	private static final int START_EXPRESSION = 0;
-	private static final int START_COMMAND = 0;
+	private static final int START_EXPRESSION = 2;
 
 	private static final int START_INDEX = 0;
 	private static final int STOP_INDEX = 1;
@@ -32,8 +31,8 @@ public class DoTimes extends ControlUnbundler {
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp) {
-		int[] expressionIndex = findBrackets(exp, START_EXPRESSION);
-		int[] commandIndex = findBrackets(exp, START_COMMAND);
+		int[] expressionIndex = findBrackets(exp, 0);
+		int[] commandIndex = findBrackets(exp, 1);
 		setNumbers(exp, expressionIndex[1]);
 		buildCommand(exp, commandIndex[START_INDEX], commandIndex[STOP_INDEX]);
 		modifyList(exp, commandIndex[STOP_INDEX]);
@@ -72,7 +71,7 @@ public class DoTimes extends ControlUnbundler {
 	 */
 	private double evaluateExpression(List<String> exp, int end) {
 		List<String> expression = new ArrayList<>();
-		for (int i = 2; i < end; i++) {
+		for (int i = START_EXPRESSION; i < end; i++) {
 			String current = exp.get(i);
 			expression.add(current);
 		}

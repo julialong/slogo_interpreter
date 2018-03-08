@@ -19,16 +19,21 @@ public class For extends ControlUnbundler {
 	private double end;
 	private double increment;
 
+	private static final int VARIABLE_INDEX = 1;
+	private static final int START_INDEX = 2;
+	private static final int END_INDEX = 3;
+	private static final int INCREMENT_INDEX = 4;
+
 	private ArrayList<String> unbundledArray;
 
 	/**
-	 * Unbun
+	 * Unbundles For command to a longer string that the Parser can parse
 	 * @param exp
 	 * @return
 	 */
 	@Override
 	protected String unbundle(List<String> exp) {
-		setNumbers(exp, 1);
+		setNumbers(exp);
 		int[] commandIndex = findBrackets(exp, 1);
 		buildCommand(exp, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);
@@ -38,13 +43,12 @@ public class For extends ControlUnbundler {
 	/**
 	 * Sets the given parameters based on the entries in the first set of brackets
 	 * @param exp is is the entire ArrayList of the input commands
-	 * @param index is the index of the start of the expression
 	 */
-	private void setNumbers(List<String> exp, int index) {
-		variable = exp.get(index);
-		start = Double.parseDouble(exp.get(index + 1));
-		end = Double.parseDouble(exp.get(index + 2));
-		increment = Double.parseDouble(exp.get(index + 3));
+	private void setNumbers(List<String> exp) {
+		variable = exp.get(VARIABLE_INDEX);
+		start = Double.parseDouble(exp.get(START_INDEX));
+		end = Double.parseDouble(exp.get(END_INDEX));
+		increment = Double.parseDouble(exp.get(INCREMENT_INDEX));
 	}
 
 	/**
