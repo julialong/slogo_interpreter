@@ -25,7 +25,7 @@ public interface Updatable {
 	
 	double home();
 	
-	double setPen(boolean down);
+	double setPenDown(boolean down);
 	
 	double clear();
 	
@@ -35,7 +35,7 @@ public interface Updatable {
 
 	double getPenColor();
 
-	double setPenSize(double pixels);
+	double setPenWidth(double pixels);
 
 	double setPenColor(int dex);
 
