@@ -31,8 +31,6 @@ public interface Drawable {
 	public boolean getIsDown();
 
 	public double setPenDown(boolean down);
-
-	public double getPenWidth();
 	
 	public double getViewX();
 	
