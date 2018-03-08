@@ -16,13 +16,15 @@ import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 
 public class Toolbar extends AnchorPane {
+	private Visualizer myVis;
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
 	
-	public Toolbar(Pane canvas){
+	public Toolbar(Visualizer v, Pane canvas){
+		myVis = v;
 		myCanvasObjects = canvas;
 	}
 	
@@ -225,7 +227,7 @@ public class Toolbar extends AnchorPane {
 		colorButton.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent e){
-				new ColorPalettes();
+				new ColorPalettes(myVis);
 			}
 		});
 		return colorButton;

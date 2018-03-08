@@ -27,7 +27,10 @@ import javafx.scene.shape.Rectangle;
 import resources.keys.Resources;
 
 public class ColorPalettes extends Group {
-	public ColorPalettes() {
+	Visualizer myVis;
+
+	public ColorPalettes(Visualizer vis) {
+		myVis = vis;
 		Scene myScene = initPage();
 		Stage myStage = new Stage();
 		myStage.setScene(myScene);
@@ -54,7 +57,7 @@ public class ColorPalettes extends Group {
         TableColumn bgColorCol = new TableColumn("BackgroundColor");
 		bgColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
         bgColorTable.getColumns().add(bgColorCol);
-        bgColorTable.setItems(Visualizer.bgColors);
+        bgColorTable.setItems(myVis.bgColors);
         myVBox.getChildren().add(bgColorTable);
 
         TableView penColorTable = new TableView();
@@ -65,7 +68,7 @@ public class ColorPalettes extends Group {
         TableColumn penColorCol = new TableColumn("Pen Color");
 		penColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
         penColorTable.getColumns().add(penColorCol);
-        penColorTable.setItems(Visualizer.penColors);
+        penColorTable.setItems(myVis.penColors);
         myVBox.getChildren().add(penColorTable);
 
         return myVBox;

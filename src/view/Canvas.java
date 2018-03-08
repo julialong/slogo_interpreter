@@ -67,7 +67,7 @@ public class Canvas {
 				myPane.getChildren().add(turtle.getView());
 			}
 			List<String> properties = myTurtles.get(turtle);
-			List<Color> possColors = Visualizer.possPenColors;
+			List<String> possColors = Visualizer.possPenColors;
 
 			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(4))));
 			double penWidth = Double.parseDouble(properties.get(5));
