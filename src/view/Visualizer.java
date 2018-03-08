@@ -14,10 +14,18 @@ import java.util.HashMap;
 import commands.Result;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
@@ -39,6 +47,12 @@ public class Visualizer {
 	private Map<Drawable, List<String>> drawables = new HashMap<>();
 	private ChangeListener myChangeListener;
 	private String language = "English";
+
+	protected ObservableList<IndCol> bgColors = FXCollections.observableArrayList(new IndCol(0, Color.WHITE), new IndCol(1, Color.RED), new IndCol(2, Color.ORANGE), new IndCol(3, Color.YELLOW), new IndCol(4, Color.GREEN),
+		new IndCol(5, Color.BLUE), new IndCol(6, Color.PURPLE), new IndCol(7, Color.PINK));
+
+	protected ObservableList<IndCol> penColors = FXCollections.observableArrayList( new IndCol(0, Color.BLACK), new IndCol(1, Color.WHITE), new IndCol(2, Color.RED), new IndCol(3, Color.ORANGE), new IndCol(4, Color.YELLOW),
+		new IndCol(5, Color.GREEN), new IndCol(6, Color.BLUE), new IndCol(7, Color.PURPLE), new IndCol(8, Color.PINK));
 	
 	public Visualizer(Stage stage, ChangeListener change_listener) {
 		myChangeListener = change_listener;
@@ -86,7 +100,7 @@ public class Visualizer {
 		myConsole.language = language;
 		root.setBottom(myConsole);
 
-		myToolbar = new Toolbar(myCanvasObjects);
+		myToolbar = new Toolbar(this, myCanvasObjects);
 		myToolbar.setLanguage(language);
 		root.setTop(myToolbar.initToolbar());
 
@@ -130,8 +144,7 @@ public class Visualizer {
 	 * @param index	index within possible colors to set background to
 	 */
 	public void setBackground(int index)	{
-		// ColorPalettes.backgroundColors.get(index)
-		// myCanvasObjects.getStyleClass().add(Resources.getString());
+		
 	}
 
 	/**
@@ -142,6 +155,37 @@ public class Visualizer {
 	 * @paran b		blue amount of new color
 	 */
 	public double setPalette(int index, Double r, Double g, Double b)	{
+		bgColors.set(index, new IndCol(index, Color.rgb(r.intValue(), g.intValue(), b.intValue())));
+
 		return index;
+	}
+
+	/**
+	 * Class that has properties that TableView can read in order to import into table
+	 * Only public so PropertyValueFactory can get its properties
+	 */
+	public class IndCol	{
+		private SimpleIntegerProperty ind;
+		private SimpleObjectProperty color;
+
+		private IndCol(int anInd, Color aColor)	{
+			ind = new SimpleIntegerProperty(anInd);
+			Shape colorBox = new Rectangle(15, 15, aColor);
+			color = new SimpleObjectProperty(colorBox);
+		}
+
+		/**
+		 * Returns the name of a variable, as a property
+		 */
+    	public IntegerProperty indProperty() {
+	        return ind;
+	    }
+
+	    /**
+	     * Returns the color of a variable, as a property
+	     */
+	    public ObjectProperty colorProperty()	{
+	    	return color;
+	    }
 	}
 }

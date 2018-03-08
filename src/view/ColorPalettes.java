@@ -21,28 +21,13 @@ import javafx.scene.shape.Rectangle;
 import resources.keys.Resources;
 
 public class ColorPalettes extends Group {
-	private ObservableList<IndCol> bgColors = FXCollections.observableArrayList(
-		new IndCol(0, Color.WHITE),
-		new IndCol(1, Color.RED),
-		new IndCol(2, Color.ORANGE),
-		new IndCol(3, Color.YELLOW),
-		new IndCol(4, Color.GREEN),
-		new IndCol(5, Color.BLUE),
-		new IndCol(6, Color.PURPLE),
-		new IndCol(7, Color.PINK));
-
-	private ObservableList<IndCol> penColors = FXCollections.observableArrayList(
-		new IndCol(0, Color.BLACK),
-		new IndCol(1, Color.WHITE),
-		new IndCol(2, Color.RED),
-		new IndCol(3, Color.ORANGE),
-		new IndCol(4, Color.YELLOW),
-		new IndCol(5, Color.GREEN),
-		new IndCol(6, Color.BLUE),
-		new IndCol(7, Color.PURPLE),
-		new IndCol(8, Color.PINK));
+	private ObservableList<Visualizer.IndCol> bgColors;
+	private ObservableList<Visualizer.IndCol> penColors;
 	
-	public ColorPalettes() {
+	public ColorPalettes(ObservableList<Visualizer.IndCol> bgc, ObservableList<Visualizer.IndCol> penc) {
+		bgColors = bgc;
+		penColors = penc;
+
 		Scene myScene = initPage();
 		Stage myStage = new Stage();
 		myStage.setScene(myScene);
@@ -84,34 +69,5 @@ public class ColorPalettes extends Group {
         myVBox.getChildren().add(penColorTable);
 
         return myVBox;
-	}
-
-	/**
-	 * Class that has properties that TableView can read in order to import into table
-	 * Only public so PropertyValueFactory can get its properties
-	 */
-	public class IndCol	{
-		private SimpleIntegerProperty ind;
-		private SimpleObjectProperty color;
-
-		private IndCol(int anInd, Color aColor)	{
-			ind = new SimpleIntegerProperty(anInd);
-			Shape colorBox = new Rectangle(15, 15, aColor);
-			color = new SimpleObjectProperty(colorBox);
-		}
-
-		/**
-		 * Returns the name of a variable, as a property
-		 */
-    	public IntegerProperty indProperty() {
-	        return ind;
-	    }
-
-	    /**
-	     * Returns the color of a variable, as a property
-	     */
-	    public ObjectProperty colorProperty()	{
-	    	return color;
-	    }
 	}
 }
