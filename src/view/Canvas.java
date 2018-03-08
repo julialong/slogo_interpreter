@@ -56,7 +56,13 @@ public class Canvas {
 			turtle.getView().setFitWidth(turtleImgDim);
 			myPane.getChildren().add(turtle.getView());
 			List<String> properties = myTurtles.get(turtle);
-			Color color = Color.valueOf(properties.get(4));
+			int propertiesIDInd = 0;
+			int propertiesActiveInd = 1;
+			int propertiesImageInd = 2;
+			int propertiesPenDownInd = 3;
+			int propertiesColorInd = 4;
+			int propertiesPenWidthInd = 5;
+			Color color = Color.valueOf(properties.get(propertiesColorInd));
 			double penWidth = turtle.getPenWidth();
 			turtle.draw(myPane, color, penWidth);
 		}
@@ -81,8 +87,8 @@ public class Canvas {
 			List<String> properties = myTurtles.get(turtle);
 			List<String> possColors = Visualizer.possPenColors;
 
-			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(4))));
-			double penWidth = Double.parseDouble(properties.get(5));
+			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(propertiesColorInd))));
+			double penWidth = Double.parseDouble(properties.get(propertiesPenWidthInd));
 			turtle.draw(myPane, color, penWidth);
 			dragAndDrop();
 		}
