@@ -14,7 +14,7 @@ public class Equal extends Boolean {
 
 	@Override
 	protected double calcValue(List<Double> args) {
-		boolean b = args.get(0) == args.get(1);
+		boolean b = args.get(0).equals(args.get(1));
 		return boolToDouble(b);
 	}
 }
