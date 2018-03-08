@@ -30,8 +30,6 @@ public class Turtle implements Drawable, Updatable {
 	private double myPenWidth = 1.0;
 	private boolean myStatus = true; //need to coordinate w back end?
 
-
-
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);
 		Image image = new Image("/view/turtle.jpg");
@@ -299,11 +297,9 @@ public class Turtle implements Drawable, Updatable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	@Override
 	public double setPalette(int dex, double r, double g, double b) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
 }
