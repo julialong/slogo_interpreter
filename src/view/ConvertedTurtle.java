@@ -44,7 +44,7 @@ public class ConvertedTurtle	{
 	public ConvertedTurtle(Map.Entry turtle, Visualizer vis, Canvas canvas, Pane pane)	{
 		thisTurtle = (Drawable)turtle.getKey();
 		properties = (List<String>)turtle.getValue();
-		propertyNames = new ArrayList<String>();
+		propertyNames = new ArrayList<>();
 		myVis = vis;
 		myCanvas = canvas;
 		myPane = pane;

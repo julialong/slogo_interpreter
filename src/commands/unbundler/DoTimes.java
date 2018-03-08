@@ -52,8 +52,9 @@ public class DoTimes extends ControlUnbundler {
 	private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
 		unbundledArray = new ArrayList<>();
 		for (double i = 1; i < end + 1; i++) {
-			for (int j = startIndex + 1; j < stopIndex; j++)
+			for (int j = startIndex + 1; j < stopIndex; j++) {
 				unbundledArray.add(replaceVariable(exp.get(j), i));
+			}
 		}
 	}
 
@@ -94,7 +95,8 @@ public class DoTimes extends ControlUnbundler {
 	private String replaceVariable(String current, double currentIndex) {
 		if (current.equals(variable)) {
 			return Double.toString(currentIndex);
+		} else {
+			return current;
 		}
-		else return current;
 	}
 }

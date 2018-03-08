@@ -6,14 +6,13 @@
 
 package view;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import resources.keys.Resources;
-import resources.languages.ResourcesLanguages;
 import slogo_team07.ChangeListener;
 
 public class Console extends AnchorPane implements TextInput {
@@ -106,7 +104,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	private void addElements()  {
-		List<Node> elements = new ArrayList<Node>();
+		List<Node> elements = new ArrayList<>();
 		addText(elements);
 		this.getChildren().addAll(elements);
 	}
