@@ -29,8 +29,6 @@ public class MakeUserInstruction extends ControlUnbundler {
 	 */
 	public String unbundle(List<String> exp) {
 		commandName = exp.get(0);
-		System.out.println("commandName: " + exp);
-		System.out.println("commandName: " + commandName);
 		int[] variableIndex = findBrackets(exp, 0);
 		int[] commandIndex = findBrackets(exp, 1);
 		parameters = new ArrayList<>();
@@ -66,7 +64,6 @@ public class MakeUserInstruction extends ControlUnbundler {
 	 * @param variable string variable name
 	 */
 	private void addFunction(String variable) {
-		System.out.println(parameters + " ... " + commands);
 		dictionary.put(commandName, new Function(parameters, commands));
 	}
 

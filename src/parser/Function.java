@@ -14,7 +14,6 @@ public class Function {
 	}
 	
 	public void inject(String arg) {
-		System.out.println("arg: " + arg);
 		myArgs.add(arg);
 	}
 	

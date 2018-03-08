@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Sanitizer {
-	
+
 	private Map<String, String> myVarMap;
 	private Map<String, Function> myFuncMap;
-	
+
 	public Sanitizer(Map<String, String> var_map, Map<String, Function> func_map) {
 		myVarMap = var_map;
 		myFuncMap = func_map;
@@ -19,21 +19,18 @@ public class Sanitizer {
 	public List<String> sanitize(String s) {
 		String commentless = stripComments(s);
 		String whitespaced = handleWhitespace(commentless);
-		System.out.println("WHITESPACED2: " + whitespaced);
 		String replaced = replaceUnknowns(whitespaced);
 		return splitAroundBrackets(replaced);
 	}
-	
+
 	private String replaceUnknowns(String whitespaced) {
 		List<String> ans = new LinkedList<>();
 		if (whitespaced.length() == 0) {
 			String.join(" ", ans);
 		}
-		
+
 		String[] arr = whitespaced.split(" ");
 		int i = 0;
-		System.out.println(myFuncMap);
-		System.out.println(myVarMap);
 		while (i < arr.length) {
 			String curr = arr[i];
 			if (myVarMap.containsKey(curr)) {
@@ -52,16 +49,15 @@ public class Sanitizer {
 				i += 1;
 			}
 		}
-		System.out.println("ANS: " + ans);
 		return String.join(" ", ans);
 	}
-	
+
 	private List<String> splitAroundBrackets(String replaced) {
 		List<String> split_brackets = new LinkedList<>();
 		if (replaced.length() == 0) {
 			return split_brackets;
 		}
-		
+
 		String[] replaced_arr = replaced.split(" ");
 		int i = 0;
 		while (i < replaced_arr.length) {
@@ -74,7 +70,7 @@ public class Sanitizer {
 			} else {
 				split_brackets.add(curr);
 			}
-			
+
 			i += 1;
 		}
 		return split_brackets;
@@ -120,5 +116,16 @@ public class Sanitizer {
 		return Arrays.asList(s.split("\n")).stream()
 				.filter(line -> !line.startsWith("#"))
 				.collect(Collectors.joining(" "));
+	}
+
+	public void addFuncAndVars(List<String> input) {
+		clearAndAdd(input, sanitize(String.join(" ", input)));
+	}
+
+	private void clearAndAdd(List<String> target, List<String> source) {
+		target.clear();
+		for (String current : source) {
+			target.add(current);
+		}
 	}
 }

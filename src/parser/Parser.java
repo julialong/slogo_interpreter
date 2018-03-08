@@ -36,6 +36,7 @@ public class Parser {
 			return null;
 		}
 		
+		mySanitizer.addFuncAndVars(input);
 		String next = input.remove(0).toLowerCase();
 		if (isArgument(next)) {
 			return next;
@@ -48,7 +49,6 @@ public class Parser {
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
 			}
-			System.out.println("executing");
 			ans = node.execute();
 		}
 		clearAndAdd(input, temp);	

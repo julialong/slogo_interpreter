@@ -27,7 +27,6 @@ public class If extends ControlUnbundler{
 	public String unbundle(List<String> exp) {
 		int[] commandIndex = findBrackets(exp, 0);
 		expression = new ArrayList<>();
-		System.out.println(exp);
 		buildExpression(exp, commandIndex[0]);
 		executeCommands = executeExpression(expression);
 		buildCommand(exp, commandIndex[0], commandIndex[1]);

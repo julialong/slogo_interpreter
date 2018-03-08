@@ -25,7 +25,6 @@ public class MakeVariable extends ControlUnbundler{
 	 * @return the string variable name
 	 */
 	public String unbundle(List<String> exp) {
-		System.out.println("exp: " + exp);
 		String variableName = exp.get(0);
 		expression = new ArrayList<>();
 		buildExpression(exp, 1, exp.size());
