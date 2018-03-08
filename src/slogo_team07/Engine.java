@@ -1,5 +1,6 @@
 package slogo_team07;
 
+import commands.Result;
 import commands.factory.CommandFactory;
 import javafx.stage.Stage;
 import parser.Parser;
@@ -22,7 +23,8 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeInput(String input) {
-		myParser.parse(input);
+		double ans = myParser.parse(input);
+		myVis.runCommand(new Result(ans), true);
 	}
 
 	@Override

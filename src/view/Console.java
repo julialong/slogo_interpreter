@@ -83,22 +83,7 @@ public class Console extends AnchorPane implements TextInput {
 		history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
 		clear();
 
-		if (comm.indexOf("past(") >= 0)	{
-			try	{
-				int pastIndex = Character.getNumericValue(comm.charAt(comm.indexOf("past(") + "past(".length()));
-				myChangeListener.changeInput(pastCommands.get(pastIndex - 1));
-			}
-			catch (IndexOutOfBoundsException e)	{
-				 Alert alert = new Alert(AlertType.INFORMATION);
-		        alert.setTitle("No Such Past Command");
-		        alert.setContentText("There is no previous command with that ID.\nCheck history box for possible past commands to run.");
-		        alert.show();
-			}
-		}
-		else	{
-			myChangeListener.changeInput(comm);
-			checkSpecial(comm);
-		}
+		myChangeListener.changeInput(comm);
 
 		return comm;
 	}
@@ -145,23 +130,12 @@ public class Console extends AnchorPane implements TextInput {
 		elements.add(console);
 	}
 
-	private void checkSpecial(String comm)  {
-		if (comm.indexOf(ResourcesLanguages.getString(language, "MakeUserInstruction") + " ") >= 0)   {
-			makeUDI(comm);
-		}
-
-		if (comm.indexOf(ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[0] + " ") >= 0
-				|| comm.indexOf(ResourcesLanguages.getString(language, "MakeVariable").split("\\|")[1] + " ") >= 0)   {
-			makeVariable(comm);
-		}
-	}
-
-	private void makeUDI(String comm)  {
+	protected void makeUDI(String comm)  {
 		((SideBar)myVBox).addUDIButton(comm);
 	}
 
-	private void makeVariable(String comm) {
-		((SideBar)myVBox).addUDVar(comm.split(" ")[1], comm.split(" ")[2]);
+	protected void makeVariable(String var, String text) {
+		((SideBar)myVBox).addUDVar(var,text);
 	}
 
 	private void addButtons(List<Node> elements)   {

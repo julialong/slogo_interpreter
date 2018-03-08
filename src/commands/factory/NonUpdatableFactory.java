@@ -20,7 +20,7 @@ public class NonUpdatableFactory implements Factory {
 		Command command = null;
 		try {
 			Class<?> clazz = Class.forName(myCF.getBundleValue(keyword));
-			Constructor<?> ctor = clazz.getDeclaredConstructor(Visualizer.class);
+			Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class });
 			command = (Command) ctor.newInstance(myCF.getVis());
 		} catch (Exception e) {
 			throw new CommandNotFoundException("NonUpdatable command not found.");

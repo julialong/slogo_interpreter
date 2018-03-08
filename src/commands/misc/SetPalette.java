@@ -2,27 +2,26 @@ package commands.misc;
 
 import java.util.List;
 
-import commands.UpdatableCommand;
-import slogo_team07.Updatable;
+import commands.NonUpdatableDoubleArgs;
 import view.Visualizer;
 
-public class SetPalette extends UpdatableCommand {
-	
+public class SetPalette extends NonUpdatableDoubleArgs {
+
 	private static final int NUM_ARGS = 4;
-	
+
 	private Visualizer myVis;
 
-	public SetPalette(Visualizer vis, Updatable updatable) {
-		super(vis, NUM_ARGS, updatable);
+	public SetPalette(Visualizer vis) {
+		super(vis, NUM_ARGS);
 		myVis = vis;
 	}
 
 	@Override
-	protected double calcValues(Updatable updatable, List<Double> args) {
+	protected double calcValue(List<Double> args) {
 		return myVis.setPalette(args.get(0).intValue(),
-									args.get(1),
-									args.get(2),
-									args.get(3));
+				args.get(1),
+				args.get(2),
+				args.get(3));
 	}
 
 }

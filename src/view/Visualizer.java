@@ -16,10 +16,18 @@ import file_managers.FileReader;
 import file_managers.FileWriter;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
@@ -44,6 +52,9 @@ public class Visualizer {
 	private Map<Drawable, List<String>> drawables = new HashMap<>();
 	private ChangeListener myChangeListener;
 	private String language = "English";
+
+	protected ObservableList<IndCol> bgColors = FXCollections.observableArrayList();
+	protected ObservableList<IndCol> penColors = FXCollections.observableArrayList();
 	
 	public Visualizer(Stage stage, ChangeListener change_listener) {
 		myChangeListener = change_listener;
@@ -53,6 +64,14 @@ public class Visualizer {
 		stage.setTitle(Resources.getString("Title"));
 		stage.show();
 		setupAnimation();
+
+		for (int i = 0; i < possBackgroundColors.size(); i++)	{
+			bgColors.add(new IndCol(i, Color.valueOf(possBackgroundColors.get(i))));
+		}
+
+		for (int i = 0; i < possPenColors.size(); i++)	{
+			penColors.add(new IndCol(i, Color.valueOf(possPenColors.get(i))));
+		}
 	}
 	
 	private void setupAnimation(){
@@ -84,7 +103,7 @@ public class Visualizer {
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, drawables, myCanvas);
+		mySideBar = new SideBar(myCanvasObjects, this, drawables, myCanvas);
 		root.setRight(mySideBar.initSideBar());
 
 		myConsole = new Console();
@@ -125,15 +144,86 @@ public class Visualizer {
 	}
 
 	/**
-	 * Controller functionality that passes visual elements the necessary info to update them
+	 * Default method - Controller functionality that passes visual elements the necessary info to update them
 	 * @param result	Result ojbect passed back from Engine that gives a double return value
 	 */
 	public void runCommand(Result result)	{
-		myConsole.printResult(Double.toString(result.getRes1()));
-		myCanvas.updateCanvas(result);
+		runCommand(result, false);
 	}
 
-	public double setPalette(int i, Double aDouble, Double aDouble1, Double aDouble2) {
-		return 0.0;
+	/**
+	 * Controller functionality that passes visual elements the necessary info to update them
+	 * @param result	Result ojbect passed back from Engine that gives a double return value
+	 * @param isLast	Whether command is last in serires - only want to actually print last command result (recursive commands get long)
+	 */
+	public void runCommand(Result result, boolean isLast) {
+		myCanvas.updateCanvas(result);
+
+		if (isLast)	{
+			myConsole.printResult(Double.toString(result.getRes1()));
+		}
+	}
+
+	/**
+	 * Called by a TO command, in order to send a user-defined function to the table of user-defined functions
+	 */
+	public void addNewFunc(String functionText)	{
+		myConsole.makeUDI(functionText);
+	}
+
+	/**
+	 * Called by a MAKE or SET command, in order to send a user-defined variable to the table of variables
+	 */
+	public void addNewVar(String variable, String value)	{
+		myConsole.makeVariable(variable, value);
+	}
+
+	/**
+	 * Called by SetBackground command, sets canvas pane background to one based on index in ColorPalette
+	 * @param index	index within possible colors to set background to
+	 */
+	public void setBackground(int index)	{
+		System.out.println("background");
+	}
+
+	/**
+	 * Called by SetPalette command, changes the color value in color palete at index to new RGB color
+	 * @param index	index of color to set in palette
+	 * @param r		red amount of new color
+	 * @param g		green amount of new color
+	 * @paran b		blue amount of new color
+	 */
+	public double setPalette(int index, Double r, Double g, Double b)	{
+		bgColors.set(index, new IndCol(index, Color.rgb(r.intValue(), g.intValue(), b.intValue())));
+		return index;
+	}
+
+	/**
+	 * Class that has properties that TableView can read in order to import into table
+	 * Only public so PropertyValueFactory can get its properties
+	 */
+	public class IndCol	{
+		private SimpleIntegerProperty ind;
+		private SimpleObjectProperty color;
+
+		private IndCol(int anInd, Color aColor)	{
+			ind = new SimpleIntegerProperty(anInd);
+			Shape colorBox = new Rectangle(15, 15, aColor);
+			color = new SimpleObjectProperty(colorBox);
+		}
+
+		/**
+		 * Returns the index of a variable, as a property
+		 */
+    	public IntegerProperty indProperty() {
+	        return ind;
+	    }
+
+	    /**
+	     * Returns the color of a variable, as a property
+	     */
+	    public ObjectProperty colorProperty()	{
+	    	return color;
+	    }
 	}
 }

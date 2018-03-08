@@ -29,8 +29,9 @@ public class Turtle implements Drawable, Updatable {
 	private Pane myPane;
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
-	private double myPenWidth;
 	private double myId;
+	private double myPenWidth = 1.0;
+	private boolean myStatus = true; //need to coordinate w back end?
 
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);
@@ -283,10 +284,9 @@ public class Turtle implements Drawable, Updatable {
 
 		for (int i = 0; i < myColors.size(); i++)	{
 			if (Color.valueOf(myColors.get(i)) == myColor)	{
-				return (double)i;
+				return i;
 			}
 		}
-
 		return 0;
 	}
 
