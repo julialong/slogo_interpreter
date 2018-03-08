@@ -12,16 +12,33 @@ import java.util.Map;
 import commands.Result;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import resources.keys.Resources;
 import slogo_team07.Drawable;
 
 public class Canvas {
 	private Pane myPane;
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
+//	private Color myColor = Color.BLACK;
+//	private double myPenWidth = 1.0;
+	private double paneX;
+	private double paneY;
+	private double translateX;
+	private double translateY;
+	private double diffX;
+	private double diffY;
 	
 	/**
 	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
@@ -47,6 +64,9 @@ public class Canvas {
 	
 	protected Pane updateCanvas(Map<Drawable, List<String>> turtles) {		
 		myTurtles = turtles;
+//		for (Node child: myPane.getChildren()){
+//			System.out.println(child);
+//		}
 		for (Drawable turtle: myTurtles.keySet()){
 			if (! turtle.getIsVisible()){
 				myPane.getChildren().remove(turtle.getView());
@@ -63,6 +83,7 @@ public class Canvas {
 			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(4))));
 			double penWidth = Double.parseDouble(properties.get(5));
 			turtle.draw(myPane, color, penWidth);
+			dragAndDrop();
 		}
 		return myPane;
 	}
@@ -75,6 +96,38 @@ public class Canvas {
 			alert.show();
 		}
 		return updateCanvas(myTurtles);
+	}
+	
+	protected void dragAndDrop(){
+		for (Drawable turtle: myTurtles.keySet()){
+			ImageView source = turtle.getView();
+			source.setOnMousePressed(new EventHandler<MouseEvent>(){
+				public void handle(MouseEvent e){
+					paneX = e.getSceneX();
+					paneY = e.getSceneY();
+					diffX = paneX - turtle.getViewX();
+					diffY = paneY - turtle.getViewY();
+					translateX = ((ImageView) e.getSource()).getTranslateX();
+					translateY = ((ImageView) e.getSource()).getTranslateY();
+				}
+			});
+			
+			source.setOnMouseDragged(new EventHandler<MouseEvent>(){
+				public void handle(MouseEvent e){
+					double offsetX = e.getSceneX() - paneX;
+					double offsetY = e.getSceneY() - paneY;
+					double newTranslateX = translateX + offsetX;
+					double newTranslateY = translateY + offsetY;
+				}
+			});
+			
+			source.setOnMouseReleased(new EventHandler<MouseEvent>(){
+				public void handle(MouseEvent e){
+					turtle.setViewX(e.getSceneX() - diffX);
+					turtle.setViewY(e.getSceneY() - diffY);
+				}
+			});
+		}
 	}
 	
 }

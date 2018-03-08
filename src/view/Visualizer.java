@@ -23,6 +23,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -90,6 +96,7 @@ public class Visualizer {
 	private void step(double cycles){
 		myCanvasObjects = myCanvas.updateCanvas(drawables);
 		root.setCenter(myCanvasObjects);
+		//dragAndDrop();
 
 		if (!myToolbar.getLanguage().equals(language))	{
 			language = myToolbar.getLanguage();
@@ -168,6 +175,35 @@ public class Visualizer {
 			myConsole.printResult(Double.toString(result.getRes1()));
 		}
 	}
+	
+	protected ChangeListener getChangeListener(){
+		return myChangeListener;
+	}
+	
+//	protected void dragAndDrop(){
+//		for (Drawable turtle: drawables.keySet()){
+//			ImageView source = turtle.getView();
+//			source.setOnDragDetected(new EventHandler<MouseEvent>(){
+//				public void handle(MouseEvent e){
+//					System.out.println("drag detected");
+//					Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+//					ClipboardContent content = new ClipboardContent();
+//					content.putImage(turtle.getImage());
+//					db.setContent(content);
+//					e.consume();
+//				}
+//			});
+//			
+//			Pane target = myCanvasObjects;
+//			target.setOnDragOver(new EventHandler<DragEvent>(){
+//				public void handle(DragEvent e){
+//					System.out.println("dragging");
+//					e.acceptTransferModes(TransferMode.ANY);
+//					e.consume();
+//				}
+//			});
+//		}
+//	}
 
 	/**
 	 * Called by a TO command, in order to send a user-defined function to the table of user-defined functions
