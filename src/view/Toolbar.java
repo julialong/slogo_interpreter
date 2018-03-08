@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
-	
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
 	private Stage myStage;
@@ -43,7 +42,7 @@ public class Toolbar extends AnchorPane {
 		myStage = stage;
 	}
 	
-	public AnchorPane initToolbar(){
+	protected AnchorPane initToolbar(){
 		myPane = new AnchorPane();
 		
 		Text title = new Text(Resources.getString("Title"));
@@ -66,7 +65,7 @@ public class Toolbar extends AnchorPane {
     }
 	
 	private ComboBox colorMenu()	{
-		ComboBox colorMenu = new ComboBox(colorList);
+		ComboBox colorMenu = new ComboBox(Visualizer.possBackgroundColors);
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(e -> {
             String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();

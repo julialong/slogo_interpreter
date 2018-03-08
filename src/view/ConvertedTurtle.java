@@ -21,11 +21,13 @@ import javafx.scene.paint.Color;
 
 import resources.keys.Resources;
 import slogo_team07.Drawable;
+import slogo_team07.Updatable;
 
 public class ConvertedTurtle	{
 	private Drawable thisTurtle;
 	private List<String> properties;
 	private List<String> propertyNames;
+	private Visualizer myVis;
 	private Canvas myCanvas;
 	private Pane myPane;
 
@@ -39,10 +41,11 @@ public class ConvertedTurtle	{
 	private SimpleObjectProperty yPos;
 	private SimpleObjectProperty heading;
 
-	public ConvertedTurtle(Map.Entry turtle, Canvas canvas, Pane pane)	{
+	public ConvertedTurtle(Map.Entry turtle, Visualizer vis, Canvas canvas, Pane pane)	{
 		thisTurtle = (Drawable)turtle.getKey();
 		properties = (List<String>)turtle.getValue();
 		propertyNames = new ArrayList<String>();
+		myVis = vis;
 		myCanvas = canvas;
 		myPane = pane;
 

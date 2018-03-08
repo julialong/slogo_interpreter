@@ -17,6 +17,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 	private List<String> commands;
 	private Map<String, Function> dictionary;
 	private Visualizer visualizer;
+	private Function func;
 
 	private int[] variableIndex;
 	private int[] commandIndex;
@@ -76,8 +77,15 @@ public class MakeUserInstruction extends ControlUnbundler {
 	 * Adds the current function to the map for use later
 	 */
 	private void addFunction() {
-		dictionary.put(commandName, new Function(visualizer, getMyParser(), parameters, commands));
+		func = new Function(visualizer, getParser(), commandName, parameters, commands);
+		dictionary.put(commandName, func);
 	}
-
+	
+	@Override
+	protected double calcValue(List<String> args) {
+		String unbundled = unbundle(argsToExp(args));
+		visualizer.addNewFunc(func.toString());
+		return getParser().parse(unbundled);
+	}
 
 }

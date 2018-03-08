@@ -1,38 +1,32 @@
+/**
+ * @author Jennifer Chin
+ * @author Maya Messinger
+ * Visual area of screen that displays the events of commands that affect turtle
+ */
+
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.collections.FXCollections;
+import commands.Result;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import resources.keys.Resources;
 import slogo_team07.Drawable;
-import commands.Result;
 
 public class Canvas {
-
 	private Pane myPane;
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
-	private Color myColor = Color.BLACK;
-	private double myPenWidth = 1.0;
-	protected static ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
-//	private double myPenWidth = 1.0;
+	private static ObservableList<String> colorList = Visualizer.possBackgroundColors;	
 	
-	
+	/**
+	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
+	 */
 	public Canvas(Map<Drawable, List<String>> turtles){
 		myTurtles = turtles;
 	}
@@ -64,19 +58,9 @@ public class Canvas {
 				myPane.getChildren().add(turtle.getView());
 			}
 			List<String> properties = myTurtles.get(turtle);
-			List<Color> possColors = new ArrayList<>()	{{
-				add(Color.BLACK);
-				add(Color.WHITE);
-				add(Color.RED);
-				add(Color.ORANGE);
-				add(Color.YELLOW);
-				add(Color.GREEN);
-				add(Color.BLUE);
-				add(Color.PURPLE);
-				add(Color.PINK);
-			}};
+			List<Color> possColors = Visualizer.possPenColors;
 
-			Color color = possColors.get(Integer.parseInt(properties.get(4)));
+			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(4))));
 			double penWidth = Double.parseDouble(properties.get(5));
 			turtle.draw(myPane, color, penWidth);
 		}

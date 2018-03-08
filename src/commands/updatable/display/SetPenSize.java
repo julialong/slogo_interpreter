@@ -16,7 +16,7 @@ public class SetPenSize extends UpdatableCommand {
 
 	@Override
 	protected double calcValues(Updatable updatable, List<Double> args) {
-		return updatable.setPenSize(args.get(0));
+		return updatable.setPenWidth(args.get(0));
 	}
 
 }
