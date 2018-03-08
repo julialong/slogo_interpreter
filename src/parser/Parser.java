@@ -69,6 +69,6 @@ public class Parser {
 	}
 
 	private boolean isRegistered(String var) {
-		return myCommandFactory.knowsVar(var);
+		return myCommandFactory.isRegistered(var);
 	}
 }

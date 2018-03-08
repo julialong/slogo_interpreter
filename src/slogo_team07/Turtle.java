@@ -1,5 +1,8 @@
 package slogo_team07;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -27,6 +30,8 @@ public class Turtle implements Drawable, Updatable {
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
 	private double myId;
+	private double myPenWidth = 1.0;
+	private boolean myStatus = true; //need to coordinate w back end?
 
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);
@@ -57,6 +62,16 @@ public class Turtle implements Drawable, Updatable {
 	}
 	
 	@Override
+	public boolean getIsDown(){
+		return isDown;
+	}
+
+	@Override
+	public double getPenWidth()	{
+		return myPenWidth;
+	}
+	
+	@Override
 	public ImageView getView(){
 		return myIV;
 	}
@@ -73,7 +88,8 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public void draw(Pane display, Color color) {
+	public void draw(Pane display, Color color, double penWidth) {
+		myPenWidth = penWidth;
 		myColor = color;
 		myPane = display;
 		translate(myPane);
@@ -83,10 +99,12 @@ public class Turtle implements Drawable, Updatable {
 			}
 			Line trail = new Line(myViewPrevX, myViewPrevY, myViewX, myViewY);
 			trail.setStroke(myColor);
+			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
 		}
 	}
+
 
 	@Override
 	public double setPosition(double x, double y) {
@@ -252,12 +270,29 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double getPenColor() {
-		// TODO Auto-generated method stub
+		List<String> myColors = new ArrayList<>()	{{
+			add("Black");
+			add("White");
+			add("Red");
+			add("Orange");
+			add("Yellow");
+			add("Green");
+			add("Blue");
+			add("Purple");
+			add("Pink");
+		}};
+
+		for (int i = 0; i < myColors.size(); i++)	{
+			if (Color.valueOf(myColors.get(i)) == myColor)	{
+				return (double)i;
+			}
+		}
+
 		return 0;
 	}
 
 	@Override
-	public double setPenSize(double pixels) {
+	public double setPenWidth(double pixels) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -270,6 +305,12 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double setShape(int dex) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setPalette(int dex, double r, double g, double b) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -37,4 +37,9 @@ public class Function extends NonUpdatableStringArgs {
 	protected double calcValue(List<String> args) {
 		return myParser.parse(replaceParams(args));
 	}
+
+	@Override
+	public String toString() {
+		return String.join(" ", myParams) + " | " + String.join(" ", myCommands);
+	}
 }

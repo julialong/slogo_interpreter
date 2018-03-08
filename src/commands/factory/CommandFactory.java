@@ -114,7 +114,7 @@ public class CommandFactory {
 		return myVarMap.get(variable);
 	}
 
-	public boolean knowsVar(String string) {
+	public boolean isRegistered(String string) {
 		return myVarMap.containsKey(string) 
 				|| myLanguages.containsKey(string)
 				|| myFuncMap.containsKey(string);
