@@ -111,6 +111,7 @@ public class Parser implements Iterable<Commandable> {
 
 	private Commandable findNext() {
 		while (!myCurrent.isReady()) {
+			System.out.println(myStringList.get(myDex));
 			String curr = myStringList.get(myDex);
 			if (isArgument(curr)) {
 				myCurrent.inject(Double.parseDouble(curr));

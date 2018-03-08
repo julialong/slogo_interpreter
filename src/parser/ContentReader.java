@@ -81,8 +81,8 @@ public class ContentReader {
         if (functionComponents.length != 2) {
             throw new InvalidFileException();
         }
-        ArrayList<String> parameters = new ArrayList<>(Arrays.asList(functionComponents[0].split(" ")));
-        ArrayList<String> commands = new ArrayList<>(Arrays.asList(functionComponents[1].split(" ")));
+        List<String> parameters = new ArrayList<>(Arrays.asList(functionComponents[0].split(" ")));
+        List<String> commands = new ArrayList<>(Arrays.asList(functionComponents[1].split(" ")));
         return new Function(parameters, commands);
     }
 
