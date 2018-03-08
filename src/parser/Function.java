@@ -3,48 +3,38 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import commands.NonUpdatableDoubleArgs;
+import commands.NonUpdatableStringArgs;
 import view.Visualizer;
 
-public class Function extends NonUpdatableDoubleArgs {
-	private List<String> myArgs = new ArrayList<>();
+public class Function extends NonUpdatableStringArgs {
 	private List<String> myParams;
 	private List<String> myCommands;
 	private Parser myParser;
 	
-	public Function(Parser parser, Visualizer vis, List<String> params, List<String> commands) {
+	public Function(Visualizer vis, Parser parser, List<String> params, List<String> commands) {
 		super(vis, params.size());
+		myParser = parser;
 		myParams = params;
 		myCommands = commands;
 	}
 	
-	@Override
-	public void inject(String arg) {
-		myArgs.add(arg);
-	}
-	
-	public int numArgs() {
-		return myParams.size();
-	}
-	
-	public List<String> replaceParams() {
+	private String replaceParams(List<String> args) {
 		List<String> replaced = new ArrayList<>(myCommands);
 		for (int i=0; i < myParams.size(); i++) {
 			String param = myParams.get(i);
 			for (int j=0; j < replaced.size(); j++) {
 				String command = replaced.get(j);
 				if (command.equals(param)) {
-					replaced.set(j, myArgs.get(i));
+					replaced.set(j, args.get(i));
 				}
 			}
 		}
-		myArgs.clear();
-		return replaced;
+		args.clear();
+		return String.join(" ", replaced);
 	}
 
 	@Override
-	protected double calcValue(List<Double> args) {
-		// TODO Auto-generated method stub
-		return 0;
+	protected double calcValue(List<String> args) {
+		return myParser.parse(replaceParams(args));
 	}
 }

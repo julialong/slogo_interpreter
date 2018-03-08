@@ -1,12 +1,12 @@
 package commands.unbundler;
 
-import parser.Function;
-import parser.Parser;
-import view.Visualizer;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import parser.Function;
+import parser.Parser;
+import view.Visualizer;
 
 public class MakeUserInstruction extends ControlUnbundler {
 
@@ -16,10 +16,12 @@ public class MakeUserInstruction extends ControlUnbundler {
 	private List<String> parameters;
 	private List<String> commands;
 	private Map<String, Function> dictionary;
+	private Visualizer visualizer;
 
 	public MakeUserInstruction(Visualizer vis, Parser p, Map<String, Function> dict) {
 		super(vis, NUM_ARGS, p);
 		dictionary = dict;
+		visualizer = vis;
 	}
 
 	/**
@@ -64,7 +66,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 	 * @param variable string variable name
 	 */
 	private void addFunction(String variable) {
-		dictionary.put(commandName, new Function(parameters, commands));
+		dictionary.put(commandName, new Function(visualizer, getParser(), parameters, commands));
 	}
 
 
