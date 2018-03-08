@@ -53,7 +53,7 @@ public class Repeat extends ControlUnbundler {
 		if (expression.size() <= 0) {
 			repeat = 0;
 		} else {
-			repeat = getMyParser().parse(String.join(" ", expression));
+			repeat = getParser().parse(String.join(" ", expression));
 		}
 	}
 
