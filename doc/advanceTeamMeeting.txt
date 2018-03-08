@@ -2,7 +2,6 @@
 * fake commands to back-end
 	* active  - use tell command
 		* to deactive a turtle, actually activate every other turtle and leave inactive turtle out
-	* pen up/down - tell command
 * ColorIndices (calls ColorPalettes())
 * Undo
 	* store stack of imageviews at each state, and then pop off to rewind?

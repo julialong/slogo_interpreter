@@ -29,10 +29,8 @@ public class Turtle implements Drawable, Updatable {
 	private Pane myPane;
 	private Group myLines = new Group();
 	private Color myColor = Color.BLACK;
-	private double myPenWidth;
+	private double myPenWidth = 1.0;
 	private double myId;
-
-
 
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);

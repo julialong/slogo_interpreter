@@ -125,12 +125,10 @@ public class ConvertedTurtle	{
 			@Override
 			public void handle(ActionEvent e) {
 				if (penDownBox.isSelected())	{
-					new PenDownCommand(myVis, (Updatable)thisTurtle).execute();
 					thisTurtle.setPenDown(true);
 					properties.set(propertyNames.indexOf("penDown"), "down");
 				}
 				else	{
-					new PenUpCommand(myVis, (Updatable)thisTurtle).execute();
 					thisTurtle.setPenDown(false);
 					properties.set(propertyNames.indexOf("penDown"), "up");
 				}
