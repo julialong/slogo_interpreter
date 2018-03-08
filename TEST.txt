@@ -1,7 +1,11 @@
-VARIABLES
-Deutsch : Hallo
-English : Hello
-Francais : Alo
-Espanol : Hola
-COMMANDS
-alpha : a b c d | a b c d
+Commands
+to spiral [ :len ]
+[
+  if less? :len 200
+  [
+    fd :len
+    rt 89
+    spiral + :len 3
+  ]
+]
+Variables

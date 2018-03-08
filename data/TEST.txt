@@ -1,7 +1,7 @@
 Variables
-Deutsch : Hallo
-English : Hello
-Francais : Alo
-Espanol : Hola
+:z : 2
+:w : 5
+:x : 30
+:y : 400
 Commands
-alpha : a b c d | 1 2 3 4
+alpha : :a :b | sum :a :b product :b :a

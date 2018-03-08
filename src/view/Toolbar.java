@@ -1,14 +1,13 @@
 package view;
 
-import java.io.File;
-
+import file_managers.FileReader;
+import file_managers.FileWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -19,23 +18,30 @@ import javafx.stage.Stage;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 
+import java.io.File;
+import java.util.Optional;
+
 public class Toolbar extends AnchorPane {
-	
+	private Visualizer myVis;
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
-	private ObservableList<String> colorList = FXCollections.observableArrayList("Default", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
-	private ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
+	private Stage myStage;
+	private FileWriter myFileWriter;
+	private FileReader myFileReader;
+	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
 	private Visualizer myVis;
 	
-	public Toolbar(Pane canvas, Visualizer vis){
+	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
+		myVis = v;
 		myCanvasObjects = canvas;
-		myVis = vis;
+		myFileWriter = fileWriter;
+		myFileReader = fileReader;
+		myStage = stage;
 	}
 	
-	public AnchorPane initToolbar(){
+	protected AnchorPane initToolbar(){
 		myPane = new AnchorPane();
 		
 		Text title = new Text(Resources.getString("Title"));
@@ -53,38 +59,29 @@ public class Toolbar extends AnchorPane {
 	private Button helpButton()	{
 		Button helpButton = new Button();
 		helpButton.setText(ResourcesLanguages.getString(myLanguage, "Help"));
-    	helpButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				new HelpBox(myLanguage);
-			}
-		});
+    	helpButton.setOnAction(e -> new HelpBox(myLanguage));
     	return helpButton;
     }
 	
 	private ComboBox colorMenu()	{
-		ComboBox colorMenu = new ComboBox(colorList);
+		ComboBox colorMenu = new ComboBox(Visualizer.possBackgroundColors);
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
-		colorMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();
-				myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back", 
-						"green-back", "blue-back", "purple-back", "pink-back");
-				myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
-			}
-		});
+		colorMenu.setOnAction(e -> {
+            String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();
+            myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back",
+                    "green-back", "blue-back", "purple-back", "pink-back");
+            myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
+        });
 		return colorMenu;
 	}
 	
 	private ComboBox langMenu(Button helpButton)	{
 		ComboBox langMenu = new ComboBox<String>(langsSupported);
 		langMenu.setPromptText(Resources.getString("LangMenu"));
-		langMenu.setOnAction(new EventHandler<ActionEvent>(){
-			@Override public void handle(ActionEvent e){
-				myLanguage = (String)(langMenu.getValue());
-				helpButton.setText(ResourcesLanguages.getString(myLanguage, "Help"));
-			}
-		});
+		langMenu.setOnAction(e -> {
+            myLanguage = (String)(langMenu.getValue());
+            helpButton.setText(ResourcesLanguages.getString(myLanguage, "Help"));
+        });
 		return langMenu;
 	}
 	
@@ -103,12 +100,9 @@ public class Toolbar extends AnchorPane {
 	//need to sync w parser
 	private Button saveButton()	{
 		Button saveButton = new Button("Save");
-    	saveButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
+    	saveButton.setOnAction(e -> {
+			promptForFilename();
+        });
     	return saveButton;
     }
 	
@@ -127,7 +121,7 @@ public class Toolbar extends AnchorPane {
     }
 	
 	private VBox initButtons(){
-		HBox myHBox = new HBox(Resources.getInt("Inset"));
+		HBox myHBox = new HBox(Resources.getInt(Visualizer.inset));
 		Button helpButton = helpButton();
 		myHBox.getChildren().add(helpButton);
 		myHBox.getChildren().add(colorMenu());
@@ -136,7 +130,7 @@ public class Toolbar extends AnchorPane {
 		myHBox.getChildren().add(saveButton());
 		myHBox.getChildren().add(loadButton());
 		
-		HBox buttons = new HBox(Resources.getInt("Inset"));
+		HBox buttons = new HBox(Resources.getInt(Visualizer.inset));
 		buttons.getChildren().add(pauseButton());
 		buttons.getChildren().add(stepButton());
 		buttons.getChildren().add(resetButton());
@@ -146,8 +140,8 @@ public class Toolbar extends AnchorPane {
 		buttons.getChildren().add(addDrawableButton());
 		buttons.getChildren().add(colorButton());
 		
-		VBox myVBox = new VBox(Resources.getInt("Inset"));
-		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
+		VBox myVBox = new VBox(Resources.getInt(Visualizer.inset));
+		myVBox.setPadding(new Insets(Resources.getInt(Visualizer.inset)));
 		myVBox.getChildren().add(myHBox);
 		myVBox.getChildren().add(buttons);
 		
@@ -157,88 +151,62 @@ public class Toolbar extends AnchorPane {
 	//need to link w visualizer class somehow
 	private Button addDrawableButton()	{
 		Button addDrawableButton = new Button("Add Turtle");
-	    addDrawableButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-			}
-		});
+	    addDrawableButton.setOnAction(e -> {
+        });
 		return addDrawableButton;
 	}
 	
 	private Button pauseButton()	{
 		Button pauseButton = new Button("Pause");
-    	pauseButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
+    	pauseButton.setOnAction(e -> {
+
+        });
     	return pauseButton;
     }
 	
 	private Button stepButton()	{
 		Button stepButton = new Button("Step");
-    	stepButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
+    	stepButton.setOnAction(e -> {
+
+        });
     	return stepButton;
     }
 	
 	private Button resetButton()	{
 		Button resetButton = new Button("Reset");
-    	resetButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
+    	resetButton.setOnAction(e -> {
+
+        });
     	return resetButton;
     }
 	
 	private Button undoButton()	{
 		Button undoButton = new Button("Undo");
-    	undoButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
+    	undoButton.setOnAction(e -> {
+
+        });
     	return undoButton;
     }
 	
 	private Button speedUpButton()	{
 		Button speedUpButton = new Button("Speed Up");
-    	speedUpButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
+    	speedUpButton.setOnAction(e -> {
+
+        });
     	return speedUpButton;
     }
 	
 	private Button slowDownButton()	{
 		Button slowDownButton = new Button("SlowDown");
-    	slowDownButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				
-			}
-		});
+    	slowDownButton.setOnAction(e -> {
+
+        });
     	return slowDownButton;
     }
 	
 	private Button colorButton() {
 		Button colorButton = new Button("Color Indices");
-		colorButton.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent e){
-				new ColorPalettes();
-			}
-		});
+		colorButton.setOnAction(e -> new ColorPalettes(myVis));
 		return colorButton;
 	}
 	
@@ -248,6 +216,39 @@ public class Toolbar extends AnchorPane {
 	
 	public String getLanguage(){
 		return myLanguage;
+	}
+
+	/**
+	 * Opens a file chooser window for the user to select their file
+	 */
+	private void openFileChooser() {
+		File configFile = new FileChooser().showOpenDialog(myStage);
+		if (configFile != null) {
+
+		}
+	}
+
+	/**
+	 * Prompts user for the filename of the text file they want to write
+	 */
+	private void promptForFilename() {
+		TextInputDialog prompt = new TextInputDialog("newfile");
+		prompt.setTitle("Write to file");
+		prompt.setHeaderText("Please enter the name of your file.");
+		Optional<String> result = prompt.showAndWait();
+		result.ifPresent(this::writeToFile);
+	}
+
+	/**
+	 * Calls File Writer to write to file
+	 */
+	private void writeToFile(String filename) {
+		try {
+			myFileWriter.writeToFile(filename);
+		}
+		catch (Exception e) {
+			//TODO: HANDLE THIS
+		}
 	}
 	
 }

@@ -16,6 +16,12 @@ public interface Drawable {
 	
 	public void setPane(Pane pane);
 
+	public double getId();
+
+	public double getPenColor();
+
+	public double getPenWidth();
+
 	public double getX();
 
 	public double getY();
@@ -24,7 +30,7 @@ public interface Drawable {
 	
 	public boolean getIsDown();
 
-	public Color getColor();
+	public double setPenDown(boolean down);
 
 	public double getPenWidth();
 	

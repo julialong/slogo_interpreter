@@ -79,10 +79,6 @@ public class Turtle implements Drawable, Updatable {
 		return isDown;
 	}
 
-	public Color getColor()	{
-		return myColor;
-	}
-
 	@Override
 	public double getPenWidth()	{
 		return myPenWidth;
@@ -95,10 +91,11 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public void setView(String imagePath){
-		myImage = new Image(imagePath);
-		myIV = new ImageView(myImage);
-		myIV.setFitHeight(20);
-		myIV.setFitWidth(20);
+		Image image = new Image(imagePath);
+		myIV = new ImageView(image);
+		int ivDim = 20;
+		myIV.setFitHeight(ivDim);
+		myIV.setFitWidth(ivDim);
 		translate(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
@@ -254,7 +251,7 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public double setPen(boolean down) {
+	public double setPenDown(boolean down) {
 		isDown = down;
 		return isDown ? 1.0 : 0.0;
 	}
@@ -320,12 +317,28 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double getPenColor() {
-		// TODO Auto-generated method stub
+		List<String> myColors = new ArrayList<>()	{{
+			add("Black");
+			add("White");
+			add("Red");
+			add("Orange");
+			add("Yellow");
+			add("Green");
+			add("Blue");
+			add("Purple");
+			add("Pink");
+		}};
+
+		for (int i = 0; i < myColors.size(); i++)	{
+			if (Color.valueOf(myColors.get(i)) == myColor)	{
+				return i;
+			}
+		}
 		return 0;
 	}
 
 	@Override
-	public double setPenSize(double pixels) {
+	public double setPenWidth(double pixels) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -347,5 +360,10 @@ public class Turtle implements Drawable, Updatable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+	@Override
+	public double setPenSize(Double aDouble) {
+		return 0;
+	}
+
 }

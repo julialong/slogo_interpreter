@@ -1,45 +1,47 @@
 package parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class Function {
-	private List<String> myArgs = new ArrayList<>();
+import commands.NonUpdatableStringArgs;
+import view.Visualizer;
+
+public class Function extends NonUpdatableStringArgs {
 	private List<String> myParams;
 	private List<String> myCommands;
-	
-	public Function(List<String> params, List<String> commands) {
+	private Parser myParser;
+	private String myName;
+
+	public Function(Visualizer vis, Parser parser, String name, List<String> params, List<String> commands) {
+		super(vis, params.size());
+		myParser = parser;
 		myParams = params;
 		myCommands = commands;
+		myName = name;
 	}
-	
-	public void inject(String arg) {
-		myArgs.add(arg);
-	}
-	
-	public int numArgs() {
-		return myParams.size();
-	}
-	
-	public List<String> replaceParams() {
-		List<String> replaced = new ArrayList<String>();
+
+	private String replaceParams(List<String> args) {
+		List<String> replaced = new ArrayList<>(myCommands);
 		for (int i=0; i < myParams.size(); i++) {
 			String param = myParams.get(i);
-			for (String command : myCommands) {
+			for (int j=0; j < replaced.size(); j++) {
+				String command = replaced.get(j);
 				if (command.equals(param)) {
-					replaced.add(myArgs.get(i));
-				} else {
-					replaced.add(command);
+					replaced.set(j, args.get(i));
 				}
 			}
 		}
-		myArgs.clear();
-		return replaced;
+		args.clear();
+		return String.join(" ", replaced);
+	}
+
+	@Override
+	protected double calcValue(List<String> args) {
+		return myParser.parse(replaceParams(args));
 	}
 
 	@Override
 	public String toString() {
-		return String.join(" ", myParams) + " | " + String.join(" ", myCommands);
+		return myName + " | " + String.join(" ", myParams) + " | " + String.join(" ", myCommands);
 	}
 }

@@ -8,6 +8,7 @@
 package view;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -18,27 +19,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import resources.keys.Resources;
-import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
 
 public class SideBar extends VBox{
 	private VBox myVBox;
 	private Pane myCanvasObjects;
 	private Canvas myCanvas;
+	private Visualizer myVis;
 	private Map<Drawable, List<String>> myTurtles;
-	
-//	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
-//			"Octopus", "Bird", "Butterfly");
-//	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-//			"Yellow", "Green", "Blue", "Purple", "Pink");
 	
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
@@ -56,8 +50,9 @@ public class SideBar extends VBox{
 	 * @param canvas	canvas of program, where turtles are displayed
 	 * @param turtles	list of all the movers in the canvas
 	 */
-	public SideBar(Pane canvas, Map<Drawable, List<String>> turtles, Canvas c){
+	public SideBar(Pane canvas, Visualizer v, Map<Drawable, List<String>> turtles, Canvas c){
 		myCanvasObjects = canvas;
+		myVis = v;
 		myTurtles = turtles;
 		myCanvas = c;
 	}
@@ -85,7 +80,9 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable(myTurtles, myCanvas, myCanvasObjects);
+				new DrawablesTable(myTurtles, myVis, myCanvas, myCanvasObjects);
+				exportCommands();
+				exportVariables();
 			}
 		});
 		return allDrawablesButton;
@@ -103,22 +100,46 @@ public class SideBar extends VBox{
         return commandTable;
 	}
 
+	public List<String> exportCommands()	{
+		List<String> commands = new ArrayList<>();
+
+		for (Button button:uDefCommands)	{
+			commands.add(button.getText());
+
+			System.out.println(button.getText());
+		}
+
+		return commands;
+	}
+
 	private TableView variableTable(double colWidth)	{
 		variableTable = new TableView();
 		variableTable.setEditable(true);
+		int numVarCols = 2;
 		vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
 		varName.setCellValueFactory(new PropertyValueFactory<>("key"));
-		varName.setPrefWidth(colWidth/2);
+		varName.setPrefWidth(colWidth/numVarCols);
 		varValue = new TableColumn("Value");
-		varValue.setPrefWidth(colWidth/2);
+		varValue.setPrefWidth(colWidth/numVarCols);
 		varValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 		vars.getColumns().addAll(varName, varValue);
 		variableTable.getColumns().add(vars);
 		variableTable.setItems(setVariables);
 
 		return variableTable;
+	}
+
+	public List<String> exportVariables()	{
+		List<String> variables = new ArrayList<>();
+
+		for (VarVal pair:setVariables)	{
+			String fullText = "make " + pair.keyProperty().getValue() + " " + pair.valueProperty().getValue();
+			variables.add(fullText);
+		}
+
+		return variables;
 	}
 
 	protected void addUDIButton(String text)	{
@@ -129,12 +150,7 @@ public class SideBar extends VBox{
 		LoadButton udc = new LoadButton();
 		udc.setText(text);
 
-		udc.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				myTextInput.loadInput("\n" + udc.getText());
-			}
-		});
+		udc.setOnAction(e -> myTextInput.loadInput("\n" + udc.getText()));
 
 		uDefCommands.add(udc);
 	}
