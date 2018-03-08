@@ -24,13 +24,15 @@ public class HelpBox extends Group {
 	private Scene helpInternal;
 	private Group myGroup;
 	private VBox helpVB;
+
+	private static final String SYNTAX = "Syntax";
+	private static final String SUBTITLE = "subtitle";
 	
     /**
      * constructor for box
      * @param language  determines language that commands should be displayed in
      */
     public HelpBox(String language)    {
-        //this.getChildren().add(helpButton());
     	myGroup = help(language);
 		helpInternal = new Scene(myGroup, 600, 800);
 		helpInternal.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
@@ -49,12 +51,7 @@ public class HelpBox extends Group {
         sc.setOrientation(Orientation.VERTICAL);
         myGroup.getChildren().add(sc);
         
-        sc.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                Number old_val, Number new_val) {
-                    helpVB.setLayoutY(-5 * new_val.doubleValue());
-                }
-        });
+        sc.valueProperty().addListener((ov, old_val, new_val) -> helpVB.setLayoutY(-5 * new_val.doubleValue()));
     }
 
     private Group help(String language){
@@ -66,25 +63,25 @@ public class HelpBox extends Group {
     	helpVB.getChildren().add(title);
     	
     	Text basic = new Text("Basic Syntax");
-    	basic.getStyleClass().add("subtitle");
+    	basic.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(basic);
     	
     	Text basicBody = new Text();
-    	basicBody.setText("Comment = " + ResourcesLanguages.getString("Syntax", "Comment")
-			+ "\nConstant = " + ResourcesLanguages.getString("Syntax", "Constant")
-			+ "\nVariable = " + ResourcesLanguages.getString("Syntax", "Variable")
-			+ "\nCommand = " + ResourcesLanguages.getString("Syntax", "Command")
-			+ "\nListStart = " + ResourcesLanguages.getString("Syntax", "ListStart")
-			+ "\nListEnd = " + ResourcesLanguages.getString("Syntax", "ListEnd")
-			+ "\nGroupStart = " + ResourcesLanguages.getString("Syntax", "GroupStart")
-			+ "\nGroupEnd = " + ResourcesLanguages.getString("Syntax", "GroupEnd")
-			+ "\nWhitespace = " + ResourcesLanguages.getString("Syntax", "Whitespace")
-			+ "\nNewline = " + ResourcesLanguages.getString("Syntax", "Newline"));
+    	basicBody.setText("Comment = " + ResourcesLanguages.getString(SYNTAX, "Comment")
+			+ "\nConstant = " + ResourcesLanguages.getString(SYNTAX, "Constant")
+			+ "\nVariable = " + ResourcesLanguages.getString(SYNTAX, "Variable")
+			+ "\nCommand = " + ResourcesLanguages.getString(SYNTAX, "Command")
+			+ "\nListStart = " + ResourcesLanguages.getString(SYNTAX, "ListStart")
+			+ "\nListEnd = " + ResourcesLanguages.getString(SYNTAX, "ListEnd")
+			+ "\nGroupStart = " + ResourcesLanguages.getString(SYNTAX, "GroupStart")
+			+ "\nGroupEnd = " + ResourcesLanguages.getString(SYNTAX, "GroupEnd")
+			+ "\nWhitespace = " + ResourcesLanguages.getString(SYNTAX, "Whitespace")
+			+ "\nNewline = " + ResourcesLanguages.getString(SYNTAX, "Newline"));
     	basicBody.getStyleClass().add("body");
     	helpVB.getChildren().add(basicBody);
     	
     	Text turtle = new Text("Turtle Commands");
-    	turtle.getStyleClass().add("subtitle");
+    	turtle.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(turtle);
     	
     	Text turtleBody = new Text();
@@ -105,7 +102,7 @@ public class HelpBox extends Group {
     	helpVB.getChildren().add(turtleBody);
     	
     	Text turtleq = new Text("Turtle Queries");
-    	turtleq.getStyleClass().add("subtitle");
+    	turtleq.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(turtleq);
     	
     	Text turtleqBody = new Text();
@@ -118,7 +115,7 @@ public class HelpBox extends Group {
     	helpVB.getChildren().add(turtleqBody);
     	
     	Text math = new Text("Math Operations");
-    	math.getStyleClass().add("subtitle");
+    	math.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(math);
     	
     	Text mathBody = new Text();
@@ -140,7 +137,7 @@ public class HelpBox extends Group {
     	helpVB.getChildren().add(mathBody);
     	
     	Text bool = new Text("Boolean Operations");
-    	bool.getStyleClass().add("subtitle");
+    	bool.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(bool);
     	
     	Text boolBody = new Text();
@@ -155,7 +152,7 @@ public class HelpBox extends Group {
     	helpVB.getChildren().add(boolBody);
     	
     	Text var = new Text("Variables, Control Structures, and User-Defined Commands");
-    	var.getStyleClass().add("subtitle");
+    	var.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(var);
     	
     	Text varBody = new Text();
@@ -170,7 +167,7 @@ public class HelpBox extends Group {
     	helpVB.getChildren().add(varBody);
     	
     	Text display = new Text("Display Commands");
-    	display.getStyleClass().add("subtitle");
+    	display.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(display);
     	
     	Text displayBody = new Text();
@@ -187,7 +184,7 @@ public class HelpBox extends Group {
     	helpVB.getChildren().add(displayBody);
     	
     	Text mult = new Text("Multiple Turtle Commands");
-    	mult.getStyleClass().add("subtitle");
+    	mult.getStyleClass().add(SUBTITLE);
     	helpVB.getChildren().add(mult);
     	
     	Text multBody = new Text();

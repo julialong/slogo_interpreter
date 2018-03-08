@@ -11,7 +11,7 @@ public class Repeat extends ControlUnbundler {
 	
 	private static final int NUM_ARGS = 2;
 
-	private double repeat;
+	private double toRepeat;
 	private List<String> expression;
 	private LinkedList<String> unbundledArray;
 	
@@ -51,9 +51,9 @@ public class Repeat extends ControlUnbundler {
 
 	private void executeExpression() {
 		if (expression.size() <= 0) {
-			repeat = 0;
+			toRepeat = 0;
 		} else {
-			repeat = getParser().parse(String.join(" ", expression));
+			toRepeat = getParser().parse(String.join(" ", expression));
 		}
 	}
 
@@ -65,7 +65,7 @@ public class Repeat extends ControlUnbundler {
 	 */
 	private void buildCommand(List<String> exp, int start, int stop) {
 		unbundledArray = new LinkedList<>();
-		for (int i = 0; i < (int) repeat; i++) {
+		for (int i = 0; i < (int) toRepeat; i++) {
 			for (int j = start + 1; j < stop; j++) {
 				unbundledArray.add(exp.get(j));
 			}
