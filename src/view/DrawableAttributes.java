@@ -23,7 +23,7 @@ import resources.keys.Resources;
 import slogo_team07.Drawable;
 import slogo_team07.Updatable;
 
-public class ConvertedTurtle	{
+public class DrawableAttributes	{
 	private Drawable thisTurtle;
 	private List<String> properties;
 	private List<String> propertyNames;
@@ -41,10 +41,10 @@ public class ConvertedTurtle	{
 	private SimpleObjectProperty yPos;
 	private SimpleObjectProperty heading;
 
-	public ConvertedTurtle(Map.Entry turtle, Visualizer vis, Canvas canvas, Pane pane)	{
+	public DrawableAttributes(Map.Entry turtle, Visualizer vis, Canvas canvas, Pane pane)	{
 		thisTurtle = (Drawable)turtle.getKey();
 		properties = (List<String>)turtle.getValue();
-		propertyNames = new ArrayList<String>();
+		propertyNames = new ArrayList<>();
 		myVis = vis;
 		myCanvas = canvas;
 		myPane = pane;
@@ -72,20 +72,21 @@ public class ConvertedTurtle	{
 	}
 
 	private SimpleObjectProperty makeActive(String activeString)	{
+		String thisProp = "active";
 		CheckBox activeBox = new CheckBox();
 		activeBox.setSelected(Boolean.valueOf(activeString));
-		activeBox.setOnAction(new EventHandler<ActionEvent>() {
+		activeBox.setOnAction(new EventHandler<ActionEvent>() {	
 			@Override
 			public void handle(ActionEvent e) {
 				if (activeBox.isSelected())	{
 					// thisTurtle is active
 					// tel all turtles active
-					properties.set(propertyNames.indexOf("active"), "true");
+					properties.set(propertyNames.indexOf(thisProp), "true");
 				}
 				else	{
 					// thisTurtle is not active
 					// tell every other turtle active
-					properties.set(propertyNames.indexOf("active"), "false");
+					properties.set(propertyNames.indexOf(thisProp), "false");
 				}
 			}
 		});
@@ -94,6 +95,7 @@ public class ConvertedTurtle	{
 	}
 
 	private SimpleObjectProperty makeImage(String imageString)	{
+		String thisProp = "image";
 		ObservableList<String> imageList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
 			"Octopus", "Bird", "Butterfly");
 		ComboBox imageMenu = new ComboBox(imageList);
@@ -109,7 +111,7 @@ public class ConvertedTurtle	{
 				thisTurtle.setView(Resources.getString(newImage));
 				myPane.getChildren().add(thisTurtle.getView());
 
-				properties.set(propertyNames.indexOf("image"), newImage);
+				properties.set(propertyNames.indexOf(thisProp), newImage);
 			}
 		});
 
@@ -117,6 +119,7 @@ public class ConvertedTurtle	{
 	}
 
 	private SimpleObjectProperty makepenDown(String penDownString)	{
+		String thisProp = "penDown";
 		CheckBox penDownBox = new CheckBox();
 		penDownBox.setSelected(Boolean.valueOf(penDownString));
 		penDownBox.setOnAction(new EventHandler<ActionEvent>() {
@@ -124,11 +127,11 @@ public class ConvertedTurtle	{
 			public void handle(ActionEvent e) {
 				if (penDownBox.isSelected())	{
 					thisTurtle.setPenDown(true);
-					properties.set(propertyNames.indexOf("penDown"), "down");
+					properties.set(propertyNames.indexOf(thisProp), "down");
 				}
 				else	{
 					thisTurtle.setPenDown(false);
-					properties.set(propertyNames.indexOf("penDown"), "up");
+					properties.set(propertyNames.indexOf(thisProp), "up");
 				}
 			}
 		});
@@ -137,8 +140,8 @@ public class ConvertedTurtle	{
 	}
 
 	private SimpleObjectProperty makePenColor(String penColorString)	{
-		ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-		"Yellow", "Green", "Blue", "Purple", "Pink");
+		String thisProp = "penColor";
+		ObservableList<String> penList = Visualizer.possPenColors;
 
 		ComboBox penColorMenu = new ComboBox(penList);
 
@@ -150,7 +153,7 @@ public class ConvertedTurtle	{
 
 				thisTurtle.setPenColor(penList.indexOf(newColor));
 
-				properties.set(propertyNames.indexOf("penColor"), Integer.toString(penList.indexOf(newColor)));
+				properties.set(propertyNames.indexOf(thisProp), Integer.toString(penList.indexOf(newColor)));
 			}
 		});
 
@@ -158,6 +161,7 @@ public class ConvertedTurtle	{
 	}
 
 	private SimpleObjectProperty makePenWidth(String penWidthString)	{
+		String thisProp = "penWidth";
 		ObservableList<String> penWidthList = FXCollections.observableArrayList("0.5", "1.0", "1.5", "2.0", "2.5",
 		"3.0", "4.0", "5.0");
 
@@ -171,7 +175,7 @@ public class ConvertedTurtle	{
 
 				thisTurtle.setPenWidth(Double.parseDouble(newWidth));
 
-				properties.set(propertyNames.indexOf("penWidth"), newWidth);
+				properties.set(propertyNames.indexOf(thisProp), newWidth);
 			}
 		});
 

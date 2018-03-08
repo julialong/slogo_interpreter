@@ -115,7 +115,7 @@ public class Toolbar extends AnchorPane {
     }
 	
 	private VBox initButtons(){
-		HBox myHBox = new HBox(Resources.getInt("Inset"));
+		HBox myHBox = new HBox(Resources.getInt(Visualizer.inset));
 		Button helpButton = helpButton();
 		myHBox.getChildren().add(helpButton);
 		myHBox.getChildren().add(colorMenu());
@@ -124,7 +124,7 @@ public class Toolbar extends AnchorPane {
 		myHBox.getChildren().add(saveButton());
 		myHBox.getChildren().add(loadButton());
 		
-		HBox buttons = new HBox(Resources.getInt("Inset"));
+		HBox buttons = new HBox(Resources.getInt(Visualizer.inset));
 		buttons.getChildren().add(pauseButton());
 		buttons.getChildren().add(stepButton());
 		buttons.getChildren().add(resetButton());
@@ -134,8 +134,8 @@ public class Toolbar extends AnchorPane {
 		buttons.getChildren().add(addDrawableButton());
 		buttons.getChildren().add(colorButton());
 		
-		VBox myVBox = new VBox(Resources.getInt("Inset"));
-		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
+		VBox myVBox = new VBox(Resources.getInt(Visualizer.inset));
+		myVBox.setPadding(new Insets(Resources.getInt(Visualizer.inset)));
 		myVBox.getChildren().add(myHBox);
 		myVBox.getChildren().add(buttons);
 		
