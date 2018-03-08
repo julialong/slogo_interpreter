@@ -19,7 +19,7 @@ public class SetBackground extends NonUpdatableDoubleArgs {
 	@Override
 	protected double calcValue(List<Double> args) {
 		Double dex = args.get(0);
-		//myVis.setBackground(dex.intValue());
+		myVis.setBackground(dex.intValue());
 		return dex;
 	}
 

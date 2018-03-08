@@ -4,8 +4,6 @@ import file_managers.FileReader;
 import file_managers.FileWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,7 +19,6 @@ import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 
 public class Toolbar extends AnchorPane {

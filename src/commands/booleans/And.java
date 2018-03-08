@@ -14,7 +14,7 @@ public class And extends Boolean {
 
 	@Override
 	protected double calcValue(List<Double> args) {
-		boolean b = (args.get(0) != 0.0) && (args.get(1) != 0.0);
+		boolean b = (!args.get(0).equals(0.0) && !args.get(1).equals(0.0));
 		return boolToDouble(b);
 	}
 
