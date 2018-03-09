@@ -21,7 +21,6 @@ public class Parser {
 		List<String> input = mySanitizer.sanitize(s);
 		double ans = -1;
 		while (!input.isEmpty()) {
-			System.out.println("GARBAGE: " + input);
 			ans = Double.parseDouble(traverse(input));
 		}
 		return ans;
@@ -46,7 +45,6 @@ public class Parser {
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
 			}
-			System.out.println("executing: " + node);
 			ans = node.execute();
 		}
 		clearAndAdd(input, temp);
