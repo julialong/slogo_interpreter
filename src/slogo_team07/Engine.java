@@ -18,7 +18,7 @@ public class Engine implements ChangeListener {
 		myVis = new Visualizer(stage, this);
 		myParser = new Parser(myVis);
 		
-		changeInput(INIT_TURTLE);
+		myParser.parse(INIT_TURTLE);
 	}
 
 	@Override

@@ -42,6 +42,6 @@ public class Function extends NonUpdatableCommand {
 
 	@Override
 	public String toString() {
-		return myName + " | " + String.join(" ", myParams) + " | " + String.join(" ", myCommands);
+		return String.format("to %s [ %s ] [ %s ]", myName, String.join(" ", myParams), String.join(" ", myCommands));
 	}
 }
