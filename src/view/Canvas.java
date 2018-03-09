@@ -11,14 +11,22 @@ import java.util.List;
 import java.util.Map;
 
 import commands.Result;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import resources.keys.Resources;
 import slogo_team07.Drawable;
 
 public class Canvas {
@@ -31,19 +39,12 @@ public class Canvas {
 	private double translateY;
 	private double diffX;
 	private double diffY;
-	private int propertiesShapeInd = 2;
-	private int propertiesDownInd = 3;
+	private int propertiesIDInd = 0;
+	private int propertiesActiveInd = 1;
+	private int propertiesImageInd = 2;
+	private int propertiesPenDownInd = 3;
 	private int propertiesColorInd = 4;
 	private int propertiesPenWidthInd = 5;
-	private List<String> myShapes = new ArrayList<String>() {{
-		add("Turtle");
-		add("Bird");
-		add("Butterfly");
-		add("Cat");
-		add("Dog");
-		add("Fish");
-		add("Octopus");
-	}};
 	
 	/**
 	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
@@ -82,13 +83,13 @@ public class Canvas {
 			List<String> properties = myTurtles.get(turtle);
 			List<String> possColors = Visualizer.possPenColors;
 
-			String shape = properties.get(propertiesShapeInd);
+			String shape = properties.get(propertiesImageInd);
 			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
-				properties.add(propertiesShapeInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
+				properties.add(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
 			}
-			String down = properties.get(propertiesDownInd);
+			String down = properties.get(propertiesPenDownInd);
 			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
-				properties.add(propertiesDownInd, Boolean.toString(turtle.getIsDown()));
+				properties.add(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
 			}
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
