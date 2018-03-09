@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import parser.Parser;
 import slogo_team07.Turtle;
 import slogo_team07.Updatable;
 import view.Visualizer;
@@ -13,12 +14,14 @@ public class Tell extends Multiple {
 	private static final int NUM_ARGS = 1;
 	
 	private Visualizer myVis;
+	private Parser myParser;
 	private Set<String> myActives;
 	private Map<String, Updatable> myUpdatables;
 
-	public Tell(Visualizer vis, Set<String> actives, Map<String, Updatable> updatables) {
+	public Tell(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
 		super(vis, NUM_ARGS);
 		myVis = vis;
+		myParser = parser;
 		myActives = actives;
 		myUpdatables = updatables;
 	}
@@ -34,17 +37,19 @@ public class Tell extends Multiple {
 		List<String> input = argsToList(args);
 		int[] brackets = findBrackets(input, 0);
 		myActives.clear();
-		String num = null;
+		double num = -1;
 		for (int i=1; i < brackets[1]; i++) {
-			num = input.get(i);
-			if (!myUpdatables.containsKey(num)) {
-				addTurtle(num);
+			num = myParser.parse(input.get(i));
+			String num_string = Integer.toString((int) num);
+			System.out.println(num_string);
+			if (!myUpdatables.containsKey(num_string)) {
+				addTurtle(num_string);
 			}
-			myActives.add(num);
+			myActives.add(num_string);
 		}
 		
 		modifyList(input, brackets[1]);
 		
-		return Double.parseDouble(num);
+		return num;
 	}
 }
