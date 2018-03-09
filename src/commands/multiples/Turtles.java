@@ -8,7 +8,7 @@ import view.Visualizer;
 
 public class Turtles extends Multiple {
 	
-	private static final int NUM_ARGS = 2;
+	private static final int NUM_ARGS = 0;
 	
 	private Map<String, Updatable> myUpdatables;
 

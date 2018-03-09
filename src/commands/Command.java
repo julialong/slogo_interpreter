@@ -42,6 +42,7 @@ public abstract class Command {
 	}
 
 	protected List<Double> parseToDouble(List<String> args) {
+		System.out.println("args: " + args);
 		return args.stream()
 				.map(Double::parseDouble)
 				.collect(Collectors.toList());

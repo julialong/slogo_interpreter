@@ -31,7 +31,9 @@ public class Parser {
 			return null;
 		}
 
+		System.out.println("input: " + input);
 		String next = input.remove(0).toLowerCase();
+		System.out.println("next: " + next);
 		if (isVariable(next)) {
 			return isRegistered(next) ? myCommandFactory.getVar(next) : next;
 		} else if (isArgument(next) || !isRegistered(next)) {
@@ -45,7 +47,9 @@ public class Parser {
 			while (!node.isReady()) {
 				node.inject(traverse(temp));
 			}
+			System.out.println("executing: " + node);
 			ans = node.execute();
+			System.out.println("ans: " + ans);
 		}
 		clearAndAdd(input, temp);
 		return ans;
