@@ -17,6 +17,7 @@ import resources.keys.Resources;
 
 public class ColorPalettes extends Group {
 	Visualizer myVis;
+	int tableHeight = 250;
 
 	public ColorPalettes(Visualizer vis) {
 		myVis = vis;
@@ -30,7 +31,7 @@ public class ColorPalettes extends Group {
 	private Scene initPage(){
 		Group root = new Group();
 		root.getChildren().add(makeVBox());
-		int sceneSize = 600;
+		int sceneSize = 300;
 		Scene scene = new Scene(root, sceneSize, Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		return scene;
@@ -39,6 +40,14 @@ public class ColorPalettes extends Group {
 	private VBox makeVBox()	{
 		VBox myVBox = new VBox();
 
+        myVBox.getChildren().add(bgColorTable());
+        myVBox.getChildren().add(penColorTable());
+        myVBox.getChildren().add(iconTable());
+
+        return myVBox;
+	}
+
+	private TableView bgColorTable()	{
 		TableView bgColorTable = new TableView();
 		bgColorTable.setEditable(false);
 		TableColumn bgIndexCol = new TableColumn("Index");
@@ -48,9 +57,13 @@ public class ColorPalettes extends Group {
 		bgColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
         bgColorTable.getColumns().add(bgColorCol);
         bgColorTable.setItems(myVis.bgColors);
-        myVBox.getChildren().add(bgColorTable);
+        bgColorTable.setPrefHeight(tableHeight);
 
-        TableView penColorTable = new TableView();
+        return bgColorTable;
+	}
+
+	private TableView penColorTable()	{
+		TableView penColorTable = new TableView();
 		penColorTable.setEditable(false);
 		TableColumn penIndexCol = new TableColumn("Index");
 		penIndexCol.setCellValueFactory(new PropertyValueFactory<>("ind"));
@@ -59,8 +72,23 @@ public class ColorPalettes extends Group {
 		penColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
         penColorTable.getColumns().add(penColorCol);
         penColorTable.setItems(myVis.penColors);
-        myVBox.getChildren().add(penColorTable);
+        penColorTable.setPrefHeight(tableHeight);
 
-        return myVBox;
+        return penColorTable;
+	}
+
+	private TableView iconTable()	{
+		TableView ivTable = new TableView();
+		ivTable.setEditable(false);
+		TableColumn ivIndexCol = new TableColumn("Index");
+		ivIndexCol.setCellValueFactory(new PropertyValueFactory<>("ind"));
+        ivTable.getColumns().add(ivIndexCol);
+        TableColumn ivCol = new TableColumn("Icon");
+		ivCol.setCellValueFactory(new PropertyValueFactory<>("image"));
+        ivTable.getColumns().add(ivCol);
+        ivTable.setItems(myVis.ivImages);
+        ivTable.setPrefHeight(tableHeight);
+
+        return ivTable;
 	}
 }

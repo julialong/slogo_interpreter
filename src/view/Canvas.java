@@ -52,6 +52,12 @@ public class Canvas {
 		add("Fish");
 		add("Octopus");
 	}};
+	private int propertiesIDInd = 0;
+	private int propertiesActiveInd = 1;
+	private int propertiesImageInd = 2;
+	private int propertiesPenDownInd = 3;
+	private int propertiesColorInd = 4;
+	private int propertiesPenWidthInd = 5;
 	
 	/**
 	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
