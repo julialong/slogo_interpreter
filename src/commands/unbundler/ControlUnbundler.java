@@ -6,7 +6,7 @@ import java.util.List;
 
 import commands.BracketFinder;
 import commands.ListModifier;
-import commands.NonUpdatableStringArgs;
+import commands.NonUpdatableCommand;
 import parser.Parser;
 import view.Visualizer;
 
@@ -14,7 +14,7 @@ import view.Visualizer;
  * Abstract class used for all unbundler classes
  * @author benhubsch, julialong
  */
-public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
+public abstract class ControlUnbundler extends NonUpdatableCommand implements ListModifier, BracketFinder {
 	
 	private Parser parser;
 

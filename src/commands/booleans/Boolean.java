@@ -1,9 +1,9 @@
 package commands.booleans;
 
-import commands.NonUpdatableDoubleArgs;
+import commands.NonUpdatableCommand;
 import view.Visualizer;
 
-public abstract class Boolean extends NonUpdatableDoubleArgs {
+public abstract class Boolean extends NonUpdatableCommand {
 	
 	public Boolean(Visualizer vis, int num_args) {
 		super(vis, num_args);

@@ -11,8 +11,9 @@ public class Atan extends Trig {
 	}
 
 	@Override
-	protected double calcValue(List<Double> args) {
-		return Math.atan(args.get(0));
+	protected double calcValue(List<String> args) {
+		List<Double> double_args = parseToDouble(args);
+		return Math.atan(double_args.get(0));
 	}
 
 }

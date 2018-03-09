@@ -46,8 +46,9 @@ public class Parser {
 				node.inject(traverse(temp));
 			}
 			ans = node.execute();
+			System.out.println("ANS: " + ans);
 		}
-		clearAndAdd(input, temp);	
+		clearAndAdd(input, temp);
 		return ans;
 	}
 

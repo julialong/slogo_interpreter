@@ -13,8 +13,9 @@ public class Not extends Boolean {
 	}
 	
 	@Override
-	protected double calcValue(List<Double> args) {
-		boolean b = args.get(0) == 0.0; 
+	protected double calcValue(List<String> args) {
+		List<Double> double_args = parseToDouble(args);
+		boolean b = double_args.get(0) == 0.0; 
 		return boolToDouble(b);
 	}
 }

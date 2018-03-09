@@ -3,10 +3,10 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import commands.NonUpdatableStringArgs;
+import commands.NonUpdatableCommand;
 import view.Visualizer;
 
-public class Function extends NonUpdatableStringArgs {
+public class Function extends NonUpdatableCommand {
 	private List<String> myParams;
 	private List<String> myCommands;
 	private Parser myParser;
@@ -42,6 +42,6 @@ public class Function extends NonUpdatableStringArgs {
 
 	@Override
 	public String toString() {
-		return myName + " | " + String.join(" ", myParams) + " | " + String.join(" ", myCommands);
+		return String.format("to %s [ %s ] [ %s ]", myName, String.join(" ", myParams), String.join(" ", myCommands));
 	}
 }
