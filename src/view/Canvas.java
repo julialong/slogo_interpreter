@@ -39,8 +39,6 @@ public class Canvas {
 	private double translateY;
 	private double diffX;
 	private double diffY;
-	private int propertiesIDInd = 0;
-	private int propertiesActiveInd = 1;
 	private int propertiesImageInd = 2;
 	private int propertiesPenDownInd = 3;
 	private int propertiesColorInd = 4;
