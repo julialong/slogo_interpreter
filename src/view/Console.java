@@ -6,14 +6,13 @@
 
 package view;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import resources.keys.Resources;
-import resources.languages.ResourcesLanguages;
 import slogo_team07.ChangeListener;
 
 public class Console extends AnchorPane implements TextInput {
@@ -39,9 +37,10 @@ public class Console extends AnchorPane implements TextInput {
 	private int width = 700;
 	private int cHeight = 100;
 	private int hHeight = 80;
-	private int bHeight = (cHeight + hHeight + offsetPad + 5*Resources.getInt("Inset"))/3;
+	private int buttonheightPadding = 3;
+	private int buttonWidthPadding = 50;
+	private int bHeight = (cHeight + hHeight + offsetPad + buttonWidthPadding)/buttonheightPadding;
 	private int bWidth = 80;
-	private int commandIndex = -1;   // will track what command is "last" for scrollability
 
 	/**
 	 * Constructor for Console
@@ -60,8 +59,8 @@ public class Console extends AnchorPane implements TextInput {
 		clearer = setClearer();
 		pastCommands = new ArrayList<>();
 
-		VBox myButtons = new VBox(Resources.getInt("Inset"));
-		myButtons.setPadding(new Insets(Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset"), Resources.getInt("Inset")));
+		VBox myButtons = new VBox(Resources.getInt(Visualizer.inset));
+		myButtons.setPadding(new Insets(Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset)));
 		myButtons.getChildren().addAll(runner, clearer);
 		this.getChildren().add(myButtons);
 		addElements();
@@ -106,7 +105,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	private void addElements()  {
-		List<Node> elements = new ArrayList<Node>();
+		List<Node> elements = new ArrayList<>();
 		addText(elements);
 		this.getChildren().addAll(elements);
 	}

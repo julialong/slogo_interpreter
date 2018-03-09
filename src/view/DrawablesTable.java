@@ -26,13 +26,15 @@ public class DrawablesTable extends Group	{
 	private TableView table = new TableView();
 	private double colWidth = 80;
 	private double numCols = 9;
-	private ObservableList<ConvertedTurtle> drawables = FXCollections.observableArrayList();
+	private int sceneSize = 400;
+	private ObservableList<DrawableAttributes> drawables = FXCollections.observableArrayList();
 
 	public DrawablesTable(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
 		parseInfo(allInfo, v, c, p);
 		makeTable();
 
-		Scene internal = new Scene(this, colWidth * numCols, 400);
+		Scene internal = new Scene(this, colWidth * numCols, sceneSize);
+		internal.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		Stage stage = new Stage();
 		stage.setScene(internal);
 		stage.setTitle("All Drawables");
@@ -41,7 +43,7 @@ public class DrawablesTable extends Group	{
 
 	private void parseInfo(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
 		for (Map.Entry figure:allInfo.entrySet())	{
-			drawables.add(new ConvertedTurtle(figure, v, c, p));
+			drawables.add(new DrawableAttributes(figure, v, c, p));
 		}
 	}
 

@@ -1,22 +1,31 @@
 package commands.unbundler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import parser.Parser;
 import view.Visualizer;
 
-public class If extends ControlUnbundler{
+/**
+ * Handles If control command
+ * @author julialong
+ */
+public class If extends ConditionalUnbundler{
 	
 	private static final int NUM_ARGS = 2;
+	private static final int START_INDEX = 0;
+	private static final int STOP_INDEX = 1;
 
-	private List<String> expression;
-	private ArrayList<String> unbundledArray;
-
+	private List <String> expression;
 	private boolean executeCommands;
+	private int[] commandIndex;
 
-	public If(Visualizer vis, Parser p) {
-		super(vis, NUM_ARGS, p);
+	/**
+	 * Creates a new If unbundler class
+	 * @param vis is the current Visualizer class
+	 * @param parser is the current parser
+	 */
+	public If(Visualizer vis, Parser parser) {
+		super(vis, NUM_ARGS, parser);
 	}
 
 	/**
@@ -25,52 +34,20 @@ public class If extends ControlUnbundler{
 	 * @return the String of the unbundled control command
 	 */
 	public String unbundle(List<String> exp) {
-		int[] commandIndex = findBrackets(exp, 0);
-		expression = new ArrayList<>();
-		buildExpression(exp, commandIndex[0]);
-		executeCommands = executeExpression(expression);
-		buildCommand(exp, commandIndex[0], commandIndex[1]);
+		commandIndex = findBrackets(exp, 0);
+		handleExpression(exp);
+		List<String> unbundledArray = buildCommand(exp, commandIndex[START_INDEX], commandIndex[STOP_INDEX], executeCommands);
 		modifyList(exp, commandIndex[1]);
 		return String.join(" ", unbundledArray);
 	}
 
 	/**
-	 * Builds the expression to be evaluated
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index of the first left bracket
+	 * Builds and executes the expression
+	 * @param exp is the list of the expression
 	 */
-	private void buildExpression(List<String> exp, int end) {
-		for (int i = 0; i < end; i++) {
-			String current = exp.get(i);
-			expression.add(current);
-		}
+	private void handleExpression(List<String> exp) {
+		expression = buildExpression(exp, commandIndex[START_INDEX]);
+		executeCommands = executeExpression(expression);
 	}
 
-	private boolean executeExpression(List<String> expression) {
-		boolean executeCommands;
-		if (expression.size() <= 0) {
-			executeCommands = false;
-		} else {
-			double answer = getMyParser().parse(String.join(" ", expression));
-			executeCommands = (answer != 0.0);
-		}
-		return executeCommands;
-	}
-
-	/**
-	 * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index where the command ends, or the last bracket
-	 */
-	private void buildCommand(List<String> exp, int start, int stop) {
-		unbundledArray = new ArrayList<>();
-		if (executeCommands) {
-			for (int j = start + 1; j < stop; j++) {
-				unbundledArray.add(exp.get(j));
-			}
-		}
-		else {
-			unbundledArray.add("#nocommands");
-		}
-	}
 }

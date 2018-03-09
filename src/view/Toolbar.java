@@ -4,8 +4,6 @@ import file_managers.FileReader;
 import file_managers.FileWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,21 +19,21 @@ import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
+	private Visualizer myVis;
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
 	private Stage myStage;
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
-	private static ObservableList<String> colorList = Canvas.colorList;
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
 	
-	public Toolbar(Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
+	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
+		myVis = v;
 		myCanvasObjects = canvas;
 		myFileWriter = fileWriter;
 		myFileReader = fileReader;
@@ -86,12 +84,12 @@ public class Toolbar extends AnchorPane {
 		return langMenu;
 	}
 	
-	//need to write
+	//need to send tell command to create initial turtle on new window
 	private Button windowButton()	{
 		Button windowButton = new Button("New Window");
     	windowButton.setOnAction(e -> {
-            // TODO: need to write
-        });
+			new Visualizer(new Stage(), myVis.getChangeListener());
+		});
     	return windowButton;
     }
 	
@@ -104,17 +102,19 @@ public class Toolbar extends AnchorPane {
     	return saveButton;
     }
 	
-	//need to sync w parser
+	//what does julia want me to do with chosen file
 	private Button loadButton()	{
 		Button loadButton = new Button("Load");
     	loadButton.setOnAction(e -> {
-
-        });
+			FileChooser fc = new FileChooser();
+			fc.setTitle(Resources.getString("ChooserTitle"));
+			File file = fc.showOpenDialog(new Stage());
+		});
     	return loadButton;
     }
 	
 	private VBox initButtons(){
-		HBox myHBox = new HBox(Resources.getInt("Inset"));
+		HBox myHBox = new HBox(Resources.getInt(Visualizer.inset));
 		Button helpButton = helpButton();
 		myHBox.getChildren().add(helpButton);
 		myHBox.getChildren().add(colorMenu());
@@ -123,7 +123,7 @@ public class Toolbar extends AnchorPane {
 		myHBox.getChildren().add(saveButton());
 		myHBox.getChildren().add(loadButton());
 		
-		HBox buttons = new HBox(Resources.getInt("Inset"));
+		HBox buttons = new HBox(Resources.getInt(Visualizer.inset));
 		buttons.getChildren().add(pauseButton());
 		buttons.getChildren().add(stepButton());
 		buttons.getChildren().add(resetButton());
@@ -133,8 +133,8 @@ public class Toolbar extends AnchorPane {
 		buttons.getChildren().add(addDrawableButton());
 		buttons.getChildren().add(colorButton());
 		
-		VBox myVBox = new VBox(Resources.getInt("Inset"));
-		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
+		VBox myVBox = new VBox(Resources.getInt(Visualizer.inset));
+		myVBox.setPadding(new Insets(Resources.getInt(Visualizer.inset)));
 		myVBox.getChildren().add(myHBox);
 		myVBox.getChildren().add(buttons);
 		
@@ -199,7 +199,7 @@ public class Toolbar extends AnchorPane {
 	
 	private Button colorButton() {
 		Button colorButton = new Button("Color Indices");
-		colorButton.setOnAction(e -> new ColorPalettes());
+		colorButton.setOnAction(e -> new ColorPalettes(myVis));
 		return colorButton;
 	}
 	

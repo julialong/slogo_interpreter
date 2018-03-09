@@ -14,6 +14,11 @@ public class DoTimes extends ControlUnbundler {
 	private String variable;
 	private double end;
 	private ArrayList<String> unbundledArray;
+
+	private static final int START_EXPRESSION = 2;
+
+	private static final int START_INDEX = 0;
+	private static final int STOP_INDEX = 1;
 	
 	public DoTimes(Visualizer vis, Parser p) {
 		super(vis, NUM_ARGS, p);
@@ -29,8 +34,8 @@ public class DoTimes extends ControlUnbundler {
 		int[] expressionIndex = findBrackets(exp, 0);
 		int[] commandIndex = findBrackets(exp, 1);
 		setNumbers(exp, expressionIndex[1]);
-		buildCommand(exp, commandIndex[0], commandIndex[1]);
-		modifyList(exp, commandIndex[1]);
+		buildCommand(exp, commandIndex[START_INDEX], commandIndex[STOP_INDEX]);
+		modifyList(exp, commandIndex[STOP_INDEX]);
 		return String.join(" ", unbundledArray);
 	}
 
@@ -52,8 +57,9 @@ public class DoTimes extends ControlUnbundler {
 	private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
 		unbundledArray = new ArrayList<>();
 		for (double i = 1; i < end + 1; i++) {
-			for (int j = startIndex + 1; j < stopIndex; j++)
+			for (int j = startIndex + 1; j < stopIndex; j++) {
 				unbundledArray.add(replaceVariable(exp.get(j), i));
+			}
 		}
 	}
 
@@ -65,7 +71,7 @@ public class DoTimes extends ControlUnbundler {
 	 */
 	private double evaluateExpression(List<String> exp, int end) {
 		List<String> expression = new ArrayList<>();
-		for (int i = 2; i < end; i++) {
+		for (int i = START_EXPRESSION; i < end; i++) {
 			String current = exp.get(i);
 			expression.add(current);
 		}
@@ -80,7 +86,7 @@ public class DoTimes extends ControlUnbundler {
 	private double executeExpression(List<String> expression) {
 		double answer = 0;
 		if (expression.size() > 0){
-			answer = getMyParser().parse(String.join(" ", expression));
+			answer = getParser().parse(String.join(" ", expression));
 		}
 		return answer;
 	}
@@ -94,7 +100,8 @@ public class DoTimes extends ControlUnbundler {
 	private String replaceVariable(String current, double currentIndex) {
 		if (current.equals(variable)) {
 			return Double.toString(currentIndex);
+		} else {
+			return current;
 		}
-		else return current;
 	}
 }

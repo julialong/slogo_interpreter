@@ -6,13 +6,16 @@
 
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import commands.Result;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -22,7 +25,25 @@ public class Canvas {
 	private Pane myPane;
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
-	private static ObservableList<String> colorList = Visualizer.possBackgroundColors;	
+	private double paneX;
+	private double paneY;
+	private double translateX;
+	private double translateY;
+	private double diffX;
+	private double diffY;
+	private int propertiesShapeInd = 2;
+	private int propertiesDownInd = 3;
+	private int propertiesColorInd = 4;
+	private int propertiesPenWidthInd = 5;
+	private List<String> myShapes = new ArrayList<String>() {{
+		add("Turtle");
+		add("Bird");
+		add("Butterfly");
+		add("Cat");
+		add("Dog");
+		add("Fish");
+		add("Octopus");
+	}};
 	
 	/**
 	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
@@ -34,12 +55,12 @@ public class Canvas {
 	protected Pane initCanvas(){
 		myPane = new Pane();
 		for (Drawable turtle: myTurtles.keySet()){
-			//turtle.setPane(myPane);
-			turtle.getView().setFitHeight(20);
-			turtle.getView().setFitWidth(20);
+			int turtleImgDim = 20;
+			turtle.getView().setFitHeight(turtleImgDim);
+			turtle.getView().setFitWidth(turtleImgDim);
 			myPane.getChildren().add(turtle.getView());
 			List<String> properties = myTurtles.get(turtle);
-			Color color = Color.valueOf(properties.get(4));
+			Color color = Color.valueOf(properties.get(propertiesColorInd));
 			double penWidth = turtle.getPenWidth();
 			turtle.draw(myPane, color, penWidth);
 		}
@@ -53,16 +74,36 @@ public class Canvas {
 				myPane.getChildren().remove(turtle.getView());
 			}
 			else if (! myPane.getChildren().contains(turtle.getView())){
-				turtle.getView().setFitHeight(20);
-				turtle.getView().setFitWidth(20);
+				int turtleImgDim = 20;
+				turtle.getView().setFitHeight(turtleImgDim);
+				turtle.getView().setFitWidth(turtleImgDim);
 				myPane.getChildren().add(turtle.getView());
 			}
 			List<String> properties = myTurtles.get(turtle);
-			List<Color> possColors = Visualizer.possPenColors;
+			List<String> possColors = Visualizer.possPenColors;
 
-			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(4))));
-			double penWidth = Double.parseDouble(properties.get(5));
+			String shape = properties.get(propertiesShapeInd);
+			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
+				properties.add(propertiesShapeInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
+			}
+			String down = properties.get(propertiesDownInd);
+			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
+				properties.add(propertiesDownInd, Boolean.toString(turtle.getIsDown()));
+			}
+			//may throw error if user tries to use user-defined color from set palette command
+			List<Color> colors = turtle.getMyColors();
+			Color color = colors.get((int) Double.parseDouble(properties.get(propertiesColorInd)));
+			if (! color.equals(colors.get((int) turtle.getPenColor()))){
+				color = colors.get((int) turtle.getPenColor());
+				properties.add(propertiesColorInd, Double.toString(turtle.getPenColor()));
+			}
+			double penWidth = Double.parseDouble(properties.get(propertiesPenWidthInd));
+			if (penWidth != turtle.getPenWidth()){
+				penWidth = turtle.getPenWidth();
+				properties.add(propertiesPenWidthInd, Double.toString(penWidth));
+			}
 			turtle.draw(myPane, color, penWidth);
+			dragAndDrop();
 		}
 		return myPane;
 	}
@@ -77,12 +118,36 @@ public class Canvas {
 		return updateCanvas(myTurtles);
 	}
 	
-	protected void setColor(Color color){
-		myColor = color;
-	}
-
-	protected void setPenWidth(double width){
-		myPenWidth = width;
+	protected void dragAndDrop(){
+		for (Drawable turtle: myTurtles.keySet()){
+			ImageView source = turtle.getView();
+			source.setOnMousePressed(new EventHandler<MouseEvent>(){
+				public void handle(MouseEvent e){
+					paneX = e.getSceneX();
+					paneY = e.getSceneY();
+					diffX = paneX - turtle.getViewX();
+					diffY = paneY - turtle.getViewY();
+					translateX = ((ImageView) e.getSource()).getTranslateX();
+					translateY = ((ImageView) e.getSource()).getTranslateY();
+				}
+			});
+			
+			source.setOnMouseDragged(new EventHandler<MouseEvent>(){
+				public void handle(MouseEvent e){
+					double offsetX = e.getSceneX() - paneX;
+					double offsetY = e.getSceneY() - paneY;
+					double newTranslateX = translateX + offsetX;
+					double newTranslateY = translateY + offsetY;
+				}
+			});
+			
+			source.setOnMouseReleased(new EventHandler<MouseEvent>(){
+				public void handle(MouseEvent e){
+					turtle.setViewX(e.getSceneX() - diffX);
+					turtle.setViewY(e.getSceneY() - diffY);
+				}
+			});
+		}
 	}
 	
 }

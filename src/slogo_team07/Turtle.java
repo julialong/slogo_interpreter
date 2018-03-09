@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import resources.keys.Resources;
+import view.Visualizer;
 
 public class Turtle implements Drawable, Updatable {
 
@@ -31,7 +33,10 @@ public class Turtle implements Drawable, Updatable {
 	private Color myColor = Color.BLACK;
 	private double myId;
 	private double myPenWidth = 1.0;
-	private boolean myStatus = true; //need to coordinate w back end?
+	private Image myImage;
+	private List<Color> myColors = new ArrayList<>();
+	private List<String> myShapes = Visualizer.possIVImages;
+	private String myShape = "Turtle";
 
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);
@@ -39,6 +44,10 @@ public class Turtle implements Drawable, Updatable {
 		myIV = new ImageView(image);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
+
+		for (int i = 0; i < Visualizer.possPenColors.size(); i++)	{
+			myColors.add(Color.valueOf(Visualizer.possPenColors.get(i)));
+		}
 	}
 	
 	private void translate(Pane display){
@@ -50,6 +59,15 @@ public class Turtle implements Drawable, Updatable {
 		myViewPrevY = -1 * (myPrevYPos  - height/2);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
+	}
+	
+	private void opptranslate(Pane display){
+		double height = display.getHeight();
+		double width = display.getWidth();
+		myXPos = myViewX - width/2;
+		myYPos = height/2 - myViewY;
+		myPrevXPos = myViewPrevX - width/2;
+		myPrevYPos = height/2 - myViewPrevY;	
 	}
 	
 	public void setPane(Pane pane){
@@ -78,13 +96,44 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public void setView(String imagePath){
+		myShape = Resources.getString(imagePath);
 		Image image = new Image(imagePath);
 		myIV = new ImageView(image);
-		myIV.setFitHeight(20);
-		myIV.setFitWidth(20);
+		int ivDim = 20;
+		myIV.setFitHeight(ivDim);
+		myIV.setFitWidth(ivDim);
 		translate(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
+	}
+	
+	@Override 
+	public double getViewX(){
+		return myViewX;
+	}
+	
+	@Override 
+	public double getViewY(){
+		return myViewY;
+	}
+	
+	@Override
+	public void setViewX(double x){
+		myViewPrevX = myViewX;
+		myViewX = x;
+		opptranslate(myPane);
+	}
+	
+	@Override
+	public void setViewY(double y){
+		myViewPrevY = myViewY;
+		myViewY = y;
+		opptranslate(myPane);
+	}
+
+	@Override
+	public List<Color> getMyColors(){
+		return myColors;
 	}
 
 	@Override
@@ -102,9 +151,18 @@ public class Turtle implements Drawable, Updatable {
 			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
+			//lineAnimation(myIV);
 		}
 	}
 
+//	private void lineAnimation(Node iv){
+//		Path path = new Path();
+//		path.getElements().add(new MoveTo(myViewX, myViewY));
+//		path.getElements().add(new LineTo(myViewX, myViewY));
+//		//will need to change duration.millis to variable to change speed
+//		PathTransition pt = new PathTransition(Duration.millis(4000), path, iv);
+//		pt.play();
+//	}
 
 	@Override
 	public double setPosition(double x, double y) {
@@ -264,26 +322,8 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double getShape() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getPenColor() {
-		List<String> myColors = new ArrayList<>()	{{
-			add("Black");
-			add("White");
-			add("Red");
-			add("Orange");
-			add("Yellow");
-			add("Green");
-			add("Blue");
-			add("Purple");
-			add("Pink");
-		}};
-
-		for (int i = 0; i < myColors.size(); i++)	{
-			if (Color.valueOf(myColors.get(i)) == myColor)	{
+		for (int i = 0; i < myShapes.size(); i++){
+			if (myShapes.get(i).equals(myShape)){
 				return i;
 			}
 		}
@@ -291,42 +331,39 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	@Override
-	public double setPenSize(double pixels) {
+	public double getPenColor() {
+		for (int i = 0; i < myColors.size(); i++)	{
+			if (myColors.get(i).equals(myColor))	{
+				return i;
+			}
+		}
 		return 0;
 	}
 
 	@Override
 	public double setPenWidth(double pixels) {
-		// TODO Auto-generated method stub
-		return 0;
+		myPenWidth = pixels;
+		return pixels;
 	}
 
+	//should probably throw exception if dex > myColors.size()
 	@Override
 	public double setPenColor(int dex) {
-		// TODO Auto-generated method stub
-		return 0;
+		myColor = myColors.get(dex);
+		return dex;
 	}
 
 	@Override
 	public double setShape(int dex) {
-		// TODO Auto-generated method stub
-		return 0;
+		setView(Resources.getString(myShapes.get(dex)));
+		return dex;
 	}
 
 	@Override
 	public double setPalette(int dex, double r, double g, double b) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double setPen(boolean b) {
-		return 0;
-	}
-
-	@Override
-	public double setPenSize(Double aDouble) {
-		return 0;
+		Color newColor = Color.rgb((int) r, (int) g, (int) b, 1.0);
+		myColors.add(dex, newColor);
+		return dex;
 	}
 
 }

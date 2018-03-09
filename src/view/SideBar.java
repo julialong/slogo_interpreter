@@ -19,15 +19,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import resources.keys.Resources;
-import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
 
 public class SideBar extends VBox{
@@ -36,11 +33,6 @@ public class SideBar extends VBox{
 	private Canvas myCanvas;
 	private Visualizer myVis;
 	private Map<Drawable, List<String>> myTurtles;
-	
-//	private ObservableList<String> iconList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
-//			"Octopus", "Bird", "Butterfly");
-//	private ObservableList<String> penList = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-//			"Yellow", "Green", "Blue", "Purple", "Pink");
 	
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
@@ -123,13 +115,14 @@ public class SideBar extends VBox{
 	private TableView variableTable(double colWidth)	{
 		variableTable = new TableView();
 		variableTable.setEditable(true);
+		int numVarCols = 2;
 		vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
 		varName.setCellValueFactory(new PropertyValueFactory<>("key"));
-		varName.setPrefWidth(colWidth/2);
+		varName.setPrefWidth(colWidth/numVarCols);
 		varValue = new TableColumn("Value");
-		varValue.setPrefWidth(colWidth/2);
+		varValue.setPrefWidth(colWidth/numVarCols);
 		varValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 		vars.getColumns().addAll(varName, varValue);
 		variableTable.getColumns().add(vars);
