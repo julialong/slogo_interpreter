@@ -14,7 +14,7 @@ import view.Visualizer;
  * Abstract class used for all unbundler classes
  * @author benhubsch, julialong
  */
-public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
+public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListModifier, BracketFinder, CommandBuilder {
 	
 	private Parser parser;
 
@@ -61,6 +61,20 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
 		String unbundled = unbundle(argsToExp(args));
 		return parser.parse(unbundled);
 	}
+
+    /**
+     * Builds the expression to be evaluated
+     * @param exp is the entire ArrayList of the input commands
+     * @return the index of the first left bracket
+     */
+    protected List<String> buildExpression(List<String> exp, int end) {
+        List<String> expression = new ArrayList<>();
+        for (int i = 0; i < end; i++) {
+            String current = exp.get(i);
+            expression.add(current);
+        }
+        return expression;
+    }
 
 	/**
 	 * Unbundles the current command so that it can be executed

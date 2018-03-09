@@ -7,15 +7,13 @@ import parser.Parser;
 import view.Visualizer;
 
 
-public class DoTimes extends ControlUnbundler {
+public class DoTimes extends MultipleUnbundler {
 	
 	private static final int NUM_ARGS = 2;
 
 	private String variable;
 	private double end;
-	private ArrayList<String> unbundledArray;
-
-	private static final int START_EXPRESSION = 2;
+	private List<String> unbundledArray;
 
 	private static final int START_INDEX = 0;
 	private static final int STOP_INDEX = 1;
@@ -34,7 +32,7 @@ public class DoTimes extends ControlUnbundler {
 		int[] expressionIndex = findBrackets(exp, 0);
 		int[] commandIndex = findBrackets(exp, 1);
 		setNumbers(exp, expressionIndex[1]);
-		buildCommand(exp, commandIndex[START_INDEX], commandIndex[STOP_INDEX]);
+		unbundledArray = buildCommand(exp, commandIndex[START_INDEX], commandIndex[STOP_INDEX]);
 		modifyList(exp, commandIndex[STOP_INDEX]);
 		return String.join(" ", unbundledArray);
 	}
@@ -45,37 +43,7 @@ public class DoTimes extends ControlUnbundler {
 	 */
 	private void setNumbers(List<String> exp, int stopIndex) {
 		variable = exp.get(1);
-		end = evaluateExpression(exp, stopIndex);
-	}
-
-
-	/**
-	 * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index where the command ends, or the last bracket
-	 */
-	private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
-		unbundledArray = new ArrayList<>();
-		for (double i = 1; i < end + 1; i++) {
-			for (int j = startIndex + 1; j < stopIndex; j++) {
-				unbundledArray.add(replaceVariable(exp.get(j), i));
-			}
-		}
-	}
-
-	/**
-	 * Builds and executes the expression to be evaluated
-	 *
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index of the first left bracket
-	 */
-	private double evaluateExpression(List<String> exp, int end) {
-		List<String> expression = new ArrayList<>();
-		for (int i = START_EXPRESSION; i < end; i++) {
-			String current = exp.get(i);
-			expression.add(current);
-		}
-		return executeExpression(expression);
+		end = executeExpression(buildExpression(exp, stopIndex));
 	}
 
 	/**
@@ -89,19 +57,5 @@ public class DoTimes extends ControlUnbundler {
 			answer = getParser().parse(String.join(" ", expression));
 		}
 		return answer;
-	}
-
-	/**
-	 * Replaces the variable with the value of the current index
-	 * @param current is the current string
-	 * @param currentIndex is the value of the current position that needs to replace the variable
-	 * @return
-	 */
-	private String replaceVariable(String current, double currentIndex) {
-		if (current.equals(variable)) {
-			return Double.toString(currentIndex);
-		} else {
-			return current;
-		}
 	}
 }
