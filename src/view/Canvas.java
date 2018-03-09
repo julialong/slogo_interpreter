@@ -11,8 +11,6 @@ import java.util.Map;
 
 import commands.Result;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -74,11 +72,11 @@ public class Canvas {
 
 			String shape = properties.get(propertiesImageInd);
 			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
-				properties.add(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
+				properties.set(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
 			}
 			String down = properties.get(propertiesPenDownInd);
 			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
-				properties.add(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
+				properties.set(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
 			}
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
@@ -86,12 +84,12 @@ public class Canvas {
 
 			if (! color.equals(colors.get((int) turtle.getPenColor()))){
 				color = colors.get((int) turtle.getPenColor());
-				properties.add(propertiesColorInd, Double.toString(turtle.getPenColor()));
+				properties.set(propertiesColorInd, Double.toString(turtle.getPenColor()));
 			}
 			double penWidth = Double.parseDouble(properties.get(propertiesPenWidthInd));
 			if (penWidth != turtle.getPenWidth()){
 				penWidth = turtle.getPenWidth();
-				properties.add(propertiesPenWidthInd, Double.toString(penWidth));
+				properties.set(propertiesPenWidthInd, Double.toString(penWidth));
 			}
 			turtle.draw(myPane, color, penWidth);
 			dragAndDrop();
@@ -100,12 +98,6 @@ public class Canvas {
 	}
 
 	protected Pane updateCanvas(Result result) {
-		if (result.getRes1() == Double.MAX_VALUE)	{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Improper command");
-			alert.setContentText(result.toString());
-			alert.show();
-		}
 		return updateCanvas(myTurtles);
 	}
 	

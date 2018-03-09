@@ -23,13 +23,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -71,6 +68,10 @@ public class Visualizer {
 	protected ObservableList<IndCol> penColors = FXCollections.observableArrayList();
 	protected ObservableList<IndImg> ivImages = FXCollections.observableArrayList();
 	
+	/**
+	 * @param stage				stage that this Visulizer is displaying in
+	 * @param change_listener	ChangeListener that links to backend and operates on commands
+	 */
 	public Visualizer(Stage stage, ChangeListener change_listener) {
 		myChangeListener = change_listener;
 		myStage = stage;
@@ -177,10 +178,19 @@ public class Visualizer {
 	 * @param isLast	Whether command is last in serires - only want to actually print last command result (recursive commands get long)
 	 */
 	public void runCommand(Result result, boolean isLast) {
-		myCanvas.updateCanvas(result);
+		if (result.getRes1() == Double.MAX_VALUE)	{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Improper command");
+			alert.setContentText(result.toString());
+			alert.show();
+		}
+		else	{
+			myCanvas.updateCanvas(result);
 
-		if (isLast)	{
-			myConsole.printResult(Double.toString(result.getRes1()));
+			if (isLast)	{
+				myConsole.printResult(Double.toString(result.getRes1()));
+			}
+
 		}
 	}
 	
@@ -190,6 +200,7 @@ public class Visualizer {
 
 	/**
 	 * Called by a TO command, in order to send a user-defined function to the table of user-defined functions
+	 * @param functionText	command from backend that will be displayed on button
 	 */
 	public void addNewFunc(String functionText)	{
 		mySideBar.addUDIButton(functionText);
@@ -197,9 +208,11 @@ public class Visualizer {
 
 	/**
 	 * Called by a MAKE or SET command, in order to send a user-defined variable to the table of variables
+	 * @param variable	name of variable made
+	 * @param value		value of variable
 	 */
 	public void addNewVar(String variable, String value)	{
-		mySideBar.addUDVar(variable, value);
+		mySideBar.addUDVar(variable, Double.parseDouble(value));
 	}
 
 	/**
