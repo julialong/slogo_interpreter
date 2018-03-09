@@ -10,7 +10,7 @@ import java.util.Set;
 
 import commands.Command;
 import commands.VariableReplacer;
-import parser.Function;
+import commands.misc.Function;
 import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;

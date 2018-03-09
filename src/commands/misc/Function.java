@@ -1,10 +1,11 @@
-package parser;
+package commands.misc;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import commands.NonUpdatableCommand;
 import commands.VariableReplacer;
+import parser.Parser;
 import view.Visualizer;
 
 public class Function extends NonUpdatableCommand {
