@@ -6,8 +6,8 @@ import view.Visualizer;
 
 public abstract class NonUpdatableCommand extends Command {
 
-	public NonUpdatableCommand(Visualizer vis, int num_args) {
-		super(vis, num_args);
+	public NonUpdatableCommand(Visualizer vis, VariableReplacer var_replacer, int num_args) {
+		super(vis, var_replacer, num_args);
 	}
 	
 	public String execute() {
@@ -15,7 +15,7 @@ public abstract class NonUpdatableCommand extends Command {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		double ans = calcValue(getArgs());
+		double ans = calcValue(replaceVars(getArgs()));
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}

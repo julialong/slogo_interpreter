@@ -3,6 +3,7 @@ package commands.unbundler;
 import java.util.ArrayList;
 import java.util.List;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -20,8 +21,8 @@ public class DoTimes extends ControlUnbundler {
 	private static final int START_INDEX = 0;
 	private static final int STOP_INDEX = 1;
 	
-	public DoTimes(Visualizer vis, Parser p) {
-		super(vis, NUM_ARGS, p);
+	public DoTimes(Visualizer vis, VariableReplacer var_replacer, Parser p) {
+		super(vis, var_replacer, NUM_ARGS, p);
 	}
 
 	/**

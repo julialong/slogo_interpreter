@@ -3,6 +3,7 @@ package commands.misc;
 import java.util.List;
 
 import commands.NonUpdatableCommand;
+import commands.VariableReplacer;
 import view.Visualizer;
 
 public class SetPalette extends NonUpdatableCommand {
@@ -11,8 +12,8 @@ public class SetPalette extends NonUpdatableCommand {
 
 	private Visualizer myVis;
 
-	public SetPalette(Visualizer vis) {
-		super(vis, NUM_ARGS);
+	public SetPalette(Visualizer vis, VariableReplacer var_replacer) {
+		super(vis, var_replacer, NUM_ARGS);
 		myVis = vis;
 	}
 

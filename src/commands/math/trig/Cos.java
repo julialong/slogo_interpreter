@@ -2,12 +2,13 @@ package commands.math.trig;
 
 import java.util.List;
 
+import commands.VariableReplacer;
 import view.Visualizer;
 
 public class Cos extends Trig {
 
-	public Cos(Visualizer vis) {
-		super(vis);
+	public Cos(Visualizer vis, VariableReplacer var_replacer) {
+		super(vis, var_replacer);
 	}
 
 	@Override

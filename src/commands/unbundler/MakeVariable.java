@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import commands.CommandArgsUnfilledException;
+import commands.Result;
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
-public class MakeVariable extends ControlUnbundler{
+public class MakeVariable extends ControlUnbundler {
 	
 	private static final int NUM_ARGS = 2;
 
@@ -15,10 +18,21 @@ public class MakeVariable extends ControlUnbundler{
 	private Map<String, String> dictionary;
 	private Visualizer myVis;
 	
-	public MakeVariable(Visualizer vis, Parser p, Map<String, String> dict) {
-		super(vis, NUM_ARGS, p);
+	public MakeVariable(Visualizer vis, VariableReplacer var_replacer, Parser p, Map<String, String> dict) {
+		super(vis, var_replacer, NUM_ARGS, p);
 		dictionary = dict;
 		myVis = vis;
+	}
+	
+	@Override
+	public String execute() {
+		if (! isReady()) {
+			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
+		}
+
+		double ans = calcValue(getArgs());
+		visCommand(new Result(ans));
+		return Double.toString(ans);
 	}
 
 	/**

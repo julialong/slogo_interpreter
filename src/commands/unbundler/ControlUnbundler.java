@@ -7,6 +7,7 @@ import java.util.List;
 import commands.BracketFinder;
 import commands.ListModifier;
 import commands.NonUpdatableCommand;
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -24,8 +25,8 @@ public abstract class ControlUnbundler extends NonUpdatableCommand implements Li
 	 * @param numArgs is the number of arguments
 	 * @param parser is the current Parser class
 	 */
-	public ControlUnbundler(Visualizer vis, int numArgs, Parser parser) {
-		super(vis, numArgs);
+	public ControlUnbundler(Visualizer vis, VariableReplacer var_replacer, int numArgs, Parser parser) {
+		super(vis, var_replacer, numArgs);
 		this.parser = parser;
 	}
 

@@ -2,14 +2,15 @@ package commands.booleans;
 
 import java.util.List;
 
+import commands.VariableReplacer;
 import view.Visualizer;
 
 public class And extends Boolean {
 	
 	private static final int NUM_ARGS = 2;
 
-	public And(Visualizer vis) {
-		super(vis, NUM_ARGS);
+	public And(Visualizer vis, VariableReplacer var_replacer) {
+		super(vis, var_replacer, NUM_ARGS);
 	}
 
 	@Override

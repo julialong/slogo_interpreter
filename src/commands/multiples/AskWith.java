@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -14,8 +15,8 @@ public class AskWith extends Multiple {
 	private Parser myParser;
 	private Set<String> myActives;
 
-	public AskWith(Visualizer vis, Parser parser, Set<String> actives) {
-		super(vis, NUM_ARGS);
+	public AskWith(Visualizer vis, VariableReplacer var_replacer, Parser parser, Set<String> actives) {
+		super(vis, var_replacer, NUM_ARGS);
 		myParser = parser;
 		myActives = actives;
 	}

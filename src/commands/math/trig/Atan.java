@@ -2,12 +2,13 @@ package commands.math.trig;
 
 import java.util.List;
 
+import commands.VariableReplacer;
 import view.Visualizer;
 
 public class Atan extends Trig {
 
-	public Atan(Visualizer vis) {
-		super(vis);
+	public Atan(Visualizer vis, VariableReplacer var_replacer) {
+		super(vis, var_replacer);
 	}
 
 	@Override

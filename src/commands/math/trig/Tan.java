@@ -2,12 +2,13 @@ package commands.math.trig;
 
 import java.util.List;
 
+import commands.VariableReplacer;
 import view.Visualizer;
 
 public class Tan extends Trig {
 
-	public Tan(Visualizer vis) {
-		super(vis);
+	public Tan(Visualizer vis, VariableReplacer var_replacer) {
+		super(vis, var_replacer);
 	}
 
 	@Override

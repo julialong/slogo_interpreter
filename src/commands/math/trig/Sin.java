@@ -2,12 +2,13 @@ package commands.math.trig;
 
 import java.util.List;
 
+import commands.VariableReplacer;
 import view.Visualizer;
 
 public class Sin extends Trig {
 
-	public Sin(Visualizer vis) {
-		super(vis);
+	public Sin(Visualizer vis, VariableReplacer var_replacer) {
+		super(vis, var_replacer);
 	}
 
 	@Override

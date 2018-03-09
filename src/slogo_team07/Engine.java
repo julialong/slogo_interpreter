@@ -1,7 +1,7 @@
 package slogo_team07;
 
+import commands.ErrorResult;
 import commands.Result;
-import commands.factory.CommandFactory;
 import javafx.stage.Stage;
 import parser.Parser;
 import view.Visualizer;
@@ -9,26 +9,33 @@ import view.Visualizer;
 public class Engine implements ChangeListener {
 	
 	private static final String INIT_TURTLE = "tell [ 0 ]";
+	private static final String ERROR = "Command sequence not recognized.";
 	
 	private Visualizer myVis;
 	private Parser myParser;
-	private CommandFactory myCommandFactory;
 
 	public Engine(Stage stage) {
 		myVis = new Visualizer(stage, this);
 		myParser = new Parser(myVis);
 		
-		changeInput(INIT_TURTLE);
+		myParser.parse(INIT_TURTLE);
 	}
 
 	@Override
 	public void changeInput(String input) {
-		double ans = myParser.parse(input);
-		myVis.runCommand(new Result(ans), true);
+		Result result;
+		try {
+			double ans = myParser.parse(input);
+			result = new Result(ans);
+		} catch (Exception e) {
+			result = new ErrorResult(Double.MAX_VALUE, ERROR);
+		}
+		
+		myVis.runCommand(result, true);
 	}
 
 	@Override
 	public void changeLanguage(String lang) {
-		myCommandFactory.updateLanguage(lang);
+		myParser.updateLanguage(lang);
 	}
 }
