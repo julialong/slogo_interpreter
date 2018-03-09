@@ -92,8 +92,12 @@ public class Toolbar extends AnchorPane {
 		});
     	return windowButton;
     }
-	
-	//need to sync w parser
+
+	/**
+	 * Creates a button that, when pressed, asks for a file name to save to and then saves status of current
+	 * user defined commands to that file
+	 * @return new save Button
+	 */
 	private Button saveButton()	{
 		Button saveButton = new Button("Save");
     	saveButton.setOnAction(e -> {
@@ -101,14 +105,20 @@ public class Toolbar extends AnchorPane {
         });
     	return saveButton;
     }
-	
-	//what does julia want me to do with chosen file
+
+	/**
+	 * Creates a button that, when pressed, opens a filechooser and loads file to console
+	 * @return new load Button
+	 */
 	private Button loadButton()	{
 		Button loadButton = new Button("Load");
     	loadButton.setOnAction(e -> {
-			FileChooser fc = new FileChooser();
-			fc.setTitle(Resources.getString("ChooserTitle"));
-			File file = fc.showOpenDialog(new Stage());
+			try {
+				myFileReader.readFile(openFileChooser());
+			}
+			catch (Exception exception) {
+				// TODO: HANDLE EXCEPTION
+			}
 		});
     	return loadButton;
     }
@@ -214,11 +224,10 @@ public class Toolbar extends AnchorPane {
 	/**
 	 * Opens a file chooser window for the user to select their file
 	 */
-	private void openFileChooser() {
-		File configFile = new FileChooser().showOpenDialog(myStage);
-		if (configFile != null) {
-
-		}
+	private File openFileChooser() {
+		FileChooser fc = new FileChooser();
+		fc.setTitle(Resources.getString("ChooserTitle"));
+		return fc.showOpenDialog(new Stage());
 	}
 
 	/**
@@ -240,7 +249,7 @@ public class Toolbar extends AnchorPane {
 			myFileWriter.writeToFile(filename);
 		}
 		catch (Exception e) {
-			// TODO: HANDLE THIS
+			// TODO: HANDLE EXCEPTION
 		}
 	}
 	
