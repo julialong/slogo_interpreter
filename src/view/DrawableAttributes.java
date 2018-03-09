@@ -92,8 +92,8 @@ public class DrawableAttributes	{
 
 	private SimpleObjectProperty makeImage(String imageString)	{
 		String thisProp = "image";
-		ObservableList<String> imageList = FXCollections.observableArrayList("Turtle", "Dog", "Cat", "Fish",
-			"Octopus", "Bird", "Butterfly");
+		ObservableList<String> imageList = Visualizer.possIVImages;
+
 		ComboBox imageMenu = new ComboBox(imageList);
 
 		imageMenu.setPromptText(imageString);
