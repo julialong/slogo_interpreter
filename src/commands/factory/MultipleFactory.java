@@ -25,7 +25,7 @@ public class MultipleFactory implements Factory {
 		} else if (keyword.equalsIgnoreCase("AskWith")) {
 			command = new AskWith(myCF.getVis(), myCF, myCF.getParser(), myCF.getActives());
 		} else if (keyword.equalsIgnoreCase("Tell")) {
-			command = new Tell(myCF.getVis(), myCF, myCF.getParser(), myCF.getActives(), myCF.getUpdatables());
+			command = new Tell(myCF.getVis(), myCF, myCF.getActives(), myCF.getUpdatables());
 		} else if (keyword.equalsIgnoreCase("Turtles")) {
 			command = new Turtles(myCF.getVis(), myCF, myCF.getUpdatables());
 		} else {

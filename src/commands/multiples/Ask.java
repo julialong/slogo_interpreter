@@ -19,6 +19,7 @@ public class Ask extends Multiple {
 	private Parser myParser;
 	private Map<String, Updatable> myUpdatables;
 	private Set<String> myActives;
+	private VariableReplacer myVariableReplacer;
 
 	public Ask(Visualizer vis, VariableReplacer var_replacer, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
 		super(vis, var_replacer, NUM_ARGS);
@@ -26,6 +27,7 @@ public class Ask extends Multiple {
 		myParser = parser;
 		myActives = actives;
 		myUpdatables = updatables;
+		myVariableReplacer = var_replacer;
 	}
 	
 	private void addTurtle(String id) {
@@ -36,10 +38,12 @@ public class Ask extends Multiple {
 
 	private void activate(List<String> replace) {
 		myActives.clear();
-		for (int i=0; i < replace.size(); i++) {
-			double id = myParser.parse(replace.get(i));
-			String id_string = Integer.toString((int) id);
-			System.out.println(id_string);
+		for (String id : replace) {
+			if (isVariable(id)) {
+				id = myVariableReplacer.replace(id);
+			}
+			double num = Double.parseDouble(id);
+			String id_string = Integer.toString((int) num);
 			if (!myUpdatables.containsKey(id_string)) {
 				addTurtle(id_string);
 			}
@@ -60,4 +64,7 @@ public class Ask extends Multiple {
 		return ans;
 	}
 
+	private boolean isVariable(String string) {
+		return string.matches(":[a-zA-Z]+");
+	}
 }
