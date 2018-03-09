@@ -12,7 +12,6 @@ public class Engine implements ChangeListener {
 	
 	private Visualizer myVis;
 	private Parser myParser;
-	private CommandFactory myCommandFactory;
 
 	public Engine(Stage stage) {
 		myVis = new Visualizer(stage, this);
@@ -29,6 +28,6 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeLanguage(String lang) {
-		myCommandFactory.updateLanguage(lang);
+		myParser.updateLanguage(lang);
 	}
 }

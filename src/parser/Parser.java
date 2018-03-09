@@ -74,4 +74,8 @@ public class Parser {
 	private boolean isRegistered(String var) {
 		return myCommandFactory.isRegistered(var);
 	}
+
+	public void updateLanguage(String lang) {
+		myCommandFactory.updateLanguage(lang);
+	}
 }
