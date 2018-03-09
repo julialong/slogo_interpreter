@@ -1,5 +1,7 @@
 package slogo_team07;
 
+import java.util.List;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -39,4 +41,8 @@ public interface Drawable {
 	public void setViewX(double x);
 	
 	public void setViewY(double y);
+	
+	public List<Color> getMyColors();
+	
+	public double getShape();
 }

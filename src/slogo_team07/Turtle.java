@@ -150,6 +150,11 @@ public class Turtle implements Drawable, Updatable {
 		myViewY = y;
 		opptranslate(myPane);
 	}
+	
+	@Override
+	public List<Color> getMyColors(){
+		return myColors; 
+	}
 
 	@Override
 	public void draw(Pane display, Color color, double penWidth) {
@@ -357,6 +362,7 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double setPenWidth(double pixels) {
+		//need to update map
 		myPenWidth = pixels;
 		return pixels;
 	}
@@ -364,6 +370,7 @@ public class Turtle implements Drawable, Updatable {
 	//should probably throw exception if dex > myColors.size()
 	@Override
 	public double setPenColor(int dex) {
+		//need to update map
 		myColor = myColors.get(dex);
 		return dex;
 	}
