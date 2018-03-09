@@ -40,6 +40,8 @@ public class Canvas {
 	private double translateY;
 	private double diffX;
 	private double diffY;
+	private int propertiesColorInd = 4;
+	private int propertiesPenWidthInd = 5;
 	
 	/**
 	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
@@ -56,12 +58,6 @@ public class Canvas {
 			turtle.getView().setFitWidth(turtleImgDim);
 			myPane.getChildren().add(turtle.getView());
 			List<String> properties = myTurtles.get(turtle);
-			int propertiesIDInd = 0;
-			int propertiesActiveInd = 1;
-			int propertiesImageInd = 2;
-			int propertiesPenDownInd = 3;
-			int propertiesColorInd = 4;
-			int propertiesPenWidthInd = 5;
 			Color color = Color.valueOf(properties.get(propertiesColorInd));
 			double penWidth = turtle.getPenWidth();
 			turtle.draw(myPane, color, penWidth);
