@@ -32,7 +32,7 @@ public abstract class Command {
 	}
 	
 	protected List<String> getArgs() {
-		return replaceVars(myArgs);
+		return myArgs;
 	}
 
 	public int getChildren() {
@@ -49,7 +49,7 @@ public abstract class Command {
 				.collect(Collectors.toList());
 	}
 	
-	private List<String> replaceVars(List<String> args) {
+	protected List<String> replaceVars(List<String> args) {
 		List<String> temp = new ArrayList<>();
 		for (int i=0; i < args.size(); i++) {
 			String curr = args.get(i);

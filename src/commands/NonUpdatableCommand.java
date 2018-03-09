@@ -15,7 +15,7 @@ public abstract class NonUpdatableCommand extends Command {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		double ans = calcValue(getArgs());
+		double ans = calcValue(replaceVars(getArgs()));
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}
