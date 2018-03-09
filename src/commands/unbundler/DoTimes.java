@@ -23,7 +23,6 @@ public class DoTimes extends ControlUnbundler {
 	public DoTimes(Visualizer vis, Parser p) {
 		super(vis, NUM_ARGS, p);
 	}
-	
 
 	/**
 	 * unbundles the given control command starting at index
