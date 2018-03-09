@@ -6,6 +6,7 @@
 
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,16 +33,25 @@ public class Canvas {
 	private Pane myPane;
 	private Map<Drawable, List<String>> myTurtles;
 	protected VBox myVBox;
-//	private Color myColor = Color.BLACK;
-//	private double myPenWidth = 1.0;
 	private double paneX;
 	private double paneY;
 	private double translateX;
 	private double translateY;
 	private double diffX;
 	private double diffY;
+	private int propertiesShapeInd = 2;
+	private int propertiesDownInd = 3;
 	private int propertiesColorInd = 4;
 	private int propertiesPenWidthInd = 5;
+	private List<String> myShapes = new ArrayList<String>() {{
+		add("Turtle");
+		add("Bird");
+		add("Butterfly");
+		add("Cat");
+		add("Dog");
+		add("Fish");
+		add("Octopus");
+	}};
 	
 	/**
 	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
@@ -67,9 +77,6 @@ public class Canvas {
 	
 	protected Pane updateCanvas(Map<Drawable, List<String>> turtles) {		
 		myTurtles = turtles;
-//		for (Node child: myPane.getChildren()){
-//			System.out.println(child);
-//		}
 		for (Drawable turtle: myTurtles.keySet()){
 			if (! turtle.getIsVisible()){
 				myPane.getChildren().remove(turtle.getView());
@@ -83,8 +90,26 @@ public class Canvas {
 			List<String> properties = myTurtles.get(turtle);
 			List<String> possColors = Visualizer.possPenColors;
 
-			Color color = Color.valueOf(possColors.get(Integer.parseInt(properties.get(propertiesColorInd))));
+			String shape = properties.get(propertiesShapeInd);
+			if (! shape.equals(myShapes.get((int) turtle.getShape()))){
+				properties.add(propertiesShapeInd, (myShapes.get((int) turtle.getShape())));
+			}
+			String down = properties.get(propertiesDownInd);
+			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
+				properties.add(propertiesDownInd, Boolean.toString(turtle.getIsDown()));
+			}
+			//may throw error if user tries to use user-defined color from set palette command
+			List<Color> colors = turtle.getMyColors();
+			Color color = colors.get((int) Double.parseDouble(properties.get(propertiesColorInd)));
+			if (! color.equals(colors.get((int) turtle.getPenColor()))){
+				color = colors.get((int) turtle.getPenColor());
+				properties.add(propertiesColorInd, Double.toString(turtle.getPenColor()));
+			}
 			double penWidth = Double.parseDouble(properties.get(propertiesPenWidthInd));
+			if (penWidth != turtle.getPenWidth()){
+				penWidth = turtle.getPenWidth();
+				properties.add(propertiesPenWidthInd, Double.toString(penWidth));
+			}
 			turtle.draw(myPane, color, penWidth);
 			dragAndDrop();
 		}

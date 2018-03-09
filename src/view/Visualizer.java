@@ -179,31 +179,6 @@ public class Visualizer {
 	protected ChangeListener getChangeListener(){
 		return myChangeListener;
 	}
-	
-//	protected void dragAndDrop(){
-//		for (Drawable turtle: drawables.keySet()){
-//			ImageView source = turtle.getView();
-//			source.setOnDragDetected(new EventHandler<MouseEvent>(){
-//				public void handle(MouseEvent e){
-//					System.out.println("drag detected");
-//					Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-//					ClipboardContent content = new ClipboardContent();
-//					content.putImage(turtle.getImage());
-//					db.setContent(content);
-//					e.consume();
-//				}
-//			});
-//			
-//			Pane target = myCanvasObjects;
-//			target.setOnDragOver(new EventHandler<DragEvent>(){
-//				public void handle(DragEvent e){
-//					System.out.println("dragging");
-//					e.acceptTransferModes(TransferMode.ANY);
-//					e.consume();
-//				}
-//			});
-//		}
-//	}
 
 	/**
 	 * Called by a TO command, in order to send a user-defined function to the table of user-defined functions
