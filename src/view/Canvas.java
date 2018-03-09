@@ -6,27 +6,16 @@
 
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import commands.Result;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import resources.keys.Resources;
 import slogo_team07.Drawable;
 
 public class Canvas {
@@ -39,8 +28,6 @@ public class Canvas {
 	private double translateY;
 	private double diffX;
 	private double diffY;
-	private int propertiesIDInd = 0;
-	private int propertiesActiveInd = 1;
 	private int propertiesImageInd = 2;
 	private int propertiesPenDownInd = 3;
 	private int propertiesColorInd = 4;
@@ -85,23 +72,24 @@ public class Canvas {
 
 			String shape = properties.get(propertiesImageInd);
 			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
-				properties.add(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
+				properties.set(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
 			}
 			String down = properties.get(propertiesPenDownInd);
 			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
-				properties.add(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
+				properties.set(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
 			}
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
 			Color color = colors.get((int) Double.parseDouble(properties.get(propertiesColorInd)));
+
 			if (! color.equals(colors.get((int) turtle.getPenColor()))){
 				color = colors.get((int) turtle.getPenColor());
-				properties.add(propertiesColorInd, Double.toString(turtle.getPenColor()));
+				properties.set(propertiesColorInd, Double.toString(turtle.getPenColor()));
 			}
 			double penWidth = Double.parseDouble(properties.get(propertiesPenWidthInd));
 			if (penWidth != turtle.getPenWidth()){
 				penWidth = turtle.getPenWidth();
-				properties.add(propertiesPenWidthInd, Double.toString(penWidth));
+				properties.set(propertiesPenWidthInd, Double.toString(penWidth));
 			}
 			turtle.draw(myPane, color, penWidth);
 			dragAndDrop();
@@ -110,12 +98,6 @@ public class Canvas {
 	}
 
 	protected Pane updateCanvas(Result result) {
-		if (result.getRes1() == Double.MAX_VALUE)	{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Improper command");
-			alert.setContentText("The command " + result.toString() + " is not supported.");
-			alert.show();
-		}
 		return updateCanvas(myTurtles);
 	}
 	

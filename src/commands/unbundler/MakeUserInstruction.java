@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import commands.VariableReplacer;
 import parser.Function;
 import parser.Parser;
 import view.Visualizer;
@@ -18,14 +19,16 @@ public class MakeUserInstruction extends ControlUnbundler {
 	private Map<String, Function> dictionary;
 	private Visualizer visualizer;
 	private Function func;
+	private VariableReplacer variable_replacer;
 
 	private int[] variableIndex;
 	private int[] commandIndex;
 
-	public MakeUserInstruction(Visualizer vis, Parser parser, Map<String, Function> dict) {
-		super(vis, NUM_ARGS, parser);
+	public MakeUserInstruction(Visualizer vis, VariableReplacer var_replacer, Parser parser, Map<String, Function> dict) {
+		super(vis, var_replacer, NUM_ARGS, parser);
 		dictionary = dict;
 		visualizer = vis;
+		variable_replacer = var_replacer;
 	}
 
 	/**
@@ -65,7 +68,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 	 * Adds the current function to the map for use later
 	 */
 	private void addFunction() {
-		func = new Function(visualizer, getParser(), commandName, parameters, commands);
+		func = new Function(visualizer, variable_replacer, getParser(), commandName, parameters, commands);
 		dictionary.put(commandName, func);
 	}
 	

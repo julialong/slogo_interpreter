@@ -2,6 +2,7 @@ package commands.unbundler.conditional_unbundlers;
 
 import java.util.List;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -24,8 +25,8 @@ public class If extends ConditionalUnbundler{
 	 * @param vis is the current Visualizer class
 	 * @param parser is the current parser
 	 */
-	public If(Visualizer vis, Parser parser) {
-		super(vis, NUM_ARGS, parser);
+	public If(Visualizer vis, VariableReplacer var_replacer, Parser parser) {
+		super(vis, var_replacer, NUM_ARGS, parser);
 	}
 
 	/**

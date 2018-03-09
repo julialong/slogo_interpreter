@@ -1,5 +1,6 @@
 package commands.unbundler;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -13,8 +14,8 @@ abstract class MultipleUnbundler extends ControlUnbundler{
      * @param numArgs is the number of arguments
      * @param parser  is the current Parser class
      */
-    MultipleUnbundler(Visualizer vis, int numArgs, Parser parser) {
-        super(vis, numArgs, parser);
+    MultipleUnbundler(Visualizer vis, VariableReplacer variableReplacer, int numArgs, Parser parser) {
+        super(vis, variableReplacer, numArgs, parser);
     }
 
 }

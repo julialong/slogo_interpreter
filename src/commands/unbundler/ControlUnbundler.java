@@ -6,7 +6,8 @@ import java.util.List;
 
 import commands.BracketFinder;
 import commands.ListModifier;
-import commands.NonUpdatableStringArgs;
+import commands.NonUpdatableCommand;
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -14,18 +15,18 @@ import view.Visualizer;
  * Abstract class used for all unbundler classes
  * @author benhubsch, julialong
  */
-public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListModifier, BracketFinder, CommandBuilder {
+public abstract class ControlUnbundler extends NonUpdatableCommand implements ListModifier, BracketFinder, CommandBuilder {
 	
 	private Parser parser;
 
-	/**
+	/**C
 	 * Creates a new ControlUnbundler class
 	 * @param vis is the current Visualizer class
 	 * @param numArgs is the number of arguments
 	 * @param parser is the current Parser class
 	 */
-	public ControlUnbundler(Visualizer vis, int numArgs, Parser parser) {
-		super(vis, numArgs);
+	public ControlUnbundler(Visualizer vis, VariableReplacer var_replacer, int numArgs, Parser parser) {
+		super(vis, var_replacer, numArgs);
 		this.parser = parser;
 	}
 

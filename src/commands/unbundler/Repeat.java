@@ -2,20 +2,22 @@ package commands.unbundler;
 
 import java.util.List;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
 public class Repeat extends MultipleUnbundler {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	private double timesToRepeat;
 	private List<String> expression;
 	private List<String> unbundledArray;
-	
 
-	public Repeat(Visualizer vis, Parser p) {
-		super(vis, NUM_ARGS, p);
+
+
+	public Repeat(Visualizer vis, VariableReplacer var_replacer, Parser p) {
+		super(vis, var_replacer, NUM_ARGS, p);
 	}
 
 	/**
@@ -40,5 +42,4 @@ public class Repeat extends MultipleUnbundler {
 			timesToRepeat = getParser().parse(String.join(" ", expression));
 		}
 	}
-
 }

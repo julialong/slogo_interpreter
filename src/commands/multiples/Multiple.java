@@ -6,13 +6,14 @@ import java.util.List;
 
 import commands.BracketFinder;
 import commands.ListModifier;
-import commands.NonUpdatableStringArgs;
+import commands.NonUpdatableCommand;
+import commands.VariableReplacer;
 import view.Visualizer;
 
-public abstract class Multiple extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
+public abstract class Multiple extends NonUpdatableCommand implements ListModifier, BracketFinder {
 	
-	public Multiple(Visualizer vis, int num_args) {
-		super(vis, num_args);
+	public Multiple(Visualizer vis, VariableReplacer var_replacer, int num_args) {
+		super(vis, var_replacer, num_args);
 	}
 	
 	protected List<String> argsToList(List<String> args) {

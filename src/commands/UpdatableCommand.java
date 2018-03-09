@@ -9,8 +9,8 @@ public abstract class UpdatableCommand extends Command {
 
 	private Updatable myUpdatable;
 
-	public UpdatableCommand(Visualizer vis, int num_args,  Updatable updatable) {
-		super(vis, num_args);
+	public UpdatableCommand(Visualizer vis, VariableReplacer var_replacer, int num_args, Updatable updatable) {
+		super(vis, var_replacer, num_args);
 		myUpdatable = updatable;
 	}
 
@@ -19,7 +19,7 @@ public abstract class UpdatableCommand extends Command {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		Double ans = calcValues(myUpdatable, getDoubleArgs());
+		Double ans = calcValues(myUpdatable, parseToDouble(getArgs()));
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}

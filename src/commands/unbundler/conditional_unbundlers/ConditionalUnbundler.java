@@ -1,5 +1,6 @@
 package commands.unbundler.conditional_unbundlers;
 
+import commands.VariableReplacer;
 import commands.unbundler.ControlUnbundler;
 import parser.Parser;
 import view.Visualizer;
@@ -9,8 +10,8 @@ import java.util.List;
 
 abstract class ConditionalUnbundler extends ControlUnbundler {
 
-    ConditionalUnbundler(Visualizer vis, int num_args, Parser p) {
-        super(vis, num_args, p);
+    ConditionalUnbundler(Visualizer vis, VariableReplacer variableReplacer, int numArgs, Parser parser) {
+        super(vis, variableReplacer, numArgs, parser);
     }
 
     /**
