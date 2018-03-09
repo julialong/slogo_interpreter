@@ -4,5 +4,4 @@
 * Undo
 	* store stack of imageviews at each state, and then pop off to rewind?
 * Table update real-time
-* past commands
 * Javadoc all

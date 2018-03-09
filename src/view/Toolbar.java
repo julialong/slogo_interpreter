@@ -29,7 +29,7 @@ public class Toolbar extends AnchorPane {
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
-			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
+			"French", "German", "Italian", "Portuguese", "Russian", "Spanish", "Urdu");
 	private String myLanguage;
 	
 	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){

@@ -192,14 +192,14 @@ public class Visualizer {
 	 * Called by a TO command, in order to send a user-defined function to the table of user-defined functions
 	 */
 	public void addNewFunc(String functionText)	{
-		myConsole.makeUDI(functionText);
+		mySideBar.addUDIButton(functionText);
 	}
 
 	/**
 	 * Called by a MAKE or SET command, in order to send a user-defined variable to the table of variables
 	 */
 	public void addNewVar(String variable, String value)	{
-		myConsole.makeVariable(variable, value);
+		mySideBar.addUDVar(variable, value);
 	}
 
 	/**
