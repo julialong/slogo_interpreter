@@ -117,6 +117,7 @@ public class Console extends AnchorPane implements TextInput {
 
 	protected void printResult(String res)    {
 		pastCommands.add(new ComRet(console.getText(), res));
+		history.scrollTo(pastCommands.get(pastCommands.size() - 1));
 		clear();
 	}
 
