@@ -72,11 +72,11 @@ public class Canvas {
 
 			String shape = properties.get(propertiesImageInd);
 			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
-				properties.add(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
+				properties.set(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
 			}
 			String down = properties.get(propertiesPenDownInd);
 			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
-				properties.add(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
+				properties.set(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
 			}
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
@@ -84,12 +84,12 @@ public class Canvas {
 
 			if (! color.equals(colors.get((int) turtle.getPenColor()))){
 				color = colors.get((int) turtle.getPenColor());
-				properties.add(propertiesColorInd, Double.toString(turtle.getPenColor()));
+				properties.set(propertiesColorInd, Double.toString(turtle.getPenColor()));
 			}
 			double penWidth = Double.parseDouble(properties.get(propertiesPenWidthInd));
 			if (penWidth != turtle.getPenWidth()){
 				penWidth = turtle.getPenWidth();
-				properties.add(propertiesPenWidthInd, Double.toString(penWidth));
+				properties.set(propertiesPenWidthInd, Double.toString(penWidth));
 			}
 			turtle.draw(myPane, color, penWidth);
 			dragAndDrop();

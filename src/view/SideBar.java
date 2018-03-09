@@ -83,8 +83,6 @@ public class SideBar extends VBox{
 			@Override
 			public void handle(ActionEvent e) {
 				new DrawablesTable(myTurtles, myCanvasObjects);
-				exportCommands();
-				exportVariables();
 			}
 		});
 		return allDrawablesButton;
