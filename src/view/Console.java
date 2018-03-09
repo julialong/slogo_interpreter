@@ -135,6 +135,8 @@ public class Console extends AnchorPane implements TextInput {
 				((SideBar)myVBox).addUDIButton(pc);
 			}
 		}
+
+		// ((SideBar)myVBox).addUDIButton(comm);
 	}
 
 	protected void makeVariable(String var, String text) {

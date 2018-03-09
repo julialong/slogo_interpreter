@@ -123,11 +123,11 @@ public class DrawableAttributes	{
 			public void handle(ActionEvent e) {
 				if (penDownBox.isSelected())	{
 					thisTurtle.setPenDown(true);
-					properties.set(propertyNames.indexOf(thisProp), "down");
+					properties.set(propertyNames.indexOf(thisProp), "true");
 				}
 				else	{
 					thisTurtle.setPenDown(false);
-					properties.set(propertyNames.indexOf(thisProp), "up");
+					properties.set(propertyNames.indexOf(thisProp), "false");
 				}
 			}
 		});
