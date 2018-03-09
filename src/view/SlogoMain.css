@@ -95,6 +95,20 @@
 	-fx-border-color: black;
 }
 
+.table-view .column-header-background .filler{
+	-fx-background-color: #a3a3c2;
+	-fx-border-style: solid;
+	-fx-border-color: black;
+}
+
 .table-view {
+	-fx-background-color: #e0e0eb;
+}
+
+.table-row-cell:odd {
+	-fx-background-color: #efeff5;
+}
+
+.table-row-cell:even {
 	-fx-background-color: #e0e0eb;
 }

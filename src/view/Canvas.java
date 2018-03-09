@@ -39,12 +39,19 @@ public class Canvas {
 	private double translateY;
 	private double diffX;
 	private double diffY;
-	private int propertiesIDInd = 0;
-	private int propertiesActiveInd = 1;
-	private int propertiesImageInd = 2;
-	private int propertiesPenDownInd = 3;
+	private int propertiesShapeInd = 2;
+	private int propertiesDownInd = 3;
 	private int propertiesColorInd = 4;
 	private int propertiesPenWidthInd = 5;
+	private List<String> myShapes = new ArrayList<String>() {{
+		add("Turtle");
+		add("Bird");
+		add("Butterfly");
+		add("Cat");
+		add("Dog");
+		add("Fish");
+		add("Octopus");
+	}};
 	
 	/**
 	 * @param turtles	Map of all drawables to draw, and their individual characteristics (id, active, pen color, pen width... etc)
