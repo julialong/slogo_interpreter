@@ -52,14 +52,14 @@ public class Console extends AnchorPane implements TextInput {
 	private int bWidth = 80;
 
 	/**
-	 * Constructor for Console
+	 * Ceates a new instance of Console and initialized variables
 	 */
 	public Console()    {
 		initConsole();
 	}
 
 	/**
-	 * Initialized this Console with variables/contents
+	 * Initializes this Console with variables/contents
 	 */
 	public AnchorPane initConsole() {
 		pastCommands = FXCollections.observableArrayList();
@@ -81,7 +81,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	/**
-	 * Sends text from console to anything that calls run(), clears text box, and adds command to history
+	 * Sends text from console to anything that calls run(), clears text box
 	 */
 	@Override
 	public String run()    {
@@ -93,7 +93,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	/**
-	 * Clears text in console
+	 * Clears text in input console
 	 */
 	@Override
 	public void clear() {
@@ -101,7 +101,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	/**
-	 * Loads a String (pre-determined user command) into console
+	 * Loads a String (pre-determined user command or text from command history) into console
 	 * @param command   pre-set command to insert into console
 	 */
 	@Override

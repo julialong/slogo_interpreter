@@ -27,6 +27,9 @@ public class ColorPalettes extends Group {
 	private VBox myVBox;
 	private int sceneWidth = 350;
 
+	/**
+	 * @param Vis	Visualizer that this palette belongs to. Necessary because visualizer contains dynamic lists that this class modifies
+	 */
 	public ColorPalettes(Visualizer vis) {
 		myVis = vis;
 		myScene = initPage();

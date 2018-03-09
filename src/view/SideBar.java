@@ -48,7 +48,9 @@ public class SideBar extends VBox{
 	/**
 	 * Constructor for sidebar of program that contains buttons/options
 	 * @param canvas	canvas of program, where turtles are displayed
+	 * @param v			Visualizer instance that this sidebar belongs to
 	 * @param turtles	list of all the movers in the canvas
+	 * @param c			Canvas instance that is in the same visualizer as this sidebar
 	 */
 	public SideBar(Pane canvas, Visualizer v, Map<Drawable, List<String>> turtles, Canvas c){
 		myCanvasObjects = canvas;
@@ -80,7 +82,7 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable(myTurtles, myVis, myCanvas, myCanvasObjects);
+				new DrawablesTable(myTurtles, myCanvasObjects);
 				exportCommands();
 				exportVariables();
 			}
@@ -100,6 +102,9 @@ public class SideBar extends VBox{
         return commandTable;
 	}
 
+	/**
+	 * Returns all user-defined commands as a list of parsable (runnable) Strings
+	 */
 	public List<String> exportCommands()	{
 		List<String> commands = new ArrayList<>();
 
@@ -131,6 +136,9 @@ public class SideBar extends VBox{
 		return variableTable;
 	}
 
+	/**
+	 * Exports all defined variables as parsable/runnable Make commands
+	 */
 	public List<String> exportVariables()	{
 		List<String> variables = new ArrayList<>();
 
@@ -228,6 +236,8 @@ public class SideBar extends VBox{
 	     * Returns the value of a variable, as a property
 	     */
 	    public StringProperty valueProperty()	{
+	    	// MakeVaraible.addVariable(key, value);
+
 	    	return value;
 	    }
 	}

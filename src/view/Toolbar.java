@@ -1,3 +1,10 @@
+/**
+ * @author Jennifer Chin
+ * @author Maya Messinger
+ * Started 27 Feb 18
+ * Upper navigation bar that holds totle of program and all buttons that affect global variables (that exist in whole program)
+ */
+
 package view;
 
 import file_managers.FileReader;
@@ -32,6 +39,14 @@ public class Toolbar extends AnchorPane {
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish", "Urdu");
 	private String myLanguage;
 	
+	/**
+	 * Initialized isntance of Toolbar and sets its instance variables
+	 * @param v				Instance of Visualizer that this toolbar affects and is part of
+	 * @param canvas		canvas that this toolbar is tied to (in same Visualizer instance with)
+	 * @param fileWriter	Allows for storing current state of program
+	 * @param fileReader	Allows for loading pre-defined commands into program
+	 * @param stage			Window that this object dispalys in
+	 */
 	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
 		myVis = v;
 		myCanvasObjects = canvas;
@@ -217,6 +232,9 @@ public class Toolbar extends AnchorPane {
 		myLanguage = lang;
 	}
 	
+	/**
+	 * Returns the String name of the language that this program is accepting commands and displaying help in
+	 */
 	public String getLanguage(){
 		return myLanguage;
 	}
