@@ -17,6 +17,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
+import resources.keys.Resources;
 
 public class Turtle implements Drawable, Updatable {
 
@@ -39,6 +40,27 @@ public class Turtle implements Drawable, Updatable {
 	private double myId;
 	private double myPenWidth = 1.0;
 	private Image myImage;
+	private List<Color> myColors = new ArrayList<Color>()	{{ 
+		add(Color.BLACK);
+		add(Color.WHITE);
+		add(Color.RED);
+		add(Color.ORANGE);
+		add(Color.YELLOW);
+		add(Color.GREEN);
+		add(Color.BLUE);
+		add(Color.PURPLE);
+		add(Color.PINK);
+	}};
+	private List<String> myShapes = new ArrayList<String>() {{
+		add("Turtle");
+		add("Bird");
+		add("Butterfly");
+		add("Cat");
+		add("Dog");
+		add("Fish");
+		add("Octopus");
+	}};
+	private String myShape = "Turtle";
 
 	public Turtle(String id) {
 		myId = Double.parseDouble(id);
@@ -94,6 +116,7 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public void setView(String imagePath){
+		myShape = Resources.getString(imagePath);
 		Image image = new Image(imagePath);
 		myIV = new ImageView(image);
 		int ivDim = 20;
@@ -314,26 +337,18 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double getShape() {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < myShapes.size(); i++){
+			if (myShapes.get(i).equals(myShape)){
+				return i;
+			}
+		}
 		return 0;
 	}
 
 	@Override
 	public double getPenColor() {
-		List<String> myColors = new ArrayList<String>()	{{
-			add("Black");
-			add("White");
-			add("Red");
-			add("Orange");
-			add("Yellow");
-			add("Green");
-			add("Blue");
-			add("Purple");
-			add("Pink");
-		}};
-
 		for (int i = 0; i < myColors.size(); i++)	{
-			if (Color.valueOf(myColors.get(i)) == myColor)	{
+			if (myColors.get(i).equals(myColor))	{
 				return i;
 			}
 		}
@@ -342,31 +357,28 @@ public class Turtle implements Drawable, Updatable {
 
 	@Override
 	public double setPenWidth(double pixels) {
-		// TODO Auto-generated method stub
-		return 0;
+		myPenWidth = pixels;
+		return pixels;
 	}
 
+	//should probably throw exception if dex > myColors.size()
 	@Override
 	public double setPenColor(int dex) {
-		// TODO Auto-generated method stub
-		return 0;
+		myColor = myColors.get(dex);
+		return dex;
 	}
 
 	@Override
 	public double setShape(int dex) {
-		// TODO Auto-generated method stub
-		return 0;
+		setView(Resources.getString(myShapes.get(dex)));
+		return dex;
 	}
 
 	@Override
 	public double setPalette(int dex, double r, double g, double b) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double setPenSize(Double aDouble) {
-		return 0;
+		Color newColor = Color.rgb((int) r, (int) g, (int) b, 1.0);
+		myColors.add(dex, newColor);
+		return dex;
 	}
 
 }
