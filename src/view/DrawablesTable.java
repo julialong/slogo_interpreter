@@ -34,6 +34,7 @@ public class DrawablesTable extends Group	{
 		makeTable();
 
 		Scene internal = new Scene(this, colWidth * numCols, sceneSize);
+		internal.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
 		Stage stage = new Stage();
 		stage.setScene(internal);
 		stage.setTitle("All Drawables");
