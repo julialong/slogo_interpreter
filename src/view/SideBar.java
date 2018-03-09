@@ -174,9 +174,8 @@ public class SideBar extends VBox{
 
 	protected void addUDVar(String var, double value)	{
 		if (varExists(var) != null)	{
-			TextField valInput = new TextField();
-			valInput.setText(String.valueOf(value));
-			varExists(var).value = new SimpleObjectProperty(valInput);
+			varExists(var).setVal(value);
+			System.out.println(value);
 		}
 		else	{
 			setVariables.add(new VarVal(var, value));
@@ -248,6 +247,10 @@ public class SideBar extends VBox{
 				}
 			});
 			changeButton = new SimpleObjectProperty(changer);
+		}
+
+		private void setVal(double aVal)	{
+			((TextField)(value.getValue())).setText(Double.toString(aVal));
 		}
 
 		/**
