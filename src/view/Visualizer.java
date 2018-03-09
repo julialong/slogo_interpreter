@@ -23,6 +23,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -41,9 +43,11 @@ public class Visualizer {
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	public static final String inset = "Inset";
 	public static final ObservableList<String> possBackgroundColors = FXCollections.observableArrayList("White", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
+		"Yellow", "Green", "Blue", "Purple", "Pink");
 	public static final ObservableList<String> possPenColors = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-			"Yellow", "Green", "Blue", "Purple", "Pink");
+		"Yellow", "Green", "Blue", "Purple", "Pink");
+	public static final ObservableList<String> possIVImages = FXCollections.observableArrayList("Turtle", "Bird", "Butterfly", "Cat", "Dog",
+		"Fish", "Octopus");
 
 	private Stage myStage;
 	private Canvas myCanvas;
@@ -60,6 +64,7 @@ public class Visualizer {
 
 	protected ObservableList<IndCol> bgColors = FXCollections.observableArrayList();
 	protected ObservableList<IndCol> penColors = FXCollections.observableArrayList();
+	protected ObservableList<IndImg> ivImages = FXCollections.observableArrayList();
 	
 	public Visualizer(Stage stage, ChangeListener change_listener) {
 		myChangeListener = change_listener;
@@ -76,6 +81,10 @@ public class Visualizer {
 
 		for (int i = 0; i < possPenColors.size(); i++)	{
 			penColors.add(new IndCol(i, Color.valueOf(possPenColors.get(i))));
+		}
+
+		for (int i = 0; i < possIVImages.size(); i++)	{
+			ivImages.add(new IndImg(i, possIVImages.get(i)));
 		}
 	}
 	
@@ -230,6 +239,38 @@ public class Visualizer {
 	     */
 	    public ObjectProperty colorProperty()	{
 	    	return color;
+	    }
+	}
+
+	/**
+	 * Class that has properties that TableView can read in order to import into table
+	 * Only public so PropertyValueFactory can get its properties
+	 */
+	public class IndImg	{
+		private SimpleIntegerProperty ind;
+		private SimpleObjectProperty image;
+
+		private IndImg(int anInd, String imgString)	{
+			ind = new SimpleIntegerProperty(anInd);
+			int imgDim = 15;
+			ImageView icon = new ImageView(new Image(Resources.getString(imgString)));
+			icon.setFitHeight(imgDim);
+			icon.setFitWidth(imgDim);
+			image = new SimpleObjectProperty(icon);
+		}
+
+		/**
+		 * Returns the index of a variable, as a property
+		 */
+    	public IntegerProperty indProperty() {
+	        return ind;
+	    }
+
+	    /**
+	     * Returns the color of a variable, as a property
+	     */
+	    public ObjectProperty imageProperty()	{
+	    	return image;
 	    }
 	}
 }
