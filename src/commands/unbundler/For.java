@@ -35,7 +35,7 @@ public class For extends MultipleUnbundler {
 	protected String unbundle(List<String> exp) {
 		setNumbers(exp);
 		int[] commandIndex = findBrackets(exp, 1);
-		unbundledArray = buildCommand(exp, commandIndex[0], commandIndex[1]);
+		unbundledArray = buildCommand(exp, variable, end, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);
 		return String.join(" ", unbundledArray);
 	}
