@@ -1,5 +1,3 @@
 * fake commands to back-end
 	* active  - use tell command
 		* to deactive a turtle, actually activate every other turtle and leave inactive turtle out
-* penUp
-* Javadoc all
