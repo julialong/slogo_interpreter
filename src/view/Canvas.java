@@ -11,22 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 import commands.Result;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import resources.keys.Resources;
 import slogo_team07.Drawable;
 
 public class Canvas {
@@ -90,13 +82,13 @@ public class Canvas {
 			List<String> properties = myTurtles.get(turtle);
 			List<String> possColors = Visualizer.possPenColors;
 
-			String shape = properties.get(propertiesImageInd);
+			String shape = properties.get(propertiesShapeInd);
 			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
-				properties.add(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
+				properties.add(propertiesShapeInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
 			}
-			String down = properties.get(propertiesPenDownInd);
+			String down = properties.get(propertiesDownInd);
 			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
-				properties.add(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
+				properties.add(propertiesDownInd, Boolean.toString(turtle.getIsDown()));
 			}
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
