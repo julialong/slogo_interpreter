@@ -39,8 +39,6 @@ public class Canvas {
 	private double translateY;
 	private double diffX;
 	private double diffY;
-	private int propertiesIDInd = 0;
-	private int propertiesActiveInd = 1;
 	private int propertiesImageInd = 2;
 	private int propertiesPenDownInd = 3;
 	private int propertiesColorInd = 4;
@@ -94,6 +92,7 @@ public class Canvas {
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
 			Color color = colors.get((int) Double.parseDouble(properties.get(propertiesColorInd)));
+
 			if (! color.equals(colors.get((int) turtle.getPenColor()))){
 				color = colors.get((int) turtle.getPenColor());
 				properties.add(propertiesColorInd, Double.toString(turtle.getPenColor()));

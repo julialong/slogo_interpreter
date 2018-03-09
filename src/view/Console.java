@@ -130,7 +130,11 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	protected void makeUDI(String comm)  {
-		((SideBar)myVBox).addUDIButton(comm);
+		for (String pc:pastCommands)	{
+			if (pc.indexOf(comm.split(" ")[0]) >= 0)	{
+				((SideBar)myVBox).addUDIButton(pc);
+			}
+		}
 	}
 
 	protected void makeVariable(String var, String text) {

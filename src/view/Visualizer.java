@@ -207,7 +207,9 @@ public class Visualizer {
 	 * @param index	index within possible colors to set background to
 	 */
 	public void setBackground(int index)	{
-		System.out.println("background");
+		 myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back",
+                "green-back", "blue-back", "purple-back", "pink-back");
+        myCanvasObjects.setStyle("-fx-background-color: #" + ((Shape)(bgColors.get(index).colorProperty().getValue())).getFill().toString().substring(2, 8) + ";");
 	}
 
 	/**
