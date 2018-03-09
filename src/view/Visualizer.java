@@ -212,7 +212,7 @@ public class Visualizer {
 	 * @param value		value of variable
 	 */
 	public void addNewVar(String variable, String value)	{
-		mySideBar.addUDVar(variable, value);
+		mySideBar.addUDVar(variable, Double.parseDouble(value));
 	}
 
 	/**
