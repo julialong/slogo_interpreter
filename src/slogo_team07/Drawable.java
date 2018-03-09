@@ -22,7 +22,11 @@ public interface Drawable {
 
 	public double getPenColor();
 
+	public double setPenColor(int dex);
+
 	public double getPenWidth();
+
+	public double setPenWidth(double pixels);
 
 	public double getX();
 
@@ -35,13 +39,13 @@ public interface Drawable {
 	public double setPenDown(boolean down);
 	
 	public double getViewX();
+
+	public void setViewX(double x);
 	
 	public double getViewY();
 	
-	public void setViewX(double x);
-	
 	public void setViewY(double y);
-	
+
 	public List<Color> getMyColors();
 	
 	public double getShape();

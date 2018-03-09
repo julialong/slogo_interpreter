@@ -3,21 +3,15 @@ package slogo_team07;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.animation.Animation;
-import javafx.animation.PathTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 import resources.keys.Resources;
+import view.Visualizer;
 
 public class Turtle implements Drawable, Updatable {
 
@@ -40,26 +34,8 @@ public class Turtle implements Drawable, Updatable {
 	private double myId;
 	private double myPenWidth = 1.0;
 	private Image myImage;
-	private List<Color> myColors = new ArrayList<Color>()	{{ 
-		add(Color.BLACK);
-		add(Color.WHITE);
-		add(Color.RED);
-		add(Color.ORANGE);
-		add(Color.YELLOW);
-		add(Color.GREEN);
-		add(Color.BLUE);
-		add(Color.PURPLE);
-		add(Color.PINK);
-	}};
-	private List<String> myShapes = new ArrayList<String>() {{
-		add("Turtle");
-		add("Bird");
-		add("Butterfly");
-		add("Cat");
-		add("Dog");
-		add("Fish");
-		add("Octopus");
-	}};
+	private List<Color> myColors = new ArrayList<>();
+	private List<String> myShapes = Visualizer.possIVImages;
 	private String myShape = "Turtle";
 
 	public Turtle(String id) {
@@ -68,6 +44,10 @@ public class Turtle implements Drawable, Updatable {
 		myIV = new ImageView(image);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
+
+		for (int i = 0; i < Visualizer.possPenColors.size(); i++)	{
+			myColors.add(Color.valueOf(Visualizer.possPenColors.get(i)));
+		}
 	}
 	
 	private void translate(Pane display){
@@ -150,10 +130,10 @@ public class Turtle implements Drawable, Updatable {
 		myViewY = y;
 		opptranslate(myPane);
 	}
-	
+
 	@Override
 	public List<Color> getMyColors(){
-		return myColors; 
+		return myColors;
 	}
 
 	@Override
