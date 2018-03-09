@@ -92,6 +92,7 @@ public class Canvas {
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
 			Color color = colors.get((int) Double.parseDouble(properties.get(propertiesColorInd)));
+
 			if (! color.equals(colors.get((int) turtle.getPenColor()))){
 				color = colors.get((int) turtle.getPenColor());
 				properties.add(propertiesColorInd, Double.toString(turtle.getPenColor()));
