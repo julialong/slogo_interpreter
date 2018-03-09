@@ -28,8 +28,8 @@ public class For extends ControlUnbundler {
 
 	/**
 	 * Unbundles For command to a longer string that the Parser can parse
-	 * @param exp
-	 * @return
+	 * @param exp is the current expression
+	 * @return the unbundled command as a string
 	 */
 	@Override
 	protected String unbundle(List<String> exp) {

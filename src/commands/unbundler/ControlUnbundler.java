@@ -10,35 +10,31 @@ import commands.NonUpdatableStringArgs;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * Abstract class used for all unbundler classes
+ * @author benhubsch, julialong
+ */
 public abstract class ControlUnbundler extends NonUpdatableStringArgs implements ListModifier, BracketFinder {
-	
-	private static final String LEFT_BRACE = "[";
-	private static final String RIGHT_BRACE = "]";
 	
 	private Parser parser;
 
-	public ControlUnbundler(Visualizer vis, int num_args, Parser p) {
-		super(vis, num_args);
-		parser = p;
+	/**
+	 * Creates a new ControlUnbundler class
+	 * @param vis is the current Visualizer class
+	 * @param numArgs is the number of arguments
+	 * @param parser is the current Parser class
+	 */
+	public ControlUnbundler(Visualizer vis, int numArgs, Parser parser) {
+		super(vis, numArgs);
+		this.parser = parser;
 	}
 
 	/**
-	 * @param current is the current string
-	 * @return true if the current string is not a left bracket, false otherwise
+	 * Converts the current list of arguments to a list of expressions
+	 * @param args is the list of arguments
+	 * @return List of expressions
 	 */
-	protected boolean notLeftBracket (String current){
-		return !current.equals(LEFT_BRACE);
-	}
-
-	/**
-	 * @param current is the current string
-	 * @return true if the current string is not a right bracket, false otherwise
-	 */
-	protected boolean notRightBracket (String current){
-		return !current.equals(RIGHT_BRACE);
-	}
-	
-	protected List<String> argsToExp(List<String> args) {
+	List<String> argsToExp(List<String> args) {
 		List<String> exp = new ArrayList<>();
 		for (String arg : args) {
 			exp.addAll(Arrays.asList(arg.split(" ")));
@@ -46,16 +42,30 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
 		
 		return exp;
 	}
-	
+
+	/**
+	 * Returns the current parser for this class
+	 * @return the current parser
+	 */
 	protected Parser getParser() {
-		return parser;
+		return this.parser;
 	}
 
+	/**
+	 * Parses the value of the unbundled expression and returns the value
+	 * @param args is the list of arguments
+	 * @return the double value of the expression
+	 */
 	@Override
 	protected double calcValue(List<String> args) {
 		String unbundled = unbundle(argsToExp(args));
 		return parser.parse(unbundled);
 	}
-	
+
+	/**
+	 * Unbundles the current command so that it can be executed
+	 * @param exp is the expression to evaluate as a list
+	 * @return the unbundled String
+	 */
 	protected abstract String unbundle(List<String> exp);
 }
