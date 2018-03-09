@@ -1,5 +1,6 @@
 /**
  * @author Maya Messinger
+ * @author Jennifer Chin
  * Pop-up box that displays all of the commands possible, and based on language, how to input them
  */
 

@@ -1,3 +1,9 @@
+/**
+ * @author Jennifer Chin
+ * @author Julia Long
+ * Pane that represents the top portion of the screen containing most of the GUI's buttons
+ */
+
 package view;
 
 import file_managers.FileReader;
@@ -17,27 +23,41 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
+import slogo_team07.Drawable;
+import slogo_team07.Turtle;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
 	private Visualizer myVis;
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
-	private Stage myStage;
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
 	private String myLanguage;
 	
-	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
+	/**
+	 * Toolbar constructor. Takes in a Visualizer in order to create another visualizer with the same change
+	 * listener. Takes in a canvas for background color button. Takes in a fileWriter and fileReader to save and 
+	 * load new files. 
+	 * @param v
+	 * @param canvas
+	 * @param fileWriter
+	 * @param fileReader
+	 * @param stage
+	 */
+	
+	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader){
 		myVis = v;
 		myCanvasObjects = canvas;
 		myFileWriter = fileWriter;
 		myFileReader = fileReader;
-		myStage = stage;
 	}
 	
 	protected AnchorPane initToolbar(){
@@ -151,10 +171,19 @@ public class Toolbar extends AnchorPane {
 		return myVBox;
 	}
 	
-	//need to link w visualizer class somehow
+	//NOT SURE HOW TO LINK W BACKEND
 	private Button addDrawableButton()	{
 		Button addDrawableButton = new Button("Add Turtle");
 	    addDrawableButton.setOnAction(e -> {
+	    	int id = myVis.drawables.size();
+	    	List<String> ids = new ArrayList<String>();
+	    	for (Map.Entry<Drawable, List<String>> entry: myVis.drawables.entrySet()){
+	    		ids.add(myVis.drawables.get(entry.getKey()).get(0));
+	    	}
+	    	while (ids.contains(String.valueOf(id))){
+	    		id++;
+	    	}
+	    	myVis.addDrawable(new Turtle(String.valueOf(id)));
         });
 		return addDrawableButton;
 	}
@@ -217,6 +246,11 @@ public class Toolbar extends AnchorPane {
 		myLanguage = lang;
 	}
 	
+	/**
+	 * Returns current language user has selected. Language is decided in the toolbar and must be accessed by other
+	 * classes so that all part are operating under the same language.
+	 * @return String
+	 */
 	public String getLanguage(){
 		return myLanguage;
 	}
