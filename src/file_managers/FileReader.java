@@ -2,6 +2,7 @@ package file_managers;
 
 import view.Console;
 
+import java.io.File;
 import java.util.Scanner;
 
 /**
@@ -23,18 +24,18 @@ public class FileReader {
 
     /**
      * Reads in the current file and modifies the given variable and function maps
-     * @param filename is the name of the file that we want to read in
+     * @param file is the file that we want to read in
      * @throws InvalidFileException when the file filename is not correctly formatted
      */
-    public void readFile(String filename) throws InvalidFileException {
+    public void readFile(File file) throws InvalidFileException {
         try {
-            Scanner myScanner = new Scanner(getClass().getClassLoader().getResourceAsStream(filename));
+            Scanner myScanner = new Scanner(file);
             StringBuilder newCommands = new StringBuilder();
-            while (myScanner.hasNext()) {
-                newCommands.append(myScanner.next());
+            while (myScanner.hasNextLine()) {
+                newCommands.append(myScanner.nextLine());
+                newCommands.append(" ");
             }
             commandsToSend = newCommands.toString();
-            // TODO: send commands to console
             sendToConsole();
         }
         catch (Exception e) {

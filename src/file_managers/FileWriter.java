@@ -1,11 +1,9 @@
 package file_managers;
 
-import javafx.scene.control.TextInputDialog;
 import view.SideBar;
 
 import java.io.*;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Writes the current states of the session to a text file so that they may be read in later
@@ -41,7 +39,6 @@ public class FileWriter {
      * @throws IOException when input is invalid
      */
     private void writeCommands() throws IOException {
-        myWriter.write("Commands\n");
         List<String> commands = mySideBar.exportCommands();
         writeList(commands);
     }
@@ -51,7 +48,6 @@ public class FileWriter {
      * @throws IOException when input is invalid
      */
     private void writeVariables() throws IOException {
-        myWriter.write("Variables\n");
         List<String> variables = mySideBar.exportVariables();
         writeList(variables);
     }
