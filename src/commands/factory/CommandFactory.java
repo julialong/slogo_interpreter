@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import commands.Command;
-import commands.misc.Null;
 import parser.Function;
 import parser.Parser;
 import slogo_team07.Updatable;
@@ -32,11 +31,11 @@ public class CommandFactory {
 	private Map<String, String> myVarMap = new HashMap<>();
 	private Visualizer myVis;
 	private Parser myParser;
-	
+
 	public CommandFactory(Visualizer vis, Parser parser) {
 		myVis = vis;
 		myParser = parser;
-		
+
 		updateLanguage(DEFAULT);
 	}
 
@@ -44,14 +43,9 @@ public class CommandFactory {
 		if (myFuncMap.containsKey(command)) {
 			return Arrays.asList(myFuncMap.get(command));
 		}
-		
 		String keyword = myLanguages.get(command);
 		Factory factory = myFactoryMap.get(myFactories.getString(keyword));
-		try {
-			return factory.create(keyword);
-		} catch (CommandNotFoundException e) {
-			return Arrays.asList(new Null(myVis));
-		}
+		return factory.create(keyword);
 	}
 
 	public void updateLanguage(String lang) {
@@ -92,11 +86,11 @@ public class CommandFactory {
 	public Map<String, Function> getFuncMap() {
 		return myFuncMap;
 	}
-	
+
 	public Map<String, String> getVarMap() {
 		return myVarMap;
 	}
-	
+
 	private Map<String, Factory> createMap() {
 		Map<String, Factory> factory_map = new HashMap<>();
 		factory_map.put("Multiple", new MultipleFactory(this));

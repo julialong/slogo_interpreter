@@ -37,11 +37,10 @@ public class Tell extends Multiple {
 		List<String> input = argsToList(args);
 		int[] brackets = findBrackets(input, 0);
 		myActives.clear();
-		double num = -1;
-		for (int i=1; i < brackets[1]; i++) {
-			num = myParser.parse(input.get(i));
+		double num = 0;
+		for (String id : input.subList(1, brackets[1])) {
+			num = myParser.parse(id);
 			String num_string = Integer.toString((int) num);
-			System.out.println(num_string);
 			if (!myUpdatables.containsKey(num_string)) {
 				addTurtle(num_string);
 			}

@@ -21,6 +21,7 @@ public class Parser {
 		List<String> input = mySanitizer.sanitize(s);
 		double ans = -1;
 		while (!input.isEmpty()) {
+			System.out.println("GARBAGE: " + input);
 			ans = Double.parseDouble(traverse(input));
 		}
 		return ans;
@@ -31,15 +32,13 @@ public class Parser {
 			return null;
 		}
 
-		System.out.println("input: " + input);
 		String next = input.remove(0).toLowerCase();
-		System.out.println("next: " + next);
 		if (isVariable(next)) {
 			return isRegistered(next) ? myCommandFactory.getVar(next) : next;
 		} else if (isArgument(next) || !isRegistered(next)) {
 			return next;
 		}
-
+		
 		String ans = null;
 		List<String> temp = input;
 		for (Command node : myCommandFactory.createCommands(next)) {
@@ -49,7 +48,6 @@ public class Parser {
 			}
 			System.out.println("executing: " + node);
 			ans = node.execute();
-			System.out.println("ans: " + ans);
 		}
 		clearAndAdd(input, temp);
 		return ans;

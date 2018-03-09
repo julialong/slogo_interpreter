@@ -6,27 +6,18 @@
 
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import commands.Result;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import resources.keys.Resources;
 import slogo_team07.Drawable;
 
 public class Canvas {
@@ -112,7 +103,7 @@ public class Canvas {
 		if (result.getRes1() == Double.MAX_VALUE)	{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Improper command");
-			alert.setContentText("The command " + result.toString() + " is not supported.");
+			alert.setContentText(result.toString());
 			alert.show();
 		}
 		return updateCanvas(myTurtles);
