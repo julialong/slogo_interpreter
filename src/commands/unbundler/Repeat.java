@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -16,8 +17,8 @@ public class Repeat extends ControlUnbundler {
 	private LinkedList<String> unbundledArray;
 
 
-	public Repeat(Visualizer vis, Parser p) {
-		super(vis, NUM_ARGS, p);
+	public Repeat(Visualizer vis, VariableReplacer var_replacer, Parser p) {
+		super(vis, var_replacer, NUM_ARGS, p);
 	}
 
 	/**

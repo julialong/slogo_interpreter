@@ -3,14 +3,15 @@ package commands.math.misc;
 import java.util.List;
 
 import commands.NonUpdatableCommand;
+import commands.VariableReplacer;
 import view.Visualizer;
 
 public class Pow extends NonUpdatableCommand {
 	
 	private static final int NUM_ARGS = 2;
 
-	public Pow(Visualizer vis) {
-		super(vis, NUM_ARGS);
+	public Pow(Visualizer vis, VariableReplacer var_replacer) {
+		super(vis, var_replacer, NUM_ARGS);
 	}
 
 	@Override

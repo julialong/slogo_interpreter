@@ -11,10 +11,12 @@ public abstract class Command {
 	private int myArgsNeeded;
 	private List<String> myArgs = new ArrayList<>();
 	private Visualizer myVis;
+	private VariableReplacer myVariableReplacer;
 
-	public Command(Visualizer vis, int num_args) {
+	public Command(Visualizer vis, VariableReplacer var_replacer, int num_args) {
 		myArgsNeeded = num_args;
 		myVis = vis;
+		myVariableReplacer = var_replacer;
 	}
 
 	public void inject(String arg) {
@@ -30,9 +32,9 @@ public abstract class Command {
 	}
 	
 	protected List<String> getArgs() {
-		return myArgs;
+		return replaceVars(myArgs);
 	}
-	
+
 	public int getChildren() {
 		return myArgsNeeded;
 	}
@@ -42,10 +44,26 @@ public abstract class Command {
 	}
 
 	protected List<Double> parseToDouble(List<String> args) {
-		System.out.println("args: " + args);
-		return args.stream()
+		return replaceVars(args).stream()
 				.map(Double::parseDouble)
 				.collect(Collectors.toList());
+	}
+	
+	private List<String> replaceVars(List<String> args) {
+		List<String> temp = new ArrayList<>();
+		for (int i=0; i < args.size(); i++) {
+			String curr = args.get(i);
+			if (isVariable(curr)) {
+				temp.add(myVariableReplacer.replace(curr));
+			} else {
+				temp.add(curr);
+			}
+		}
+		return temp;
+	}
+	
+	private boolean isVariable(String string) {
+		return string.matches(":[a-zA-Z]+");
 	}
 
 	public abstract String execute();

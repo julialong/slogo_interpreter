@@ -34,7 +34,7 @@ public class Parser {
 
 		String next = input.remove(0).toLowerCase();
 		if (isVariable(next)) {
-			return isRegistered(next) ? myCommandFactory.getVar(next) : next;
+			return next;
 		} else if (isArgument(next) || !isRegistered(next)) {
 			return next;
 		}

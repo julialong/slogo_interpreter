@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import slogo_team07.Turtle;
 import slogo_team07.Updatable;
@@ -18,8 +19,8 @@ public class Tell extends Multiple {
 	private Set<String> myActives;
 	private Map<String, Updatable> myUpdatables;
 
-	public Tell(Visualizer vis, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
-		super(vis, NUM_ARGS);
+	public Tell(Visualizer vis, VariableReplacer var_replacer, Parser parser, Set<String> actives, Map<String, Updatable> updatables) {
+		super(vis, var_replacer, NUM_ARGS);
 		myVis = vis;
 		myParser = parser;
 		myActives = actives;

@@ -3,6 +3,7 @@ package commands.multiples;
 import java.util.List;
 import java.util.Map;
 
+import commands.VariableReplacer;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
@@ -12,8 +13,8 @@ public class Turtles extends Multiple {
 	
 	private Map<String, Updatable> myUpdatables;
 
-	public Turtles(Visualizer vis, Map<String, Updatable> updatables) {
-		super(vis, NUM_ARGS);
+	public Turtles(Visualizer vis, VariableReplacer var_replacer, Map<String, Updatable> updatables) {
+		super(vis, var_replacer, NUM_ARGS);
 		myUpdatables = updatables;
 	}
 	

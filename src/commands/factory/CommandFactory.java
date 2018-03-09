@@ -9,12 +9,13 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import commands.Command;
+import commands.VariableReplacer;
 import parser.Function;
 import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class CommandFactory {
+public class CommandFactory implements VariableReplacer {
 
 	private static final String COMMANDS = "resources.commands.Command";
 	private static final String FACTORIES = "resources.commands.Factory";
@@ -112,5 +113,10 @@ public class CommandFactory {
 		return myVarMap.containsKey(string) 
 				|| myLanguages.containsKey(string)
 				|| myFuncMap.containsKey(string);
+	}
+
+	@Override
+	public String replace(String var) {
+		return myVarMap.containsKey(var) ? myVarMap.get(var) : "0.0";
 	}
 }

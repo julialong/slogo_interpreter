@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -15,8 +16,8 @@ public class MakeVariable extends ControlUnbundler{
 	private Map<String, String> dictionary;
 	private Visualizer myVis;
 	
-	public MakeVariable(Visualizer vis, Parser p, Map<String, String> dict) {
-		super(vis, NUM_ARGS, p);
+	public MakeVariable(Visualizer vis, VariableReplacer var_replacer, Parser p, Map<String, String> dict) {
+		super(vis, var_replacer, NUM_ARGS, p);
 		dictionary = dict;
 		myVis = vis;
 	}
