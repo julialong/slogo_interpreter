@@ -1,9 +1,9 @@
 package commands.math.trig;
 
-import commands.NonUpdatableDoubleArgs;
+import commands.NonUpdatableCommand;
 import view.Visualizer;
 
-public abstract class Trig extends NonUpdatableDoubleArgs {
+public abstract class Trig extends NonUpdatableCommand {
 	
 	private static final int NUM_ARGS = 1;
 

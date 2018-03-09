@@ -2,10 +2,10 @@ package commands.misc;
 
 import java.util.List;
 
-import commands.NonUpdatableDoubleArgs;
+import commands.NonUpdatableCommand;
 import view.Visualizer;
 
-public class SetBackground extends NonUpdatableDoubleArgs {
+public class SetBackground extends NonUpdatableCommand {
 	
 	private static final int NUM_ARGS = 1;
 	
@@ -17,8 +17,9 @@ public class SetBackground extends NonUpdatableDoubleArgs {
 	}
 
 	@Override
-	protected double calcValue(List<Double> args) {
-		Double dex = args.get(0);
+	protected double calcValue(List<String> args) {
+		List<Double> double_args = parseToDouble(args);
+		Double dex = double_args.get(0);
 		myVis.setBackground(dex.intValue());
 		return dex;
 	}

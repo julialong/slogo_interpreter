@@ -19,7 +19,7 @@ public abstract class UpdatableCommand extends Command {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		Double ans = calcValues(myUpdatable, getDoubleArgs());
+		Double ans = calcValues(myUpdatable, parseToDouble(getArgs()));
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}

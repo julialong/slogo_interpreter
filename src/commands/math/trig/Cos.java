@@ -11,8 +11,9 @@ public class Cos extends Trig {
 	}
 
 	@Override
-	protected double calcValue(List<Double> args) {
-		return Math.cos(args.get(0));
+	protected double calcValue(List<String> args) {
+		List<Double> double_args = parseToDouble(args);
+		return Math.cos(double_args.get(0));
 	}
 
 }

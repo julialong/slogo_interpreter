@@ -11,8 +11,9 @@ public class Sin extends Trig {
 	}
 
 	@Override
-	protected double calcValue(List<Double> args) {
-		return Math.sin(args.get(0));
+	protected double calcValue(List<String> args) {
+		List<Double> double_args = parseToDouble(args);
+		return Math.sin(double_args.get(0));
 	}
 
 }

@@ -11,8 +11,9 @@ public class Tan extends Trig {
 	}
 
 	@Override
-	protected double calcValue(List<Double> args) {
-		return Math.tan(args.get(0));
+	protected double calcValue(List<String> args) {
+		List<Double> double_args = parseToDouble(args);
+		return Math.tan(double_args.get(0));
 	}
 
 }

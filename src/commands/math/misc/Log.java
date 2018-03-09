@@ -2,10 +2,10 @@ package commands.math.misc;
 
 import java.util.List;
 
-import commands.NonUpdatableDoubleArgs;
+import commands.NonUpdatableCommand;
 import view.Visualizer;
 
-public class Log extends NonUpdatableDoubleArgs {
+public class Log extends NonUpdatableCommand {
 	
 	private static final int NUM_ARGS = 1;
 	
@@ -14,7 +14,8 @@ public class Log extends NonUpdatableDoubleArgs {
 	}
 
 	@Override
-	protected double calcValue(List<Double> args) {
-		return Math.log(args.get(0));
+	protected double calcValue(List<String> args) {
+		List<Double> double_args = parseToDouble(args);
+		return Math.log(double_args.get(0));
 	}
 }

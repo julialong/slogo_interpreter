@@ -33,7 +33,6 @@ public class Turtle implements Drawable, Updatable {
 	private Color myColor = Color.BLACK;
 	private double myId;
 	private double myPenWidth = 1.0;
-	private Image myImage;
 	private List<Color> myColors = new ArrayList<>();
 	private List<String> myShapes = Visualizer.possIVImages;
 	private String myShape = "Turtle";
