@@ -39,19 +39,6 @@ public class Canvas {
 	private double translateY;
 	private double diffX;
 	private double diffY;
-	private int propertiesShapeInd = 2;
-	private int propertiesDownInd = 3;
-	private int propertiesColorInd = 4;
-	private int propertiesPenWidthInd = 5;
-	private List<String> myShapes = new ArrayList<String>() {{
-		add("Turtle");
-		add("Bird");
-		add("Butterfly");
-		add("Cat");
-		add("Dog");
-		add("Fish");
-		add("Octopus");
-	}};
 	private int propertiesIDInd = 0;
 	private int propertiesActiveInd = 1;
 	private int propertiesImageInd = 2;
@@ -96,13 +83,13 @@ public class Canvas {
 			List<String> properties = myTurtles.get(turtle);
 			List<String> possColors = Visualizer.possPenColors;
 
-			String shape = properties.get(propertiesShapeInd);
-			if (! shape.equals(myShapes.get((int) turtle.getShape()))){
-				properties.add(propertiesShapeInd, (myShapes.get((int) turtle.getShape())));
+			String shape = properties.get(propertiesImageInd);
+			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
+				properties.add(propertiesImageInd, (Visualizer.possIVImages.get((int) turtle.getShape())));
 			}
-			String down = properties.get(propertiesDownInd);
+			String down = properties.get(propertiesPenDownInd);
 			if (Boolean.parseBoolean(down) != turtle.getIsDown()){
-				properties.add(propertiesDownInd, Boolean.toString(turtle.getIsDown()));
+				properties.add(propertiesPenDownInd, Boolean.toString(turtle.getIsDown()));
 			}
 			//may throw error if user tries to use user-defined color from set palette command
 			List<Color> colors = turtle.getMyColors();
