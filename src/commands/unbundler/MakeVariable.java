@@ -28,23 +28,10 @@ public class MakeVariable extends ControlUnbundler{
 	 */
 	public String unbundle(List<String> exp) {
 		String variableName = exp.get(0);
-		expression = new ArrayList<>();
-		buildExpression(exp, 1, exp.size());
+		expression = buildExpression(exp, 1, exp.size());
 		addVariable(variableName);
 		modifyList(exp, 1);
 		return String.join(" ", expression);
-	}
-
-	/**
-	 * Builds the expression to be evaluated
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index of the first left bracket
-	 */
-	private void buildExpression(List<String> exp, int start, int end) {
-		for (int i = start; i < end; i++) {
-			String current = exp.get(i);
-			expression.add(current);
-		}
 	}
 
 	/**

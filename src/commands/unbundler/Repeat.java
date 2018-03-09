@@ -28,7 +28,7 @@ public class Repeat extends MultipleUnbundler {
 	 */
 	public String unbundle(List<String> exp) {
 		int[] commandIndex = findBrackets(exp, 0);
-		expression = buildExpression(exp, commandIndex[0]);
+		expression = buildExpression(exp, 0, commandIndex[0]);
 		executeExpression();
 		unbundledArray = buildCommand(exp, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);

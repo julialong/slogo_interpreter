@@ -46,7 +46,7 @@ public class If extends ConditionalUnbundler{
 	 * @param exp is the list of the expression
 	 */
 	private void handleExpression(List<String> exp) {
-		expression = buildExpression(exp, commandIndex[START_INDEX]);
+		expression = buildExpression(exp, 0,  commandIndex[START_INDEX]);
 		executeCommands = executeExpression(expression);
 	}
 

@@ -1,6 +1,5 @@
 package commands.unbundler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import parser.Parser;
@@ -12,8 +11,10 @@ public class DoTimes extends MultipleUnbundler {
 	private static final int NUM_ARGS = 2;
 
 	private String variable;
-	private double end;
+	private double timesToRepeat;
 	private List<String> unbundledArray;
+
+	private static final int START_EXPRESSION = 2;
 
 	private static final int START_INDEX = 0;
 	private static final int STOP_INDEX = 1;
@@ -32,7 +33,7 @@ public class DoTimes extends MultipleUnbundler {
 		int[] expressionIndex = findBrackets(exp, 0);
 		int[] commandIndex = findBrackets(exp, 1);
 		setNumbers(exp, expressionIndex[1]);
-		unbundledArray = buildCommand(exp, commandIndex[START_INDEX], commandIndex[STOP_INDEX]);
+		unbundledArray = buildCommand(exp, variable, timesToRepeat, commandIndex[START_INDEX], commandIndex[STOP_INDEX]);
 		modifyList(exp, commandIndex[STOP_INDEX]);
 		return String.join(" ", unbundledArray);
 	}
@@ -43,7 +44,7 @@ public class DoTimes extends MultipleUnbundler {
 	 */
 	private void setNumbers(List<String> exp, int stopIndex) {
 		variable = exp.get(1);
-		end = executeExpression(buildExpression(exp, stopIndex));
+		timesToRepeat = executeExpression(buildExpression(exp, START_EXPRESSION, stopIndex));
 	}
 
 	/**
@@ -53,8 +54,11 @@ public class DoTimes extends MultipleUnbundler {
 	 */
 	private double executeExpression(List<String> expression) {
 		double answer = 0;
-		if (expression.size() > 0){
+		if (expression.size() > 1){
 			answer = getParser().parse(String.join(" ", expression));
+		}
+		else {
+			answer = Double.parseDouble(expression.get(0));
 		}
 		return answer;
 	}

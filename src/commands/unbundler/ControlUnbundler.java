@@ -67,14 +67,15 @@ public abstract class ControlUnbundler extends NonUpdatableStringArgs implements
      * @param exp is the entire ArrayList of the input commands
      * @return the index of the first left bracket
      */
-    protected List<String> buildExpression(List<String> exp, int end) {
+    protected List<String> buildExpression(List<String> exp, int startIndex, int endIndex) {
         List<String> expression = new ArrayList<>();
-        for (int i = 0; i < end; i++) {
+        for (int i = startIndex; i < endIndex; i++) {
             String current = exp.get(i);
             expression.add(current);
         }
         return expression;
     }
+
 
 	/**
 	 * Unbundles the current command so that it can be executed

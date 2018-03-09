@@ -51,19 +51,4 @@ public class For extends MultipleUnbundler {
 		increment = Double.parseDouble(exp.get(INCREMENT_INDEX));
 	}
 
-	/**
-	 * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index where the command ends, or the last bracket
-	 */
-	public List<String> buildCommand(List<String> exp, int startIndex, int stopIndex) {
-		unbundledArray = new ArrayList<>();
-		for (double i = start; i < end; i+= increment) {
-			for (int j = startIndex + 1; j < stopIndex; j++) {
-				unbundledArray.add(replaceVariable(variable, exp.get(j), i));
-			}
-		}
-        return unbundledArray;
-    }
-
 }

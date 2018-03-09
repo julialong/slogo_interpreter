@@ -17,20 +17,4 @@ abstract class MultipleUnbundler extends ControlUnbundler{
         super(vis, numArgs, parser);
     }
 
-    /**
-     * Replaces the current string with the current index, if the current string is the variable name
-     *
-     * @param variable is the string of the variable name
-     * @param current is the current string we are parsing
-     * @param currentIndex is the current number of the loop we are on
-     * @return the modified string
-     */
-    String replaceVariable(String variable, String current, double currentIndex) {
-        if (current.equals(variable)) {
-            return Double.toString(currentIndex);
-        } else {
-            return current;
-        }
-    }
-
 }
