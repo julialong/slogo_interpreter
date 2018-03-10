@@ -6,10 +6,13 @@ Date finished: 9 Mar 18
 
 Ben Hubsch (bah37)
 * hours worked:
+
 Jennifer Chin (jrc81)
 * hours worked:
+
 Julia Long (jbl34)
-* hours worked:
+* hours worked: 35
+
 Maya Messinger (mm479)
 * hours worked: 45
 
@@ -42,7 +45,7 @@ Maya used TableViews a lot, and found out how to generally create them using the
 #### Starting the project
 Our Main.java class starts this Slogo project. 
 #### Testing the project
-We used all provided test files to test our project, and we also formulated extreme  cases of our own to test 
+We used all provided test files to test our project, and we also formulated extreme cases of our own to test 
 possible choices a user may make, including using a high level of nested control commands that all need to be evaluated
 within each other.
 #### Necessary files
@@ -52,7 +55,6 @@ can write commands in any language they wish.
 No input files are required to get the project to work- this project functions very well only with direct user 
 input! However, the user is invited to upload any properly formatted file, and the interpreter will be able to parse 
 and run its commands and store the appropriate functions and variables.
-#### Using the program
 
 #### Assuptions and decisions to handle vague specs
 * MAKE/SET command only sets variables to double values (no strings)

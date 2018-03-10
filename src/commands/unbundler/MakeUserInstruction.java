@@ -9,6 +9,10 @@ import commands.misc.Function;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * Handles control command necessary to make a function
+ * @author julialong, benhubsch
+ */
 public class MakeUserInstruction extends ControlUnbundler {
 
 	private static final int NUM_ARGS = 3;
@@ -24,11 +28,18 @@ public class MakeUserInstruction extends ControlUnbundler {
 	private int[] variableIndex;
 	private int[] commandIndex;
 
-	public MakeUserInstruction(Visualizer vis, VariableReplacer var_replacer, Parser parser, Map<String, Function> dict) {
-		super(vis, var_replacer, NUM_ARGS, parser);
+	/**
+	 * Creates a new Make unbundler object
+	 * @param visualizer is the current Visualizer being used in the session
+	 * @param variableReplacer is the current variableReplacer object
+	 * @param parser is the current Parser object
+	 * @param dict is the current map of function names to function objects
+	 */
+	public MakeUserInstruction(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser, Map<String, Function> dict) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 		dictionary = dict;
-		visualizer = vis;
-		variable_replacer = var_replacer;
+		this.visualizer = visualizer;
+		variable_replacer = variableReplacer;
 	}
 
 	/**
@@ -47,16 +58,29 @@ public class MakeUserInstruction extends ControlUnbundler {
 		return Integer.toString(1);
 	}
 
+	/**
+	 * Gets the current indexes of the variable and command brackets
+	 * @param exp
+	 */
 	private void getIndex(List<String> exp) {
 		variableIndex = findBrackets(exp, 0);
 		commandIndex = findBrackets(exp, 1);
 	}
 
+	/**
+	 * Sets up the parameter and command lists
+	 */
 	private void setUpLists() {
 		parameters = new ArrayList<>();
 		commands = new ArrayList<>();
 	}
 
+	/**
+	 * Adds parameters to the parameter list
+	 * @param exp is the list of te entire expression
+	 * @param start is the index to start adding variables
+	 * @param end is the index to stop adding variables
+	 */
 	private void addVariables(List<String> exp, int start, int end) {
 		for (int i = start + 1; i < end; i++) {
 			String current = exp.get(i);
@@ -83,7 +107,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 		func = new Function(visualizer, variable_replacer, getParser(), commandName, parameters, commands);
 		dictionary.put(commandName, func);
 	}
-	
+
 	@Override
 	protected double calcValue(List<String> args) {
 		String unbundled = unbundle(argsToExp(args));

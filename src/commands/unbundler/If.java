@@ -10,6 +10,10 @@ import view.Visualizer;
  * Handles If control command
  * @author julialong
  */
+
+/**
+ *
+ */
 public class If extends ConditionalUnbundler{
 	
 	private static final int NUM_ARGS = 2;
@@ -22,11 +26,12 @@ public class If extends ConditionalUnbundler{
 
 	/**
 	 * Creates a new If unbundler class
-	 * @param vis is the current Visualizer class
-	 * @param parser is the current parser
+	 * @param visualizer is the current Visualizer being used in the session
+	 * @param variableReplacer is the current variableReplacer object
+	 * @param parser is the current Parser object
 	 */
-	public If(Visualizer vis, VariableReplacer var_replacer, Parser parser) {
-		super(vis, var_replacer, NUM_ARGS, parser);
+	public If(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 	}
 
 	/**

@@ -7,7 +7,10 @@ import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
-
+/**
+ * Creates an object that handles the case where we need to perform an action a certain number of times
+ * @author julialong
+ */
 public class DoTimes extends ControlUnbundler {
 	
 	private static final int NUM_ARGS = 2;
@@ -20,9 +23,15 @@ public class DoTimes extends ControlUnbundler {
 
 	private static final int START_INDEX = 0;
 	private static final int STOP_INDEX = 1;
-	
-	public DoTimes(Visualizer vis, VariableReplacer var_replacer, Parser p) {
-		super(vis, var_replacer, NUM_ARGS, p);
+
+	/**
+	 * Creates a new DoTimes object
+	 * @param visualizer is the current Visualizer being used in the session
+	 * @param variableReplacer is the current variableReplacer object
+	 * @param parser is the current Parser object
+	 */
+	public DoTimes(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 	}
 
 	/**

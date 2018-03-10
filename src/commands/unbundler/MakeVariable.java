@@ -10,6 +10,10 @@ import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * Handles control command necessary to define a variable
+ * @author julialong, benhubsch
+ */
 public class MakeVariable extends ControlUnbundler {
 	
 	private static final int NUM_ARGS = 2;
@@ -17,11 +21,18 @@ public class MakeVariable extends ControlUnbundler {
 	private List<String> expression;
 	private Map<String, String> dictionary;
 	private Visualizer myVis;
-	
-	public MakeVariable(Visualizer vis, VariableReplacer var_replacer, Parser p, Map<String, String> dict) {
-		super(vis, var_replacer, NUM_ARGS, p);
+
+	/**
+	 * Creates a MakeVariable unbundler object
+	 * @param visualizer is the current Visualizer being used in the session
+	 * @param variableReplacer is the current variableReplacer object
+	 * @param parser is the current Parser object
+	 * @param dict is the current map of function names to function objects
+	 */
+	public MakeVariable(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser, Map<String, String> dict) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 		dictionary = dict;
-		myVis = vis;
+		myVis = visualizer;
 	}
 	
 	@Override

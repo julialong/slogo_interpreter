@@ -7,10 +7,21 @@ import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * Abstract class that implements methods useful for classes that implement on a certain condition
+ * @author julialong
+ */
 abstract class ConditionalUnbundler extends ControlUnbundler{
 
-    ConditionalUnbundler(Visualizer vis, VariableReplacer var_replacer, int num_args, Parser p) {
-        super(vis, var_replacer, num_args, p);
+    /**
+     * Creates a ConditionalUnbundler object
+     * @param visualizer is the current Visualizer being used in the session
+     * @param variableReplacer is the current variableReplacer object
+     * @param numArgs is the number of arguments needed
+     * @param parser is the current Parser object
+     */
+    ConditionalUnbundler(Visualizer visualizer, VariableReplacer variableReplacer, int numArgs, Parser parser) {
+        super(visualizer, variableReplacer, numArgs, parser);
     }
 
     /**

@@ -16,11 +16,12 @@ public class IfElse extends ConditionalUnbundler {
 
     /**
      * Creates new IfElse unbundler object
-     * @param vis is the current Visualizer
-     * @param parser is the current Parser
+     * @param visualizer is the current Visualizer being used in the session
+     * @param variableReplacer is the current variableReplacer object
+     * @param parser is the current Parser object
      */
-    public IfElse(Visualizer vis, VariableReplacer var_replacer, Parser parser) {
-		super(vis, var_replacer, NUM_ARGS, parser);
+    public IfElse(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 	}
 
     /**

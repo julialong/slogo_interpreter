@@ -7,6 +7,10 @@ import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * Creates an object that handles the case where we need to perform an action a certain number of times
+ * @author julialong
+ */
 public class Repeat extends ControlUnbundler {
 
 	private static final int NUM_ARGS = 2;
@@ -16,8 +20,14 @@ public class Repeat extends ControlUnbundler {
 	private List<String> unbundledArray;
 
 
-	public Repeat(Visualizer vis, VariableReplacer var_replacer, Parser p) {
-		super(vis, var_replacer, NUM_ARGS, p);
+	/**
+	 * Creates a new Repeat unbundler object
+	 * @param visualizer is the current Visualizer being used in the session
+	 * @param variableReplacer is the current variableReplacer object
+	 * @param parser is the current Parser object
+	 */
+	public Repeat(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 	}
 
 	/**
@@ -49,6 +59,9 @@ public class Repeat extends ControlUnbundler {
 		}
 	}
 
+	/**
+	 * Executes the expression
+	 */
 	private void executeExpression() {
 		if (expression.size() <= 0) {
 			toRepeat = 0;
