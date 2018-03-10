@@ -6,12 +6,22 @@ import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * Handles For control command
+ * @author julialong
+ */
 public class For extends MultipleUnbundler {
 
 	private static final int NUM_ARGS = 2;
 
-	public For(Visualizer vis, VariableReplacer var_replacer, Parser p) {
-		super(vis, var_replacer, NUM_ARGS, p);
+	/**
+	 *
+	 * @param vis is the current Visualizer class
+	 * @param variableReplacer is the current VariableReplacer class
+	 * @param parser is the current parser
+	 */
+	public For(Visualizer vis, VariableReplacer variableReplacer, Parser parser) {
+		super(vis, variableReplacer, NUM_ARGS, parser);
 	}
 
 	private String variable;

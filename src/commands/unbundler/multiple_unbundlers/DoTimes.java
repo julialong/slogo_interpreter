@@ -6,7 +6,10 @@ import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
-
+/**
+ * Handles DoTimes control command
+ * @author julialong
+ */
 public class DoTimes extends MultipleUnbundler {
 	
 	private static final int NUM_ARGS = 2;
@@ -22,12 +25,12 @@ public class DoTimes extends MultipleUnbundler {
 
 	/**
 	 * Creates a new DoTimes unbundler class
-	 * @param vis
-	 * @param variableReplacer
-	 * @param p
+	 * @param vis is the current Visualizer class
+	 * @param variableReplacer is the current VariableReplacer class
+	 * @param parser is the current parser
 	 */
-	public DoTimes(Visualizer vis, VariableReplacer variableReplacer, Parser p) {
-		super(vis, variableReplacer, NUM_ARGS, p);
+	public DoTimes(Visualizer vis, VariableReplacer variableReplacer, Parser parser) {
+		super(vis, variableReplacer, NUM_ARGS, parser);
 	}
 
 	/**
