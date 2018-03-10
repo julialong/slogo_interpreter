@@ -66,4 +66,3 @@ a box that is tied to only one individual turtle.
 * Turtle information pop-up does not update based on typed commands in real time. A new instance of the window needs to be opened
 before that information is updated. This is because these pieces of information are only grabbed at the start of an instance. If 
 values are changed while a window is open, it will not update, but data is accurate at time of window launch.
-* Did not implement moving turtles graphically
