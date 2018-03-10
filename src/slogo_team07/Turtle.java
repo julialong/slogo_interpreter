@@ -240,14 +240,11 @@ public class Turtle implements Drawable, Updatable {
 			myLines.getChildren().add(finishTrail);
 			myPrevYPos = myYPos;
 		}
-		//totally didnt work
 		if (myXPos > (width / 2) - imageSize){ //right
 			myXPos = -1 * (width / 2);
 			Line finishTrail = new Line(myViewPrevX, myViewPrevY, width, myViewY);
 			myLines.getChildren().add(finishTrail);
 			myPrevXPos = myXPos;
-			//System.out.println("X POS: " + myXPos);
-			//System.out.println("view x: " + myViewX);
 		}
 		else if (myXPos < -1 * (width / 2)){ //left
 			myXPos = width / 2 - imageSize;
@@ -256,7 +253,6 @@ public class Turtle implements Drawable, Updatable {
 			myPrevXPos = width / 2;
 		}
 		translate(pane);
-		//System.out.println("view x: " + myViewX);
 	}
 
 	/**
