@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import resources.keys.Resources;
 import view.Visualizer;
 
@@ -44,6 +45,7 @@ public class Turtle implements Drawable, Updatable {
 	private List<Color> myColors = new ArrayList<>();
 	private List<String> myShapes = Visualizer.possIVImages;
 	private String myShape = "Turtle";
+	private double imageSize = 20.0;
 
 	/**
 	 * Turtle constructor that takes in a String representing the Turtle's id. Sets the default image to a Turtle
@@ -65,6 +67,9 @@ public class Turtle implements Drawable, Updatable {
 		double height = display.getHeight();
 		double width = display.getWidth();
 		myViewX = myXPos + width/2;
+//		System.out.println("x pos: " + myXPos);
+//		System.out.println("view x trans: " + myViewX);
+//		System.out.println("width: " + width/2);
 		myViewY = -1 * (myYPos - height/2);
 		myViewPrevX = myPrevXPos + width/2;
 		myViewPrevY = -1 * (myPrevYPos  - height/2);
@@ -208,11 +213,6 @@ public class Turtle implements Drawable, Updatable {
 			myViewPrevX = myViewX;
 			myViewPrevY = myViewY;
 			opptranslate(myPane);
-			System.out.println("pen up");
-			System.out.println("prev x: " + myViewPrevX);
-			System.out.println("prev y: " + myViewPrevY);
-			System.out.println("x: " + myViewX);
-			System.out.println("y: " + myViewY);
 		}
 		if (isDown){
 			if (myPane.getChildren().contains(myLines)){
@@ -223,23 +223,42 @@ public class Turtle implements Drawable, Updatable {
 			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
-			System.out.println("pen down");
-			System.out.println("prev x: " + myViewPrevX);
-			System.out.println("prev y: " + myViewPrevY);
-			System.out.println("x: " + myViewX);
-			System.out.println("y: " + myViewY);
-			//lineAnimation(myIV);
 		}
 	}
-
-//	private void lineAnimation(Node iv){
-//		Path path = new Path();
-//		path.getElements().add(new MoveTo(myViewX, myViewY));
-//		path.getElements().add(new LineTo(myViewX, myViewY));
-//		//will need to change duration.millis to variable to change speed
-//		PathTransition pt = new PathTransition(Duration.millis(4000), path, iv);
-//		pt.play();
-//	}
+	
+	private void wrapPos(Pane pane){
+		double height = pane.getHeight();
+		double width = pane.getWidth();
+		if (myYPos > height / 2){ //top
+			myYPos = -1 * (height / 2) + imageSize;
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, myViewX, 0);
+			myLines.getChildren().add(finishTrail);
+			myPrevYPos = -1 * (height / 2);
+		}
+		else if (myYPos < -1 * (height / 2) + imageSize){ //bottom
+			myYPos = height / 2;
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, myViewX, height);
+			myLines.getChildren().add(finishTrail);
+			myPrevYPos = myYPos;
+		}
+		//totally didnt work
+		if (myXPos > (width / 2) - imageSize){ //right
+			myXPos = -1 * (width / 2);
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, width, myViewY);
+			myLines.getChildren().add(finishTrail);
+			myPrevXPos = myXPos;
+			//System.out.println("X POS: " + myXPos);
+			//System.out.println("view x: " + myViewX);
+		}
+		else if (myXPos < -1 * (width / 2)){ //left
+			myXPos = width / 2 - imageSize;
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, 0, myViewY);
+			myLines.getChildren().add(finishTrail);
+			myPrevXPos = width / 2;
+		}
+		translate(pane);
+		//System.out.println("view x: " + myViewX);
+	}
 
 	/**
 	 * Changes the Turtle's position to the given x and y coordinates
@@ -255,6 +274,7 @@ public class Turtle implements Drawable, Updatable {
 		myXPos = x;
 		myYPos = y;
 		translate(myPane);
+		wrapPos(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 		return distance;
@@ -273,6 +293,7 @@ public class Turtle implements Drawable, Updatable {
 		myXPos += pixels * Math.cos(radians);
 		myYPos += pixels * Math.sin(radians);
 		translate(myPane);
+		wrapPos(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 		return pixels;
