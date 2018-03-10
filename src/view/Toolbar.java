@@ -287,7 +287,10 @@ public class Toolbar extends AnchorPane {
 			myFileWriter.writeToFile(filename);
 		}
 		catch (Exception e) {
-			// TODO: HANDLE EXCEPTION
+			Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cannot write file");
+				alert.setContentText("This filename is invalid, could not write to it");
+				alert.show();
 		}
 	}
 
