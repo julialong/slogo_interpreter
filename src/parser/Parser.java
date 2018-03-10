@@ -8,7 +8,7 @@ import commands.factory.CommandFactory;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
-public class Parser {
+public class Parser implements VariableTruthometer {
 
 	private CommandFactory myCommandFactory;
 	private Sanitizer mySanitizer;
@@ -75,10 +75,6 @@ public class Parser {
 		return string.matches("-?[0-9]+\\.?[0-9]*") 
 				|| string.matches("^\\[.*]$")
 				|| !isRegistered(string);
-	}
-
-	private boolean isVariable(String string) {
-		return string.matches(":[a-zA-Z]+");
 	}
 
 	private boolean isRegistered(String var) {
