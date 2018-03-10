@@ -60,7 +60,7 @@ public class Visualizer {
 	private Console myConsole;
 	private Toolbar myToolbar;
 	private BorderPane root;
-	private Map<Drawable, List<String>> drawables = new HashMap<>();
+	protected Map<Drawable, List<String>> drawables = new HashMap<>();
 	private ChangeListener myChangeListener;
 	private String language = "English";
 
@@ -134,7 +134,7 @@ public class Visualizer {
 		myFileWriter = new FileWriter(mySideBar);
 		myFileReader = new FileReader(myConsole);
 
-		myToolbar = new Toolbar(this, myCanvasObjects, myFileWriter, myFileReader, myStage);
+		myToolbar = new Toolbar(this, myCanvasObjects, myFileWriter, myFileReader);
 		myToolbar.setLanguage(language);
 		root.setTop(myToolbar.initToolbar());
 
