@@ -16,7 +16,7 @@ public class Equal extends Boolean {
 	@Override
 	protected double calcValue(List<String> args) {
 		List<Double> double_args = parseToDouble(args);
-		boolean b = double_args.get(0) == double_args.get(1);
-		return boolToDouble(b);
+		boolean are_equal = double_args.get(0).equals(double_args.get(1));
+		return boolToDouble(are_equal);
 	}
 }

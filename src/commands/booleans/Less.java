@@ -16,7 +16,7 @@ public class Less extends Boolean {
 	@Override
 	protected double calcValue(List<String> args) {
 		List<Double> double_args = parseToDouble(args);
-		boolean b = double_args.get(0) < double_args.get(1);
-		return boolToDouble(b);
+		boolean is_less = double_args.get(0) < double_args.get(1);
+		return boolToDouble(is_less);
 	}
 }
