@@ -1,9 +1,9 @@
-package commands.unbundler;
+package commands.unbundler.multiple_unbundlers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import commands.factory.VariableReplacer;
+import commands.unbundler.ControlUnbundler;
 import parser.Parser;
 import view.Visualizer;
 
@@ -36,7 +36,7 @@ public class For extends ControlUnbundler {
 	private static final int END_INDEX = 3;
 	private static final int INCREMENT_INDEX = 4;
 
-	private ArrayList<String> unbundledArray;
+	private List<String> unbundledArray;
 
 	/**
 	 * Unbundles For command to a longer string that the Parser can parse
@@ -47,7 +47,7 @@ public class For extends ControlUnbundler {
 	protected String unbundle(List<String> exp) {
 		setNumbers(exp);
 		int[] commandIndex = findBrackets(exp, 1);
-		buildCommand(exp, commandIndex[0], commandIndex[1]);
+		unbundledArray = buildCommand(exp, variable, end, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);
 		return String.join(" ", unbundledArray);
 	}
@@ -61,28 +61,6 @@ public class For extends ControlUnbundler {
 		start = Double.parseDouble(exp.get(START_INDEX));
 		end = Double.parseDouble(exp.get(END_INDEX));
 		increment = Double.parseDouble(exp.get(INCREMENT_INDEX));
-	}
-
-	/**
-	 * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index where the command ends, or the last bracket
-	 */
-	private void buildCommand(List<String> exp, int startIndex, int stopIndex) {
-		unbundledArray = new ArrayList<>();
-		for (double i = start; i < end; i+= increment) {
-			for (int j = startIndex + 1; j < stopIndex; j++) {
-				unbundledArray.add(replaceVariable(exp.get(j), i));
-			}
-		}
-	}
-
-	private String replaceVariable(String current, double currentIndex) {
-		if (current.equals(variable)) {
-			return Double.toString(currentIndex);
-		} else {
-			return current;
-		}
 	}
 
 }

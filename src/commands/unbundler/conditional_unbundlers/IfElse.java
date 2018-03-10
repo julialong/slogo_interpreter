@@ -1,4 +1,4 @@
-package commands.unbundler;
+package commands.unbundler.conditional_unbundlers;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class IfElse extends ConditionalUnbundler {
     public String unbundle(List<String> exp) {
         int[] trueCommandIndex = findBrackets(exp, 0);
         int[] falseCommandIndex = findBrackets(exp, 1);
-        List<String> expression = buildExpression(exp, trueCommandIndex[0]);
+        List<String> expression = buildExpression(exp, 0, trueCommandIndex[0]);
         boolean executeCommands = executeExpression(expression);
         List<String> unbundledArray = buildCommand(exp, trueCommandIndex[0], trueCommandIndex[1], falseCommandIndex[0], falseCommandIndex[1], executeCommands);
         modifyList(exp, falseCommandIndex[1]);

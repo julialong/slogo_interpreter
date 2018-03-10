@@ -48,7 +48,6 @@ public class Sanitizer {
 			} else {
 				split_brackets.add(curr);
 			}
-
 			i += 1;
 		}
 		return split_brackets;

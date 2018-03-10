@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * 
- * @author benhubsch
+ * @author benhubsch, julialong
  *
  * This is an interface that allows multiple classes to find the indices of any pair of brackets. 
  * For example, ask, askwith, for, and dotimes all take advantage of this implementation to 
@@ -12,24 +12,24 @@ import java.util.List;
  */
 public interface BracketFinder {
 
-	default int[] findBrackets(List<String> exp, int pair_num) {
+	default int[] findBrackets(List<String> exp, int pairNum) {
 		int[] answer = new int[] {-1, -1};
 		int unmatched = 0;
 		for (int i = 0; i < exp.size(); i++) {
 			String curr = exp.get(i);
 			if (curr.equals("[")) {
-				if (unmatched == 0 && pair_num == 0) {
+				if (unmatched == 0 && pairNum == 0) {
 					answer[0] = i;
 				}
 				unmatched += 1;
 			} else if (curr.equals("]")) {
 				unmatched--;
 				if (unmatched == 0) {
-					if (pair_num == 0) {
+					if (pairNum == 0) {
 						answer[1] = i;
 						return answer;
 					}
-					pair_num--;
+					pairNum--;
 				}
 			}
 		}

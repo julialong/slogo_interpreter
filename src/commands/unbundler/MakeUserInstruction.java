@@ -1,6 +1,7 @@
 package commands.unbundler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 		commandName = exp.get(0);
 		getIndex(exp);
 		setUpLists();
-		buildExpression(exp, commandIndex[0], commandIndex[1]);
+		commands = buildExpression(exp, commandIndex[0] + 1, commandIndex[1]);
 		addVariables(exp, variableIndex[0], variableIndex[1]);
 		addFunction();
 		modifyList(exp, commandIndex[1]);
@@ -85,18 +86,6 @@ public class MakeUserInstruction extends ControlUnbundler {
 		for (int i = start + 1; i < end; i++) {
 			String current = exp.get(i);
 			parameters.add(current);
-		}
-	}
-
-	/**
-	 * Builds the expression to be evaluated
-	 * @param exp is the entire ArrayList of the input commands
-	 * @return the index of the first left bracket
-	 */
-	private void buildExpression(List <String> exp, int start, int end) {
-		for (int i = start + 1; i < end; i++) {
-			String current = exp.get(i);
-			commands.add(current);
 		}
 	}
 
