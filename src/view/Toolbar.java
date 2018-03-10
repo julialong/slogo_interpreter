@@ -36,7 +36,6 @@ import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
 	private Visualizer myVis;
-	private AnchorPane myPane;
 	private Pane myCanvasObjects;
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
@@ -63,7 +62,7 @@ public class Toolbar extends AnchorPane {
 	}
 	
 	protected AnchorPane initToolbar(){
-		myPane = new AnchorPane();
+		AnchorPane myPane = new AnchorPane();
 		
 		Text title = new Text(Resources.getString("Title"));
 		title.getStyleClass().add("title");
@@ -178,7 +177,7 @@ public class Toolbar extends AnchorPane {
 		Button addDrawableButton = new Button("Add Turtle");
 	    addDrawableButton.setOnAction(e -> {
 	    	int id = myVis.drawables.size();
-	    	List<String> ids = new ArrayList<String>();
+	    	List<String> ids = new ArrayList<>();
 	    	for (Map.Entry<Drawable, List<String>> entry: myVis.drawables.entrySet()){
 	    		ids.add(myVis.drawables.get(entry.getKey()).get(0));
 	    	}

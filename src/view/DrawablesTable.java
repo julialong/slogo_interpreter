@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import slogo_team07.Drawable;
 
 public class DrawablesTable extends Group	{
-	private VBox myVB;
 	private TableView table = new TableView();
 	private double colWidth = 80;
 	private double numCols = 9;
@@ -52,7 +51,7 @@ public class DrawablesTable extends Group	{
 	}
 
 	private Group makeTable(){
-		myVB = new VBox();
+		VBox myVB = new VBox();
 
 		table.setEditable(false);
 		TableColumn turtleCol = new TableColumn("Turtle");

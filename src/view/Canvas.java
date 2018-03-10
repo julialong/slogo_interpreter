@@ -68,7 +68,6 @@ public class Canvas {
 				myPane.getChildren().add(turtle.getView());
 			}
 			List<String> properties = myTurtles.get(turtle);
-			List<String> possColors = Visualizer.possPenColors;
 
 			String shape = properties.get(propertiesImageInd);
 			if (! shape.equals(Visualizer.possIVImages.get((int) turtle.getShape()))){
