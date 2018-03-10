@@ -228,30 +228,24 @@ public class Turtle implements Drawable, Updatable {
 	private void wrapPos(Pane pane){
 		double height = pane.getHeight();
 		double width = pane.getWidth();
-		if (myYPos > height / 2){ //top
-			myYPos = -1 * (height / 2) + imageSize;
-			Line finishTrail = new Line(myViewPrevX, myViewPrevY, myViewX, 0);
-			myLines.getChildren().add(finishTrail);
-			myPrevYPos = -1 * (height / 2);
+		
+		if (myYPos > height/2)	{	// past top
+			myYPos = -(myYPos - height/2);
+			wrapPos(pane);
 		}
-		else if (myYPos < -1 * (height / 2) + imageSize){ //bottom
-			myYPos = height / 2;
-			Line finishTrail = new Line(myViewPrevX, myViewPrevY, myViewX, height);
-			myLines.getChildren().add(finishTrail);
-			myPrevYPos = myYPos;
+		if (myYPos < -height/2)	{	// below bottom
+			myYPos = -(myYPos + height/2);
+			wrapPos(pane);
 		}
-		if (myXPos > (width / 2) - imageSize){ //right
-			myXPos = -1 * (width / 2);
-			Line finishTrail = new Line(myViewPrevX, myViewPrevY, width, myViewY);
-			myLines.getChildren().add(finishTrail);
-			myPrevXPos = myXPos;
+		if (myXPos > width/2)	{	// past right
+			myXPos = -(myXPos - width/2);
+			wrapPos(pane);
 		}
-		else if (myXPos < -1 * (width / 2)){ //left
-			myXPos = width / 2 - imageSize;
-			Line finishTrail = new Line(myViewPrevX, myViewPrevY, 0, myViewY);
-			myLines.getChildren().add(finishTrail);
-			myPrevXPos = width / 2;
+		if (myXPos < -width/2)	{	// past left
+			myXPos = -(myXPos + width/2);
+			wrapPos(pane);
 		}
+
 		translate(pane);
 	}
 
@@ -283,7 +277,9 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public double move(double pixels) {
 		myPrevXPos = myXPos;
+		myViewPrevX = myPrevXPos;
 		myPrevYPos = myYPos;
+		myViewPrevY = myPrevYPos;
 		double radians = degreesToRadians(myDegrees);
 		myXPos += pixels * Math.cos(radians);
 		myYPos += pixels * Math.sin(radians);
@@ -302,7 +298,9 @@ public class Turtle implements Drawable, Updatable {
 	public double home() {
 		double distance = calcDistance(0.0, 0.0, myXPos, myYPos);
 		myPrevXPos = myXPos;
+		myViewPrevX = myPrevXPos;
 		myPrevYPos = myYPos;
+		myViewPrevY = myPrevYPos;
 		myXPos = 0.0;
 		myYPos = 0.0;
 		myDegrees = 90.0;
