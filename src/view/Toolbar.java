@@ -8,11 +8,19 @@
 
 package view;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import file_managers.FileReader;
 import file_managers.FileWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputDialog;
@@ -26,17 +34,11 @@ import javafx.stage.Stage;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
+import slogo_team07.Engine;
 import slogo_team07.Turtle;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
 	private Visualizer myVis;
-	private AnchorPane myPane;
 	private Pane myCanvasObjects;
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
@@ -63,8 +65,7 @@ public class Toolbar extends AnchorPane {
 	}
 
 	protected AnchorPane initToolbar(){
-		myPane = new AnchorPane();
-
+		AnchorPane myPane = new AnchorPane();
 		Text title = new Text(Resources.getString("Title"));
 		title.getStyleClass().add("title");
 		myPane.getChildren().add(title);
@@ -110,7 +111,7 @@ public class Toolbar extends AnchorPane {
 	private Button windowButton()	{
 		Button windowButton = new Button("New Window");
 		windowButton.setOnAction(e -> {
-			new Visualizer(new Stage(), myVis.getChangeListener());
+			new Engine(new Stage());
 		});
 		return windowButton;
 	}
@@ -139,7 +140,10 @@ public class Toolbar extends AnchorPane {
 				myFileReader.readFile(openFileChooser());
 			}
 			catch (Exception exception) {
-				// TODO: HANDLE EXCEPTION
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cannot read file");
+				alert.setContentText("This file is invalid and cannot be loaded");
+				alert.show();
 			}
 		});
 		return loadButton;
@@ -148,22 +152,16 @@ public class Toolbar extends AnchorPane {
 	private VBox initButtons(){
 		HBox myHBox = new HBox(Resources.getInt(Visualizer.inset));
 		Button helpButton = helpButton();
-		myHBox.getChildren().add(helpButton);
 		myHBox.getChildren().add(colorMenu());
 		myHBox.getChildren().add(langMenu(helpButton));
-		myHBox.getChildren().add(windowButton());
-		myHBox.getChildren().add(saveButton());
-		myHBox.getChildren().add(loadButton());
+		myHBox.getChildren().add(addDrawableButton());
 
 		HBox buttons = new HBox(Resources.getInt(Visualizer.inset));
-		buttons.getChildren().add(pauseButton());
-		buttons.getChildren().add(stepButton());
-		buttons.getChildren().add(resetButton());
-		buttons.getChildren().add(undoButton());
-		buttons.getChildren().add(speedUpButton());
-		buttons.getChildren().add(slowDownButton());
-		buttons.getChildren().add(addDrawableButton());
+		buttons.getChildren().add(windowButton());
+		buttons.getChildren().add(saveButton());
+		buttons.getChildren().add(loadButton());
 		buttons.getChildren().add(colorButton());
+		buttons.getChildren().add(helpButton);
 
 		VBox myVBox = new VBox(Resources.getInt(Visualizer.inset));
 		myVBox.setPadding(new Insets(Resources.getInt(Visualizer.inset)));
@@ -173,7 +171,6 @@ public class Toolbar extends AnchorPane {
 		return myVBox;
 	}
 
-	//NOT SURE HOW TO LINK W BACKEND
 	private Button addDrawableButton()	{
 		Button addDrawableButton = new Button("Add Turtle");
 		addDrawableButton.setOnAction(e -> {
@@ -190,53 +187,6 @@ public class Toolbar extends AnchorPane {
 		return addDrawableButton;
 	}
 
-	private Button pauseButton()	{
-		Button pauseButton = new Button("Pause");
-		pauseButton.setOnAction(e -> {
-
-		});
-		return pauseButton;
-	}
-
-	private Button stepButton()	{
-		Button stepButton = new Button("Step");
-		stepButton.setOnAction(e -> {
-
-		});
-		return stepButton;
-	}
-
-	private Button resetButton()	{
-		Button resetButton = new Button("Reset");
-		resetButton.setOnAction(e -> {
-
-		});
-		return resetButton;
-	}
-
-	private Button undoButton()	{
-		Button undoButton = new Button("Undo");
-		undoButton.setOnAction(e -> {
-
-		});
-		return undoButton;
-	}
-
-	private Button speedUpButton()	{
-		Button speedUpButton = new Button("Speed Up");
-		speedUpButton.setOnAction(e -> {
-
-		});
-		return speedUpButton;
-	}
-
-	private Button slowDownButton()	{
-		Button slowDownButton = new Button("SlowDown");
-		slowDownButton.setOnAction(e -> {
-
-		});
-		return slowDownButton;
-	}
 
 	private Button colorButton() {
 		Button colorButton = new Button("Color Indices");
@@ -284,7 +234,10 @@ public class Toolbar extends AnchorPane {
 			myFileWriter.writeToFile(filename);
 		}
 		catch (Exception e) {
-			// TODO: HANDLE EXCEPTION
+			Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cannot write file");
+				alert.setContentText("This filename is invalid, could not write to it");
+				alert.show();
 		}
 	}
 

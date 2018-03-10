@@ -12,49 +12,43 @@ import java.util.Scanner;
  */
 public class FileReader {
 
-    private Console myConsole;
-    private String commandsToSend;
+	private Console myConsole;
+	private String commandsToSend;
 
-    /**
-     * Creates a new instance of the FileReader object
-     */
-    public FileReader(Console console) {
-        myConsole = console;
-    }
+	/**
+	 * Creates a new instance of the FileReader object
+	 */
+	public FileReader(Console console) {
+		myConsole = console;
+	}
 
-    /**
-     * Reads in the current file and modifies the given variable and function maps
-     * @param file is the file that we want to read in
-     * @throws InvalidFileException when the file filename is not correctly formatted
-     */
-    public void readFile(File file) throws InvalidFileException {
-        try {
-            Scanner myScanner = new Scanner(file);
-            StringBuilder newCommands = new StringBuilder();
-            while (myScanner.hasNextLine()) {
-                newCommands.append(myScanner.nextLine());
-                newCommands.append(" ");
-            }
-            commandsToSend = newCommands.toString();
-            sendToConsole();
-        }
-        catch (Exception e) {
-            throw new InvalidFileException();
-        }
-    }
+	/**
+	 * Reads in the current file and modifies the given variable and function maps
+	 * @param file is the file that we want to read in
+	 * @throws IllegalArgumentException when the file filename is not correctly formatted
+	 */
+	public void readFile(File file) throws IllegalArgumentException {
+		try {
+			Scanner myScanner = new Scanner(file);
+			StringBuilder newCommands = new StringBuilder();
+			while (myScanner.hasNextLine()) {
+				newCommands.append(myScanner.nextLine());
+				newCommands.append(" ");
+			}
+			commandsToSend = newCommands.toString();
+			sendToConsole();
+			myScanner.close();
+		}
+		catch (Exception e) {
+			throw new IllegalArgumentException();
+		}
+	}
 
-    /**
-     * Sends commands to console to be executed
-     */
-    private void sendToConsole() {
-        myConsole.loadInput(commandsToSend);
-        myConsole.run();
-    }
-
-    /**
-     * Thrown when we encounter an invalid file.
-     */
-    public class InvalidFileException extends Exception {
-
-    }
+	/**
+	 * Sends commands to console to be executed
+	 */
+	private void sendToConsole() {
+		myConsole.loadInput(commandsToSend);
+		myConsole.run();
+	}
 }

@@ -51,12 +51,9 @@ public class Visualizer {
 	public static final ObservableList<String> possIVImages = FXCollections.observableArrayList("Turtle", "Bird", "Butterfly", "Cat", "Dog",
 		"Fish", "Octopus");
 
-	private Stage myStage;
 	private Canvas myCanvas;
 	private Pane myCanvasObjects;
 	private SideBar mySideBar;
-	private FileWriter myFileWriter;
-	private FileReader myFileReader;
 	private Console myConsole;
 	private Toolbar myToolbar;
 	private BorderPane root;
@@ -74,7 +71,6 @@ public class Visualizer {
 	 */
 	public Visualizer(Stage stage, ChangeListener change_listener) {
 		myChangeListener = change_listener;
-		myStage = stage;
 		Scene myScene = initScreen();
 		stage.setScene(myScene);
 		stage.setTitle(Resources.getString("Title"));
@@ -124,15 +120,15 @@ public class Visualizer {
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
 		
-		mySideBar = new SideBar(myCanvasObjects, this, drawables, myCanvas);
+		mySideBar = new SideBar(myCanvasObjects, this, drawables);
 		root.setRight(mySideBar.initSideBar());
 
 		myConsole = new Console();
 		myConsole.language = language;
 		root.setBottom(myConsole);
 
-		myFileWriter = new FileWriter(mySideBar);
-		myFileReader = new FileReader(myConsole);
+		FileWriter myFileWriter = new FileWriter(mySideBar);
+		FileReader myFileReader = new FileReader(myConsole);
 
 		myToolbar = new Toolbar(this, myCanvasObjects, myFileWriter, myFileReader);
 		myToolbar.setLanguage(language);

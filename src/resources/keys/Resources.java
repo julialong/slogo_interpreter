@@ -9,8 +9,10 @@ import java.util.ResourceBundle;
 import javafx.scene.paint.Color;
 
 public class Resources {
-	
 	public static final ResourceBundle RESOURCEKEYS = ResourceBundle.getBundle("resources.keys/resourceKeys");
+
+	private Resources()	{
+	}
 	
 	/**
 	 * Returns the corresponding String of a given String key

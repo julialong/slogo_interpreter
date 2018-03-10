@@ -44,6 +44,7 @@ public class Turtle implements Drawable, Updatable {
 	private List<Color> myColors = new ArrayList<>();
 	private List<String> myShapes = Visualizer.possIVImages;
 	private String myShape = "Turtle";
+	private double imageSize = 20.0;
 
 	/**
 	 * Turtle constructor that takes in a String representing the Turtle's id. Sets the default image to a Turtle
@@ -60,18 +61,21 @@ public class Turtle implements Drawable, Updatable {
 			myColors.add(Color.valueOf(Visualizer.possPenColors.get(i)));
 		}
 	}
-	
+
 	private void translate(Pane display){
 		double height = display.getHeight();
 		double width = display.getWidth();
 		myViewX = myXPos + width/2;
+		//		System.out.println("x pos: " + myXPos);
+		//		System.out.println("view x trans: " + myViewX);
+		//		System.out.println("width: " + width/2);
 		myViewY = -1 * (myYPos - height/2);
 		myViewPrevX = myPrevXPos + width/2;
 		myViewPrevY = -1 * (myPrevYPos  - height/2);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 	}
-	
+
 	private void opptranslate(Pane display){
 		double height = display.getHeight();
 		double width = display.getWidth();
@@ -80,7 +84,7 @@ public class Turtle implements Drawable, Updatable {
 		myPrevXPos = myViewPrevX - width/2;
 		myPrevYPos = height/2 - myViewPrevY;	
 	}
-	
+
 	/**
 	 * Changes the Pane of the Turtle to be the given Pane
 	 * @param pane
@@ -97,7 +101,7 @@ public class Turtle implements Drawable, Updatable {
 	public boolean getIsVisible(){
 		return isVisible;
 	}
-	
+
 	/**
 	 * Returns whether or not the Turtle's pen is down
 	 * @return boolean
@@ -115,7 +119,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getPenWidth()	{
 		return myPenWidth;
 	}
-	
+
 	/**
 	 * Returns ImageView of Turtle
 	 * @return ImageView
@@ -141,7 +145,7 @@ public class Turtle implements Drawable, Updatable {
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 	}
-	
+
 	/**
 	 * Returns the x position of the ImageView
 	 * @return double
@@ -150,7 +154,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getViewX(){
 		return myViewX;
 	}
-	
+
 	/**
 	 * Returns the y position of the ImageView
 	 * @return double
@@ -159,7 +163,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getViewY(){
 		return myViewY;
 	}
-	
+
 	/**
 	 * Changes the ImageView's x position to the given double
 	 * @param x
@@ -170,7 +174,7 @@ public class Turtle implements Drawable, Updatable {
 		myViewX = x;
 		opptranslate(myPane);
 	}
-	
+
 	/**
 	 * Changes the ImageView's y position to the given double
 	 * @param y
@@ -218,18 +222,38 @@ public class Turtle implements Drawable, Updatable {
 			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
-			//lineAnimation(myIV);
 		}
 	}
 
-//	private void lineAnimation(Node iv){
-//		Path path = new Path();
-//		path.getElements().add(new MoveTo(myViewX, myViewY));
-//		path.getElements().add(new LineTo(myViewX, myViewY));
-//		//will need to change duration.millis to variable to change speed
-//		PathTransition pt = new PathTransition(Duration.millis(4000), path, iv);
-//		pt.play();
-//	}
+	private void wrapPos(Pane pane){
+		double height = pane.getHeight();
+		double width = pane.getWidth();
+		if (myYPos > height / 2){ //top
+			myYPos = -1 * (height / 2) + imageSize;
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, myViewX, 0);
+			myLines.getChildren().add(finishTrail);
+			myPrevYPos = -1 * (height / 2);
+		}
+		else if (myYPos < -1 * (height / 2) + imageSize){ //bottom
+			myYPos = height / 2;
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, myViewX, height);
+			myLines.getChildren().add(finishTrail);
+			myPrevYPos = myYPos;
+		}
+		if (myXPos > (width / 2) - imageSize){ //right
+			myXPos = -1 * (width / 2);
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, width, myViewY);
+			myLines.getChildren().add(finishTrail);
+			myPrevXPos = myXPos;
+		}
+		else if (myXPos < -1 * (width / 2)){ //left
+			myXPos = width / 2 - imageSize;
+			Line finishTrail = new Line(myViewPrevX, myViewPrevY, 0, myViewY);
+			myLines.getChildren().add(finishTrail);
+			myPrevXPos = width / 2;
+		}
+		translate(pane);
+	}
 
 	/**
 	 * Changes the Turtle's position to the given x and y coordinates
@@ -245,6 +269,7 @@ public class Turtle implements Drawable, Updatable {
 		myXPos = x;
 		myYPos = y;
 		translate(myPane);
+		wrapPos(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 		return distance;
@@ -263,6 +288,7 @@ public class Turtle implements Drawable, Updatable {
 		myXPos += pixels * Math.cos(radians);
 		myYPos += pixels * Math.sin(radians);
 		translate(myPane);
+		wrapPos(myPane);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 		return pixels;
@@ -336,7 +362,7 @@ public class Turtle implements Drawable, Updatable {
 		return Math.acos(numer / denom);
 
 	}
-	
+
 	/**
 	 * Changes whether the Turtle is visible or not
 	 * @param visible
@@ -403,7 +429,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getVisible() {
 		return isVisible ? 1.0 : 0.0;
 	}
-	
+
 	/**
 	 * Clears the canvas of all Turtle trails and returns the Turtle back to the center of the Canvas
 	 * @return double - distance Turtle moved
@@ -423,7 +449,7 @@ public class Turtle implements Drawable, Updatable {
 		myPane.getChildren().add(myIV);
 		return dist;
 	}
-	
+
 	private double degreesToRadians(double degrees) {
 		return (degrees * Math.PI) / 180.0;
 	}
