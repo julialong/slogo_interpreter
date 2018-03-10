@@ -13,6 +13,8 @@ import file_managers.FileWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputDialog;
@@ -36,7 +38,6 @@ import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
 	private Visualizer myVis;
-	private AnchorPane myPane;
 	private Pane myCanvasObjects;
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
@@ -63,7 +64,7 @@ public class Toolbar extends AnchorPane {
 	}
 	
 	protected AnchorPane initToolbar(){
-		myPane = new AnchorPane();
+		AnchorPane myPane = new AnchorPane();
 		
 		Text title = new Text(Resources.getString("Title"));
 		title.getStyleClass().add("title");
@@ -139,7 +140,10 @@ public class Toolbar extends AnchorPane {
 				myFileReader.readFile(openFileChooser());
 			}
 			catch (Exception exception) {
-				// TODO: HANDLE EXCEPTION
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cannot read file");
+				alert.setContentText("This file is invalid and cannot be loaded");
+				alert.show();
 			}
 		});
     	return loadButton;
@@ -178,7 +182,7 @@ public class Toolbar extends AnchorPane {
 		Button addDrawableButton = new Button("Add Turtle");
 	    addDrawableButton.setOnAction(e -> {
 	    	int id = myVis.drawables.size();
-	    	List<String> ids = new ArrayList<String>();
+	    	List<String> ids = new ArrayList<>();
 	    	for (Map.Entry<Drawable, List<String>> entry: myVis.drawables.entrySet()){
 	    		ids.add(myVis.drawables.get(entry.getKey()).get(0));
 	    	}

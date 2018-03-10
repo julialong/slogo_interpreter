@@ -9,7 +9,6 @@ package view;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -29,27 +28,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import resources.keys.Resources;
 import slogo_team07.Drawable;
-import slogo_team07.ChangeListener;
-import commands.unbundler.MakeVariable;
-import parser.Parser;
 
 
 public class SideBar extends VBox{
-	private VBox myVBox;
 	private Pane myCanvasObjects;
-	private Canvas myCanvas;
 	private Visualizer myVis;
 	private Map<Drawable, List<String>> myTurtles;
 	
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
-	private TableView commandTable;
-	private TableView variableTable;
-	private TableColumn comText;
-	private TableColumn vars;
-	private TableColumn varName;
-	private TableColumn varValue;
-	private TableColumn changeCol;
 	protected TextInput myTextInput;
 	
 	
@@ -60,24 +47,19 @@ public class SideBar extends VBox{
 	 * @param turtles	list of all the movers in the canvas
 	 * @param c			Canvas instance that is in the same visualizer as this sidebar
 	 */
-	public SideBar(Pane canvas, Visualizer v, Map<Drawable, List<String>> turtles, Canvas c){
+	public SideBar(Pane canvas, Visualizer v, Map<Drawable, List<String>> turtles){
 		myCanvasObjects = canvas;
 		myVis = v;
 		myTurtles = turtles;
-		myCanvas = c;
 	}
 	
 	/**
 	 * Creates the sidebar as a VBox and adds its children (buttons) inside
 	 */
 	public VBox initSideBar(){
-		myVBox = new VBox(Resources.getInt("Inset"));
+		VBox myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
-
-		commandTable = new TableView();
-		variableTable = new TableView();
 		double colWidth = 250;
-	
 		myVBox.getChildren().add(allDrawablesButton());
 		myVBox.getChildren().add(commandTable(colWidth));
 		myVBox.getChildren().add(variableTable(colWidth));
@@ -97,9 +79,9 @@ public class SideBar extends VBox{
 	}
 
 	private TableView commandTable(double colWidth)	{
-		commandTable = new TableView();
+		TableView commandTable = new TableView();
 		commandTable.setEditable(false);
-		comText = new TableColumn("User-defined commands");
+		TableColumn comText = new TableColumn("User-defined commands");
 		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
 		comText.setMinWidth(colWidth);
         commandTable.getColumns().add(comText);
@@ -124,18 +106,18 @@ public class SideBar extends VBox{
 	}
 
 	private TableView variableTable(double colWidth)	{
-		variableTable = new TableView();
+		TableView variableTable = new TableView();
 		variableTable.setEditable(true);
 		int numVarCols = 3;
-		vars = new TableColumn("Variables");
+		TableColumn vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
-		varName = new TableColumn("Name");
+		TableColumn varName = new TableColumn("Name");
 		varName.setCellValueFactory(new PropertyValueFactory<>("key"));
 		varName.setPrefWidth(colWidth/numVarCols);
-		varValue = new TableColumn("Value");
+		TableColumn varValue = new TableColumn("Value");
 		varValue.setPrefWidth(colWidth/numVarCols);
 		varValue.setCellValueFactory(new PropertyValueFactory<>("value"));
-		changeCol = new TableColumn("Change");
+		TableColumn changeCol = new TableColumn("Change");
 		changeCol.setPrefWidth(colWidth/numVarCols);
 		changeCol.setCellValueFactory(new PropertyValueFactory<>("changeButton"));
 		vars.getColumns().addAll(varName, varValue, changeCol);
@@ -174,9 +156,8 @@ public class SideBar extends VBox{
 
 	protected void addUDVar(String var, double value)	{
 		if (varExists(var) != null)	{
-			TextField valInput = new TextField();
-			valInput.setText(String.valueOf(value));
-			varExists(var).value = new SimpleObjectProperty(valInput);
+			varExists(var).setVal(value);
+			System.out.println(value);
 		}
 		else	{
 			setVariables.add(new VarVal(var, value));
@@ -250,6 +231,10 @@ public class SideBar extends VBox{
 			changeButton = new SimpleObjectProperty(changer);
 		}
 
+		private void setVal(double aVal)	{
+			((TextField)(value.getValue())).setText(Double.toString(aVal));
+		}
+
 		/**
 		 * Returns the name of a variable, as a property
 		 */
@@ -261,7 +246,6 @@ public class SideBar extends VBox{
 	     * Returns the value of a variable, as a property
 	     */
 	    public ObjectProperty valueProperty()	{
-
 	    	return value;
 	    }
 
@@ -269,7 +253,6 @@ public class SideBar extends VBox{
 	     * Returns a button that, when clicked, grabs text from the value textbox and sets the variable to that value
 	     */
 	    public ObjectProperty changeButtonProperty()	{
-
 	    	return changeButton;
 	    }
 	}
