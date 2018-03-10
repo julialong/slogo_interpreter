@@ -52,7 +52,6 @@ public class Toolbar extends AnchorPane {
 	 * @param canvas		canvas that this toolbar is tied to (in same Visualizer instance with)
 	 * @param fileWriter	Allows for storing current state of program
 	 * @param fileReader	Allows for loading pre-defined commands into program
-	 * @param stage			Window that this object displays in
 	 */
 	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader){
 		myVis = v;
@@ -171,15 +170,19 @@ public class Toolbar extends AnchorPane {
 	private Button addDrawableButton()	{
 		Button addDrawableButton = new Button("Add Turtle");
 		addDrawableButton.setOnAction(e -> {
-			int id = myVis.drawables.size();
-			List<String> ids = new ArrayList<String>();
-			for (Map.Entry<Drawable, List<String>> entry: myVis.drawables.entrySet()){
-				ids.add(myVis.drawables.get(entry.getKey()).get(0));
+			double id = 1;
+			List<Double> existingIds = new ArrayList<>();
+
+			for (Drawable existing:myVis.drawables.keySet())	{
+				existingIds.add(existing.getId());
 			}
-			while (ids.contains(String.valueOf(id))){
+
+			while (existingIds.contains(id))	{
 				id++;
 			}
+
 			myVis.addDrawable(new Turtle(String.valueOf(id)));
+			myVis.getChangeListener().changeInput(Double.toString(id));
 		});
 		return addDrawableButton;
 	}
