@@ -8,6 +8,12 @@
 
 package view;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import file_managers.FileReader;
 import file_managers.FileWriter;
 import javafx.collections.FXCollections;
@@ -26,13 +32,8 @@ import javafx.stage.Stage;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
+import slogo_team07.Engine;
 import slogo_team07.Turtle;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
 	private Visualizer myVis;
@@ -110,7 +111,7 @@ public class Toolbar extends AnchorPane {
 	private Button windowButton()	{
 		Button windowButton = new Button("New Window");
 		windowButton.setOnAction(e -> {
-			new Visualizer(new Stage(), myVis.getChangeListener());
+			new Engine(new Stage());
 		});
 		return windowButton;
 	}
