@@ -47,16 +47,13 @@ public class Toolbar extends AnchorPane {
 	private String myLanguage;
 
 	/**
-	 * Toolbar constructor. Takes in a Visualizer in order to create another visualizer with the same change
-	 * listener. Takes in a canvas for background color button. Takes in a fileWriter and fileReader to save and 
-	 * load new files. 
-	 * @param v
-	 * @param canvas
-	 * @param fileWriter
-	 * @param fileReader
-	 * @param stage
+	 * Initialized isntance of Toolbar and sets its instance variables
+	 * @param v				Instance of Visualizer that this toolbar affects and is part of
+	 * @param canvas		canvas that this toolbar is tied to (in same Visualizer instance with)
+	 * @param fileWriter	Allows for storing current state of program
+	 * @param fileReader	Allows for loading pre-defined commands into program
+	 * @param stage			Window that this object displays in
 	 */
-
 	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader){
 		myVis = v;
 		myCanvasObjects = canvas;
