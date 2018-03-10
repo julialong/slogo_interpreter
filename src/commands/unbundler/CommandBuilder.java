@@ -63,7 +63,7 @@ public interface CommandBuilder {
         List <String> unbundledArray = new ArrayList<>();
         for (double i = start; i <= end; i += increment) {
             for (int j = startIndex + 1; j < stopIndex; j++) {
-                unbundledArray.add(replaceVariable(variable, exp.get(j), j));
+                unbundledArray.add(replaceVariable(variable, exp.get(j), i));
             }
         }
         return unbundledArray;
