@@ -24,13 +24,16 @@ public abstract class NonUpdatableCommand extends Command {
 	
 	@Override
 	public boolean hasUpdatable() {
+		// do nothing
 		return false;
 	}
 	
 	@Override
 	public Updatable getUpdatable() {
+		// do nothing
 		return null;
 	}
+	
 	
 	protected abstract double calcValue(List<String> args);
 }
