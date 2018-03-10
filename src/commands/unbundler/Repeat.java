@@ -1,5 +1,6 @@
 package commands.unbundler;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class Repeat extends ControlUnbundler {
 
 	private double toRepeat;
 	private List<String> expression;
-	private LinkedList<String> unbundledArray;
+	private ArrayList<String> unbundledArray;
 
 
 	public Repeat(Visualizer vis, VariableReplacer var_replacer, Parser p) {
@@ -66,8 +67,8 @@ public class Repeat extends ControlUnbundler {
 	 * @return the index where the command ends, or the last bracket
 	 */
 	private void buildCommand(List<String> exp, int start, int stop) {
-		unbundledArray = new LinkedList<>();
-		for (int i = 0; i < (int) toRepeat; i++) {
+		unbundledArray = new ArrayList<>();
+		for (int i = 1; i <= toRepeat; i++) {
 			for (int j = start + 1; j < stop; j++) {
 				unbundledArray.add(replaceVariable(":repcount", exp.get(j), i));
 			}
