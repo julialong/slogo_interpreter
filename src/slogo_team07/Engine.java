@@ -36,6 +36,7 @@ public class Engine implements ChangeListener {
 			double ans = myParser.parse(input);
 			result = new Result(ans);
 		} catch (Exception e) {
+			e.printStackTrace();
 			result = new ErrorResult(Double.MAX_VALUE, e.getMessage());
 		}
 		

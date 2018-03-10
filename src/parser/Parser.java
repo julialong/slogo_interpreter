@@ -67,6 +67,7 @@ public class Parser implements VariableTruthometer {
 			return null;
 		}
 
+		System.out.println(input);
 		String next = input.remove(0).toLowerCase();
 		if (isVariable(next)) {
 			return next;

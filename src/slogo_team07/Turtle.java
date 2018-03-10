@@ -67,6 +67,9 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	private void translate(Pane display){
+		if (display == null) {
+			return;
+		}
 		double height = display.getHeight();
 		double width = display.getWidth();
 		myViewX = myXPos + width/2;
@@ -78,6 +81,9 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	private void opptranslate(Pane display){
+		if (display == null) {
+			return;
+		}
 		double height = display.getHeight();
 		double width = display.getWidth();
 		myXPos = myViewX - width/2;
@@ -205,6 +211,9 @@ public class Turtle implements Drawable, Updatable {
 	 */
 	@Override
 	public void draw(Pane display, Color color, double penWidth) {
+		if (display == null) {
+			return;
+		}
 		myPenWidth = penWidth;
 		myColor = color;
 		myPane = display;
@@ -227,6 +236,9 @@ public class Turtle implements Drawable, Updatable {
 	}
 
 	private void wrapPos(Pane pane){
+		if (pane == null) {
+			return;
+		}
 		double height = pane.getHeight();
 		double width = pane.getWidth();
 		if (myYPos > height / 2){ //top
