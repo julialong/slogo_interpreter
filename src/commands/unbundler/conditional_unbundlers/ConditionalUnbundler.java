@@ -8,8 +8,19 @@ import view.Visualizer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Unbundler for conditional control commands
+ * @author julialong
+ */
 abstract class ConditionalUnbundler extends ControlUnbundler {
 
+    /**
+     * Creates a new ConditionalUnbundler
+     * @param vis is the current Visualizer
+     * @param variableReplacer is the current variableReplacer
+     * @param numArgs is the number of arguments
+     * @param parser is the current parser
+     */
     ConditionalUnbundler(Visualizer vis, VariableReplacer variableReplacer, int numArgs, Parser parser) {
         super(vis, variableReplacer, numArgs, parser);
     }

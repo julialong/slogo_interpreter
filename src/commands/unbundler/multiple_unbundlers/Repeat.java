@@ -15,9 +15,14 @@ public class Repeat extends MultipleUnbundler {
 	private List<String> unbundledArray;
 
 
-
-	public Repeat(Visualizer vis, VariableReplacer var_replacer, Parser p) {
-		super(vis, var_replacer, NUM_ARGS, p);
+	/**
+	 * Creates a new Repeat unbundler class
+	 * @param vis
+	 * @param variableReplacer
+	 * @param p
+	 */
+	public Repeat(Visualizer vis, VariableReplacer variableReplacer, Parser p) {
+		super(vis, variableReplacer, NUM_ARGS, p);
 	}
 
 	/**
