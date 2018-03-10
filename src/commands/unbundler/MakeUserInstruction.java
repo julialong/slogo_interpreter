@@ -1,6 +1,7 @@
 package commands.unbundler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class MakeUserInstruction extends ControlUnbundler {
 		commandName = exp.get(0);
 		getIndex(exp);
 		setUpLists();
-		commands = buildExpression(exp, commandIndex[0], commandIndex[1]);
+		commands = buildExpression(exp, commandIndex[0] + 1, commandIndex[1]);
 		addVariables(exp, variableIndex[0], variableIndex[1]);
 		addFunction();
 		modifyList(exp, commandIndex[1]);
