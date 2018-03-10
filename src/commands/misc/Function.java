@@ -10,6 +10,14 @@ import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This is a Function that extends the NonUpdatableCommand object. It behaves in slightly more complex ways
+ * than other, more standard commands, but nevertheless allows for polymorphism inside of Parser.
+ *
+ */
 public class Function extends NonUpdatableCommand {
 	private List<String> myParams;
 	private List<String> myCommands;
@@ -24,6 +32,10 @@ public class Function extends NonUpdatableCommand {
 		myName = name;
 	}
 	
+	/**
+	 * Here execute is overwritten because I don't want the values of variables overwritten until execution 
+	 * time on the specific command that contains the variable itself. 
+	 */
 	@Override
 	public String execute() {
 		if (! isReady()) {
@@ -55,6 +67,9 @@ public class Function extends NonUpdatableCommand {
 		return myParser.parse(replaceParams(args));
 	}
 
+	/**
+	 * The front end uses this method to display the function to the user on screen.
+	 */
 	@Override
 	public String toString() {
 		return String.format("to %s [ %s ] [ %s ]", myName, String.join(" ", myParams), String.join(" ", myCommands));

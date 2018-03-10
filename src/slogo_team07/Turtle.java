@@ -1,11 +1,3 @@
-/**
- * @author Jennifer Chin
- * @author Ben Hubsch
- * Turtle class that implements two interfaces, Drawable and Updatable. Drawable is used by the front end and 
- * Updatable is used by the back end. Back end calls Updatable methods when a Turtle command is called and front 
- * end calls Drawable methods to accurately update the GUI as Turtle commands are called. 
- */
-
 package slogo_team07;
 
 import java.util.ArrayList;
@@ -21,6 +13,18 @@ import javafx.scene.shape.Line;
 import resources.keys.Resources;
 import view.Visualizer;
 
+/**
+ * 
+ * @author jennychin
+ * @author mayamessinger
+ * @author benhubsch
+ * 
+ * This is a Turtle class that implements two interfaces: the Drawable and Updatable
+ * interfaces. The Updatable interface is used by the back end, while the Drawable
+ * interface is used by the front end. It allows the other methods to be hidden
+ * to those respective components. 
+ *
+ */
 public class Turtle implements Drawable, Updatable {
 
 	private double myXPos;
@@ -66,9 +70,6 @@ public class Turtle implements Drawable, Updatable {
 		double height = display.getHeight();
 		double width = display.getWidth();
 		myViewX = myXPos + width/2;
-		//		System.out.println("x pos: " + myXPos);
-		//		System.out.println("view x trans: " + myViewX);
-		//		System.out.println("width: " + width/2);
 		myViewY = -1 * (myYPos - height/2);
 		myViewPrevX = myPrevXPos + width/2;
 		myViewPrevY = -1 * (myPrevYPos  - height/2);
@@ -339,8 +340,6 @@ public class Turtle implements Drawable, Updatable {
 		return degrees - old;
 	}
 
-	// THIS METHOD IS BROKEN....IT'S TOO LATE AND I'M TOO TIRED TO DO THIS
-	// MATH
 	@Override
 	public double setFacing(double x, double y) {
 		double radians = degreesToRadians(myDegrees);
@@ -351,7 +350,6 @@ public class Turtle implements Drawable, Updatable {
 		Point2D new_vec = calcVector(0.0, 0.0, x, y);
 
 		double ans = calcAngle(old_vec, new_vec);
-		//need to add imageview rotation
 		return ans;
 	}
 
