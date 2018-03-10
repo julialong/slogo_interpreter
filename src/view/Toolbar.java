@@ -1,8 +1,9 @@
 /**
  * @author Jennifer Chin
+ * @author Julia Long
  * @author Maya Messinger
  * Started 27 Feb 18
- * Upper navigation bar that holds totle of program and all buttons that affect global variables (that exist in whole program)
+ * Upper navigation bar that holds title of program and all buttons that affect global variables (that exist in whole program)
  */
 
 package view;
@@ -24,15 +25,19 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
+import slogo_team07.Drawable;
+import slogo_team07.Turtle;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
 	private Visualizer myVis;
 	private AnchorPane myPane;
 	private Pane myCanvasObjects;
-	private Stage myStage;
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
@@ -40,19 +45,21 @@ public class Toolbar extends AnchorPane {
 	private String myLanguage;
 	
 	/**
-	 * Initialized isntance of Toolbar and sets its instance variables
-	 * @param v				Instance of Visualizer that this toolbar affects and is part of
-	 * @param canvas		canvas that this toolbar is tied to (in same Visualizer instance with)
-	 * @param fileWriter	Allows for storing current state of program
-	 * @param fileReader	Allows for loading pre-defined commands into program
-	 * @param stage			Window that this object dispalys in
+	 * Toolbar constructor. Takes in a Visualizer in order to create another visualizer with the same change
+	 * listener. Takes in a canvas for background color button. Takes in a fileWriter and fileReader to save and 
+	 * load new files. 
+	 * @param v
+	 * @param canvas
+	 * @param fileWriter
+	 * @param fileReader
+	 * @param stage
 	 */
-	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader, Stage stage){
+	
+	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader){
 		myVis = v;
 		myCanvasObjects = canvas;
 		myFileWriter = fileWriter;
 		myFileReader = fileReader;
-		myStage = stage;
 	}
 	
 	protected AnchorPane initToolbar(){
@@ -166,10 +173,19 @@ public class Toolbar extends AnchorPane {
 		return myVBox;
 	}
 	
-	//need to link w visualizer class somehow
+	//NOT SURE HOW TO LINK W BACKEND
 	private Button addDrawableButton()	{
 		Button addDrawableButton = new Button("Add Turtle");
 	    addDrawableButton.setOnAction(e -> {
+	    	int id = myVis.drawables.size();
+	    	List<String> ids = new ArrayList<String>();
+	    	for (Map.Entry<Drawable, List<String>> entry: myVis.drawables.entrySet()){
+	    		ids.add(myVis.drawables.get(entry.getKey()).get(0));
+	    	}
+	    	while (ids.contains(String.valueOf(id))){
+	    		id++;
+	    	}
+	    	myVis.addDrawable(new Turtle(String.valueOf(id)));
         });
 		return addDrawableButton;
 	}
@@ -234,6 +250,7 @@ public class Toolbar extends AnchorPane {
 	
 	/**
 	 * Returns the String name of the language that this program is accepting commands and displaying help in
+	 * @return String
 	 */
 	public String getLanguage(){
 		return myLanguage;
