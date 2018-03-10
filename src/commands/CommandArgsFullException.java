@@ -1,5 +1,13 @@
 package commands;
 
+/**
+ * 
+ * @author benhubsch
+ *
+ * This is an exception class that gets thrown when an argument is injected into a Command object,
+ * but that Command already contains a sufficient number of arguments.
+ * 
+ */
 public class CommandArgsFullException extends RuntimeException {
 	private static final long serialVersionUID = -2713828251237349502L;
 	

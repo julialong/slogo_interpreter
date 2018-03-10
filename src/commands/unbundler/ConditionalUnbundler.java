@@ -1,12 +1,11 @@
 package commands.unbundler;
 
-import parser.Parser;
-import view.Visualizer;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
+import parser.Parser;
+import view.Visualizer;
 
 abstract class ConditionalUnbundler extends ControlUnbundler{
 

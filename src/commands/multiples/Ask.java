@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;

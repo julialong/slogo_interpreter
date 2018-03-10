@@ -6,7 +6,7 @@ import java.util.List;
 import commands.CommandArgsUnfilledException;
 import commands.NonUpdatableCommand;
 import commands.Result;
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import commands.Command;
-import commands.VariableReplacer;
 import view.Visualizer;
 
 public class NonUpdatableFactory implements Factory {

@@ -3,7 +3,7 @@ package commands.unbundler;
 import java.util.ArrayList;
 import java.util.List;
 
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 

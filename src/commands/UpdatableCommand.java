@@ -2,9 +2,20 @@ package commands;
 
 import java.util.List;
 
+import commands.factory.VariableReplacer;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This class is for commands that act on the Updatable: i.e., they act on the turtle. Since
+ * these Commands take double values only in our world, you'll notice that the list that gets
+ * passed into calcValues() is parsed to a list of doubles.  
+ * It inherits from Command because it is a more specific kind of Command.
+ *
+ */
 public abstract class UpdatableCommand extends Command {
 
 	private Updatable myUpdatable;
@@ -19,17 +30,17 @@ public abstract class UpdatableCommand extends Command {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
-		
+
 		Double ans = calcValues(myUpdatable, parseToDouble(getArgs()));
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}
-	
+
 	@Override
 	public boolean hasUpdatable() {
 		return true;
 	}
-	
+
 	@Override
 	public Updatable getUpdatable() {
 		return myUpdatable;

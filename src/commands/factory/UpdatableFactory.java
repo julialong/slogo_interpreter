@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commands.Command;
-import commands.VariableReplacer;
 import slogo_team07.Updatable;
 import view.Visualizer;
 

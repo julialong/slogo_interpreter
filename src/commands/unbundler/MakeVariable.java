@@ -6,7 +6,7 @@ import java.util.Map;
 
 import commands.CommandArgsUnfilledException;
 import commands.Result;
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 

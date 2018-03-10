@@ -1,5 +1,13 @@
 package commands;
 
+/**
+ * 
+ * @author benhubsch
+ *
+ * This is an exception class that gets thrown when the execute() method is called on
+ * a Command object, but it has an insufficient number of arguments inside it. 
+ * 
+ */
 public class CommandArgsUnfilledException extends RuntimeException {
 	
 	private static final long serialVersionUID = 2710644981892984866L;

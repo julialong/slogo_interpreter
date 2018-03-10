@@ -4,7 +4,7 @@ import java.util.List;
 
 import commands.CommandArgsUnfilledException;
 import commands.NonUpdatableCommand;
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Number extends NonUpdatableCommand {

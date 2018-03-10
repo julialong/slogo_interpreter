@@ -6,11 +6,12 @@
 
 package view;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import commands.ErrorResult;
 import commands.Result;
 import file_managers.FileReader;
 import file_managers.FileWriter;
@@ -30,8 +31,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import resources.keys.Resources;
@@ -174,7 +175,7 @@ public class Visualizer {
 	 * @param isLast	Whether command is last in serires - only want to actually print last command result (recursive commands get long)
 	 */
 	public void runCommand(Result result, boolean isLast) {
-		if (result.getRes1() == Double.MAX_VALUE)	{
+		if (result.getClass() == ErrorResult.class)	{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Improper command");
 			alert.setContentText(result.toString());
@@ -184,7 +185,7 @@ public class Visualizer {
 			myCanvas.updateCanvas(result);
 
 			if (isLast)	{
-				myConsole.printResult(Double.toString(result.getRes1()));
+				myConsole.printResult(result.toString());
 			}
 
 		}
