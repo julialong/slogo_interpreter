@@ -13,7 +13,7 @@ public class Repeat extends ControlUnbundler {
 
 	private double toRepeat;
 	private List<String> expression;
-	private ArrayList<String> unbundledArray;
+	private List<String> unbundledArray;
 
 
 	public Repeat(Visualizer vis, VariableReplacer var_replacer, Parser p) {
@@ -65,7 +65,7 @@ public class Repeat extends ControlUnbundler {
 	 */
 	private void buildCommand(List<String> exp, int start, int stop) {
 		unbundledArray = new ArrayList<>();
-		for (int i = 1; i <= toRepeat; i++) {
+		for (int i = 1; i <= (int) toRepeat; i++) {
 			for (int j = start + 1; j < stop; j++) {
 				unbundledArray.add(replaceVariable(":repcount", exp.get(j), i));
 			}
