@@ -9,6 +9,14 @@ import slogo_team07.Turtle;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This is an abstract class that both Tell and Ask implement and abstracts out
+ * the main concepts that exist surrounding those two Commands.
+ *
+ */
 public abstract class TurtleCreator extends Multiple {
 	
 	private Visualizer myVis;

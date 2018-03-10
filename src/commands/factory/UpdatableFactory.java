@@ -8,6 +8,14 @@ import commands.Command;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This is the Factory class for Updatable Commands. It uses reflection to instantiate the concretions 
+ * because they all take the same parameters in the constructor.
+ *
+ */
 public class UpdatableFactory implements Factory {
 
 	private CommandFactory myCF;

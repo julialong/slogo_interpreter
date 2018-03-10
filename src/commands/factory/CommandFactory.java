@@ -14,6 +14,16 @@ import parser.Parser;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
+/**
+ * A factory for creating Command objects.
+ *
+ * @author benhubsch
+ * 
+ * The CommandFactory is our main factory class. It distributes input appropriately
+ * so that the proper Commands can be instantiated by the right factory. It also is the
+ * main state holder for everything that any of the potentially instantiated commands
+ * might need, including the language conversion and many of its attributes.
+ */
 public class CommandFactory implements VariableReplacer {
 
 	public static final String ID = "id";
@@ -32,7 +42,13 @@ public class CommandFactory implements VariableReplacer {
 	private Map<String, String> myVarMap = new HashMap<>();
 	private Visualizer myVis;
 	private Parser myParser;
-
+	
+	/**
+	 * Instantiates a new CommandFactory object.
+	 *
+	 * @param vis the vis
+	 * @param parser the parser
+	 */
 	public CommandFactory(Visualizer vis, Parser parser) {
 		myVis = vis;
 		myParser = parser;
@@ -40,6 +56,13 @@ public class CommandFactory implements VariableReplacer {
 		updateLanguage(DEFAULT);
 	}
 
+	/**
+	 * Creates a new list of Command objects by delegating to the appropriate instance of
+	 * a Factory.
+	 *
+	 * @param command The string command that a user entered.
+	 * @return The List<Command> that is returned for the Parser to iterate over.
+	 */
 	public List<Command> createCommands(String command) {
 		if (myFuncMap.containsKey(command)) {
 			return Arrays.asList(myFuncMap.get(command));
@@ -49,6 +72,13 @@ public class CommandFactory implements VariableReplacer {
 		return factory.create(keyword);
 	}
 
+	/**
+	 * Updates the current language after the user chooses a new language in the UI. It
+	 * reverses the map of commands from the resource file to make it more searchable
+	 * for later inputs.
+	 *
+	 * @param lang the lang
+	 */
 	public void updateLanguage(String lang) {
 		String location = String.format("%s%s", LANGUAGE_BASE, lang);
 		ResourceBundle rb = ResourceBundle.getBundle(location);
@@ -60,34 +90,77 @@ public class CommandFactory implements VariableReplacer {
 		}
 	}
 
+	/**
+	 * Gets the String object associated with a specific keyword from the Command
+	 * bundle. It is used for reflection in some of the other Factory methods.
+	 *
+	 * @param keyword the keyword
+	 * @return String
+	 */
 	public String getBundleValue(String keyword) {
 		return myCommands.getString(keyword);
 	}
 
+	/**
+	 * Gets the Set<String> object.
+	 *
+	 * @return Set<String>
+	 */
 	public Set<String> getActives() {
 		return myActives;
 	}
 
+	/**
+	 * Gets the Visualizer object.
+	 *
+	 * @return Visualizer
+	 */
 	public Visualizer getVis() {
 		return myVis;
 	}
 
+	/**
+	 * Gets the Parser object.
+	 *
+	 * @return Parser
+	 */
 	public Parser getParser() {
 		return myParser;
 	}
 
+	/**
+	 * Gets the Updatable object.
+	 *
+	 * @param id the id
+	 * @return Updatable
+	 */
 	public Updatable getUpdatableById(String id) {
 		return myUpdatables.get(id);
 	}
 
+	/**
+	 * Gets the Map<String, Updatable> object.
+	 *
+	 * @return Map<String, Updatable>
+	 */
 	public Map<String, Updatable> getUpdatables() {
 		return myUpdatables;
 	}
 
+	/**
+	 * Gets the Map<String, Function> object.
+	 *
+	 * @return Map<String,Function>
+	 */
 	public Map<String, Function> getFuncMap() {
 		return myFuncMap;
 	}
 
+	/**
+	 * Gets the Map<String, String> object.
+	 *
+	 * @return Map<String, String>
+	 */
 	public Map<String, String> getVarMap() {
 		return myVarMap;
 	}
@@ -101,25 +174,56 @@ public class CommandFactory implements VariableReplacer {
 		return factory_map;
 	}
 
+	/**
+	 * Checks if the given string exists in the realm of known commands.
+	 *
+	 * @param string the string
+	 * @return true, if is command
+	 */
 	public boolean isCommand(String string) {
 		return myLanguages.containsKey(string);
 	}
 
+	/**
+	 * Gets the variable value associated with a given variable parameter.
+	 * For example, a given variable value ":x" might return the String value
+	 * "10."
+	 *
+	 * @param variable the variable
+	 * @return String
+	 */
 	public String getVar(String variable) {
 		return myVarMap.get(variable);
 	}
 
+	/**
+	 * Checks the given string is registered anywhere within our system or if it's
+	 * a piece of input that isn't recognized.
+	 *
+	 * @param string the string
+	 * @return true, if is registered
+	 */
 	public boolean isRegistered(String string) {
 		return myVarMap.containsKey(string) 
 				|| myLanguages.containsKey(string)
 				|| myFuncMap.containsKey(string);
 	}
 
+	/* (non-Javadoc)
+	 * @see commands.factory.VariableReplacer#replace(java.lang.String)
+	 */
 	@Override
 	public String replace(String var) {
 		return myVarMap.containsKey(var) ? myVarMap.get(var) : "0.0";
 	}
 
+	/**
+	 * Gets any Updatable object, which is used on "cold" calls to id that
+	 * aren't associated with an UpdatableCommand. It will return one of the
+	 * Updatables that can be used.
+	 *
+	 * @return Updatable
+	 */
 	public Updatable getCurrent() {
 		return myUpdatables.entrySet().iterator().next().getValue();
 	}
