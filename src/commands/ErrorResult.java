@@ -1,5 +1,14 @@
 package commands;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This class is instantiated upon receiving an error during the parsing of an input.
+ * Its toString() is used to display an error message to the user in an alert box
+ * on the front end. 
+ *
+ */
 public class ErrorResult extends Result {
 	
 	private String myErrorMessage;
@@ -11,6 +20,6 @@ public class ErrorResult extends Result {
 	
 	@Override 
 	public String toString() {
-		return myErrorMessage;
+		return "Error during parsing of input: " + myErrorMessage;
 	}
 }

@@ -3,17 +3,15 @@ package commands;
 import java.util.List;
 
 /**
- * Finds the correct pair of brackets
+ * 
  * @author benhubsch, julialong
+ *
+ * This is an interface that allows multiple classes to find the indices of any pair of brackets. 
+ * For example, ask, askwith, for, and dotimes all take advantage of this implementation to 
+ * accurately handle their inputs. 
  */
 public interface BracketFinder {
 
-	/**
-	 * Finds the outermost pair of matching brackets in the given exp List
-	 * @param exp is the list of the entire expression
-	 * @param pairNum is the number of the pair of brackets we are looking for
-	 * @return an array that contains the indexes of the two matching brackets
-	 */
 	default int[] findBrackets(List<String> exp, int pairNum) {
 		int[] answer = new int[] {-1, -1};
 		int unmatched = 0;
@@ -37,4 +35,5 @@ public interface BracketFinder {
 		}
 		return new int[0];
 	}
+
 }

@@ -2,7 +2,7 @@ package commands.booleans;
 
 import java.util.List;
 
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Not extends Boolean {

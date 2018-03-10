@@ -2,9 +2,18 @@ package commands;
 
 import java.util.List;
 
+import commands.factory.VariableReplacer;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This class is for commands that don't touch the Updatable: i.e., they don't act on the turtle at all.
+ * It inherits from Command because it is a more specific kind of Command.
+ *
+ */
 public abstract class NonUpdatableCommand extends Command {
 
 	public NonUpdatableCommand(Visualizer vis, VariableReplacer var_replacer, int num_args) {
@@ -24,13 +33,11 @@ public abstract class NonUpdatableCommand extends Command {
 	
 	@Override
 	public boolean hasUpdatable() {
-		// do nothing
 		return false;
 	}
 	
 	@Override
 	public Updatable getUpdatable() {
-		// do nothing
 		return null;
 	}
 	

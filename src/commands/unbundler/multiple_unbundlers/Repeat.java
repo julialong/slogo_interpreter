@@ -2,7 +2,7 @@ package commands.unbundler.multiple_unbundlers;
 
 import java.util.List;
 
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 

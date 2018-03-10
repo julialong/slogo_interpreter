@@ -3,7 +3,7 @@ package commands.math.algebra;
 import java.util.List;
 
 import commands.NonUpdatableCommand;
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Minus extends NonUpdatableCommand {

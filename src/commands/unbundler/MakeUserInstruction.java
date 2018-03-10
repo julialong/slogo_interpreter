@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import commands.misc.Function;
 import parser.Parser;
 import view.Visualizer;

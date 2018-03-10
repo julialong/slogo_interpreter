@@ -3,7 +3,7 @@ package commands.multiples;
 import java.util.List;
 import java.util.Map;
 
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import slogo_team07.Updatable;
 import view.Visualizer;
 

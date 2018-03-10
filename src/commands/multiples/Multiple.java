@@ -7,7 +7,7 @@ import java.util.List;
 import commands.BracketFinder;
 import commands.ListModifier;
 import commands.NonUpdatableCommand;
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public abstract class Multiple extends NonUpdatableCommand implements ListModifier, BracketFinder {

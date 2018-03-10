@@ -3,7 +3,7 @@ package commands.updatable.display;
 import java.util.List;
 
 import commands.UpdatableCommand;
-import commands.VariableReplacer;
+import commands.factory.VariableReplacer;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
