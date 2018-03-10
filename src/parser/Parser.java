@@ -5,6 +5,7 @@ import java.util.List;
 
 import commands.Command;
 import commands.factory.CommandFactory;
+import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class Parser {
@@ -27,6 +28,10 @@ public class Parser {
 	}
 
 	private String traverse(List<String> input) {
+		return traverse(input, null);
+	}
+
+	private String traverse(List<String> input, Updatable current) {
 		if (input.isEmpty()) {
 			return null;
 		}
@@ -34,16 +39,24 @@ public class Parser {
 		String next = input.remove(0).toLowerCase();
 		if (isVariable(next)) {
 			return next;
-		} else if (isArgument(next) || !isRegistered(next)) {
+		} else if (isID(next)) {
+			if (current == null) {
+				current = myCommandFactory.getCurrent();
+			}
+			return Double.toString(current.getId());
+		} else if (isArgument(next)) {
 			return next;
 		}
-		
+
 		String ans = null;
 		List<String> temp = input;
 		for (Command node : myCommandFactory.createCommands(next)) {
 			temp = new LinkedList<>(input);
 			while (!node.isReady()) {
-				node.inject(traverse(temp));
+				if (node.hasUpdatable()) {
+					current = node.getUpdatable();
+				}
+				node.inject(traverse(temp, current));
 			}
 			ans = node.execute();
 		}
@@ -60,7 +73,8 @@ public class Parser {
 
 	private Boolean isArgument(String string) {
 		return string.matches("-?[0-9]+\\.?[0-9]*") 
-				|| string.matches("^\\[.*]$");
+				|| string.matches("^\\[.*]$")
+				|| !isRegistered(string);
 	}
 
 	private boolean isVariable(String string) {
@@ -69,6 +83,10 @@ public class Parser {
 
 	private boolean isRegistered(String var) {
 		return myCommandFactory.isRegistered(var);
+	}
+
+	private boolean isID(String next) {
+		return next.equals(CommandFactory.ID);
 	}
 
 	public void updateLanguage(String lang) {

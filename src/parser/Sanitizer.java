@@ -10,7 +10,6 @@ public class Sanitizer {
 	public List<String> sanitize(String s) {
 		String commentless = stripComments(s);
 		String whitespaced = handleWhitespace(commentless);
-		System.out.println(whitespaced);
 		return splitAroundBrackets(whitespaced);
 	}
 

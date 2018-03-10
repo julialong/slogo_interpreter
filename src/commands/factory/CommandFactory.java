@@ -17,6 +17,7 @@ import view.Visualizer;
 
 public class CommandFactory implements VariableReplacer {
 
+	public static final String ID = "id";
 	private static final String COMMANDS = "resources.commands.Command";
 	private static final String FACTORIES = "resources.commands.Factory";
 	private static final String LANGUAGE_BASE = "resources.languages.";
@@ -118,5 +119,9 @@ public class CommandFactory implements VariableReplacer {
 	@Override
 	public String replace(String var) {
 		return myVarMap.containsKey(var) ? myVarMap.get(var) : "0.0";
+	}
+
+	public Updatable getCurrent() {
+		return myUpdatables.entrySet().iterator().next().getValue();
 	}
 }

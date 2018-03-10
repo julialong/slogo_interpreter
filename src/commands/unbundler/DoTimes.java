@@ -36,7 +36,6 @@ public class DoTimes extends ControlUnbundler {
 		setNumbers(exp, expressionIndex[1]);
 		buildCommand(exp, commandIndex[START_INDEX], commandIndex[STOP_INDEX]);
 		modifyList(exp, commandIndex[STOP_INDEX]);
-		System.out.println("UNBUNDLED: " + unbundledArray);
 		return String.join(" ", unbundledArray);
 	}
 
