@@ -4,9 +4,8 @@ SLOGO
 Date started: 15 Feb 18
 Date finished: 9 Mar 18
 
-<<<<<<< HEAD
 Ben Hubsch (bah37)
-* hours worked:
+* hours worked: 60 - 70
 
 Jennifer Chin (jrc81)
 * hours worked:
@@ -22,10 +21,9 @@ A development environment that helps users write SLogo programs.
 
 ### Roles
 Ben and Julia worked mostly on the backend features while Jenny and Maya tackled the frontend. Ben created all of the 
-Command objects (both turtle and otherwise), designed the final implementation of the parser, and created the parts of
-the Turtle that were necessary for backend implementation *idk what else you did @Ben*. Julia worked on the initial 
-(and sadly nonworking) version of the parser, created all of the "Unbundler" classes that handle the implementation 
-of the control commands, and wrote the classes and buttons necessary to write and read files. Maya and Jennifer both touched 
+Command objects (turtle, non-turtle, multi-turtle, and otherwise) and accompanying components (exceptions, factories, interfaces), designed the final implementation of the parser and the sanitizer, and created the parts of
+the Turtle class that were necessary for backend implementation, such as the Updatable interface. He also wired together the front and the back end classes in Engine using ChangeListener. Julia worked on the initial version of the parser, created all of the "Unbundler" classes that handle the implementation 
+of the control flow commands, and wrote the classes and buttons necessary to write and read files. Maya and Jennifer both touched 
 all of the classes on front-end over the process of the project. Maya's work dealt largely with storing and then re-accessing 
 data related to front-end. Maya was mostly in charge of the Console (text input and history), the tables that displayed the 
 user-defined commands, the pop-up windows that displayed a table of all the turtles and their various statuses (id, image, 
@@ -60,7 +58,9 @@ input! However, the user is invited to upload any properly formatted file, and t
 and run its commands and store the appropriate functions and variables.
 
 #### Assuptions and decisions to handle vague specs
-* MAKE/SET command only sets variables to double values (no strings)
+* quotient and / perform floating point division, not integer division (i.e., 3 / 2 = 1.5)
+* values in the for loop will not need to be parsed (i.e., for [ :x sum 10 20 sum 40 50 sum 15 13 ]
+* evaluation of commands happens at "execute time," such that the same command executed subsequently for different turtles may have different behaviors
 
 #### Known bugs, crashes, problems
 * GUI activation and disactivation of drawables (Turtle Information button) does not work. Was too much of a design problem
@@ -70,3 +70,4 @@ a box that is tied to only one individual turtle.
 before that information is updated. This is because these pieces of information are only grabbed at the start of an instance. If 
 values are changed while a window is open, it will not update, but data is accurate at time of window launch.
 * Turtle movement wrapping around the screen is hardcoded so that if a turtle goes over the edge of the Canvas, the turtle will simply be placed on the opposite edge, no matter how much over the edge the turtle was. Therefore, if the turtle could have wrapped around the entire Canvas 3 times, the turtle will still only appear on the other side of the Canvas and will not draw a trail over the entire Canvas. 
+* Certain ill-formatted input causes the application to spin infinitely without returning to the user, crashing, or executing any bit of code.
