@@ -34,6 +34,7 @@ public class Repeat extends ControlUnbundler {
 		executeExpression();
 		buildCommand(exp, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);
+		System.out.println("unbundled" + unbundledArray);
 		return String.join(" ", unbundledArray);
 	}
 

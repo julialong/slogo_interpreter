@@ -322,8 +322,9 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public double getShape() {
 		for (int i = 0; i < myShapes.size(); i++){
-			if (myShapes.get(i).equals(myShape)){
-				return i;
+			int adjusted = i % myShapes.size();
+			if (myShapes.get(adjusted).equals(myShape)){
+				return adjusted;
 			}
 		}
 		return 0;
@@ -332,8 +333,9 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public double getPenColor() {
 		for (int i = 0; i < myColors.size(); i++)	{
-			if (myColors.get(i).equals(myColor))	{
-				return i;
+			int adjusted = i % myColors.size();
+			if (myColors.get(adjusted).equals(myColor))	{
+				return adjusted;
 			}
 		}
 		return 0;
@@ -345,24 +347,26 @@ public class Turtle implements Drawable, Updatable {
 		return pixels;
 	}
 
-	//should probably throw exception if dex > myColors.size()
 	@Override
 	public double setPenColor(int dex) {
-		myColor = myColors.get(dex);
+		int col_dex = dex % myColors.size();
+		myColor = myColors.get(col_dex);
 		return dex;
 	}
 
 	@Override
 	public double setShape(int dex) {
-		setView(Resources.getString(myShapes.get(dex)));
+		int shape_dex = dex % myShapes.size();
+		setView(Resources.getString(myShapes.get(shape_dex)));
 		return dex;
 	}
 
 	@Override
 	public double setPalette(int dex, double r, double g, double b) {
+		int adjusted = dex % myColors.size();
 		Color newColor = Color.rgb((int) r, (int) g, (int) b, 1.0);
-		myColors.add(dex, newColor);
-		return dex;
+		myColors.add(adjusted, newColor);
+		return adjusted;
 	}
 
 }
