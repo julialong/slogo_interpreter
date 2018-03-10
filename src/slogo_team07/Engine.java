@@ -8,7 +8,7 @@ import view.Visualizer;
 
 public class Engine implements ChangeListener {
 	
-	private static final String INIT_TURTLE = "tell [ 0 ]";
+	private static final String INIT_TURTLE = "tell [ 1 ]";
 	private static final String ERROR = "Command sequence not recognized.";
 	
 	private Visualizer myVis;
@@ -28,6 +28,7 @@ public class Engine implements ChangeListener {
 			double ans = myParser.parse(input);
 			result = new Result(ans);
 		} catch (Exception e) {
+			e.printStackTrace();
 			result = new ErrorResult(Double.MAX_VALUE, ERROR);
 		}
 		

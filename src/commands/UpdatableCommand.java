@@ -14,14 +14,25 @@ public abstract class UpdatableCommand extends Command {
 		myUpdatable = updatable;
 	}
 
+	@Override
 	public String execute() {
 		if (! isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
-
+		
 		Double ans = calcValues(myUpdatable, parseToDouble(getArgs()));
 		visCommand(new Result(ans));
 		return Double.toString(ans);
+	}
+	
+	@Override
+	public boolean hasUpdatable() {
+		return true;
+	}
+	
+	@Override
+	public Updatable getUpdatable() {
+		return myUpdatable;
 	}
 
 	protected abstract double calcValues(Updatable updatable, List<Double> args);
