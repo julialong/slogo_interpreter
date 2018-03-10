@@ -1,11 +1,12 @@
-package commands.unbundler;
+package commands.unbundler.multiple_unbundlers;
 
 import commands.VariableReplacer;
+import commands.unbundler.ControlUnbundler;
 import parser.Parser;
 import view.Visualizer;
 
 
-abstract class MultipleUnbundler extends ControlUnbundler{
+abstract class MultipleUnbundler extends ControlUnbundler {
 
     /**
      * Creates a new MultipleControlUnbundler class

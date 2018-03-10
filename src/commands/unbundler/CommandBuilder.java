@@ -6,9 +6,18 @@ import java.util.List;
 public interface CommandBuilder {
 
     /**
-     * Builds an unbundled command that repeats the correct number of times based on the execution value of the expression
-     * @param exp is the entire ArrayList of the input commands
-     * @return the index where the command ends, or the last bracket
+     *
+     * @param exp is the entire expression to evaluate in the fom of a List
+     * @param variable is the variable name to replace
+     * @param start is the number to start repetitions
+     * @param end is the number to end repetitions
+     * @param increment is the number to increment
+     * @param startIndexTrue
+     * @param stopIndexTrue
+     * @param startIndexFalse
+     * @param stopIndexFalse
+     * @param executeCommands
+     * @return
      */
     default List<String> buildCommand(List<String> exp, String variable, double start, double end, double increment,
                                       int startIndexTrue, int stopIndexTrue, int startIndexFalse, int stopIndexFalse, boolean executeCommands) {
@@ -20,7 +29,7 @@ public interface CommandBuilder {
     }
 
     default List<String> buildCommand(List<String> exp, String variable, double repeat, int startIndexTrue, int stopIndexTrue, int startIndexFalse, int stopIndexFalse, boolean executeCommands) {
-        return buildCommand(exp, variable, 0, repeat, 1, startIndexTrue, stopIndexTrue, startIndexFalse, stopIndexFalse, executeCommands);
+        return buildCommand(exp, variable, 1, repeat, 1, startIndexTrue, stopIndexTrue, startIndexFalse, stopIndexFalse, executeCommands);
     }
 
     default List<String> buildArray(List<String> exp, String variable, double start, double end, double increment, int startIndex, int stopIndex) {
