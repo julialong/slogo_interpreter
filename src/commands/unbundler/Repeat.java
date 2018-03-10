@@ -67,7 +67,7 @@ public class Repeat extends ControlUnbundler {
 	 */
 	private void buildCommand(List<String> exp, int start, int stop) {
 		unbundledArray = new LinkedList<>();
-		for (int i = 0; i < (int) toRepeat; i++) {
+		for (int i = 1; i <= (int) toRepeat; i++) {
 			for (int j = start + 1; j < stop; j++) {
 				unbundledArray.add(replaceVariable(":repcount", exp.get(j), i));
 			}
