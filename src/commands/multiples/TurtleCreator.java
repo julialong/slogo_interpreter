@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import commands.VariableReplacer;
-import parser.VariableTruthometer;
 import slogo_team07.Turtle;
 import slogo_team07.Updatable;
 import view.Visualizer;
