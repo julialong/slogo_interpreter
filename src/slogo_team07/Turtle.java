@@ -208,11 +208,6 @@ public class Turtle implements Drawable, Updatable {
 			myViewPrevX = myViewX;
 			myViewPrevY = myViewY;
 			opptranslate(myPane);
-			System.out.println("pen up");
-			System.out.println("prev x: " + myViewPrevX);
-			System.out.println("prev y: " + myViewPrevY);
-			System.out.println("x: " + myViewX);
-			System.out.println("y: " + myViewY);
 		}
 		if (isDown){
 			if (myPane.getChildren().contains(myLines)){
@@ -223,11 +218,6 @@ public class Turtle implements Drawable, Updatable {
 			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
-			System.out.println("pen down");
-			System.out.println("prev x: " + myViewPrevX);
-			System.out.println("prev y: " + myViewPrevY);
-			System.out.println("x: " + myViewX);
-			System.out.println("y: " + myViewY);
 			//lineAnimation(myIV);
 		}
 	}
