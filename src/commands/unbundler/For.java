@@ -3,6 +3,7 @@ package commands.unbundler;
 import java.util.ArrayList;
 import java.util.List;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
@@ -10,8 +11,8 @@ public class For extends ControlUnbundler {
 
 	private static final int NUM_ARGS = 2;
 
-	public For(Visualizer vis, Parser p) {
-		super(vis, NUM_ARGS, p);
+	public For(Visualizer vis, VariableReplacer var_replacer, Parser p) {
+		super(vis, var_replacer, NUM_ARGS, p);
 	}
 
 	private String variable;

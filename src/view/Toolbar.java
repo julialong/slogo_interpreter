@@ -1,7 +1,9 @@
 /**
  * @author Jennifer Chin
  * @author Julia Long
- * Pane that represents the top portion of the screen containing most of the GUI's buttons
+ * @author Maya Messinger
+ * Started 27 Feb 18
+ * Upper navigation bar that holds title of program and all buttons that affect global variables (that exist in whole program)
  */
 
 package view;
@@ -39,7 +41,7 @@ public class Toolbar extends AnchorPane {
 	private FileWriter myFileWriter;
 	private FileReader myFileReader;
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
-			"French", "German", "Italian", "Portuguese", "Russian", "Spanish");
+			"French", "German", "Italian", "Portuguese", "Russian", "Spanish", "Urdu");
 	private String myLanguage;
 	
 	/**
@@ -247,8 +249,7 @@ public class Toolbar extends AnchorPane {
 	}
 	
 	/**
-	 * Returns current language user has selected. Language is decided in the toolbar and must be accessed by other
-	 * classes so that all part are operating under the same language.
+	 * Returns the String name of the language that this program is accepting commands and displaying help in
 	 * @return String
 	 */
 	public String getLanguage(){

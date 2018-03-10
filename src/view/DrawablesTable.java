@@ -29,8 +29,12 @@ public class DrawablesTable extends Group	{
 	private int sceneSize = 400;
 	private ObservableList<DrawableAttributes> drawables = FXCollections.observableArrayList();
 
-	public DrawablesTable(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
-		parseInfo(allInfo, v, c, p);
+	/**
+	 * @param allInfo	Map of all the drawables in an instance of Visualizer, and their properties as strings
+	 * @param p			pane that the drawables are displayed on
+	 */
+	public DrawablesTable(Map<Drawable, List<String>> allInfo, Pane p)	{
+		parseInfo(allInfo, p);
 		makeTable();
 
 		Scene internal = new Scene(this, colWidth * numCols, sceneSize);
@@ -41,9 +45,9 @@ public class DrawablesTable extends Group	{
 		stage.show();
 	}
 
-	private void parseInfo(Map<Drawable, List<String>> allInfo, Visualizer v, Canvas c, Pane p)	{
+	private void parseInfo(Map<Drawable, List<String>> allInfo, Pane p)	{
 		for (Map.Entry figure:allInfo.entrySet())	{
-			drawables.add(new DrawableAttributes(figure, v, c, p));
+			drawables.add(new DrawableAttributes(figure, p));
 		}
 	}
 

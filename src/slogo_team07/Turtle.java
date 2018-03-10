@@ -41,7 +41,6 @@ public class Turtle implements Drawable, Updatable {
 	private Color myColor = Color.BLACK;
 	private double myId;
 	private double myPenWidth = 1.0;
-	private Image myImage;
 	private List<Color> myColors = new ArrayList<>();
 	private List<String> myShapes = Visualizer.possIVImages;
 	private String myShape = "Turtle";
@@ -205,6 +204,16 @@ public class Turtle implements Drawable, Updatable {
 		myColor = color;
 		myPane = display;
 		translate(myPane);
+		if (! isDown){
+			myViewPrevX = myViewX;
+			myViewPrevY = myViewY;
+			opptranslate(myPane);
+			System.out.println("pen up");
+			System.out.println("prev x: " + myViewPrevX);
+			System.out.println("prev y: " + myViewPrevY);
+			System.out.println("x: " + myViewX);
+			System.out.println("y: " + myViewY);
+		}
 		if (isDown){
 			if (myPane.getChildren().contains(myLines)){
 				myPane.getChildren().remove(myLines);
@@ -214,6 +223,11 @@ public class Turtle implements Drawable, Updatable {
 			trail.setStrokeWidth(myPenWidth);
 			myLines.getChildren().add(trail);
 			myPane.getChildren().add(myLines);
+			System.out.println("pen down");
+			System.out.println("prev x: " + myViewPrevX);
+			System.out.println("prev y: " + myViewPrevY);
+			System.out.println("x: " + myViewX);
+			System.out.println("y: " + myViewY);
 			//lineAnimation(myIV);
 		}
 	}

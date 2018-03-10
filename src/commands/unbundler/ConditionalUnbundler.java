@@ -6,10 +6,12 @@ import view.Visualizer;
 import java.util.ArrayList;
 import java.util.List;
 
+import commands.VariableReplacer;
+
 abstract class ConditionalUnbundler extends ControlUnbundler{
 
-    ConditionalUnbundler(Visualizer vis, int num_args, Parser p) {
-        super(vis, num_args, p);
+    ConditionalUnbundler(Visualizer vis, VariableReplacer var_replacer, int num_args, Parser p) {
+        super(vis, var_replacer, num_args, p);
     }
 
     /**

@@ -25,7 +25,6 @@ public class DrawableAttributes	{
 	private Drawable thisTurtle;
 	private List<String> properties;
 	private List<String> propertyNames;
-	private Visualizer myVis;
 	private Pane myPane;
 
 	private SimpleObjectProperty id;
@@ -38,11 +37,14 @@ public class DrawableAttributes	{
 	private SimpleObjectProperty yPos;
 	private SimpleObjectProperty heading;
 
-	public DrawableAttributes(Map.Entry turtle, Visualizer vis, Canvas canvas, Pane pane)	{
+	/**
+	 * @param turtle	a map entry (Drawable to List<String>) of the turtle that this will represent and its attributes
+	 * @param pane		Canvas that this object's drawable is displayed in
+	 */
+	public DrawableAttributes(Map.Entry turtle, Pane pane)	{
 		thisTurtle = (Drawable)turtle.getKey();
 		properties = (List<String>)turtle.getValue();
 		propertyNames = new ArrayList<>();
-		myVis = vis;
 		myPane = pane;
 
 		propertyNames.add("id");
@@ -55,7 +57,7 @@ public class DrawableAttributes	{
 		id = makeID(properties.get(propertyNames.indexOf("id")));
 		active = makeActive(properties.get(propertyNames.indexOf("active")));
 		image = makeImage(properties.get(propertyNames.indexOf("image")));
-		penDown = makepenDown(properties.get(propertyNames.indexOf("penDown")));
+		penDown = makePenDown(properties.get(propertyNames.indexOf("penDown")));
 		penColor = makePenColor(properties.get(propertyNames.indexOf("penColor")));
 		penWidth = makePenWidth(properties.get(propertyNames.indexOf("penWidth")));
 		xPos = makeXPos();
@@ -76,7 +78,7 @@ public class DrawableAttributes	{
 			public void handle(ActionEvent e) {
 				if (activeBox.isSelected())	{
 					// thisTurtle is active
-					// tel all turtles active
+					// new Tell(myVis, myCF.getActives(), myCF.getUpdatables());
 					properties.set(propertyNames.indexOf(thisProp), "true");
 				}
 				else	{
@@ -114,7 +116,7 @@ public class DrawableAttributes	{
 		return new SimpleObjectProperty(imageMenu);
 	}
 
-	private SimpleObjectProperty makepenDown(String penDownString)	{
+	private SimpleObjectProperty makePenDown(String penDownString)	{
 		String thisProp = "penDown";
 		CheckBox penDownBox = new CheckBox();
 		penDownBox.setSelected(Boolean.valueOf(penDownString));
@@ -123,11 +125,11 @@ public class DrawableAttributes	{
 			public void handle(ActionEvent e) {
 				if (penDownBox.isSelected())	{
 					thisTurtle.setPenDown(true);
-					properties.set(propertyNames.indexOf(thisProp), "down");
+					properties.set(propertyNames.indexOf(thisProp), "true");
 				}
 				else	{
 					thisTurtle.setPenDown(false);
-					properties.set(propertyNames.indexOf(thisProp), "up");
+					properties.set(propertyNames.indexOf(thisProp), "false");
 				}
 			}
 		});

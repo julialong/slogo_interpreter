@@ -33,11 +33,11 @@ public class Parser {
 
 		String next = input.remove(0).toLowerCase();
 		if (isVariable(next)) {
-			return isRegistered(next) ? myCommandFactory.getVar(next) : next;
+			return next;
 		} else if (isArgument(next) || !isRegistered(next)) {
 			return next;
 		}
-
+		
 		String ans = null;
 		List<String> temp = input;
 		for (Command node : myCommandFactory.createCommands(next)) {
@@ -47,7 +47,7 @@ public class Parser {
 			}
 			ans = node.execute();
 		}
-		clearAndAdd(input, temp);	
+		clearAndAdd(input, temp);
 		return ans;
 	}
 
@@ -69,5 +69,9 @@ public class Parser {
 
 	private boolean isRegistered(String var) {
 		return myCommandFactory.isRegistered(var);
+	}
+
+	public void updateLanguage(String lang) {
+		myCommandFactory.updateLanguage(lang);
 	}
 }

@@ -9,12 +9,21 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -25,10 +34,10 @@ import slogo_team07.ChangeListener;
 public class Console extends AnchorPane implements TextInput {
 
 	private TextArea console;
-	private TextArea history;
+	private TableView history;
 	private Button runner;
 	private Button clearer;
-	private List<String> pastCommands;
+	private ObservableList<ComRet> pastCommands;
 	protected VBox myVBox;
 	protected ChangeListener myChangeListener;
 	protected String language;
@@ -43,21 +52,21 @@ public class Console extends AnchorPane implements TextInput {
 	private int bWidth = 80;
 
 	/**
-	 * Constructor for Console
+	 * Ceates a new instance of Console and initialized variables
 	 */
 	public Console()    {
 		initConsole();
 	}
 
 	/**
-	 * Initialized this Console with variables/contents
+	 * Initializes this Console with variables/contents
 	 */
 	public AnchorPane initConsole() {
-		console = new TextArea();
-		history = new TextArea();
+		pastCommands = FXCollections.observableArrayList();
+		console = setConsole();
+		history = setHistory();
 		runner = setRunner();
 		clearer = setClearer();
-		pastCommands = new ArrayList<>();
 
 		VBox myButtons = new VBox(Resources.getInt(Visualizer.inset));
 		myButtons.setPadding(new Insets(Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset), Resources.getInt(Visualizer.inset)));
@@ -72,15 +81,11 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	/**
-	 * Sends text from console to anything that calls run(), clears text box, and adds command to history
+	 * Sends text from console to anything that calls run(), clears text box
 	 */
 	@Override
 	public String run()    {
 		String comm = console.getText();
-
-		pastCommands.add(comm);
-		history.appendText("\n" + Integer.toString(pastCommands.size()) + ": " + comm);
-		clear();
 
 		myChangeListener.changeInput(comm);
 
@@ -88,7 +93,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	/**
-	 * Clears text in console
+	 * Clears text in input console
 	 */
 	@Override
 	public void clear() {
@@ -96,7 +101,7 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	/**
-	 * Loads a String (pre-determined user command) into console
+	 * Loads a String (pre-determined user command or text from command history) into console
 	 * @param command   pre-set command to insert into console
 	 */
 	@Override
@@ -111,39 +116,50 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	protected void printResult(String res)    {
-		history.appendText("\n" + res);
+		pastCommands.add(new ComRet(console.getText(), res));
+		history.scrollTo(pastCommands.get(pastCommands.size() - 1));
+		clear();
 	}
 
 	private void addText(List<Node> elements)  {
-		history.setEditable(false);
-		history.setPromptText("Command History");
-		history.setPrefWidth(width);
-		history.setPrefHeight(hHeight);
-		history.setMaxHeight(history.USE_PREF_SIZE);
 		elements.add(history);
-
-		console.setPromptText("Enter Commands");
-		console.setPrefWidth(width);
-		console.setPrefHeight(cHeight);
-		console.setLayoutY(Math.max(hHeight, history.getMinHeight()) + offsetPad);
 		elements.add(console);
-	}
-
-	protected void makeUDI(String comm)  {
-		for (String pc:pastCommands)	{
-			if (pc.indexOf(comm.split(" ")[0]) >= 0)	{
-				((SideBar)myVBox).addUDIButton(pc);
-			}
-		}
-	}
-
-	protected void makeVariable(String var, String text) {
-		((SideBar)myVBox).addUDVar(var,text);
 	}
 
 	private void addButtons(List<Node> elements)   {
 		elements.add(runner);
 		elements.add(clearer);
+	}
+
+	private TableView setHistory()	{
+		TableView aHistory = new TableView();
+
+		int commWidth = (int)(width * 0.85);
+		int scrollbarWidth = 20;
+		aHistory.setEditable(true);
+		aHistory.setPrefWidth(width);
+		aHistory.setPrefHeight(hHeight);
+		TableColumn commText = new TableColumn("Command");
+		commText.setCellValueFactory(new PropertyValueFactory<>("command"));
+		commText.setPrefWidth(commWidth);
+		TableColumn returned = new TableColumn("Returns");
+		returned.setCellValueFactory(new PropertyValueFactory<>("returned"));
+		returned.setPrefWidth(width - commWidth - scrollbarWidth);
+		aHistory.getColumns().addAll(commText, returned);
+		aHistory.setItems(pastCommands);
+
+		return aHistory;
+	}
+
+	private TextArea setConsole()	{
+		TextArea aConsole = new TextArea();
+
+		aConsole.setPromptText("Enter Commands");
+		aConsole.setPrefWidth(width);
+		aConsole.setPrefHeight(cHeight);
+		aConsole.setLayoutY(hHeight + offsetPad);
+
+		return aConsole;
 	}
 
 	private Button setRunner() {
@@ -187,5 +203,40 @@ public class Console extends AnchorPane implements TextInput {
 		});
 
 		return aClearer;
+	}
+
+	/**
+	 * Class that has properties that TableView can read in order to import into table
+	 * Only public so PropertyValueFactory can get its properties
+	 */
+	public class ComRet	{
+		private SimpleObjectProperty command;
+		private SimpleStringProperty returned;
+
+		private ComRet(String aCom, String aRet)	{
+			Button cButton = new Button();
+			cButton.setText(aCom);
+			cButton.setOnAction(e -> loadInput("\n" + cButton.getText()));
+			command = new SimpleObjectProperty(cButton);
+			returned = new SimpleStringProperty(aRet);
+		}
+
+		private void setReturn(String newRet)	{
+			returned = new SimpleStringProperty(newRet);
+		}
+
+		/**
+		 * Returns the command as a button with text
+		 */
+    	public ObjectProperty commandProperty() {
+	        return command;
+	    }
+
+	    /**
+	     * Returns the returned value of the command as a property
+	     */
+	    public StringProperty returnedProperty()	{
+	    	return returned;
+	    }
 	}
 }

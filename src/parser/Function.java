@@ -3,17 +3,18 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import commands.NonUpdatableStringArgs;
+import commands.NonUpdatableCommand;
+import commands.VariableReplacer;
 import view.Visualizer;
 
-public class Function extends NonUpdatableStringArgs {
+public class Function extends NonUpdatableCommand {
 	private List<String> myParams;
 	private List<String> myCommands;
 	private Parser myParser;
 	private String myName;
 
-	public Function(Visualizer vis, Parser parser, String name, List<String> params, List<String> commands) {
-		super(vis, params.size());
+	public Function(Visualizer vis, VariableReplacer var_replacer, Parser parser, String name, List<String> params, List<String> commands) {
+		super(vis, var_replacer, params.size());
 		myParser = parser;
 		myParams = params;
 		myCommands = commands;
@@ -42,6 +43,6 @@ public class Function extends NonUpdatableStringArgs {
 
 	@Override
 	public String toString() {
-		return myName + " | " + String.join(" ", myParams) + " | " + String.join(" ", myCommands);
+		return String.format("to %s [ %s ] [ %s ]", myName, String.join(" ", myParams), String.join(" ", myCommands));
 	}
 }

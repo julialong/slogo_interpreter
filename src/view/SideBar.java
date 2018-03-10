@@ -9,7 +9,9 @@ package view;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,11 +23,16 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import resources.keys.Resources;
 import slogo_team07.Drawable;
+import slogo_team07.ChangeListener;
+import commands.unbundler.MakeVariable;
+import parser.Parser;
+
 
 public class SideBar extends VBox{
 	private VBox myVBox;
@@ -42,13 +49,16 @@ public class SideBar extends VBox{
 	private TableColumn vars;
 	private TableColumn varName;
 	private TableColumn varValue;
+	private TableColumn changeCol;
 	protected TextInput myTextInput;
 	
 	
 	/**
 	 * Constructor for sidebar of program that contains buttons/options
 	 * @param canvas	canvas of program, where turtles are displayed
+	 * @param v			Visualizer instance that this sidebar belongs to
 	 * @param turtles	list of all the movers in the canvas
+	 * @param c			Canvas instance that is in the same visualizer as this sidebar
 	 */
 	public SideBar(Pane canvas, Visualizer v, Map<Drawable, List<String>> turtles, Canvas c){
 		myCanvasObjects = canvas;
@@ -80,9 +90,7 @@ public class SideBar extends VBox{
     	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				new DrawablesTable(myTurtles, myVis, myCanvas, myCanvasObjects);
-				exportCommands();
-				exportVariables();
+				new DrawablesTable(myTurtles, myCanvasObjects);
 			}
 		});
 		return allDrawablesButton;
@@ -100,6 +108,9 @@ public class SideBar extends VBox{
         return commandTable;
 	}
 
+	/**
+	 * Returns all user-defined commands as a list of parsable (runnable) Strings
+	 */
 	public List<String> exportCommands()	{
 		List<String> commands = new ArrayList<>();
 
@@ -115,7 +126,7 @@ public class SideBar extends VBox{
 	private TableView variableTable(double colWidth)	{
 		variableTable = new TableView();
 		variableTable.setEditable(true);
-		int numVarCols = 2;
+		int numVarCols = 3;
 		vars = new TableColumn("Variables");
 		vars.setPrefWidth(colWidth);
 		varName = new TableColumn("Name");
@@ -124,13 +135,19 @@ public class SideBar extends VBox{
 		varValue = new TableColumn("Value");
 		varValue.setPrefWidth(colWidth/numVarCols);
 		varValue.setCellValueFactory(new PropertyValueFactory<>("value"));
-		vars.getColumns().addAll(varName, varValue);
+		changeCol = new TableColumn("Change");
+		changeCol.setPrefWidth(colWidth/numVarCols);
+		changeCol.setCellValueFactory(new PropertyValueFactory<>("changeButton"));
+		vars.getColumns().addAll(varName, varValue, changeCol);
 		variableTable.getColumns().add(vars);
 		variableTable.setItems(setVariables);
 
 		return variableTable;
 	}
 
+	/**
+	 * Exports all defined variables as parsable/runnable Make commands
+	 */
 	public List<String> exportVariables()	{
 		List<String> variables = new ArrayList<>();
 
@@ -155,9 +172,11 @@ public class SideBar extends VBox{
 		uDefCommands.add(udc);
 	}
 
-	protected void addUDVar(String var, String value)	{
+	protected void addUDVar(String var, double value)	{
 		if (varExists(var) != null)	{
-			varExists(var).value.set(value);
+			TextField valInput = new TextField();
+			valInput.setText(String.valueOf(value));
+			varExists(var).value = new SimpleObjectProperty(valInput);
 		}
 		else	{
 			setVariables.add(new VarVal(var, value));
@@ -210,11 +229,25 @@ public class SideBar extends VBox{
 	 */
 	public class VarVal	{
 		private SimpleStringProperty key;
-		private SimpleStringProperty value;
+		private SimpleObjectProperty value;
+		private SimpleObjectProperty changeButton;
 
-		private VarVal(String aKey, String aVal)	{
+		private VarVal(String aKey, double aVal)	{
 			key = new SimpleStringProperty(aKey);
-			value = new SimpleStringProperty(aVal);
+
+			TextField valInput = new TextField();
+			valInput.setText(String.valueOf(aVal));
+			value = new SimpleObjectProperty(valInput);
+
+			Button changer = new Button();
+			changer.setText("Update");
+			changer.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent e){
+					myVis.getChangeListener().changeInput("make " + key.getValue() + " " + ((TextField)(value.getValue())).getText());
+				}
+			});
+			changeButton = new SimpleObjectProperty(changer);
 		}
 
 		/**
@@ -227,8 +260,17 @@ public class SideBar extends VBox{
 	    /**
 	     * Returns the value of a variable, as a property
 	     */
-	    public StringProperty valueProperty()	{
+	    public ObjectProperty valueProperty()	{
+
 	    	return value;
+	    }
+
+	    /**
+	     * Returns a button that, when clicked, grabs text from the value textbox and sets the variable to that value
+	     */
+	    public ObjectProperty changeButtonProperty()	{
+
+	    	return changeButton;
 	    }
 	}
 }

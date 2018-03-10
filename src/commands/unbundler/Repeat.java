@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import commands.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
 public class Repeat extends ControlUnbundler {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	private double toRepeat;
 	private List<String> expression;
 	private LinkedList<String> unbundledArray;
-	
 
-	public Repeat(Visualizer vis, Parser p) {
-		super(vis, NUM_ARGS, p);
+
+	public Repeat(Visualizer vis, VariableReplacer var_replacer, Parser p) {
+		super(vis, var_replacer, NUM_ARGS, p);
 	}
 
 	/**
@@ -67,8 +68,23 @@ public class Repeat extends ControlUnbundler {
 		unbundledArray = new LinkedList<>();
 		for (int i = 0; i < (int) toRepeat; i++) {
 			for (int j = start + 1; j < stop; j++) {
-				unbundledArray.add(exp.get(j));
+				unbundledArray.add(replaceVariable(":repcount", exp.get(j), i));
 			}
+		}
+	}
+
+	/**
+	 * Replaces the variable with the value of the current index
+	 *
+	 * @param current      is the current string
+	 * @param currentIndex is the value of the current position that needs to replace the variable
+	 * @return
+	 */
+	private String replaceVariable(String variable, String current, double currentIndex) {
+		if (current.equals(variable)) {
+			return Double.toString(currentIndex);
+		} else {
+			return current;
 		}
 	}
 }

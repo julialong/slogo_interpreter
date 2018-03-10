@@ -28,9 +28,7 @@ public class ColorPalettes extends Group {
 	private int sceneWidth = 350;
 
 	/**
-	 * ColorPalettes constructor that creates a new stage because the Color Palettes scene is a pop up window.
-	 * Linked to a Visualizer
-	 * @param vis
+	 * @param Vis	Visualizer that this palette belongs to. Necessary because visualizer contains dynamic lists that this class modifies
 	 */
 	public ColorPalettes(Visualizer vis) {
 		myVis = vis;
