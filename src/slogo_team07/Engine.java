@@ -6,6 +6,15 @@ import javafx.stage.Stage;
 import parser.Parser;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This is a simple class that facilitates interaction between the front end and 
+ * the back end. It implements the ChangeListener interface that it exposes to the
+ * frontend.
+ *
+ */
 public class Engine implements ChangeListener {
 	
 	private static final String INIT_TURTLE = "tell [ 1 ]";

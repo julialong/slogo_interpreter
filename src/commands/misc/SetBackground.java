@@ -6,6 +6,13 @@ import commands.NonUpdatableCommand;
 import commands.factory.VariableReplacer;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This class sets the background of the display.
+ *
+ */
 public class SetBackground extends NonUpdatableCommand {
 	
 	private static final int NUM_ARGS = 1;

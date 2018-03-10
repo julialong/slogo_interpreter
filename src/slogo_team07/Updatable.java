@@ -1,11 +1,13 @@
-/**
- * @author Ben Hubsch
- * @author Jennifer Chin
- * Updatable interface that is implemented by the Turtle class. Defines the public Turtle methods that can be 
- * accessed by the back end in order to update Turtle values as Turtle commands are executed. 
- */
 package slogo_team07;
 
+/**
+ * @author benhubsch
+ * @author Jennifer Chin
+ * 
+ * Updatable interface that is implemented by the Turtle class. Defines the public Turtle methods that can be 
+ * accessed by the back end in order to update Turtle values as Turtle commands are executed.
+ *  
+ */
 public interface Updatable {
 	/**
 	 * Changes the Turtle's position to the given x and y coordinates

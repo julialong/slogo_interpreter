@@ -6,6 +6,13 @@ import commands.NonUpdatableCommand;
 import commands.factory.VariableReplacer;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This class sets an index in the palette in UI to a specific color.
+ *
+ */
 public class SetPalette extends NonUpdatableCommand {
 
 	private static final int NUM_ARGS = 4;

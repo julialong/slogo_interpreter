@@ -4,6 +4,7 @@ SLOGO
 Date started: 15 Feb 18
 Date finished: 9 Mar 18
 
+<<<<<<< HEAD
 Ben Hubsch (bah37)
 * hours worked:
 
@@ -30,7 +31,7 @@ data related to front-end. Maya was mostly in charge of the Console (text input 
 user-defined commands, the pop-up windows that displayed a table of all the turtles and their various statuses (id, image, 
 pen color, etc), and creating the palettes that listed colors for referencing by index. Each of these elements were in various 
 parts of the GUI, so unlike CellSociety, the classes she wrote were collaborations instead of exclusively her own work.
-Jennifer largely worked with the actual turtle mainpulation, and creating the GUI container elmenets. She organized buttons, 
+Jennifer largely worked with the actual turtle manipulation, and creating the GUI container elements. She organized buttons, 
 styled the GUI with CSS, and handled all of the work with turtles (Drawables) and actually displaying the effects of commands.
 
 ### Resources
@@ -40,6 +41,8 @@ Julia used some online resources to assist in reading and writing a file
 
 Maya used TableViews a lot, and found out how to generally create them using the tutorial
 (<http://www.java2s.com/Tutorials/Java/JavaFX/0650__JavaFX_TableView.htm>).
+
+Jennifer mostly looked at the Java documentation for JavaFX and the Java tutorials for how to use various JavaFX elements. In particular she spent a lot of time reading about different types of Panes, how to drag and drop a node using the computer mouse, and how to use CSS with JavaFX.
 
 ### The Project
 #### Starting the project
@@ -66,3 +69,4 @@ a box that is tied to only one individual turtle.
 * Turtle information pop-up does not update based on typed commands in real time. A new instance of the window needs to be opened
 before that information is updated. This is because these pieces of information are only grabbed at the start of an instance. If 
 values are changed while a window is open, it will not update, but data is accurate at time of window launch.
+* Turtle movement wrapping around the screen is hardcoded so that if a turtle goes over the edge of the Canvas, the turtle will simply be placed on the opposite edge, no matter how much over the edge the turtle was. Therefore, if the turtle could have wrapped around the entire Canvas 3 times, the turtle will still only appear on the other side of the Canvas and will not draw a trail over the entire Canvas. 
