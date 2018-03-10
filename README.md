@@ -6,10 +6,13 @@ Date finished: 9 Mar 18
 
 Ben Hubsch (bah37)
 * hours worked:
+
 Jennifer Chin (jrc81)
 * hours worked:
+
 Julia Long (jbl34)
-* hours worked:
+* hours worked: 35
+
 Maya Messinger (mm479)
 * hours worked: 45
 
