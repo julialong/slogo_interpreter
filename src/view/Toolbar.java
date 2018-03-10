@@ -152,22 +152,16 @@ public class Toolbar extends AnchorPane {
 	private VBox initButtons(){
 		HBox myHBox = new HBox(Resources.getInt(Visualizer.inset));
 		Button helpButton = helpButton();
-		myHBox.getChildren().add(helpButton);
 		myHBox.getChildren().add(colorMenu());
 		myHBox.getChildren().add(langMenu(helpButton));
-		myHBox.getChildren().add(windowButton());
-		myHBox.getChildren().add(saveButton());
-		myHBox.getChildren().add(loadButton());
+		myHBox.getChildren().add(addDrawableButton());
 
 		HBox buttons = new HBox(Resources.getInt(Visualizer.inset));
-		buttons.getChildren().add(pauseButton());
-		buttons.getChildren().add(stepButton());
-		buttons.getChildren().add(resetButton());
-		buttons.getChildren().add(undoButton());
-		buttons.getChildren().add(speedUpButton());
-		buttons.getChildren().add(slowDownButton());
-		buttons.getChildren().add(addDrawableButton());
+		buttons.getChildren().add(windowButton());
+		buttons.getChildren().add(saveButton());
+		buttons.getChildren().add(loadButton());
 		buttons.getChildren().add(colorButton());
+		buttons.getChildren().add(helpButton);
 
 		VBox myVBox = new VBox(Resources.getInt(Visualizer.inset));
 		myVBox.setPadding(new Insets(Resources.getInt(Visualizer.inset)));
@@ -193,53 +187,6 @@ public class Toolbar extends AnchorPane {
 		return addDrawableButton;
 	}
 
-	private Button pauseButton()	{
-		Button pauseButton = new Button("Pause");
-		pauseButton.setOnAction(e -> {
-
-		});
-		return pauseButton;
-	}
-
-	private Button stepButton()	{
-		Button stepButton = new Button("Step");
-		stepButton.setOnAction(e -> {
-
-		});
-		return stepButton;
-	}
-
-	private Button resetButton()	{
-		Button resetButton = new Button("Reset");
-		resetButton.setOnAction(e -> {
-
-		});
-		return resetButton;
-	}
-
-	private Button undoButton()	{
-		Button undoButton = new Button("Undo");
-		undoButton.setOnAction(e -> {
-
-		});
-		return undoButton;
-	}
-
-	private Button speedUpButton()	{
-		Button speedUpButton = new Button("Speed Up");
-		speedUpButton.setOnAction(e -> {
-
-		});
-		return speedUpButton;
-	}
-
-	private Button slowDownButton()	{
-		Button slowDownButton = new Button("SlowDown");
-		slowDownButton.setOnAction(e -> {
-
-		});
-		return slowDownButton;
-	}
 
 	private Button colorButton() {
 		Button colorButton = new Button("Color Indices");
