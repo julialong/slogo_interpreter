@@ -37,6 +37,12 @@ public class DrawableAttributes	{
 	private SimpleObjectProperty yPos;
 	private SimpleObjectProperty heading;
 
+	private String propActive = "active";
+	private String propImage = "image";
+	private String propPenDown = "penDown";
+	private String propPenColor = "penColor";
+	private String propPenWidth = "penWidth";
+
 	/**
 	 * @param turtle	a map entry (Drawable to List<String>) of the turtle that this will represent and its attributes
 	 * @param pane		Canvas that this object's drawable is displayed in
@@ -48,18 +54,18 @@ public class DrawableAttributes	{
 		myPane = pane;
 
 		propertyNames.add("id");
-		propertyNames.add("active");
-		propertyNames.add("image");
-		propertyNames.add("penDown");
-		propertyNames.add("penColor");
-		propertyNames.add("penWidth");
+		propertyNames.add(propActive);
+		propertyNames.add(propActive);
+		propertyNames.add(propPenDown);
+		propertyNames.add(propPenColor);
+		propertyNames.add(propPenWidth);
 
 		id = makeID(properties.get(propertyNames.indexOf("id")));
-		active = makeActive(properties.get(propertyNames.indexOf("active")));
-		image = makeImage(properties.get(propertyNames.indexOf("image")));
-		penDown = makePenDown(properties.get(propertyNames.indexOf("penDown")));
-		penColor = makePenColor(properties.get(propertyNames.indexOf("penColor")));
-		penWidth = makePenWidth(properties.get(propertyNames.indexOf("penWidth")));
+		active = makeActive(properties.get(propertyNames.indexOf(propActive)));
+		image = makeImage(properties.get(propertyNames.indexOf(propActive)));
+		penDown = makePenDown(properties.get(propertyNames.indexOf(propPenDown)));
+		penColor = makePenColor(properties.get(propertyNames.indexOf(propPenColor)));
+		penWidth = makePenWidth(properties.get(propertyNames.indexOf(propPenWidth)));
 		xPos = makeXPos();
 		yPos = makeXPos();
 		heading = makeHeading();
@@ -70,7 +76,6 @@ public class DrawableAttributes	{
 	}
 
 	private SimpleObjectProperty makeActive(String activeString)	{
-		String thisProp = "active";
 		CheckBox activeBox = new CheckBox();
 		activeBox.setSelected(Boolean.valueOf(activeString));
 		activeBox.setOnAction(new EventHandler<ActionEvent>() {	
@@ -79,12 +84,12 @@ public class DrawableAttributes	{
 				if (activeBox.isSelected())	{
 					// thisTurtle is active
 					// new Tell(myVis, myCF.getActives(), myCF.getUpdatables());
-					properties.set(propertyNames.indexOf(thisProp), "true");
+					properties.set(propertyNames.indexOf(propActive), "true");
 				}
 				else	{
 					// thisTurtle is not active
 					// tell every other turtle active
-					properties.set(propertyNames.indexOf(thisProp), "false");
+					properties.set(propertyNames.indexOf(propActive), "false");
 				}
 			}
 		});
@@ -93,7 +98,6 @@ public class DrawableAttributes	{
 	}
 
 	private SimpleObjectProperty makeImage(String imageString)	{
-		String thisProp = "image";
 		ObservableList<String> imageList = Visualizer.possIVImages;
 
 		ComboBox imageMenu = new ComboBox(imageList);
@@ -109,7 +113,7 @@ public class DrawableAttributes	{
 				thisTurtle.setView(Resources.getString(newImage));
 				myPane.getChildren().add(thisTurtle.getView());
 
-				properties.set(propertyNames.indexOf(thisProp), newImage);
+				properties.set(propertyNames.indexOf(propImage), newImage);
 			}
 		});
 
@@ -117,7 +121,6 @@ public class DrawableAttributes	{
 	}
 
 	private SimpleObjectProperty makePenDown(String penDownString)	{
-		String thisProp = "penDown";
 		CheckBox penDownBox = new CheckBox();
 		penDownBox.setSelected(Boolean.valueOf(penDownString));
 		penDownBox.setOnAction(new EventHandler<ActionEvent>() {
@@ -125,11 +128,11 @@ public class DrawableAttributes	{
 			public void handle(ActionEvent e) {
 				if (penDownBox.isSelected())	{
 					thisTurtle.setPenDown(true);
-					properties.set(propertyNames.indexOf(thisProp), "true");
+					properties.set(propertyNames.indexOf(propPenDown), "true");
 				}
 				else	{
 					thisTurtle.setPenDown(false);
-					properties.set(propertyNames.indexOf(thisProp), "false");
+					properties.set(propertyNames.indexOf(propPenDown), "false");
 				}
 			}
 		});
@@ -138,7 +141,6 @@ public class DrawableAttributes	{
 	}
 
 	private SimpleObjectProperty makePenColor(String penColorString)	{
-		String thisProp = "penColor";
 		ObservableList<String> penList = Visualizer.possPenColors;
 
 		ComboBox penColorMenu = new ComboBox(penList);
@@ -151,7 +153,7 @@ public class DrawableAttributes	{
 
 				thisTurtle.setPenColor(penList.indexOf(newColor));
 
-				properties.set(propertyNames.indexOf(thisProp), Integer.toString(penList.indexOf(newColor)));
+				properties.set(propertyNames.indexOf(propPenColor), Integer.toString(penList.indexOf(newColor)));
 			}
 		});
 
@@ -159,7 +161,6 @@ public class DrawableAttributes	{
 	}
 
 	private SimpleObjectProperty makePenWidth(String penWidthString)	{
-		String thisProp = "penWidth";
 		ObservableList<String> penWidthList = FXCollections.observableArrayList("0.5", "1.0", "1.5", "2.0", "2.5",
 		"3.0", "4.0", "5.0");
 
@@ -173,7 +174,7 @@ public class DrawableAttributes	{
 
 				thisTurtle.setPenWidth(Double.parseDouble(newWidth));
 
-				properties.set(propertyNames.indexOf(thisProp), newWidth);
+				properties.set(propertyNames.indexOf(propPenWidth), newWidth);
 			}
 		});
 

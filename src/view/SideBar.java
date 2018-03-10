@@ -246,7 +246,6 @@ public class SideBar extends VBox{
 	     * Returns the value of a variable, as a property
 	     */
 	    public ObjectProperty valueProperty()	{
-
 	    	return value;
 	    }
 
@@ -254,7 +253,6 @@ public class SideBar extends VBox{
 	     * Returns a button that, when clicked, grabs text from the value textbox and sets the variable to that value
 	     */
 	    public ObjectProperty changeButtonProperty()	{
-
 	    	return changeButton;
 	    }
 	}

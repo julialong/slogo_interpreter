@@ -13,6 +13,8 @@ import file_managers.FileWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputDialog;
@@ -138,7 +140,10 @@ public class Toolbar extends AnchorPane {
 				myFileReader.readFile(openFileChooser());
 			}
 			catch (Exception exception) {
-				// TODO: HANDLE EXCEPTION
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Cannot read file");
+				alert.setContentText("This file is invalid and cannot be loaded");
+				alert.show();
 			}
 		});
     	return loadButton;

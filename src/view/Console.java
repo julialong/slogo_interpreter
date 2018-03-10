@@ -33,7 +33,7 @@ import slogo_team07.ChangeListener;
 
 public class Console extends AnchorPane implements TextInput {
 
-	private TextArea console;
+	private TextArea consoleInput;
 	private TableView history;
 	private Button runner;
 	private Button clearer;
@@ -63,7 +63,7 @@ public class Console extends AnchorPane implements TextInput {
 	 */
 	public AnchorPane initConsole() {
 		pastCommands = FXCollections.observableArrayList();
-		console = setConsole();
+		consoleInput = setConsole();
 		history = setHistory();
 		runner = setRunner();
 		clearer = setClearer();
@@ -74,18 +74,18 @@ public class Console extends AnchorPane implements TextInput {
 		this.getChildren().add(myButtons);
 		addElements();
 		this.setTopAnchor(history, 0.0);
-		this.setBottomAnchor(console, 0.0);
+		this.setBottomAnchor(consoleInput, 0.0);
 		this.setRightAnchor(myButtons, 0.0);
 
 		return this;
 	}
 
 	/**
-	 * Sends text from console to anything that calls run(), clears text box
+	 * Sends text from consoleInput to anything that calls run(), clears text box
 	 */
 	@Override
 	public String run()    {
-		String comm = console.getText();
+		String comm = consoleInput.getText();
 
 		myChangeListener.changeInput(comm);
 
@@ -93,20 +93,20 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	/**
-	 * Clears text in input console
+	 * Clears text in input consoleInput
 	 */
 	@Override
 	public void clear() {
-		console.clear();
+		consoleInput.clear();
 	}
 
 	/**
-	 * Loads a String (pre-determined user command or text from command history) into console
-	 * @param command   pre-set command to insert into console
+	 * Loads a String (pre-determined user command or text from command history) into consoleInput
+	 * @param command   pre-set command to insert into consoleInput
 	 */
 	@Override
 	public void loadInput(String command) {
-		console.appendText(command);    // "types" long command into textbox for the ability to re-use a pre-defined function
+		consoleInput.appendText(command);    // "types" long command into textbox for the ability to re-use a pre-defined function
 	}
 
 	private void addElements()  {
@@ -116,14 +116,14 @@ public class Console extends AnchorPane implements TextInput {
 	}
 
 	protected void printResult(String res)    {
-		pastCommands.add(new ComRet(console.getText(), res));
+		pastCommands.add(new ComRet(consoleInput.getText(), res));
 		history.scrollTo(pastCommands.get(pastCommands.size() - 1));
 		clear();
 	}
 
 	private void addText(List<Node> elements)  {
 		elements.add(history);
-		elements.add(console);
+		elements.add(consoleInput);
 	}
 
 	private void addButtons(List<Node> elements)   {
