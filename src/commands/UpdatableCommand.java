@@ -10,9 +10,7 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- * This class is for commands that act on the Updatable: i.e., they act on the turtle. Since
- * these Commands take double values only in our world, you'll notice that the list that gets
- * passed into calcValues() is parsed to a list of doubles.  
+ * This class is for commands that act on the Updatable: i.e., they act on the turtle. 
  * It inherits from Command because it is a more specific kind of Command.
  *
  */
@@ -25,6 +23,10 @@ public abstract class UpdatableCommand extends Command {
 		myUpdatable = updatable;
 	}
 
+	/**
+	 * Since these Commands take double values only in our world, you'll notice that the list 
+	 * that gets passed into calcValues() is parsed to a list of doubles.  
+	 */
 	@Override
 	public String execute() {
 		if (! isReady()) {

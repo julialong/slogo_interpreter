@@ -7,6 +7,14 @@ import java.util.List;
 import commands.Command;
 import view.Visualizer;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This is the Factory class for NonUpdatable commands. It uses reflection to instantiate the concretions 
+ * because they all take the same parameters in the constructor.
+ *
+ */
 public class NonUpdatableFactory implements Factory {
 	
 	private CommandFactory myCF;

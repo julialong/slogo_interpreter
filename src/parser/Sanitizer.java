@@ -5,8 +5,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This class is called when the user enters input and sanitizes the input, formatting it in
+ * a way that the Parser expects and can handle.
+ *
+ */
 public class Sanitizer {
 
+	/**
+	 * This is the entry point to the sanitizer. It takes a raw input string and forces everything
+	 * to be singly-space separated, stripping out the comments and splitting the string around
+	 * brackets. The string is split around brackets so that Command objects like DoTimes can have
+	 * the list of command injected into them as a single entity.
+	 *
+	 * @param s the s
+	 * @return List<String>
+	 */
 	public List<String> sanitize(String s) {
 		String commentless = stripComments(s);
 		String whitespaced = handleWhitespace(commentless);

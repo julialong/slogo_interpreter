@@ -8,16 +8,39 @@ import commands.factory.CommandFactory;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
+/**
+ * The Class Parser.
+ *
+ * @author benhubsch
+ * 
+ * This is the parser for the input that the user enters to the front end. It uses recursion
+ * to virtualize a syntax tree and executes commands in the tree as it builds them, not
+ * waiting to first build the tree and then traverse it. It takes advantage of polymorphism,
+ * relying on the API exposed by Command objects to do its work.
+ */
 public class Parser implements VariableTruthometer {
 
 	private CommandFactory myCommandFactory;
 	private Sanitizer mySanitizer;
 
+	/**
+	 * Instantiates a new Parser object.
+	 *
+	 * @param vis the vis
+	 */
 	public Parser(Visualizer vis) {
 		myCommandFactory = new CommandFactory(vis, this);
 		mySanitizer = new Sanitizer();
 	}
 
+	/**
+	 * This is the entry point to the traversal. It sanitizes the input and then loops
+	 * over it while it isn't empty -- every time one of those loops returns, that represents
+	 * the traversal of a single tree.
+	 * @param s The input string.
+	 * @return double The return value of the final command executed, which will end up getting
+	 * displayed to the user.
+	 */
 	public double parse(String s) {
 		List<String> input = mySanitizer.sanitize(s);
 		double ans = -1;
@@ -31,6 +54,14 @@ public class Parser implements VariableTruthometer {
 		return traverse(input, null);
 	}
 
+	/**
+	 * This function is the meat of this class. It traverses the tree and executes commands
+	 * as they become executable, recursing over child nodes when appropriate.
+	 * @param input This is the user input in sanitized list form.
+	 * @param current This is the "current" Updatable, which is used to return the proper
+	 * ID when called. 
+	 * @return
+	 */
 	private String traverse(List<String> input, Updatable current) {
 		if (input.isEmpty()) {
 			return null;
@@ -86,6 +117,12 @@ public class Parser implements VariableTruthometer {
 		return next.equals(CommandFactory.ID);
 	}
 
+	/**
+	 * Updates the language that the CommandFactory uses to return
+	 * Commands.
+	 *
+	 * @param lang the lang
+	 */
 	public void updateLanguage(String lang) {
 		myCommandFactory.updateLanguage(lang);
 	}

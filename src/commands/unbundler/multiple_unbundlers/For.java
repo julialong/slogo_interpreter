@@ -3,25 +3,27 @@ package commands.unbundler.multiple_unbundlers;
 import java.util.List;
 
 import commands.factory.VariableReplacer;
+import commands.unbundler.ControlUnbundler;
 import parser.Parser;
 import view.Visualizer;
 
 /**
- * Handles For control command
+ * Creates an object that handles the case where we need to perform an action a certain number of times,
+ * with a certain start, end, and increment size
  * @author julialong
  */
-public class For extends MultipleUnbundler {
+public class For extends ControlUnbundler {
 
 	private static final int NUM_ARGS = 2;
 
 	/**
-	 *
-	 * @param vis is the current Visualizer class
-	 * @param variableReplacer is the current VariableReplacer class
-	 * @param parser is the current parser
+	 * Creates a For unbundler object
+	 * @param visualizer is the current Visualizer being used in the session
+	 * @param variableReplacer is the current variableReplacer object
+	 * @param parser is the current Parser object
 	 */
-	public For(Visualizer vis, VariableReplacer variableReplacer, Parser parser) {
-		super(vis, variableReplacer, NUM_ARGS, parser);
+	public For(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 	}
 
 	private String variable;

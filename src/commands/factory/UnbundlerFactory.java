@@ -12,6 +12,13 @@ import commands.unbundler.MakeUserInstruction;
 import commands.unbundler.MakeVariable;
 import commands.unbundler.multiple_unbundlers.Repeat;
 
+/**
+ * 
+ * @author benhubsch
+ * 
+ * This is the Factory class for NonUpdatable Commands.
+ *
+ */
 public class UnbundlerFactory implements Factory {
 	
 	private CommandFactory myCF;

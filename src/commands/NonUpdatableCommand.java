@@ -20,6 +20,10 @@ public abstract class NonUpdatableCommand extends Command {
 		super(vis, var_replacer, num_args);
 	}
 	
+	/**
+	 * This function gets the arguments from its superclass and passes them allong to be calculated
+	 * by the concrete instance of a NonUpdatableCommand object.
+	 */
 	@Override
 	public String execute() {
 		if (! isReady()) {
