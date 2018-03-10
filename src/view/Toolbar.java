@@ -8,6 +8,12 @@
 
 package view;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import file_managers.FileReader;
 import file_managers.FileWriter;
 import javafx.collections.FXCollections;
@@ -28,13 +34,8 @@ import javafx.stage.Stage;
 import resources.keys.Resources;
 import resources.languages.ResourcesLanguages;
 import slogo_team07.Drawable;
+import slogo_team07.Engine;
 import slogo_team07.Turtle;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class Toolbar extends AnchorPane {
 	private Visualizer myVis;
@@ -44,7 +45,7 @@ public class Toolbar extends AnchorPane {
 	protected static ObservableList<String> langsSupported = FXCollections.observableArrayList("Chinese", "English",
 			"French", "German", "Italian", "Portuguese", "Russian", "Spanish", "Urdu");
 	private String myLanguage;
-	
+
 	/**
 	 * Toolbar constructor. Takes in a Visualizer in order to create another visualizer with the same change
 	 * listener. Takes in a canvas for background color button. Takes in a fileWriter and fileReader to save and 
@@ -55,66 +56,65 @@ public class Toolbar extends AnchorPane {
 	 * @param fileReader
 	 * @param stage
 	 */
-	
+
 	public Toolbar(Visualizer v, Pane canvas, FileWriter fileWriter, FileReader fileReader){
 		myVis = v;
 		myCanvasObjects = canvas;
 		myFileWriter = fileWriter;
 		myFileReader = fileReader;
 	}
-	
+
 	protected AnchorPane initToolbar(){
 		AnchorPane myPane = new AnchorPane();
-		
 		Text title = new Text(Resources.getString("Title"));
 		title.getStyleClass().add("title");
 		myPane.getChildren().add(title);
 		myPane.setLeftAnchor(title, 10.0);
 		myPane.setTopAnchor(title, 10.0);
-		
+
 		VBox myButtons = initButtons();
 		myPane.getChildren().add(myButtons);
 		myPane.setRightAnchor(myButtons, 0.0);
 		return myPane;
 	}
-	
+
 	private Button helpButton()	{
 		Button helpButton = new Button();
 		helpButton.setText(ResourcesLanguages.getString(myLanguage, "Help"));
-    	helpButton.setOnAction(e -> new HelpBox(myLanguage));
-    	return helpButton;
-    }
-	
+		helpButton.setOnAction(e -> new HelpBox(myLanguage));
+		return helpButton;
+	}
+
 	private ComboBox colorMenu()	{
 		ComboBox colorMenu = new ComboBox(Visualizer.possBackgroundColors);
 		colorMenu.setPromptText(Resources.getString("ColorMenu"));
 		colorMenu.setOnAction(e -> {
-            String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();
-            myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back",
-                    "green-back", "blue-back", "purple-back", "pink-back");
-            myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
-        });
+			String tempColor = colorMenu.getSelectionModel().getSelectedItem().toString();
+			myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back",
+					"green-back", "blue-back", "purple-back", "pink-back");
+			myCanvasObjects.getStyleClass().add(Resources.getString(tempColor));
+		});
 		return colorMenu;
 	}
-	
+
 	private ComboBox langMenu(Button helpButton)	{
 		ComboBox langMenu = new ComboBox<String>(langsSupported);
 		langMenu.setPromptText(Resources.getString("LangMenu"));
 		langMenu.setOnAction(e -> {
-            myLanguage = (String)(langMenu.getValue());
-            helpButton.setText(ResourcesLanguages.getString(myLanguage, "Help"));
-        });
+			myLanguage = (String)(langMenu.getValue());
+			helpButton.setText(ResourcesLanguages.getString(myLanguage, "Help"));
+		});
 		return langMenu;
 	}
-	
+
 	//need to send tell command to create initial turtle on new window
 	private Button windowButton()	{
 		Button windowButton = new Button("New Window");
-    	windowButton.setOnAction(e -> {
-			new Visualizer(new Stage(), myVis.getChangeListener());
+		windowButton.setOnAction(e -> {
+			new Engine(new Stage());
 		});
-    	return windowButton;
-    }
+		return windowButton;
+	}
 
 	/**
 	 * Creates a button that, when pressed, asks for a file name to save to and then saves status of current
@@ -123,11 +123,11 @@ public class Toolbar extends AnchorPane {
 	 */
 	private Button saveButton()	{
 		Button saveButton = new Button("Save");
-    	saveButton.setOnAction(e -> {
+		saveButton.setOnAction(e -> {
 			promptForFilename();
-        });
-    	return saveButton;
-    }
+		});
+		return saveButton;
+	}
 
 	/**
 	 * Creates a button that, when pressed, opens a filechooser and loads file to console
@@ -135,7 +135,7 @@ public class Toolbar extends AnchorPane {
 	 */
 	private Button loadButton()	{
 		Button loadButton = new Button("Load");
-    	loadButton.setOnAction(e -> {
+		loadButton.setOnAction(e -> {
 			try {
 				myFileReader.readFile(openFileChooser());
 			}
@@ -146,9 +146,9 @@ public class Toolbar extends AnchorPane {
 				alert.show();
 			}
 		});
-    	return loadButton;
-    }
-	
+		return loadButton;
+	}
+
 	private VBox initButtons(){
 		HBox myHBox = new HBox(Resources.getInt(Visualizer.inset));
 		Button helpButton = helpButton();
@@ -158,7 +158,7 @@ public class Toolbar extends AnchorPane {
 		myHBox.getChildren().add(windowButton());
 		myHBox.getChildren().add(saveButton());
 		myHBox.getChildren().add(loadButton());
-		
+
 		HBox buttons = new HBox(Resources.getInt(Visualizer.inset));
 		buttons.getChildren().add(pauseButton());
 		buttons.getChildren().add(stepButton());
@@ -168,90 +168,89 @@ public class Toolbar extends AnchorPane {
 		buttons.getChildren().add(slowDownButton());
 		buttons.getChildren().add(addDrawableButton());
 		buttons.getChildren().add(colorButton());
-		
+
 		VBox myVBox = new VBox(Resources.getInt(Visualizer.inset));
 		myVBox.setPadding(new Insets(Resources.getInt(Visualizer.inset)));
 		myVBox.getChildren().add(myHBox);
 		myVBox.getChildren().add(buttons);
-		
+
 		return myVBox;
 	}
-	
-	//NOT SURE HOW TO LINK W BACKEND
+
 	private Button addDrawableButton()	{
 		Button addDrawableButton = new Button("Add Turtle");
-	    addDrawableButton.setOnAction(e -> {
-	    	int id = myVis.drawables.size();
-	    	List<String> ids = new ArrayList<>();
-	    	for (Map.Entry<Drawable, List<String>> entry: myVis.drawables.entrySet()){
-	    		ids.add(myVis.drawables.get(entry.getKey()).get(0));
-	    	}
-	    	while (ids.contains(String.valueOf(id))){
-	    		id++;
-	    	}
-	    	myVis.addDrawable(new Turtle(String.valueOf(id)));
-        });
+		addDrawableButton.setOnAction(e -> {
+			int id = myVis.drawables.size();
+			List<String> ids = new ArrayList<String>();
+			for (Map.Entry<Drawable, List<String>> entry: myVis.drawables.entrySet()){
+				ids.add(myVis.drawables.get(entry.getKey()).get(0));
+			}
+			while (ids.contains(String.valueOf(id))){
+				id++;
+			}
+			myVis.addDrawable(new Turtle(String.valueOf(id)));
+		});
 		return addDrawableButton;
 	}
-	
+
 	private Button pauseButton()	{
 		Button pauseButton = new Button("Pause");
-    	pauseButton.setOnAction(e -> {
+		pauseButton.setOnAction(e -> {
 
-        });
-    	return pauseButton;
-    }
-	
+		});
+		return pauseButton;
+	}
+
 	private Button stepButton()	{
 		Button stepButton = new Button("Step");
-    	stepButton.setOnAction(e -> {
+		stepButton.setOnAction(e -> {
 
-        });
-    	return stepButton;
-    }
-	
+		});
+		return stepButton;
+	}
+
 	private Button resetButton()	{
 		Button resetButton = new Button("Reset");
-    	resetButton.setOnAction(e -> {
+		resetButton.setOnAction(e -> {
 
-        });
-    	return resetButton;
-    }
-	
+		});
+		return resetButton;
+	}
+
 	private Button undoButton()	{
 		Button undoButton = new Button("Undo");
-    	undoButton.setOnAction(e -> {
+		undoButton.setOnAction(e -> {
 
-        });
-    	return undoButton;
-    }
-	
+		});
+		return undoButton;
+	}
+
 	private Button speedUpButton()	{
 		Button speedUpButton = new Button("Speed Up");
-    	speedUpButton.setOnAction(e -> {
+		speedUpButton.setOnAction(e -> {
 
-        });
-    	return speedUpButton;
-    }
-	
+		});
+		return speedUpButton;
+	}
+
 	private Button slowDownButton()	{
 		Button slowDownButton = new Button("SlowDown");
-    	slowDownButton.setOnAction(e -> {
+		slowDownButton.setOnAction(e -> {
 
-        });
-    	return slowDownButton;
-    }
-	
+		});
+		return slowDownButton;
+	}
+
 	private Button colorButton() {
 		Button colorButton = new Button("Color Indices");
 		colorButton.setOnAction(e -> new ColorPalettes(myVis));
 		return colorButton;
 	}
-	
+
 	public void setLanguage(String lang){
 		myLanguage = lang;
 	}
-	
+
 	/**
 	 * Returns the String name of the language that this program is accepting commands and displaying help in
 	 * @return String
@@ -291,5 +290,5 @@ public class Toolbar extends AnchorPane {
 			// TODO: HANDLE EXCEPTION
 		}
 	}
-	
+
 }

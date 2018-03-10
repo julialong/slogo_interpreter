@@ -32,4 +32,3 @@ can write commands in any language they wish.
 No input files are required to get the project to work- this project functions very well only with direct user 
 input! However, the user is invited to upload any properly formatted file, and the interpreter will be able to parse 
 and run its commands and store the appropriate functions and variables.
-

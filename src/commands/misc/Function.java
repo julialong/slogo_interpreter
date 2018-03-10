@@ -1,10 +1,13 @@
-package parser;
+package commands.misc;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import commands.CommandArgsUnfilledException;
 import commands.NonUpdatableCommand;
+import commands.Result;
 import commands.VariableReplacer;
+import parser.Parser;
 import view.Visualizer;
 
 public class Function extends NonUpdatableCommand {
@@ -19,6 +22,17 @@ public class Function extends NonUpdatableCommand {
 		myParams = params;
 		myCommands = commands;
 		myName = name;
+	}
+	
+	@Override
+	public String execute() {
+		if (! isReady()) {
+			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
+		}
+
+		double ans = calcValue(getArgs());
+		visCommand(new Result(ans));
+		return Double.toString(ans);
 	}
 
 	private String replaceParams(List<String> args) {

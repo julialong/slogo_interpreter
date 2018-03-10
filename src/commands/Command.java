@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import parser.VariableTruthometer;
+import slogo_team07.Updatable;
 import view.Visualizer;
 
-public abstract class Command {
+public abstract class Command implements VariableTruthometer {
 	
 	private int myArgsNeeded;
 	private List<String> myArgs = new ArrayList<>();
@@ -61,10 +63,10 @@ public abstract class Command {
 		}
 		return temp;
 	}
-	
-	private boolean isVariable(String string) {
-		return string.matches(":[a-zA-Z]+");
-	}
 
 	public abstract String execute();
+	
+	public abstract boolean hasUpdatable();
+
+	public abstract Updatable getUpdatable();
 }

@@ -62,21 +62,21 @@ public class Turtle implements Drawable, Updatable {
 			myColors.add(Color.valueOf(Visualizer.possPenColors.get(i)));
 		}
 	}
-	
+
 	private void translate(Pane display){
 		double height = display.getHeight();
 		double width = display.getWidth();
 		myViewX = myXPos + width/2;
-//		System.out.println("x pos: " + myXPos);
-//		System.out.println("view x trans: " + myViewX);
-//		System.out.println("width: " + width/2);
+		//		System.out.println("x pos: " + myXPos);
+		//		System.out.println("view x trans: " + myViewX);
+		//		System.out.println("width: " + width/2);
 		myViewY = -1 * (myYPos - height/2);
 		myViewPrevX = myPrevXPos + width/2;
 		myViewPrevY = -1 * (myPrevYPos  - height/2);
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 	}
-	
+
 	private void opptranslate(Pane display){
 		double height = display.getHeight();
 		double width = display.getWidth();
@@ -85,7 +85,7 @@ public class Turtle implements Drawable, Updatable {
 		myPrevXPos = myViewPrevX - width/2;
 		myPrevYPos = height/2 - myViewPrevY;	
 	}
-	
+
 	/**
 	 * Changes the Pane of the Turtle to be the given Pane
 	 * @param pane
@@ -102,7 +102,7 @@ public class Turtle implements Drawable, Updatable {
 	public boolean getIsVisible(){
 		return isVisible;
 	}
-	
+
 	/**
 	 * Returns whether or not the Turtle's pen is down
 	 * @return boolean
@@ -120,7 +120,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getPenWidth()	{
 		return myPenWidth;
 	}
-	
+
 	/**
 	 * Returns ImageView of Turtle
 	 * @return ImageView
@@ -146,7 +146,7 @@ public class Turtle implements Drawable, Updatable {
 		myIV.setX(myViewX);
 		myIV.setY(myViewY);
 	}
-	
+
 	/**
 	 * Returns the x position of the ImageView
 	 * @return double
@@ -155,7 +155,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getViewX(){
 		return myViewX;
 	}
-	
+
 	/**
 	 * Returns the y position of the ImageView
 	 * @return double
@@ -164,7 +164,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getViewY(){
 		return myViewY;
 	}
-	
+
 	/**
 	 * Changes the ImageView's x position to the given double
 	 * @param x
@@ -175,7 +175,7 @@ public class Turtle implements Drawable, Updatable {
 		myViewX = x;
 		opptranslate(myPane);
 	}
-	
+
 	/**
 	 * Changes the ImageView's y position to the given double
 	 * @param y
@@ -225,7 +225,7 @@ public class Turtle implements Drawable, Updatable {
 			myPane.getChildren().add(myLines);
 		}
 	}
-	
+
 	private void wrapPos(Pane pane){
 		double height = pane.getHeight();
 		double width = pane.getWidth();
@@ -367,7 +367,7 @@ public class Turtle implements Drawable, Updatable {
 		return Math.acos(numer / denom);
 
 	}
-	
+
 	/**
 	 * Changes whether the Turtle is visible or not
 	 * @param visible
@@ -434,7 +434,7 @@ public class Turtle implements Drawable, Updatable {
 	public double getVisible() {
 		return isVisible ? 1.0 : 0.0;
 	}
-	
+
 	/**
 	 * Clears the canvas of all Turtle trails and returns the Turtle back to the center of the Canvas
 	 * @return double - distance Turtle moved
@@ -454,7 +454,7 @@ public class Turtle implements Drawable, Updatable {
 		myPane.getChildren().add(myIV);
 		return dist;
 	}
-	
+
 	private double degreesToRadians(double degrees) {
 		return (degrees * Math.PI) / 180.0;
 	}
@@ -488,8 +488,9 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public double getShape() {
 		for (int i = 0; i < myShapes.size(); i++){
-			if (myShapes.get(i).equals(myShape)){
-				return i;
+			int adjusted = i % myShapes.size();
+			if (myShapes.get(adjusted).equals(myShape)){
+				return adjusted;
 			}
 		}
 		return 0;
@@ -502,8 +503,9 @@ public class Turtle implements Drawable, Updatable {
 	@Override
 	public double getPenColor() {
 		for (int i = 0; i < myColors.size(); i++)	{
-			if (myColors.get(i).equals(myColor))	{
-				return i;
+			int adjusted = i % myColors.size();
+			if (myColors.get(adjusted).equals(myColor))	{
+				return adjusted;
 			}
 		}
 		return 0;
@@ -520,6 +522,7 @@ public class Turtle implements Drawable, Updatable {
 		return pixels;
 	}
 
+
 	/**
 	 * Changes the pen color to the color at the specified index in the list of possible colors 
 	 * @param dex
@@ -527,7 +530,8 @@ public class Turtle implements Drawable, Updatable {
 	 */
 	@Override
 	public double setPenColor(int dex) {
-		myColor = myColors.get(dex);
+		int col_dex = dex % myColors.size();
+		myColor = myColors.get(col_dex);
 		return dex;
 	}
 
@@ -538,7 +542,8 @@ public class Turtle implements Drawable, Updatable {
 	 */
 	@Override
 	public double setShape(int dex) {
-		setView(Resources.getString(myShapes.get(dex)));
+		int shape_dex = dex % myShapes.size();
+		setView(Resources.getString(myShapes.get(shape_dex)));
 		return dex;
 	}
 
@@ -552,9 +557,10 @@ public class Turtle implements Drawable, Updatable {
 	 */
 	@Override
 	public double setPalette(int dex, double r, double g, double b) {
+		int adjusted = dex % myColors.size();
 		Color newColor = Color.rgb((int) r, (int) g, (int) b, 1.0);
-		myColors.add(dex, newColor);
-		return dex;
+		myColors.add(adjusted, newColor);
+		return adjusted;
 	}
 
 }
