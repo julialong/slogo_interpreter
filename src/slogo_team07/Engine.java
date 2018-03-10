@@ -8,7 +8,7 @@ import view.Visualizer;
 
 public class Engine implements ChangeListener {
 	
-	private static final String INIT_TURTLE = "tell [ 0 ]";
+	private static final String INIT_TURTLE = "tell [ 1 ]";
 	private static final String ERROR = "Command sequence not recognized.";
 	
 	private Visualizer myVis;

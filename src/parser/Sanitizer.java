@@ -75,7 +75,7 @@ public class Sanitizer {
 
 	private String stripComments(String s) {
 		return Arrays.asList(s.split("\n")).stream()
-				.filter(line -> !line.startsWith("#"))
+				.filter(line -> !line.trim().startsWith("#"))
 				.collect(Collectors.joining(" "));
 	}
 }

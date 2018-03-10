@@ -17,6 +17,7 @@ public class Forward extends UpdatableCommand {
 
 	@Override
 	protected double calcValues(Updatable updatable, List<Double> args) {
+		System.out.println(args);
 		return updatable.move(args.get(0));
 	}
 	
