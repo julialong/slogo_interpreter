@@ -3,7 +3,7 @@ package commands;
 import java.util.List;
 
 /**
- * Finds the location of matching brackets in a List
+ * Finds the correct pair of brackets
  * @author benhubsch, julialong
  */
 public interface BracketFinder {
@@ -19,18 +19,22 @@ public interface BracketFinder {
 		int unmatched = 0;
 		for (int i = 0; i < exp.size(); i++) {
 			String curr = exp.get(i);
-			if (curr.equals("[") && unmatched == 0 && pairNum == 0) {
+			if (curr.equals("[")) {
+				if (unmatched == 0 && pairNum == 0) {
 					answer[0] = i;
+				}
 				unmatched += 1;
 			} else if (curr.equals("]")) {
 				unmatched--;
-				if (unmatched == 0 && pairNum == 0) {
-					answer[1] = i;
-					return answer;
-				}
+				if (unmatched == 0) {
+					if (pairNum == 0) {
+						answer[1] = i;
+						return answer;
+					}
 					pairNum--;
 				}
 			}
+		}
 		return new int[0];
 	}
 }
