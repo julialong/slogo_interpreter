@@ -40,17 +40,17 @@ import slogo_team07.ChangeListener;
 import slogo_team07.Drawable;
 
 public class Visualizer {
-	
+
 	public static final int FRAMES_PER_SECOND = 5;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	public static final String inset = "Inset";
 	public static final ObservableList<String> possBackgroundColors = FXCollections.observableArrayList("White", "Red", "Orange",
-		"Yellow", "Green", "Blue", "Purple", "Pink");
+			"Yellow", "Green", "Blue", "Purple", "Pink");
 	public static final ObservableList<String> possPenColors = FXCollections.observableArrayList("Black", "White", "Red", "Orange",
-		"Yellow", "Green", "Blue", "Purple", "Pink");
+			"Yellow", "Green", "Blue", "Purple", "Pink");
 	public static final ObservableList<String> possIVImages = FXCollections.observableArrayList("Turtle", "Bird", "Butterfly", "Cat", "Dog",
-		"Fish", "Octopus");
+			"Fish", "Octopus");
 
 	private Canvas myCanvas;
 	private Pane myCanvasObjects;
@@ -65,7 +65,7 @@ public class Visualizer {
 	protected ObservableList<IndCol> bgColors = FXCollections.observableArrayList();
 	protected ObservableList<IndCol> penColors = FXCollections.observableArrayList();
 	protected ObservableList<IndImg> ivImages = FXCollections.observableArrayList();
-	
+
 	/**
 	 * @param stage				stage that this Visulizer is displaying in
 	 * @param change_listener	ChangeListener that links to backend and operates on commands
@@ -90,7 +90,7 @@ public class Visualizer {
 			ivImages.add(new IndImg(i, possIVImages.get(i)));
 		}
 	}
-	
+
 	private void setupAnimation(){
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
 		Timeline animation = new Timeline();
@@ -98,7 +98,7 @@ public class Visualizer {
 		animation.getKeyFrames().add(frame);
 		animation.play();
 	}
-	
+
 	private void step(double cycles){
 		myCanvasObjects = myCanvas.updateCanvas(drawables);
 		root.setCenter(myCanvasObjects);
@@ -110,17 +110,17 @@ public class Visualizer {
 			myChangeListener.changeLanguage(language);
 		}
 	}
-	
+
 	private Scene initScreen(){
 		root = new BorderPane();
 		Scene scene = new Scene(root, Resources.getInt("ScreenWidth"), Resources.getInt("ScreenHeight"), Resources.getColor("BackgroundColor"));
 		scene.getStylesheets().add(getClass().getResource("SlogoMain.css").toString());
-		
+
 		myCanvas = new Canvas(drawables);
 		myCanvasObjects = myCanvas.initCanvas(); 
 		myCanvasObjects.getStyleClass().addAll("pane", "border");
 		root.setCenter(myCanvasObjects);
-		
+
 		mySideBar = new SideBar(myCanvasObjects, this, drawables);
 		root.setRight(mySideBar.initSideBar());
 
@@ -139,7 +139,7 @@ public class Visualizer {
 		myConsole.myChangeListener = myChangeListener;
 		mySideBar.myTextInput = myConsole;
 		myConsole.myVBox = mySideBar;
-		
+
 		return scene;
 	}
 
@@ -190,7 +190,7 @@ public class Visualizer {
 
 		}
 	}
-	
+
 	protected ChangeListener getChangeListener(){
 		return myChangeListener;
 	}
@@ -217,9 +217,9 @@ public class Visualizer {
 	 * @param index	index within possible colors to set background to
 	 */
 	public void setBackground(int index)	{
-		 myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back",
-                "green-back", "blue-back", "purple-back", "pink-back");
-        myCanvasObjects.setStyle("-fx-background-color: #" + ((Shape)(bgColors.get(index).colorProperty().getValue())).getFill().toString().substring(2, 8) + ";");
+		myCanvasObjects.getStyleClass().removeAll("pane", "red-back", "orange-back", "yellow-back",
+				"green-back", "blue-back", "purple-back", "pink-back");
+		myCanvasObjects.setStyle("-fx-background-color: #" + ((Shape)(bgColors.get(index).colorProperty().getValue())).getFill().toString().substring(2, 8) + ";");
 	}
 
 	/**
@@ -252,16 +252,16 @@ public class Visualizer {
 		/**
 		 * Returns the index of a variable, as a property
 		 */
-    	public IntegerProperty indProperty() {
-	        return ind;
-	    }
+		public IntegerProperty indProperty() {
+			return ind;
+		}
 
-	    /**
-	     * Returns the color of a variable, as a property
-	     */
-	    public ObjectProperty colorProperty()	{
-	    	return color;
-	    }
+		/**
+		 * Returns the color of a variable, as a property
+		 */
+		public ObjectProperty colorProperty()	{
+			return color;
+		}
 	}
 
 	/**
@@ -284,15 +284,15 @@ public class Visualizer {
 		/**
 		 * Returns the index of a variable, as a property
 		 */
-    	public IntegerProperty indProperty() {
-	        return ind;
-	    }
+		public IntegerProperty indProperty() {
+			return ind;
+		}
 
-	    /**
-	     * Returns the color of a variable, as a property
-	     */
-	    public ObjectProperty imageProperty()	{
-	    	return image;
-	    }
+		/**
+		 * Returns the color of a variable, as a property
+		 */
+		public ObjectProperty imageProperty()	{
+			return image;
+		}
 	}
 }
