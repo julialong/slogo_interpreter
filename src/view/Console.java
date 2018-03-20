@@ -228,15 +228,15 @@ public class Console extends AnchorPane implements TextInput {
 		/**
 		 * Returns the command as a button with text
 		 */
-    	public ObjectProperty commandProperty() {
-	        return command;
-	    }
+		public ObjectProperty commandProperty() {
+			return command;
+		}
 
-	    /**
-	     * Returns the returned value of the command as a property
-	     */
-	    public StringProperty returnedProperty()	{
-	    	return returned;
-	    }
+		/**
+		 * Returns the returned value of the command as a property
+		 */
+		public StringProperty returnedProperty()	{
+			return returned;
+		}
 	}
 }
