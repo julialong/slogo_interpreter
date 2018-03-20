@@ -63,13 +63,16 @@ public class CommandFactory implements VariableReplacer {
 	 * @param command The string command that a user entered.
 	 * @return The List<Command> that is returned for the Parser to iterate over.
 	 */
-	public List<Command> createCommands(String command) {
+	public Iterable<Command> createCommands(String command) {
+		List<Command> result;
 		if (myFuncMap.containsKey(command)) {
-			return Arrays.asList(myFuncMap.get(command));
+			result = Arrays.asList(myFuncMap.get(command));
+		} else {
+			String keyword = myLanguages.get(command);
+			Factory factory = myFactoryMap.get(myFactories.getString(keyword));
+			result = factory.create(keyword);
 		}
-		String keyword = myLanguages.get(command);
-		Factory factory = myFactoryMap.get(myFactories.getString(keyword));
-		return factory.create(keyword);
+		return () -> result.iterator();
 	}
 
 	/**

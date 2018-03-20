@@ -83,7 +83,6 @@ public class Parser implements VariableTruthometer {
 		List<String> temp = input;
 		for (Command node : myCommandFactory.createCommands(next)) {
 			temp = new LinkedList<>(input);
-
 			while (!node.isReady()) {
 				if (node.hasUpdatable()) {
 					current = node.getUpdatable();
