@@ -28,9 +28,9 @@ public class Parser implements VariableTruthometer {
 	 *
 	 * @param vis the vis
 	 */
-	public Parser(Visualizer vis) {
-		myCommandFactory = new CommandFactory(vis, this);
-		mySanitizer = new Sanitizer();
+	public Parser(Visualizer vis, CommandFactory command_factory, Sanitizer sanitizer) {
+		myCommandFactory = command_factory;
+		mySanitizer = sanitizer;
 	}
 
 	/**

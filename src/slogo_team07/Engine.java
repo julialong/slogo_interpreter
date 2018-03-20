@@ -2,8 +2,10 @@ package slogo_team07;
 
 import commands.ErrorResult;
 import commands.Result;
+import commands.factory.CommandFactory;
 import javafx.stage.Stage;
 import parser.Parser;
+import parser.Sanitizer;
 import view.Visualizer;
 
 /**
@@ -19,12 +21,17 @@ public class Engine implements ChangeListener {
 	
 	private static final String INIT_TURTLE = "tell [ 1 ]";
 	
+	private CommandFactory myCommandFactory;
 	private Visualizer myVis;
 	private Parser myParser;
 
 	public Engine(Stage stage) {
 		myVis = new Visualizer(stage, this);
-		myParser = new Parser(myVis);
+		
+		Sanitizer sanitizer = new Sanitizer();
+		myCommandFactory = new CommandFactory(myVis);
+		myParser = new Parser(myVis, myCommandFactory, sanitizer);
+		myCommandFactory.setParser(myParser);
 		
 		myParser.parse(INIT_TURTLE);
 	}

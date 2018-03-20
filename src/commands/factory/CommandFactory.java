@@ -49,9 +49,8 @@ public class CommandFactory implements VariableReplacer {
 	 * @param vis the vis
 	 * @param parser the parser
 	 */
-	public CommandFactory(Visualizer vis, Parser parser) {
+	public CommandFactory(Visualizer vis) {
 		myVis = vis;
-		myParser = parser;
 
 		updateLanguage(DEFAULT);
 	}
@@ -229,5 +228,9 @@ public class CommandFactory implements VariableReplacer {
 	 */
 	public Updatable getCurrent() {
 		return myUpdatables.entrySet().iterator().next().getValue();
+	}
+	
+	public void setParser(Parser parser) {
+		myParser = parser;
 	}
 }
