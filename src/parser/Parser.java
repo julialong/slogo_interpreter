@@ -31,6 +31,8 @@ public class Parser implements VariableTruthometer {
 	public Parser(Visualizer vis, CommandFactory command_factory, Sanitizer sanitizer) {
 		myCommandFactory = command_factory;
 		mySanitizer = sanitizer;
+		
+		myCommandFactory.setParser(this);
 	}
 
 	/**
@@ -114,15 +116,5 @@ public class Parser implements VariableTruthometer {
 
 	private boolean isID(String next) {
 		return next.equals(CommandFactory.ID);
-	}
-
-	/**
-	 * Updates the language that the CommandFactory uses to return
-	 * Commands.
-	 *
-	 * @param lang the lang
-	 */
-	public void updateLanguage(String lang) {
-		myCommandFactory.updateLanguage(lang);
 	}
 }

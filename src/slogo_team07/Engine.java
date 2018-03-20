@@ -31,7 +31,6 @@ public class Engine implements ChangeListener {
 		Sanitizer sanitizer = new Sanitizer();
 		myCommandFactory = new CommandFactory(myVis);
 		myParser = new Parser(myVis, myCommandFactory, sanitizer);
-		myCommandFactory.setParser(myParser);
 		
 		myParser.parse(INIT_TURTLE);
 	}
@@ -51,6 +50,6 @@ public class Engine implements ChangeListener {
 
 	@Override
 	public void changeLanguage(String lang) {
-		myParser.updateLanguage(lang);
+		myCommandFactory.updateLanguage(lang);
 	}
 }
