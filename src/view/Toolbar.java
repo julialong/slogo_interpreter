@@ -11,7 +11,6 @@ package view;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import file_managers.FileReader;
@@ -235,9 +234,9 @@ public class Toolbar extends AnchorPane {
 		}
 		catch (Exception e) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Cannot write file");
-				alert.setContentText("This filename is invalid, could not write to it");
-				alert.show();
+			alert.setTitle("Cannot write file");
+			alert.setContentText("This filename is invalid, could not write to it");
+			alert.show();
 		}
 	}
 
