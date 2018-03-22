@@ -90,113 +90,7 @@ public class CommandFactory implements VariableReplacer {
 			}
 		}
 	}
-
-	/**
-	 * Gets the String object associated with a specific keyword from the Command
-	 * bundle. It is used for reflection in some of the other Factory methods.
-	 *
-	 * @param keyword the keyword
-	 * @return String
-	 */
-	public String getBundleValue(String keyword) {
-		return myCommands.getString(keyword);
-	}
-
-	/**
-	 * Gets the Set<String> object.
-	 *
-	 * @return Set<String>
-	 */
-	public List<String> getActives() {
-		return myActives;
-	}
-
-	/**
-	 * Gets the Visualizer object.
-	 *
-	 * @return Visualizer
-	 */
-	public Visualizer getVis() {
-		return myVis;
-	}
-
-	/**
-	 * Gets the Parser object.
-	 *
-	 * @return Parser
-	 */
-	public Parser getParser() {
-		return myParser;
-	}
-
-	/**
-	 * Gets the Updatable object.
-	 *
-	 * @param id the id
-	 * @return Updatable
-	 */
-	public Updatable getUpdatableById(String id) {
-		return myUpdatables.get(id);
-	}
-
-	/**
-	 * Gets the Map<String, Updatable> object.
-	 *
-	 * @return Map<String, Updatable>
-	 */
-	public Map<String, Updatable> getUpdatables() {
-		return myUpdatables;
-	}
-
-	/**
-	 * Gets the Map<String, Function> object.
-	 *
-	 * @return Map<String,Function>
-	 */
-	public Map<String, Function> getFuncMap() {
-		return myFuncMap;
-	}
-
-	/**
-	 * Gets the Map<String, String> object.
-	 *
-	 * @return Map<String, String>
-	 */
-	public Map<String, String> getVarMap() {
-		return myVarMap;
-	}
-
-	private Map<String, Factory> createMap() {
-		Map<String, Factory> factory_map = new HashMap<>();
-		factory_map.put("Multiple", new MultipleFactory(this));
-		factory_map.put("NonUpdatable", new NonUpdatableFactory(this));
-		factory_map.put("Updatable", new UpdatableFactory(this));
-		factory_map.put("Unbundler", new UnbundlerFactory(this));
-		return factory_map;
-	}
-
-	/**
-	 * Checks if the given string exists in the realm of known commands.
-	 *
-	 * @param string the string
-	 * @return true, if is command
-	 */
-	public boolean isCommand(String string) {
-		return myLanguages.containsKey(string);
-	}
-
-	/**
-	 * Gets the variable value associated with a given variable parameter.
-	 * For example, a given variable value ":x" might return the String value
-	 * "10."
-	 *
-	 * @param variable the variable
-	 * @return String
-	 */
-	public String getVar(String variable) {
-		return myVarMap.get(variable);
-	}
-
+	
 	/**
 	 * Checks the given string is registered anywhere within our system or if it's
 	 * a piece of input that isn't recognized.
@@ -245,5 +139,111 @@ public class CommandFactory implements VariableReplacer {
 	private Updatable getAny() {
 		String curr = myActives.iterator().next();
 		return myUpdatables.get(curr);
+	}
+
+	/**
+	 * Gets the String object associated with a specific keyword from the Command
+	 * bundle. It is used for reflection in some of the other Factory methods.
+	 *
+	 * @param keyword the keyword
+	 * @return String
+	 */
+	protected String getBundleValue(String keyword) {
+		return myCommands.getString(keyword);
+	}
+
+	/**
+	 * Gets the Set<String> object.
+	 *
+	 * @return Set<String>
+	 */
+	protected List<String> getActives() {
+		return myActives;
+	}
+
+	/**
+	 * Gets the Visualizer object.
+	 *
+	 * @return Visualizer
+	 */
+	protected Visualizer getVis() {
+		return myVis;
+	}
+
+	/**
+	 * Gets the Parser object.
+	 *
+	 * @return Parser
+	 */
+	protected Parser getParser() {
+		return myParser;
+	}
+
+	/**
+	 * Gets the Updatable object.
+	 *
+	 * @param id the id
+	 * @return Updatable
+	 */
+	protected Updatable getUpdatableById(String id) {
+		return myUpdatables.get(id);
+	}
+
+	/**
+	 * Gets the Map<String, Updatable> object.
+	 *
+	 * @return Map<String, Updatable>
+	 */
+	protected Map<String, Updatable> getUpdatables() {
+		return myUpdatables;
+	}
+
+	/**
+	 * Gets the Map<String, Function> object.
+	 *
+	 * @return Map<String,Function>
+	 */
+	protected Map<String, Function> getFuncMap() {
+		return myFuncMap;
+	}
+
+	/**
+	 * Gets the Map<String, String> object.
+	 *
+	 * @return Map<String, String>
+	 */
+	protected Map<String, String> getVarMap() {
+		return myVarMap;
+	}
+
+	protected Map<String, Factory> createMap() {
+		Map<String, Factory> factory_map = new HashMap<>();
+		factory_map.put("Multiple", new MultipleFactory(this));
+		factory_map.put("NonUpdatable", new NonUpdatableFactory(this));
+		factory_map.put("Updatable", new UpdatableFactory(this));
+		factory_map.put("Unbundler", new UnbundlerFactory(this));
+		return factory_map;
+	}
+
+	/**
+	 * Checks if the given string exists in the realm of known commands.
+	 *
+	 * @param string the string
+	 * @return true, if is command
+	 */
+	protected boolean isCommand(String string) {
+		return myLanguages.containsKey(string);
+	}
+
+	/**
+	 * Gets the variable value associated with a given variable parameter.
+	 * For example, a given variable value ":x" might return the String value
+	 * "10."
+	 *
+	 * @param variable the variable
+	 * @return String
+	 */
+	protected String getVar(String variable) {
+		return myVarMap.get(variable);
 	}
 }
