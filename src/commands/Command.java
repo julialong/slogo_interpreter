@@ -60,7 +60,6 @@ public abstract class Command implements VariableTruthometer {
 		return Double.toString(ans);
 	}
 	
-	protected abstract double performCalculation(List<String> args); 
 
 	/**
 	 * Injects arguments into this command object. It's called from Parser.
@@ -83,6 +82,15 @@ public abstract class Command implements VariableTruthometer {
 	public boolean isReady() {
 		return myArgs.size() == myArgsNeeded;
 	}
+	
+	/**
+	 * Gets the Updatable object.
+	 *
+	 * @return Updatable
+	 */
+	public Updatable getUpdatable() {
+		return null;
+	}; 
 
 	protected List<String> getArgs() {
 		return myArgs;
@@ -109,14 +117,6 @@ public abstract class Command implements VariableTruthometer {
 		}
 		return temp;
 	}
-
-	/**
-	 * Gets the Updatable object.
-	 *
-	 * @return Updatable
-	 */
-	public Updatable getUpdatable() {
-		return null;
-	};
-
+	
+	protected abstract double performCalculation(List<String> args);
 }
