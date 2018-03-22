@@ -80,6 +80,7 @@ public class CommandFactory implements VariableReplacer {
 	 * @param lang the lang
 	 */
 	public void updateLanguage(String lang) {
+		myLanguages.clear();
 		String location = String.format("%s%s", LANGUAGE_BASE, lang);
 		ResourceBundle rb = ResourceBundle.getBundle(location);
 		for (String key : rb.keySet()) {
