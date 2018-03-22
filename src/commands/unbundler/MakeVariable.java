@@ -41,6 +41,7 @@ public class MakeVariable extends ControlUnbundler {
 		}
 
 		double ans = calcValue(getArgs());
+		
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}

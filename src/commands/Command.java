@@ -106,7 +106,7 @@ public abstract class Command implements VariableTruthometer {
 				.collect(Collectors.toList());
 	}
 
-	protected List<String> replaceVars(List<String> args) {
+	private List<String> replaceVars(List<String> args) {
 		List<String> temp = new ArrayList<>();
 		for (String curr : args) {
 			if (isVariable(curr)) {

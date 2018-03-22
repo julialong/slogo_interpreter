@@ -38,6 +38,12 @@ public interface Updatable {
 	 */
 	double setHeading(double degrees);
 	
+	/**
+	 * Sets the Turtle to face a particular direction.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	double setFacing(double x, double y);
 	
 	/**
