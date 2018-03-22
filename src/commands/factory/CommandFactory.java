@@ -1,12 +1,11 @@
 package commands.factory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import commands.Command;
 import commands.misc.Function;
@@ -36,18 +35,17 @@ public class CommandFactory implements VariableReplacer {
 	private ResourceBundle myFactories = ResourceBundle.getBundle(FACTORIES);
 	private Map<String, Factory> myFactoryMap = createMap();
 	private Map<String, String> myLanguages = new HashMap<>();
-	private Set<String> myActives = new HashSet<>();
+	private List<String> myActives = new ArrayList<>();
 	private Map<String, Updatable> myUpdatables = new HashMap<>();
 	private Map<String, Function> myFuncMap = new HashMap<>();
 	private Map<String, String> myVarMap = new HashMap<>();
 	private Visualizer myVis;
 	private Parser myParser;
-	
+
 	/**
 	 * Instantiates a new CommandFactory object.
 	 *
 	 * @param vis the vis
-	 * @param parser the parser
 	 */
 	public CommandFactory(Visualizer vis) {
 		myVis = vis;
@@ -108,7 +106,7 @@ public class CommandFactory implements VariableReplacer {
 	 *
 	 * @return Set<String>
 	 */
-	public Set<String> getActives() {
+	public List<String> getActives() {
 		return myActives;
 	}
 
@@ -205,7 +203,7 @@ public class CommandFactory implements VariableReplacer {
 	 * @param string the string
 	 * @return true, if is registered
 	 */
-	public boolean isRegistered(String string) {
+	public boolean isKnownCommand(String string) {
 		return myVarMap.containsKey(string) 
 				|| myLanguages.containsKey(string)
 				|| myFuncMap.containsKey(string);
@@ -220,17 +218,31 @@ public class CommandFactory implements VariableReplacer {
 	}
 
 	/**
-	 * Gets any Updatable object, which is used on "cold" calls to id that
-	 * aren't associated with an UpdatableCommand. It will return one of the
-	 * Updatables that can be used.
+	 * Sets the parser.
 	 *
-	 * @return Updatable
+	 * @param parser the new parser
 	 */
-	public Updatable getCurrent() {
-		return myUpdatables.entrySet().iterator().next().getValue();
-	}
-	
 	public void setParser(Parser parser) {
 		myParser = parser;
+	}
+
+	/**
+	 * Gets the String object representing the id of the current Updatable. If there
+	 * isn't one, it just gets the id of any active turtle. 
+	 *
+	 * @param current the current
+	 * @return String
+	 */
+	public String getId(Updatable current) {
+		if (current == null) {
+			System.out.println("inside");
+			current = getAny();
+		}
+		return Double.toString(current.getId());		
+	}
+
+	private Updatable getAny() {
+		String curr = myActives.iterator().next();
+		return myUpdatables.get(curr);
 	}
 }

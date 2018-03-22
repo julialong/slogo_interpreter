@@ -2,7 +2,6 @@ package commands.multiples;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import commands.factory.VariableReplacer;
 import slogo_team07.Turtle;
@@ -21,10 +20,10 @@ public abstract class TurtleCreator extends Multiple {
 	
 	private Visualizer myVis;
 	private Map<String, Updatable> myUpdatables;
-	private Set<String> myActives;
+	private List<String> myActives;
 	private VariableReplacer myVariableReplacer;
 
-	public TurtleCreator(Visualizer vis, VariableReplacer var_replacer, int num_args, Set<String> actives, Map<String, Updatable> updatables) {
+	public TurtleCreator(Visualizer vis, VariableReplacer var_replacer, int num_args, List<String> actives, Map<String, Updatable> updatables) {
 		super(vis, var_replacer, num_args);
 		myVis = vis;
 		myUpdatables = updatables;

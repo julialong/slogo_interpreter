@@ -98,19 +98,14 @@ public abstract class Command implements VariableTruthometer {
 	 * @return String The double result of the calculation in String form.
 	 */
 	public abstract String execute();
-
-	/**
-	 * Checks if this Command object contains an Updatable. This is used to update the
-	 * latest current Updatable object in Parser, which is needed to calculate the id.
-	 *
-	 * @return true, if successful
-	 */
-	public abstract boolean hasUpdatable();
-
+	
 	/**
 	 * Gets the Updatable object.
 	 *
 	 * @return Updatable
 	 */
-	public abstract Updatable getUpdatable();
+	public Updatable getUpdatable() {
+		return null;
+	};
+
 }

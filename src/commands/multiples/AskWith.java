@@ -2,7 +2,6 @@ package commands.multiples;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import commands.factory.VariableReplacer;
 import parser.Parser;
@@ -13,9 +12,9 @@ public class AskWith extends Multiple {
 	private static final int NUM_ARGS = 2;
 	
 	private Parser myParser;
-	private Set<String> myActives;
+	private List<String> myActives;
 
-	public AskWith(Visualizer vis, VariableReplacer var_replacer, Parser parser, Set<String> actives) {
+	public AskWith(Visualizer vis, VariableReplacer var_replacer, Parser parser, List<String> actives) {
 		super(vis, var_replacer, NUM_ARGS);
 		myParser = parser;
 		myActives = actives;

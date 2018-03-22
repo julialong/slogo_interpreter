@@ -3,7 +3,6 @@ package commands;
 import java.util.List;
 
 import commands.factory.VariableReplacer;
-import slogo_team07.Updatable;
 import view.Visualizer;
 
 /**
@@ -34,17 +33,6 @@ public abstract class NonUpdatableCommand extends Command {
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}
-	
-	@Override
-	public boolean hasUpdatable() {
-		return false;
-	}
-	
-	@Override
-	public Updatable getUpdatable() {
-		return null;
-	}
-	
 	
 	protected abstract double calcValue(List<String> args);
 }

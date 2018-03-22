@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import commands.Command;
-import commands.unbundler.multiple_unbundlers.DoTimes;
-import commands.unbundler.multiple_unbundlers.For;
 import commands.unbundler.conditional_unbundlers.If;
 import commands.unbundler.conditional_unbundlers.IfElse;
+import commands.unbundler.loop_unbundlers.DoTimes;
+import commands.unbundler.loop_unbundlers.For;
+import commands.unbundler.loop_unbundlers.Repeat;
 import commands.unbundler.MakeUserInstruction;
 import commands.unbundler.MakeVariable;
-import commands.unbundler.multiple_unbundlers.Repeat;
 
 /**
  * 

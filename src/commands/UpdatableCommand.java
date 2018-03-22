@@ -39,11 +39,6 @@ public abstract class UpdatableCommand extends Command {
 	}
 
 	@Override
-	public boolean hasUpdatable() {
-		return true;
-	}
-
-	@Override
 	public Updatable getUpdatable() {
 		return myUpdatable;
 	}

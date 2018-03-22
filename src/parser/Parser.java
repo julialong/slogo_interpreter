@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import commands.Command;
+import commands.UpdatableCommand;
 import commands.factory.CommandFactory;
 import slogo_team07.Updatable;
 import view.Visualizer;
@@ -31,7 +32,7 @@ public class Parser implements VariableTruthometer {
 	public Parser(Visualizer vis, CommandFactory command_factory, Sanitizer sanitizer) {
 		myCommandFactory = command_factory;
 		mySanitizer = sanitizer;
-		
+
 		myCommandFactory.setParser(this);
 	}
 
@@ -70,14 +71,9 @@ public class Parser implements VariableTruthometer {
 		}
 
 		String next = input.remove(0).toLowerCase();
-		if (isVariable(next)) {
-			return next;
-		} else if (isID(next)) {
-			if (current == null) {
-				current = myCommandFactory.getCurrent();
-			}
-			return Double.toString(current.getId());
-		} else if (isArgument(next)) {
+		if (isID(next)) {
+			return myCommandFactory.getId(current);
+		} else if (isArgument(next) || isVariable(next)) {
 			return next;
 		}
 
@@ -86,7 +82,7 @@ public class Parser implements VariableTruthometer {
 		for (Command node : myCommandFactory.createCommands(next)) {
 			temp = new LinkedList<>(input);
 			while (!node.isReady()) {
-				if (node.hasUpdatable()) {
+				if (isUpdatable(node)) {
 					current = node.getUpdatable();
 				}
 				node.inject(traverse(temp, current));
@@ -104,17 +100,26 @@ public class Parser implements VariableTruthometer {
 		}
 	}
 
-	private Boolean isArgument(String string) {
-		return string.matches("-?[0-9]+\\.?[0-9]*") 
-				|| string.matches("^\\[.*]$")
-				|| !isRegistered(string);
+	private boolean isArgument(String string) {
+		return isNumber(string)
+				|| isList(string)
+				|| !myCommandFactory.isKnownCommand(string);
+
 	}
 
-	private boolean isRegistered(String var) {
-		return myCommandFactory.isRegistered(var);
+	private boolean isNumber(String string) {
+		return string.matches("-?[0-9]+\\.?[0-9]*");
+	}
+
+	private boolean isList(String string) {
+		return string.matches("^\\[.*]$");
 	}
 
 	private boolean isID(String next) {
 		return next.equals(CommandFactory.ID);
+	}
+
+	private boolean isUpdatable(Command node) {
+		return node.getClass().getSuperclass().equals(UpdatableCommand.class);
 	}
 }
