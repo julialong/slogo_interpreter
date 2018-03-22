@@ -41,6 +41,24 @@ public abstract class Command implements VariableTruthometer {
 		myVis = vis;
 		myVariableReplacer = var_replacer;
 	}
+	
+	/**
+	 * This is the function that is called when a Command object is ready to be
+	 * executed and its value calculated.
+	 *
+	 * @return String The double result of the calculation in String form.
+	 */
+	public String execute() {
+		if (!isReady()) {
+			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
+		}
+
+		double ans = performCalculation();
+		visCommand(new Result(ans));
+		return Double.toString(ans);
+	}
+	
+	protected abstract double performCalculation(); 
 
 	/**
 	 * Injects arguments into this command object. It's called from Parser.
@@ -80,8 +98,7 @@ public abstract class Command implements VariableTruthometer {
 
 	protected List<String> replaceVars(List<String> args) {
 		List<String> temp = new ArrayList<>();
-		for (int i=0; i < args.size(); i++) {
-			String curr = args.get(i);
+		for (String curr : args) {
 			if (isVariable(curr)) {
 				temp.add(myVariableReplacer.replace(curr));
 			} else {
@@ -91,14 +108,6 @@ public abstract class Command implements VariableTruthometer {
 		return temp;
 	}
 
-	/**
-	 * This is the function that is called when a Command object is ready to be
-	 * executed and its value calculated.
-	 *
-	 * @return String The double result of the calculation in String form.
-	 */
-	public abstract String execute();
-	
 	/**
 	 * Gets the Updatable object.
 	 *

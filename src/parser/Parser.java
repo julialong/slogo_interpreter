@@ -104,7 +104,6 @@ public class Parser implements VariableTruthometer {
 		return isNumber(string)
 				|| isList(string)
 				|| !myCommandFactory.isKnownCommand(string);
-
 	}
 
 	private boolean isNumber(String string) {

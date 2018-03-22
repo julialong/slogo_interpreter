@@ -22,20 +22,10 @@ public abstract class UpdatableCommand extends Command {
 		super(vis, var_replacer, num_args);
 		myUpdatable = updatable;
 	}
-
-	/**
-	 * Since these Commands take double values only in our world, you'll notice that the list 
-	 * that gets passed into calcValues() is parsed to a list of doubles.  
-	 */
+	
 	@Override
-	public String execute() {
-		if (! isReady()) {
-			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
-		}
-
-		Double ans = calcValues(myUpdatable, parseToDouble(getArgs()));
-		visCommand(new Result(ans));
-		return Double.toString(ans);
+	protected double performCalculation() {
+		return calcValues(myUpdatable, parseToDouble(getArgs()));
 	}
 
 	@Override
