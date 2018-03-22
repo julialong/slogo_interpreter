@@ -51,16 +51,16 @@ public class ColorPalettes extends Group {
 	private VBox makeVBox()	{
 		myVBox = new VBox(Resources.getInt("Inset"));
 		myVBox.setPadding(new Insets(Resources.getInt("Inset")));
-		
-		Text title = new Text("Color Palettes\nReference Page");
-    	title.getStyleClass().add("title2");
-    	myVBox.getChildren().add(title);
-    	
-        myVBox.getChildren().add(bgColorTable());
-        myVBox.getChildren().add(penColorTable());
-        myVBox.getChildren().add(iconTable());
 
-        return myVBox;
+		Text title = new Text("Color Palettes\nReference Page");
+		title.getStyleClass().add("title2");
+		myVBox.getChildren().add(title);
+
+		myVBox.getChildren().add(bgColorTable());
+		myVBox.getChildren().add(penColorTable());
+		myVBox.getChildren().add(iconTable());
+
+		return myVBox;
 	}
 
 	private TableView bgColorTable()	{
@@ -68,14 +68,14 @@ public class ColorPalettes extends Group {
 		bgColorTable.setEditable(false);
 		TableColumn bgIndexCol = new TableColumn("Index");
 		bgIndexCol.setCellValueFactory(new PropertyValueFactory<>("ind"));
-        bgColorTable.getColumns().add(bgIndexCol);
-        TableColumn bgColorCol = new TableColumn("BackgroundColor");
+		bgColorTable.getColumns().add(bgIndexCol);
+		TableColumn bgColorCol = new TableColumn("BackgroundColor");
 		bgColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
-        bgColorTable.getColumns().add(bgColorCol);
-        bgColorTable.setItems(myVis.bgColors);
-        bgColorTable.setPrefHeight(tableHeight);
+		bgColorTable.getColumns().add(bgColorCol);
+		bgColorTable.setItems(myVis.bgColors);
+		bgColorTable.setPrefHeight(tableHeight);
 
-        return bgColorTable;
+		return bgColorTable;
 	}
 
 	private TableView penColorTable()	{
@@ -83,14 +83,14 @@ public class ColorPalettes extends Group {
 		penColorTable.setEditable(false);
 		TableColumn penIndexCol = new TableColumn("Index");
 		penIndexCol.setCellValueFactory(new PropertyValueFactory<>("ind"));
-        penColorTable.getColumns().add(penIndexCol);
-        TableColumn penColorCol = new TableColumn("Pen Color");
+		penColorTable.getColumns().add(penIndexCol);
+		TableColumn penColorCol = new TableColumn("Pen Color");
 		penColorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
-        penColorTable.getColumns().add(penColorCol);
-        penColorTable.setItems(myVis.penColors);
-        penColorTable.setPrefHeight(tableHeight);
+		penColorTable.getColumns().add(penColorCol);
+		penColorTable.setItems(myVis.penColors);
+		penColorTable.setPrefHeight(tableHeight);
 
-        return penColorTable;
+		return penColorTable;
 	}
 
 	private TableView iconTable()	{
@@ -98,26 +98,26 @@ public class ColorPalettes extends Group {
 		ivTable.setEditable(false);
 		TableColumn ivIndexCol = new TableColumn("Index");
 		ivIndexCol.setCellValueFactory(new PropertyValueFactory<>("ind"));
-        ivTable.getColumns().add(ivIndexCol);
-        TableColumn ivCol = new TableColumn("Icon");
+		ivTable.getColumns().add(ivIndexCol);
+		TableColumn ivCol = new TableColumn("Icon");
 		ivCol.setCellValueFactory(new PropertyValueFactory<>("image"));
-        ivTable.getColumns().add(ivCol);
-        ivTable.setItems(myVis.ivImages);
-        ivTable.setPrefHeight(tableHeight);
+		ivTable.getColumns().add(ivCol);
+		ivTable.setItems(myVis.ivImages);
+		ivTable.setPrefHeight(tableHeight);
 
-        return ivTable;
+		return ivTable;
 	}
-	
-	 private void scroll(){
-	    ScrollBar sc = new ScrollBar();
-	    sc.setLayoutX(sceneWidth - sc.getWidth());
-	    sc.setMin(0);
-	    int prefHeight = 800;
-	    sc.setPrefHeight(prefHeight);
-	    sc.setOrientation(Orientation.VERTICAL);
-	    root.getChildren().add(sc);
-	        
-	    int scrollScale = -1;
-	    sc.valueProperty().addListener((ov, old_val, new_val) -> myVBox.setLayoutY(scrollScale * new_val.doubleValue()));
+
+	private void scroll(){
+		ScrollBar sc = new ScrollBar();
+		sc.setLayoutX(sceneWidth - sc.getWidth());
+		sc.setMin(0);
+		int prefHeight = 800;
+		sc.setPrefHeight(prefHeight);
+		sc.setOrientation(Orientation.VERTICAL);
+		root.getChildren().add(sc);
+
+		int scrollScale = -1;
+		sc.valueProperty().addListener((ov, old_val, new_val) -> myVBox.setLayoutY(scrollScale * new_val.doubleValue()));
 	}
 }
