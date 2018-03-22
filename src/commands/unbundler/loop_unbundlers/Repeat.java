@@ -33,7 +33,7 @@ public class Repeat extends LoopUnbundler {
 	 */
 	public String unbundle(List<String> exp) {
 		int[] commandIndex = findBrackets(exp, 0);
-		expression = buildExpression(exp, commandIndex[0] + 1, commandIndex[1]);
+		expression = buildExpression(exp, 0, commandIndex[0]);
 		executeExpression();
 		unbundledArray = buildCommand(exp, ":repcount", timesToRepeat, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);
