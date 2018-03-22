@@ -34,12 +34,12 @@ public class SideBar extends VBox{
 	private Pane myCanvasObjects;
 	private Visualizer myVis;
 	private Map<Drawable, List<String>> myTurtles;
-	
+
 	private ObservableList<LoadButton> uDefCommands = FXCollections.observableArrayList();
 	private ObservableList<VarVal> setVariables = FXCollections.observableArrayList();
 	protected TextInput myTextInput;
-	
-	
+
+
 	/**
 	 * Constructor for sidebar of program that contains buttons/options
 	 * @param canvas	canvas of program, where turtles are displayed
@@ -52,7 +52,7 @@ public class SideBar extends VBox{
 		myVis = v;
 		myTurtles = turtles;
 	}
-	
+
 	/**
 	 * Creates the sidebar as a VBox and adds its children (buttons) inside
 	 */
@@ -66,10 +66,10 @@ public class SideBar extends VBox{
 
 		return myVBox;
 	}	
-	
+
 	private Button allDrawablesButton()	{
 		Button allDrawablesButton = new Button("Turtle Information");
-    	allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
+		allDrawablesButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				new DrawablesTable(myTurtles, myCanvasObjects);
@@ -84,10 +84,10 @@ public class SideBar extends VBox{
 		TableColumn comText = new TableColumn("User-defined commands");
 		comText.setCellValueFactory(new PropertyValueFactory<>("me"));
 		comText.setMinWidth(colWidth);
-        commandTable.getColumns().add(comText);
-        commandTable.setItems(uDefCommands);
+		commandTable.getColumns().add(comText);
+		commandTable.setItems(uDefCommands);
 
-        return commandTable;
+		return commandTable;
 	}
 
 	/**
@@ -238,22 +238,22 @@ public class SideBar extends VBox{
 		/**
 		 * Returns the name of a variable, as a property
 		 */
-    	public StringProperty keyProperty() {
-	        return key;
-	    }
+		public StringProperty keyProperty() {
+			return key;
+		}
 
-	    /**
-	     * Returns the value of a variable, as a property
-	     */
-	    public ObjectProperty valueProperty()	{
-	    	return value;
-	    }
+		/**
+		 * Returns the value of a variable, as a property
+		 */
+		public ObjectProperty valueProperty()	{
+			return value;
+		}
 
-	    /**
-	     * Returns a button that, when clicked, grabs text from the value textbox and sets the variable to that value
-	     */
-	    public ObjectProperty changeButtonProperty()	{
-	    	return changeButton;
-	    }
+		/**
+		 * Returns a button that, when clicked, grabs text from the value textbox and sets the variable to that value
+		 */
+		public ObjectProperty changeButtonProperty()	{
+			return changeButton;
+		}
 	}
 }

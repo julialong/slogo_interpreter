@@ -102,7 +102,6 @@ public class Toolbar extends AnchorPane {
 		return langMenu;
 	}
 
-	//need to send tell command to create initial turtle on new window
 	private Button windowButton()	{
 		Button windowButton = new Button("New Window");
 		windowButton.setOnAction(e -> {

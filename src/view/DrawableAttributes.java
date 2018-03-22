@@ -162,7 +162,7 @@ public class DrawableAttributes	{
 
 	private SimpleObjectProperty makePenWidth(String penWidthString)	{
 		ObservableList<String> penWidthList = FXCollections.observableArrayList("0.5", "1.0", "1.5", "2.0", "2.5",
-		"3.0", "4.0", "5.0");
+				"3.0", "4.0", "5.0");
 
 		ComboBox penWidthMenu = new ComboBox(penWidthList);
 
