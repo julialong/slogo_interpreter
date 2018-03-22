@@ -1,4 +1,4 @@
-package commands.unbundler.multiple_unbundlers;
+package commands.unbundler.loop_unbundlers;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import commands.factory.VariableReplacer;
 import parser.Parser;
 import view.Visualizer;
 
-public class Repeat extends MultipleUnbundler {
+public class Repeat extends LoopUnbundler {
 
 	private static final int NUM_ARGS = 2;
 
@@ -34,6 +34,7 @@ public class Repeat extends MultipleUnbundler {
 	public String unbundle(List<String> exp) {
 		int[] commandIndex = findBrackets(exp, 0);
 		expression = buildExpression(exp, 0, commandIndex[0]);
+		System.out.println("expression: " + expression);
 		executeExpression();
 		unbundledArray = buildCommand(exp, ":repcount", timesToRepeat, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);

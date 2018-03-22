@@ -1,4 +1,4 @@
-package commands.unbundler.multiple_unbundlers;
+package commands.unbundler.loop_unbundlers;
 
 
 import commands.factory.VariableReplacer;
@@ -7,7 +7,7 @@ import parser.Parser;
 import view.Visualizer;
 
 
-abstract class MultipleUnbundler extends ControlUnbundler {
+abstract class LoopUnbundler extends ControlUnbundler {
 
     /**
      * Creates a new MultipleControlUnbundler class
@@ -16,7 +16,7 @@ abstract class MultipleUnbundler extends ControlUnbundler {
      * @param numArgs is the number of arguments
      * @param parser  is the current Parser class
      */
-    MultipleUnbundler(Visualizer vis, VariableReplacer variableReplacer, int numArgs, Parser parser) {
+    LoopUnbundler(Visualizer vis, VariableReplacer variableReplacer, int numArgs, Parser parser) {
         super(vis, variableReplacer, numArgs, parser);
     }
 

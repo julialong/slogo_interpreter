@@ -1,4 +1,4 @@
-package commands.unbundler.multiple_unbundlers;
+package commands.unbundler.loop_unbundlers;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import view.Visualizer;
  * Handles DoTimes control command
  * @author julialong
  */
-public class DoTimes extends MultipleUnbundler {
+public class DoTimes extends LoopUnbundler {
 	
 	private static final int NUM_ARGS = 2;
 
