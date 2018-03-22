@@ -53,12 +53,14 @@ public abstract class Command implements VariableTruthometer {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
-		double ans = performCalculation();
+		List<String> args = replaceVars(myArgs);
+		double ans = performCalculation(args);
+		
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}
 	
-	protected abstract double performCalculation(); 
+	protected abstract double performCalculation(List<String> args); 
 
 	/**
 	 * Injects arguments into this command object. It's called from Parser.
@@ -91,7 +93,7 @@ public abstract class Command implements VariableTruthometer {
 	}
 
 	protected List<Double> parseToDouble(List<String> args) {
-		return replaceVars(args).stream()
+		return args.stream()
 				.map(Double::parseDouble)
 				.collect(Collectors.toList());
 	}

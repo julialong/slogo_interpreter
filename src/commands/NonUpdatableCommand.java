@@ -19,24 +19,9 @@ public abstract class NonUpdatableCommand extends Command {
 		super(vis, var_replacer, num_args);
 	}
 	
-	/**
-	 * This function gets the arguments from its superclass and passes them allong to be calculated
-	 * by the concrete instance of a NonUpdatableCommand object.
-	 */
 	@Override
-	public String execute() {
-		if (! isReady()) {
-			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
-		}
-
-		double ans = performCalculation();
-		visCommand(new Result(ans));
-		return Double.toString(ans);
-	}
-	
-	@Override
-	protected double performCalculation() {
-		return calcValue(replaceVars(getArgs()));
+	protected double performCalculation(List<String> args) {
+		return calcValue(args);
 	}
 	
 	protected abstract double calcValue(List<String> args);

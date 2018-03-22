@@ -24,14 +24,14 @@ public abstract class UpdatableCommand extends Command {
 	}
 	
 	@Override
-	protected double performCalculation() {
-		return calcValues(myUpdatable, parseToDouble(getArgs()));
+	protected double performCalculation(List<String> args) {
+		return calcValues(myUpdatable, parseToDouble(args));
 	}
+	
+	protected abstract double calcValues(Updatable updatable, List<Double> args);
 
 	@Override
 	public Updatable getUpdatable() {
 		return myUpdatable;
 	}
-
-	protected abstract double calcValues(Updatable updatable, List<Double> args);
 }
