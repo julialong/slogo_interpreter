@@ -20,7 +20,9 @@ import view.Visualizer;
  *         the tree and then traverse it. It takes advantage of polymorphism,
  *         relying on the API exposed by Command objects to do its work.
  */
-public class Parser implements VariableTruthometer {
+public class Parser {
+	
+	public static final String VARIABLE_REGEX = ":[a-zA-Z]+";
 
 	private CommandFactory myCommandFactory;
 	private Sanitizer mySanitizer;
@@ -106,6 +108,10 @@ public class Parser implements VariableTruthometer {
 		for (String current : source) {
 			target.add(current);
 		}
+	}
+	
+	private boolean isVariable(String string) {
+		return string.matches(Parser.VARIABLE_REGEX);
 	}
 
 	private boolean isArgument(String string) {

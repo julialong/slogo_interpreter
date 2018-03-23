@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import commands.factory.VariableReplacer;
+import parser.Parser;
 import slogo_team07.Turtle;
 import slogo_team07.Updatable;
 import view.Visualizer;
@@ -54,5 +55,9 @@ public abstract class TurtleCreator extends Multiple {
 			myActives.add(id_string);
 		}
 		return num;
+	}
+	
+	private boolean isVariable(String string) {
+		return string.matches(Parser.VARIABLE_REGEX);
 	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import commands.factory.VariableReplacer;
-import parser.VariableTruthometer;
 import slogo_team07.Updatable;
 import view.Visualizer;
 
@@ -21,7 +20,7 @@ import view.Visualizer;
  *         arguments, it can be executed via a command called execute() that
  *         contains different implementations for different kinds of commands.
  */
-public abstract class Command implements VariableTruthometer {
+public abstract class Command {
 
 	private int myArgsNeeded;
 	private List<String> myArgs = new ArrayList<>();
@@ -106,19 +105,15 @@ public abstract class Command implements VariableTruthometer {
 	}
 
 	protected List<Double> parseToDouble(List<String> args) {
-		return args.stream().map(Double::parseDouble).collect(Collectors.toList());
+		return args.stream()
+				   .map(Double::parseDouble)
+				   .collect(Collectors.toList());
 	}
 
 	private List<String> replaceVars(List<String> args) {
-		List<String> temp = new ArrayList<>();
-		for (String curr : args) {
-			if (isVariable(curr)) {
-				temp.add(myVariableReplacer.replace(curr));
-			} else {
-				temp.add(curr);
-			}
-		}
-		return temp;
+		return args.stream()
+				   .map(myVariableReplacer::replace)
+				   .collect(Collectors.toList());
 	}
 
 	protected abstract double performCalculation(List<String> args);

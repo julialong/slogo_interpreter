@@ -114,6 +114,9 @@ public class CommandFactory implements VariableReplacer {
 	 */
 	@Override
 	public String replace(String var) {
+		if (!isVariable(var)) {
+			return var;
+		}
 		return myVarMap.containsKey(var) ? myVarMap.get(var) : "0.0";
 	}
 
@@ -255,5 +258,9 @@ public class CommandFactory implements VariableReplacer {
 		factory_map.put("Updatable", new UpdatableFactory(this));
 		factory_map.put("Unbundler", new UnbundlerFactory(this));
 		return factory_map;
+	}
+	
+	private boolean isVariable(String string) {
+		return string.matches(Parser.VARIABLE_REGEX);
 	}
 }

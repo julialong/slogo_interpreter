@@ -11,6 +11,7 @@ package commands.factory;
  *         the CommandFactory.
  *
  */
+@FunctionalInterface
 public interface VariableReplacer {
 	String replace(String var);
 }
