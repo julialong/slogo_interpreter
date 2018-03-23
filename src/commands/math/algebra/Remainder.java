@@ -19,5 +19,4 @@ public class Remainder extends NonUpdatableCommand {
 		List<Double> double_args = parseToDouble(args);
 		return double_args.get(0) % double_args.get(1);
 	}
-
 }

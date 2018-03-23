@@ -19,5 +19,4 @@ public class Forward extends UpdatableCommand {
 	protected double calcValues(Updatable updatable, List<Double> args) {
 		return updatable.move(args.get(0));
 	}
-
 }
