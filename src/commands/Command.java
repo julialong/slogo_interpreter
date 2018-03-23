@@ -106,14 +106,14 @@ public abstract class Command {
 
 	protected List<Double> parseToDouble(List<String> args) {
 		return args.stream()
-				   .map(Double::parseDouble)
-				   .collect(Collectors.toList());
+				.map(Double::parseDouble)
+				.collect(Collectors.toList());
 	}
 
 	private List<String> replaceVars(List<String> args) {
 		return args.stream()
-				   .map(myVariableReplacer::replace)
-				   .collect(Collectors.toList());
+				.map(myVariableReplacer::replace)
+				.collect(Collectors.toList());
 	}
 
 	protected abstract double performCalculation(List<String> args);
