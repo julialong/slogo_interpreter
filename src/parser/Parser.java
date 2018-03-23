@@ -21,7 +21,7 @@ import view.Visualizer;
  *         relying on the API exposed by Command objects to do its work.
  */
 public class Parser {
-	
+
 	public static final String VARIABLE_REGEX = ":[a-zA-Z]+";
 
 	private CommandFactory myCommandFactory;
@@ -30,8 +30,7 @@ public class Parser {
 	/**
 	 * Instantiates a new Parser object.
 	 *
-	 * @param vis
-	 *            the vis
+	 * @param vis the vis
 	 */
 	public Parser(Visualizer vis, CommandFactory command_factory, Sanitizer sanitizer) {
 		myCommandFactory = command_factory;
@@ -45,8 +44,7 @@ public class Parser {
 	 * loops over it while it isn't empty -- every time one of those loops returns,
 	 * that represents the traversal of a single tree.
 	 * 
-	 * @param s
-	 *            The input string.
+	 * @param s The input string.
 	 * @return double The return value of the final command executed, which will end
 	 *         up getting displayed to the user.
 	 */
@@ -68,11 +66,9 @@ public class Parser {
 	 * commands as they become executable, recursing over child nodes when
 	 * appropriate.
 	 * 
-	 * @param input
-	 *            This is the user input in sanitized list form.
-	 * @param current
-	 *            This is the "current" Updatable, which is used to return the
-	 *            proper ID when called.
+	 * @param input This is the user input in sanitized list form.
+	 * @param current This is the "current" Updatable, which is used to return the
+	 *        proper ID when called.
 	 * @return
 	 */
 	private String traverse(List<String> input, Updatable current) {
@@ -109,7 +105,7 @@ public class Parser {
 			target.add(current);
 		}
 	}
-	
+
 	private boolean isVariable(String string) {
 		return string.matches(Parser.VARIABLE_REGEX);
 	}

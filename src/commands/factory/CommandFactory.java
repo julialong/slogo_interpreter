@@ -46,8 +46,7 @@ public class CommandFactory implements VariableReplacer {
 	/**
 	 * Instantiates a new CommandFactory object.
 	 *
-	 * @param vis
-	 *            the vis
+	 * @param vis the vis
 	 */
 	public CommandFactory(Visualizer vis) {
 		myVis = vis;
@@ -59,8 +58,7 @@ public class CommandFactory implements VariableReplacer {
 	 * Creates a new list of Command objects by delegating to the appropriate
 	 * instance of a Factory.
 	 *
-	 * @param command
-	 *            The string command that a user entered.
+	 * @param command The string command that a user entered.
 	 * @return The List<Command> that is returned for the Parser to iterate over.
 	 */
 	public Iterable<Command> createCommands(String command) {
@@ -80,8 +78,7 @@ public class CommandFactory implements VariableReplacer {
 	 * It reverses the map of commands from the resource file to make it more
 	 * searchable for later inputs.
 	 *
-	 * @param lang
-	 *            the lang
+	 * @param lang the lang
 	 */
 	public void updateLanguage(String lang) {
 		myLanguages.clear();
@@ -99,8 +96,7 @@ public class CommandFactory implements VariableReplacer {
 	 * Checks the given string is registered anywhere within our system or if it's a
 	 * piece of input that isn't recognized.
 	 *
-	 * @param string
-	 *            the string
+	 * @param string the string
 	 * @return true, if is registered
 	 */
 	public boolean isKnownCommand(String string) {
@@ -123,8 +119,7 @@ public class CommandFactory implements VariableReplacer {
 	/**
 	 * Sets the parser.
 	 *
-	 * @param parser
-	 *            the new parser
+	 * @param parser the new parser
 	 */
 	public void setParser(Parser parser) {
 		myParser = parser;
@@ -134,8 +129,7 @@ public class CommandFactory implements VariableReplacer {
 	 * Gets the String object representing the id of the current Updatable. If there
 	 * isn't one, it just gets the id of any active turtle.
 	 *
-	 * @param current
-	 *            the current
+	 * @param current the current
 	 * @return String
 	 */
 	public String getId(Updatable current) {
@@ -155,8 +149,7 @@ public class CommandFactory implements VariableReplacer {
 	 * Gets the String object associated with a specific keyword from the Command
 	 * bundle. It is used for reflection in some of the other Factory methods.
 	 *
-	 * @param keyword
-	 *            the keyword
+	 * @param keyword the keyword
 	 * @return String
 	 */
 	protected String getBundleValue(String keyword) {
@@ -193,8 +186,7 @@ public class CommandFactory implements VariableReplacer {
 	/**
 	 * Gets the Updatable object.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return Updatable
 	 */
 	protected Updatable getUpdatableById(String id) {
@@ -231,8 +223,7 @@ public class CommandFactory implements VariableReplacer {
 	/**
 	 * Checks if the given string exists in the realm of known commands.
 	 *
-	 * @param string
-	 *            the string
+	 * @param string the string
 	 * @return true, if is command
 	 */
 	protected boolean isCommand(String string) {
@@ -243,8 +234,7 @@ public class CommandFactory implements VariableReplacer {
 	 * Gets the variable value associated with a given variable parameter. For
 	 * example, a given variable value ":x" might return the String value "10."
 	 *
-	 * @param variable
-	 *            the variable
+	 * @param variable the variable
 	 * @return String
 	 */
 	protected String getVar(String variable) {
@@ -259,7 +249,7 @@ public class CommandFactory implements VariableReplacer {
 		factory_map.put("Unbundler", new UnbundlerFactory(this));
 		return factory_map;
 	}
-	
+
 	private boolean isVariable(String string) {
 		return string.matches(Parser.VARIABLE_REGEX);
 	}

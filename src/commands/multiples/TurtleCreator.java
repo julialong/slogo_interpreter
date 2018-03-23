@@ -56,7 +56,7 @@ public abstract class TurtleCreator extends Multiple {
 		}
 		return num;
 	}
-	
+
 	private boolean isVariable(String string) {
 		return string.matches(Parser.VARIABLE_REGEX);
 	}

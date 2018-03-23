@@ -22,8 +22,7 @@ public class Sanitizer {
 	 * so that Command objects like DoTimes can have the list of command injected
 	 * into them as a single entity.
 	 *
-	 * @param s
-	 *            the s
+	 * @param s the s
 	 * @return List<String>
 	 */
 	public List<String> sanitize(String s) {
