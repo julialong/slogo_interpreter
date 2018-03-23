@@ -11,18 +11,21 @@ import java.util.List;
  * accurately handle their inputs. 
  */
 public interface BracketFinder {
+	
+	public static final String LEFT_BRACE = "[";
+	public static final String RIGHT_BRACE = "]";
 
 	default int[] findBrackets(List<String> exp, int pairNum) {
 		int[] answer = new int[] {-1, -1};
 		int unmatched = 0;
 		for (int i = 0; i < exp.size(); i++) {
 			String curr = exp.get(i);
-			if (curr.equals("[")) {
+			if (curr.equals(LEFT_BRACE)) {
 				if (unmatched == 0 && pairNum == 0) {
 					answer[0] = i;
 				}
 				unmatched += 1;
-			} else if (curr.equals("]")) {
+			} else if (curr.equals(RIGHT_BRACE)) {
 				unmatched--;
 				if (unmatched == 0) {
 					if (pairNum == 0) {
