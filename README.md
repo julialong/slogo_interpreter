@@ -8,7 +8,7 @@ Ben Hubsch (bah37)
 * hours worked: 60 - 70
 
 Jennifer Chin (jrc81)
-* hours worked:
+* hours worked: 40
 
 Julia Long (jbl34)
 * hours worked: 35
