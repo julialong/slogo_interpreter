@@ -7,7 +7,7 @@ import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Random extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 1;
 
 	public Random(Visualizer vis, VariableReplacer var_replacer) {

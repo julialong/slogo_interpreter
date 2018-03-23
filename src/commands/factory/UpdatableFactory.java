@@ -12,14 +12,15 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- * This is the Factory class for Updatable Commands. It uses reflection to instantiate the concretions 
- * because they all take the same parameters in the constructor.
+ *         This is the Factory class for Updatable Commands. It uses reflection
+ *         to instantiate the concretions because they all take the same
+ *         parameters in the constructor.
  *
  */
 public class UpdatableFactory implements Factory {
 
 	private CommandFactory myCF;
-	
+
 	public UpdatableFactory(CommandFactory command_factory) {
 		myCF = command_factory;
 	}
@@ -29,7 +30,8 @@ public class UpdatableFactory implements Factory {
 		List<Command> commandables = new ArrayList<>();
 		try {
 			Class<?> clazz = Class.forName(myCF.getBundleValue(keyword));
-			Constructor<?> ctor = clazz.getDeclaredConstructor(new Class[] { Visualizer.class, VariableReplacer.class, Updatable.class });
+			Constructor<?> ctor = clazz
+					.getDeclaredConstructor(new Class[] { Visualizer.class, VariableReplacer.class, Updatable.class });
 			for (String id : myCF.getActives()) {
 				commandables.add((Command) ctor.newInstance(myCF.getVis(), myCF, myCF.getUpdatableById(id)));
 			}

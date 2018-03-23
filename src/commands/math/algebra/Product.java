@@ -7,13 +7,13 @@ import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Product extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	public Product(Visualizer vis, VariableReplacer var_replacer) {
 		super(vis, var_replacer, NUM_ARGS);
 	}
-	
+
 	@Override
 	protected double calcValue(List<String> args) {
 		List<Double> double_args = parseToDouble(args);

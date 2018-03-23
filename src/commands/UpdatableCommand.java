@@ -10,8 +10,9 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- * This class is for commands that act on the Updatable: i.e., they act on the turtle. 
- * It inherits from Command because it is a more specific kind of Command.
+ *         This class is for commands that act on the Updatable: i.e., they act
+ *         on the turtle. It inherits from Command because it is a more specific
+ *         kind of Command.
  *
  */
 public abstract class UpdatableCommand extends Command {
@@ -22,16 +23,17 @@ public abstract class UpdatableCommand extends Command {
 		super(vis, var_replacer, num_args);
 		myUpdatable = updatable;
 	}
-	
+
 	@Override
 	protected double performCalculation(List<String> args) {
 		return calcValues(myUpdatable, parseToDouble(args));
 	}
-	
+
 	protected abstract double calcValues(Updatable updatable, List<Double> args);
 
 	@Override
 	public Updatable getUpdatable() {
 		return myUpdatable;
 	}
+
 }

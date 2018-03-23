@@ -8,7 +8,7 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class Towards extends UpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	public Towards(Visualizer vis, VariableReplacer var_replacer, Updatable updatable) {

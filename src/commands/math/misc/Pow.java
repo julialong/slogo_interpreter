@@ -7,7 +7,7 @@ import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Pow extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	public Pow(Visualizer vis, VariableReplacer var_replacer) {

@@ -10,7 +10,7 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- * This class sets an index in the palette in UI to a specific color.
+ *         This class sets an index in the palette in UI to a specific color.
  *
  */
 public class SetPalette extends NonUpdatableCommand {
@@ -27,9 +27,7 @@ public class SetPalette extends NonUpdatableCommand {
 	@Override
 	protected double calcValue(List<String> args) {
 		List<Double> double_args = parseToDouble(args);
-		return myVis.setPalette(double_args.get(0).intValue(),
-				double_args.get(1),
-				double_args.get(2),
+		return myVis.setPalette(double_args.get(0).intValue(), double_args.get(1), double_args.get(2),
 				double_args.get(3));
 	}
 

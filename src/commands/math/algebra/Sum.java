@@ -9,7 +9,7 @@ import view.Visualizer;
 public class Sum extends NonUpdatableCommand {
 
 	private static final int NUM_ARGS = 2;
-	
+
 	public Sum(Visualizer vis, VariableReplacer var_replacer) {
 		super(vis, var_replacer, NUM_ARGS);
 	}

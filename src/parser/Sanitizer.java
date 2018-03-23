@@ -9,19 +9,21 @@ import java.util.stream.Collectors;
  * 
  * @author benhubsch
  * 
- * This class is called when the user enters input and sanitizes the input, formatting it in
- * a way that the Parser expects and can handle.
+ *         This class is called when the user enters input and sanitizes the
+ *         input, formatting it in a way that the Parser expects and can handle.
  *
  */
 public class Sanitizer {
 
 	/**
-	 * This is the entry point to the sanitizer. It takes a raw input string and forces everything
-	 * to be singly-space separated, stripping out the comments and splitting the string around
-	 * brackets. The string is split around brackets so that Command objects like DoTimes can have
-	 * the list of command injected into them as a single entity.
+	 * This is the entry point to the sanitizer. It takes a raw input string and
+	 * forces everything to be singly-space separated, stripping out the comments
+	 * and splitting the string around brackets. The string is split around brackets
+	 * so that Command objects like DoTimes can have the list of command injected
+	 * into them as a single entity.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 * @return List<String>
 	 */
 	public List<String> sanitize(String s) {
@@ -90,8 +92,7 @@ public class Sanitizer {
 	}
 
 	private String stripComments(String s) {
-		return Arrays.asList(s.split("\n")).stream()
-				.filter(line -> !line.trim().startsWith("#"))
+		return Arrays.asList(s.split("\n")).stream().filter(line -> !line.trim().startsWith("#"))
 				.collect(Collectors.joining(" "));
 	}
 }

@@ -7,7 +7,7 @@ import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Remainder extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	public Remainder(Visualizer vis, VariableReplacer var_replacer) {

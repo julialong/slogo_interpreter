@@ -8,9 +8,9 @@ import parser.Parser;
 import view.Visualizer;
 
 public class AskWith extends Multiple {
-	
+
 	private static final int NUM_ARGS = 2;
-	
+
 	private Parser myParser;
 	private List<String> myActives;
 
@@ -19,7 +19,7 @@ public class AskWith extends Multiple {
 		myParser = parser;
 		myActives = actives;
 	}
-	
+
 	private double checkAndEval(List<String> input, int[] condition, int[] commands) {
 		double ans = -1.0;
 		for (String active : new ArrayList<>(myActives)) {
@@ -30,7 +30,7 @@ public class AskWith extends Multiple {
 		}
 		return ans;
 	}
-	
+
 	private double evaluate(List<String> input, int[] brackets) {
 		List<String> temp = new ArrayList<>(input);
 		return myParser.parse(String.join(" ", temp.subList(brackets[0] + 1, brackets[1])));
@@ -41,10 +41,10 @@ public class AskWith extends Multiple {
 		temp.add(word);
 		activate(temp);
 	}
-	
+
 	private void activate(List<String> replace) {
 		myActives.clear();
-		for (int i=0; i < replace.size(); i++) {
+		for (int i = 0; i < replace.size(); i++) {
 			myActives.add(replace.get(i));
 		}
 	}
@@ -54,11 +54,11 @@ public class AskWith extends Multiple {
 		List<String> input = argsToList(args);
 		List<String> old_actives = new ArrayList<>(myActives);
 		int[] condition = findBrackets(input, 0);
-		int[] commands = findBrackets(input, 1); 
+		int[] commands = findBrackets(input, 1);
 		double ans = checkAndEval(input, condition, commands);
 		activate(old_actives);
 		modifyList(input, commands[1]);
 		return ans;
 	}
-	
+
 }

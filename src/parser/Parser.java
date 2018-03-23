@@ -14,10 +14,11 @@ import view.Visualizer;
  *
  * @author benhubsch
  * 
- * This is the parser for the input that the user enters to the front end. It uses recursion
- * to virtualize a syntax tree and executes commands in the tree as it builds them, not
- * waiting to first build the tree and then traverse it. It takes advantage of polymorphism,
- * relying on the API exposed by Command objects to do its work.
+ *         This is the parser for the input that the user enters to the front
+ *         end. It uses recursion to virtualize a syntax tree and executes
+ *         commands in the tree as it builds them, not waiting to first build
+ *         the tree and then traverse it. It takes advantage of polymorphism,
+ *         relying on the API exposed by Command objects to do its work.
  */
 public class Parser implements VariableTruthometer {
 
@@ -27,7 +28,8 @@ public class Parser implements VariableTruthometer {
 	/**
 	 * Instantiates a new Parser object.
 	 *
-	 * @param vis the vis
+	 * @param vis
+	 *            the vis
 	 */
 	public Parser(Visualizer vis, CommandFactory command_factory, Sanitizer sanitizer) {
 		myCommandFactory = command_factory;
@@ -37,12 +39,14 @@ public class Parser implements VariableTruthometer {
 	}
 
 	/**
-	 * This is the entry point to the traversal. It sanitizes the input and then loops
-	 * over it while it isn't empty -- every time one of those loops returns, that represents
-	 * the traversal of a single tree.
-	 * @param s The input string.
-	 * @return double The return value of the final command executed, which will end up getting
-	 * displayed to the user.
+	 * This is the entry point to the traversal. It sanitizes the input and then
+	 * loops over it while it isn't empty -- every time one of those loops returns,
+	 * that represents the traversal of a single tree.
+	 * 
+	 * @param s
+	 *            The input string.
+	 * @return double The return value of the final command executed, which will end
+	 *         up getting displayed to the user.
 	 */
 	public double parse(String s) {
 		List<String> input = mySanitizer.sanitize(s);
@@ -58,11 +62,15 @@ public class Parser implements VariableTruthometer {
 	}
 
 	/**
-	 * This function is the meat of this class. It traverses the tree and executes commands
-	 * as they become executable, recursing over child nodes when appropriate.
-	 * @param input This is the user input in sanitized list form.
-	 * @param current This is the "current" Updatable, which is used to return the proper
-	 * ID when called. 
+	 * This function is the meat of this class. It traverses the tree and executes
+	 * commands as they become executable, recursing over child nodes when
+	 * appropriate.
+	 * 
+	 * @param input
+	 *            This is the user input in sanitized list form.
+	 * @param current
+	 *            This is the "current" Updatable, which is used to return the
+	 *            proper ID when called.
 	 * @return
 	 */
 	private String traverse(List<String> input, Updatable current) {
@@ -101,9 +109,7 @@ public class Parser implements VariableTruthometer {
 	}
 
 	private boolean isArgument(String string) {
-		return isNumber(string)
-				|| isList(string)
-				|| !myCommandFactory.isKnownCommand(string);
+		return isNumber(string) || isList(string) || !myCommandFactory.isKnownCommand(string);
 	}
 
 	private boolean isNumber(String string) {

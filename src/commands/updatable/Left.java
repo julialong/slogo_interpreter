@@ -8,7 +8,7 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class Left extends UpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 1;
 
 	public Left(Visualizer vis, VariableReplacer var_replacer, Updatable updatable) {

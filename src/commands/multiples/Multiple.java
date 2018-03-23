@@ -14,8 +14,9 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- * This is an abstract class for commands specific to the use of multiple turtles. It implements
- * the default methods in the ListModifier and BracketFinder interfaces.
+ *         This is an abstract class for commands specific to the use of
+ *         multiple turtles. It implements the default methods in the
+ *         ListModifier and BracketFinder interfaces.
  *
  */
 public abstract class Multiple extends NonUpdatableCommand implements ListModifier, BracketFinder {

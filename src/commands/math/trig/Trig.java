@@ -8,12 +8,12 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- * This is the abstract superclass for Trigonometric commands, which
- * all only take a single argument.  
+ *         This is the abstract superclass for Trigonometric commands, which all
+ *         only take a single argument.
  *
  */
 public abstract class Trig extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 1;
 
 	public Trig(Visualizer vis, VariableReplacer var_replacer) {

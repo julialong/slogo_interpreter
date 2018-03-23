@@ -10,13 +10,13 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- * This class sets the background of the display.
+ *         This class sets the background of the display.
  *
  */
 public class SetBackground extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 1;
-	
+
 	private Visualizer myVis;
 
 	public SetBackground(Visualizer vis, VariableReplacer var_replacer) {

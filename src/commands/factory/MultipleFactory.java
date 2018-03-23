@@ -13,14 +13,14 @@ import commands.multiples.Turtles;
  * 
  * @author benhubsch
  * 
- * This class is the Factory class for Mutliple objects. It uses if statements since the commands take
- * variable arguments.
+ *         This class is the Factory class for Mutliple objects. It uses if
+ *         statements since the commands take variable arguments.
  *
  */
 public class MultipleFactory implements Factory {
-	
+
 	private CommandFactory myCF;
-	
+
 	public MultipleFactory(CommandFactory command_factory) {
 		myCF = command_factory;
 	}

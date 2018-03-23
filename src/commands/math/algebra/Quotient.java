@@ -7,7 +7,7 @@ import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Quotient extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	public Quotient(Visualizer vis, VariableReplacer var_replacer) {

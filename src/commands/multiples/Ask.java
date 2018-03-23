@@ -10,13 +10,14 @@ import slogo_team07.Updatable;
 import view.Visualizer;
 
 public class Ask extends TurtleCreator {
-	
+
 	private static final int NUM_ARGS = 2;
-	
+
 	private Parser myParser;
 	private List<String> myActives;
 
-	public Ask(Visualizer vis, VariableReplacer var_replacer, Parser parser, List<String> actives, Map<String, Updatable> updatables) {
+	public Ask(Visualizer vis, VariableReplacer var_replacer, Parser parser, List<String> actives,
+			Map<String, Updatable> updatables) {
 		super(vis, var_replacer, NUM_ARGS, actives, updatables);
 		myParser = parser;
 		myActives = actives;

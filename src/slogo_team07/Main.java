@@ -7,16 +7,16 @@ import javafx.stage.Stage;
  * 
  * @author benhubsch
  * 
- * This class serves as nothing more than an entry point to the application.
+ *         This class serves as nothing more than an entry point to the
+ *         application.
  *
  */
 public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
-		 new Engine(stage);
+		new Engine(stage);
 	}
-	
-	
+
 	/**
 	 * Runs the program
 	 */

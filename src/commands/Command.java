@@ -14,11 +14,12 @@ import view.Visualizer;
  *
  * @author benhubsch
  * 
- * This Command class is the building block of every Command in the system. Fundamentally,
- * it holds a list of arguments that get injected into an instance of this class as the
- * input string is parsed. When the Command has been injected with an appropriate number
- * of arguments, it can be executed via a command called execute() that contains different
- * implementations for different kinds of commands.
+ *         This Command class is the building block of every Command in the
+ *         system. Fundamentally, it holds a list of arguments that get injected
+ *         into an instance of this class as the input string is parsed. When
+ *         the Command has been injected with an appropriate number of
+ *         arguments, it can be executed via a command called execute() that
+ *         contains different implementations for different kinds of commands.
  */
 public abstract class Command implements VariableTruthometer {
 
@@ -30,18 +31,22 @@ public abstract class Command implements VariableTruthometer {
 	/**
 	 * Instantiates a new Command object.
 	 *
-	 * @param vis The Visualizer class that implements the front-end logic. It is used to 
-	 * update the front-end when commands execute.
-	 * @param var_replacer This parameter allows variables to have their values calculated at 
-	 * execution time. It's an interface that the CommandFactory implements.  
-	 * @param num_args The number of arguments this object takes.
+	 * @param vis
+	 *            The Visualizer class that implements the front-end logic. It is
+	 *            used to update the front-end when commands execute.
+	 * @param var_replacer
+	 *            This parameter allows variables to have their values calculated at
+	 *            execution time. It's an interface that the CommandFactory
+	 *            implements.
+	 * @param num_args
+	 *            The number of arguments this object takes.
 	 */
 	public Command(Visualizer vis, VariableReplacer var_replacer, int num_args) {
 		myArgsNeeded = num_args;
 		myVis = vis;
 		myVariableReplacer = var_replacer;
 	}
-	
+
 	/**
 	 * This is the function that is called when a Command object is ready to be
 	 * executed and its value calculated.
@@ -55,16 +60,16 @@ public abstract class Command implements VariableTruthometer {
 
 		List<String> args = replaceVars(myArgs);
 		double ans = performCalculation(args);
-		
+
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}
-	
 
 	/**
 	 * Injects arguments into this command object. It's called from Parser.
 	 *
-	 * @param arg the arg
+	 * @param arg
+	 *            the arg
 	 */
 	public void inject(String arg) {
 		if (isReady()) {
@@ -82,7 +87,7 @@ public abstract class Command implements VariableTruthometer {
 	public boolean isReady() {
 		return myArgs.size() == myArgsNeeded;
 	}
-	
+
 	/**
 	 * Gets the Updatable object.
 	 *
@@ -90,7 +95,7 @@ public abstract class Command implements VariableTruthometer {
 	 */
 	public Updatable getUpdatable() {
 		return null;
-	}; 
+	};
 
 	protected List<String> getArgs() {
 		return myArgs;
@@ -101,9 +106,7 @@ public abstract class Command implements VariableTruthometer {
 	}
 
 	protected List<Double> parseToDouble(List<String> args) {
-		return args.stream()
-				.map(Double::parseDouble)
-				.collect(Collectors.toList());
+		return args.stream().map(Double::parseDouble).collect(Collectors.toList());
 	}
 
 	private List<String> replaceVars(List<String> args) {
@@ -117,6 +120,6 @@ public abstract class Command implements VariableTruthometer {
 		}
 		return temp;
 	}
-	
+
 	protected abstract double performCalculation(List<String> args);
 }

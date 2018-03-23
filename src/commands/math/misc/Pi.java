@@ -7,7 +7,7 @@ import commands.factory.VariableReplacer;
 import view.Visualizer;
 
 public class Pi extends NonUpdatableCommand {
-	
+
 	private static final int NUM_ARGS = 0;
 
 	public Pi(Visualizer vis, VariableReplacer var_replacer) {
@@ -18,6 +18,5 @@ public class Pi extends NonUpdatableCommand {
 	protected double calcValue(List<String> args) {
 		return Math.PI;
 	}
-
 
 }
