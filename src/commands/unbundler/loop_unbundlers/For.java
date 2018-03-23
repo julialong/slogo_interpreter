@@ -27,14 +27,10 @@ public class For extends ControlUnbundler {
 	}
 
 	private String variable;
-	private double start;
 	private double end;
-	private double increment;
 
 	private static final int VARIABLE_INDEX = 1;
-	private static final int START_INDEX = 2;
 	private static final int END_INDEX = 3;
-	private static final int INCREMENT_INDEX = 4;
 
 	private List<String> unbundledArray;
 
@@ -58,9 +54,7 @@ public class For extends ControlUnbundler {
 	 */
 	private void setNumbers(List<String> exp) {
 		variable = exp.get(VARIABLE_INDEX);
-		start = Double.parseDouble(exp.get(START_INDEX));
 		end = Double.parseDouble(exp.get(END_INDEX));
-		increment = Double.parseDouble(exp.get(INCREMENT_INDEX));
 	}
 
 }
