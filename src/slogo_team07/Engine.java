@@ -12,9 +12,8 @@ import view.Visualizer;
  * 
  * @author benhubsch
  * 
- *         This is a simple class that facilitates interaction between the front
- *         end and the back end. It implements the ChangeListener interface that
- *         it exposes to the frontend.
+ *         This is a simple class that facilitates interaction between the front end and the back
+ *         end. It implements the ChangeListener interface that it exposes to the frontend.
  *
  */
 public class Engine implements ChangeListener {

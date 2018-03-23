@@ -11,10 +11,11 @@ import view.Visualizer;
 
 /**
  * Handles control command necessary to define a variable
+ * 
  * @author julialong, benhubsch
  */
 public class MakeVariable extends ControlUnbundler {
-	
+
 	private static final int NUM_ARGS = 2;
 
 	private List<String> expression;
@@ -23,34 +24,37 @@ public class MakeVariable extends ControlUnbundler {
 
 	/**
 	 * Creates a MakeVariable unbundler object
+	 * 
 	 * @param visualizer is the current Visualizer being used in the session
 	 * @param variableReplacer is the current variableReplacer object
 	 * @param parser is the current Parser object
 	 * @param dict is the current map of function names to function objects
 	 */
-	public MakeVariable(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser, Map<String, String> dict) {
+	public MakeVariable(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser,
+			Map<String, String> dict) {
 		super(visualizer, variableReplacer, NUM_ARGS, parser);
 		dictionary = dict;
 		myVis = visualizer;
 	}
-	
+
 	@Override
 	public String execute() {
-		if (! isReady()) {
+		if (!isReady()) {
 			throw new CommandArgsUnfilledException("This Command object needs more arguments to finish executing.");
 		}
 
 		double ans = calcValue(getArgs());
-		
 		visCommand(new Result(ans));
 		return Double.toString(ans);
 	}
 
 	/**
 	 * unbundles the given control command starting at index to crete a new variable
+	 * 
 	 * @param exp is the entire ArrayList of the input commands
 	 * @return the string variable name
 	 */
+	@Override
 	public String unbundle(List<String> exp) {
 		String variableName = exp.get(0);
 		expression = buildExpression(exp, 1, exp.size());
@@ -65,7 +69,7 @@ public class MakeVariable extends ControlUnbundler {
 	private void addVariable(String variable) {
 		dictionary.put(variable, String.join(" ", expression));
 	}
-	
+
 	@Override
 	protected double calcValue(List<String> args) {
 		List<String> input = argsToExp(args);
@@ -76,4 +80,3 @@ public class MakeVariable extends ControlUnbundler {
 		return value;
 	}
 }
-
