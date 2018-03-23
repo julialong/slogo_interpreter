@@ -27,7 +27,7 @@ public abstract class ControlUnbundler extends NonUpdatableCommand implements Li
 	 */
 	public ControlUnbundler(Visualizer vis, VariableReplacer var_replacer, int numArgs, Parser parser) {
 		super(vis, var_replacer, numArgs);
-		parser = parser;
+		this.parser = parser;
 	}
 
 	/**
@@ -35,7 +35,7 @@ public abstract class ControlUnbundler extends NonUpdatableCommand implements Li
 	 * @param args is the list of arguments
 	 * @return List of expressions
 	 */
-	List<String> argsToExp(List<String> args) {
+	protected List<String> argsToExp(List<String> args) {
 		List<String> exp = new ArrayList<>();
 		for (String arg : args) {
 			exp.addAll(Arrays.asList(arg.split(" ")));
