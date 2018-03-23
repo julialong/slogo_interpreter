@@ -27,7 +27,7 @@ public abstract class ControlUnbundler extends NonUpdatableCommand implements Li
 	 */
 	public ControlUnbundler(Visualizer vis, VariableReplacer var_replacer, int numArgs, Parser parser) {
 		super(vis, var_replacer, numArgs);
-		this.parser = parser;
+		parser = parser;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public abstract class ControlUnbundler extends NonUpdatableCommand implements Li
 	 * @return the current parser
 	 */
 	protected Parser getParser() {
-		return this.parser;
+		return parser;
 	}
 
 	/**

@@ -216,15 +216,6 @@ public class CommandFactory implements VariableReplacer {
 		return myVarMap;
 	}
 
-	protected Map<String, Factory> createMap() {
-		Map<String, Factory> factory_map = new HashMap<>();
-		factory_map.put("Multiple", new MultipleFactory(this));
-		factory_map.put("NonUpdatable", new NonUpdatableFactory(this));
-		factory_map.put("Updatable", new UpdatableFactory(this));
-		factory_map.put("Unbundler", new UnbundlerFactory(this));
-		return factory_map;
-	}
-
 	/**
 	 * Checks if the given string exists in the realm of known commands.
 	 *
@@ -245,5 +236,14 @@ public class CommandFactory implements VariableReplacer {
 	 */
 	protected String getVar(String variable) {
 		return myVarMap.get(variable);
+	}
+
+	private Map<String, Factory> createMap() {
+		Map<String, Factory> factory_map = new HashMap<>();
+		factory_map.put("Multiple", new MultipleFactory(this));
+		factory_map.put("NonUpdatable", new NonUpdatableFactory(this));
+		factory_map.put("Updatable", new UpdatableFactory(this));
+		factory_map.put("Unbundler", new UnbundlerFactory(this));
+		return factory_map;
 	}
 }
