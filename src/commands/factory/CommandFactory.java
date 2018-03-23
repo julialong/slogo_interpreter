@@ -249,8 +249,10 @@ public class CommandFactory implements VariableReplacer {
 		factory_map.put("Unbundler", new UnbundlerFactory(this));
 		return factory_map;
 	}
+	
 
 	private boolean isVariable(String string) {
 		return string.matches(Parser.VARIABLE_REGEX);
 	}
+
 }

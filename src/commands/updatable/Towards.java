@@ -16,7 +16,7 @@ public class Towards extends UpdatableCommand {
 	}
 
 	@Override
-	protected double calcValues(Updatable updatable, List<Double> args) {
+	protected double calcValue(Updatable updatable, List<Double> args) {
 		return updatable.setFacing(args.get(0), args.get(1));
 	}
 }

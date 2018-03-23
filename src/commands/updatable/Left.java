@@ -16,7 +16,7 @@ public class Left extends UpdatableCommand {
 	}
 
 	@Override
-	protected double calcValues(Updatable updatable, List<Double> args) {
+	protected double calcValue(Updatable updatable, List<Double> args) {
 		return updatable.rotate(args.get(0));
 	}
 

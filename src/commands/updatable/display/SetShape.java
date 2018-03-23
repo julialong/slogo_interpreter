@@ -16,7 +16,7 @@ public class SetShape extends UpdatableCommand {
 	}
 
 	@Override
-	protected double calcValues(Updatable updatable, List<Double> args) {
+	protected double calcValue(Updatable updatable, List<Double> args) {
 		return updatable.setShape(args.get(0).intValue());
 	}
 
