@@ -59,7 +59,11 @@ Additionally, there are a couple of times where input is passed through a method
 
 There is also a strong dependency between the `Parser` and individual `Command` objects, but that is totally reasonable. The `Parser` needs to know how `Command` objects accept arguments and when it can execute them, so it is written very precisely using the API that the `Command` objects expose. It doesn't have a ton of freedom in how it handles those `Command` objects, but, again, that's a product of the fact that the `Parser` is parsing very directly in tandem with the API that the `Command` objects expose, and I don't see a real way around that. 
 
+For dependencies in the front end, we ideally would have liked each of the four main Panes to be completely independent of one another. However, because the `SideBar` and `Toolbar` classes just contain buttons that change things on the `Canvas` or display information that the `Visualizer` or `Canvas` contains, the `SideBar` and `Toolbar` need to be aware of those classes in order to properly update their information. It is clear which other classes are required by a given class because they are taken in in the constructor of a given class and stored as instance variables. 
 
+Whatever is displayed by the `Canvas` is entirely dependent upon the `Turtle` class and `Drawable` interface. The map of Drawables used by most front end classes is dependent upon the Map being properly updated by the `DrawablesTable`. If the map is updated incorrectly, meaning the pen color isn't added to the correct index of the ArrayList, then `Canvas` will be entirely thrown off and unable to draw with the designated pen color. 
+
+### Major Design Choices
 
 One of the big discussions we had at the beginning of this project was how we were going to pass information between the different parts of the program. One early proposal was to have the frontend talk to the `Parser`, have the `Parser` talk to the `Command` objects, have the `Command` objects respond to the `Parser`, and have the `Parser` respond back to the front end. It would have looked something like this:
 
