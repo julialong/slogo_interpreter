@@ -50,4 +50,36 @@ There is also a strong dependency between the `Parser` and individual `Command` 
 
 // FRONTEND ARCHITECTURE OVERVIEW AND FRONTEND DEPENDENCIES
 
+One of the big discussions we had at the beginning of this project was how we were going to pass information between the different parts of the program. One early proposal was to have the frontend talk to the `Parser`, have the `Parser` talk to the `Command` objects, have the `Command` objects respond to the `Parser`, and have the `Parser` respond back to the front end. It would have looked something like this:
+
+![alt text](proposed_design.png "Proposed Design")
+
+However, we knew that we wanted to isolate our frontend from any of the command or parsing logic in the backend. For that reason, we made use of the [Observer Pattern](http://www.oodesign.com/observer-pattern.html) described on the OODesign page, which allowed us to decouple our frontend and backend significantly. This allows for much greater flexibility in how the backend is implemented. We chose to have our `Engine` class implement a `ChangeListener` interface which contains two methods, `changeInput()` and `changeLanguage()`. Those two implementations in `Engine` are here:
+
+```java
+@Override
+public void changeInput(String input) {
+	Result result;
+	try {
+		double ans = myParser.parse(input);
+		result = new Result(ans);
+	} catch (Exception e) {
+		result = new ErrorResult(Double.MAX_VALUE, e.getMessage());
+	}
+	
+	myVis.runCommand(result, true);
+}
+
+@Override
+public void changeLanguage(String lang) {
+	myCommandFactory.updateLanguage(lang);
+}
+```
+
+As you can see, the frontend doesn't need to know about any of the details. All the frontend has to do is pass the methods the right arguments, and the rest of the magic happens behind the scene. `Engine` delegates to the `Parser` to get the results of a given command and to the `CommandFactory` to update the language.
+
+As such, our chosen design, which I think is much improved from the original diagram I displayed above, looks like the following:
+
+![alt text](current_design.png "Current Design")
+
 
