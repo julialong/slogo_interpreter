@@ -4,7 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains variations of the buildCommand method that are relevant to different control commands
+ * Contains variations of the buildCommand method that are relevant to different control commands.
+ *
+ * Prior to implementing this interface, every single control unbundler class itself had some version of the
+ * buildCommand command. By embedding this method in an interface that is implemented by the ControlUnbundler,
+ * all subclasses now have access to this method.
+ *
+ * This gets rid of the almost-duplicated code that was in all of the unbundler classes that were present before.
+ * The code went unchecked through the style checker because the implementation of each method was slightly different,
+ * but now there is absolutely no duplicated code at all, which has been one of the ideas discussed in lecture and
+ * over readings throughout the semester (such as the STUPID vs SOLID) article.
+ *
  * @author julialong
  */
 public interface CommandBuilder {

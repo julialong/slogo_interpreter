@@ -55,20 +55,4 @@ public class DoTimes extends LoopUnbundler {
 		variable = exp.get(1);
 		timesToRepeat = executeExpression(buildExpression(exp, START_EXPRESSION, stopIndex));
 	}
-
-	/**
-	 *
-	 * @param expression is the List of the expression to execute
-	 * @return the value of the expression
-	 */
-	private double executeExpression(List<String> expression) {
-		double answer = 0;
-		if (expression.size() > 1){
-			answer = getParser().parse(String.join(" ", expression));
-		}
-		else {
-			answer = Double.parseDouble(expression.get(0));
-		}
-		return answer;
-	}
 }

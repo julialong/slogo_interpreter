@@ -21,8 +21,8 @@ public interface Updatable {
 
 	/**
 	 * Moves the Turtle a certain number of pixels
-	 * 
-	 * @param pixels
+	 *
+	 * @param delta
 	 * @return double - distance moved
 	 */
 	double move(double delta);

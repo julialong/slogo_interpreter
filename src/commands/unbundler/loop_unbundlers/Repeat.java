@@ -17,12 +17,12 @@ public class Repeat extends LoopUnbundler {
 
 	/**
 	 * Creates a new Repeat unbundler class
-	 * @param vis
-	 * @param variableReplacer
-	 * @param p
+	 * @param visualizer is the current Visualizer class
+	 * @param variableReplacer is the current variableReplacer class
+	 * @param parser is the current parser
 	 */
-	public Repeat(Visualizer vis, VariableReplacer variableReplacer, Parser p) {
-		super(vis, variableReplacer, NUM_ARGS, p);
+	public Repeat(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser) {
+		super(visualizer, variableReplacer, NUM_ARGS, parser);
 	}
 
 	/**
@@ -34,17 +34,9 @@ public class Repeat extends LoopUnbundler {
 	public String unbundle(List<String> exp) {
 		int[] commandIndex = findBrackets(exp, 0);
 		expression = buildExpression(exp, 0, commandIndex[0]);
-		executeExpression();
+		timesToRepeat = executeExpression(expression);
 		unbundledArray = buildCommand(exp, ":repcount", timesToRepeat, commandIndex[0], commandIndex[1]);
 		modifyList(exp, commandIndex[1]);
 		return String.join(" ", unbundledArray);
-	}
-
-	private void executeExpression() {
-		if (expression.size() <= 0) {
-			timesToRepeat = 0;
-		} else {
-			timesToRepeat = getParser().parse(String.join(" ", expression));
-		}
 	}
 }

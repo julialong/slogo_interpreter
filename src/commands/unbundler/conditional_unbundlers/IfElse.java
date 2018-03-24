@@ -8,6 +8,9 @@ import view.Visualizer;
 
 /**
  * Handles IfElse control command
+ *
+ * IFElse is a short subclass that extends the ConditionalUnbundler abstract class.
+ *
  * @author julialong
  */
 public class IfElse extends ConditionalUnbundler {

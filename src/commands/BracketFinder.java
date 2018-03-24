@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface BracketFinder {
 
-	public static final String LEFT_BRACE = "[";
-	public static final String RIGHT_BRACE = "]";
+	String LEFT_BRACE = "[";
+	String RIGHT_BRACE = "]";
 
 	default int[] findBrackets(List<String> exp, int pairNum) {
 		int[] answer = new int[] { -1, -1 };

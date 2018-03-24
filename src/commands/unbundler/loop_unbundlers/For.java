@@ -15,6 +15,13 @@ import view.Visualizer;
 public class For extends ControlUnbundler {
 
 	private static final int NUM_ARGS = 2;
+	private String variable;
+	private double end;
+
+	private static final int VARIABLE_INDEX = 1;
+	private static final int END_INDEX = 3;
+
+	private List<String> unbundledArray;
 
 	/**
 	 * Creates a For unbundler object
@@ -25,14 +32,6 @@ public class For extends ControlUnbundler {
 	public For(Visualizer visualizer, VariableReplacer variableReplacer, Parser parser) {
 		super(visualizer, variableReplacer, NUM_ARGS, parser);
 	}
-
-	private String variable;
-	private double end;
-
-	private static final int VARIABLE_INDEX = 1;
-	private static final int END_INDEX = 3;
-
-	private List<String> unbundledArray;
 
 	/**
 	 * Unbundles For command to a longer string that the Parser can parse
