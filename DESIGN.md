@@ -1,8 +1,17 @@
+SLOGO DESIGN DOC
+================
+
+### High Level Design
+
 For the backend, input is passed into the `Engine` class from the frontend which then delegates the input string to the `Parser`. The `Parser` immediately asks the `Sanitizer` to format the input string in a desirable way by putting a single whitespace between significant characters, while leaving lists as singular, concatenated strings. (Sidenote: we chose to leave lists as one large string because it made it more straightforward to consider lists as arguments. For example,`if` is a `Command` that take two arguments: the first is an `expr` and the second is a list of commands, `[ command(s) ]`. We felt this was the most straightforward way to pass lists as arguments, which our design required.) Once the `Parser` has the input formatted in the proper way, it traverses each of the "trees" nested within a given input string, creating and executing nodes as it parses the input. The "tree" is simulated with recursion inside of `traverse()`. The `CommandFactory` delegates instantiation of `Commands` to specific `Factory` objects that recognize a given command. The `CommandFactory` ultimately returns an `Iterable<Command>` that the `Parser` can then iterate over and operate on. The final result is returned to Engine where it is ultimately passed to the frontend.
 
-The highest-level class on the frontend is `Visualizer`. On valid commands, `Visualizer` delegates to `Canvas` the responsibility of updating the `Drawable` objects on-screen and tells the `Console` what to print. The UI components like `HelpBox`, `SideBar`, and `Toolbar` all have some kind of action that is triggered on them whenever the user interacts with those components.
+The highest-level class on the frontend is `Visualizer`. The GUI is made up of four Panes called `Canvas`, `Console`, `SideBar`, and `Toolbar`. The `Console` receives user input and sends it to the `Parser` through the `Engine` and the `Parser` determines if the input is a valid command(s). If the command is not valid, the `Engine` will return to the `Visualizer` a specific number which will trigger an alert to be displayed by the `Visualizer`. On valid commands, `Visualizer` delegates to `Canvas` the responsibility of updating the `Drawable` objects on-screen and tells the `Console` what to print. `SideBar` and `Toolbar` contain buttons that allow the user to toggle different aspects of the GUI and the Turtles (like color, image, etc.), buttons that launch popup windows that provide more information about the program (like `HelpBox` and `ColorPalettes`), and table views that show variables and user-defined commands. 
 
 There is also a `Turtle` class which implements two different interfaces, one for the frontend and one for the backend. As I've alluded to previously, the type that the frontend holds to interact with the `Turtle` is called a `Drawable`. It exposes methods used in displaying the `Turtle` on-screen. The interface exposed to the backend is called the `Updatable`, which the `Command` objects use to update the `Turtle`'s state on an executed `Command`, if necessary. This means that each of the "ends" only has access to the methods that we want them to use.
+
+### Adding a New Feature
+
+##### Adding a Command
 
 Adding a `Command` to the language is relatively straightforward. Depending on what kind of command it is, you may want it to extend a specific kind of command (like `Boolean`, if it's a command that deals with booleans). Regardless, if it's a command that has some effect on the `Turtle`, you'll want the new `Command` to extend `UpdatableCommand`, which is an abstract class that requires the implementation of one method:
 
@@ -22,6 +31,12 @@ protected double calcValue(List<String> args) {
 The `Command` hierarchy has been carefully designed with the addition of new `Command` objects in mind, and this single method simple implementation results from that.
 
 Additionally, you'll have to add the new `Command` name to Command.properties and specify the absolute file path of your new command class, and you'll also have to specify the kind of factory that should create it in Factory.properties. Depending on the kind of `Command` you've created, you may have to add a new if statement to successfully create the new `Command` (this isn't true for the `UpdatableFactory` and `NonUpdatableFactory` commands, which use reflection to instantiate new `Command` objects).
+
+##### Adding a Front End Feature
+
+To add a new component to the front end, it really depends on what the component is. If it's something that can be accomplished within a button and within the single handle method that the button calls, then a button method can be added to the `Toolbar` or `SideBar`. If the new feature requires a lot of code, it is probably best to create a new class within the view package and create an instance of the new object wherever it is needed. The `Visualizer` class should not have to be touched to add a new feature to the front end; depending on what aspect of the GUI the feature will affect, the different Panes should be able to handle it.
+
+### Assumptions and Dependencies
 
 In general, I think that the dependencies are fairly easy to find. Some of the logic in the `Command` inheritance hierarchy can occasionally be hard to follow if you've never seen the structure before because things are subclassed multiple times and make use of protected methods. Nevertheless, I was intentional about making all of my instance variables private, so that the only thing that can be a little tricky to figure out is in which superclass (or supersuperclass) a method is defined. One example is in the following method inside `NonUpdatableCommand`:
 
@@ -48,6 +63,42 @@ Additionally, there are a couple of times where input is passed through a method
 
 There is also a strong dependency between the `Parser` and individual `Command` objects, but that is totally reasonable. The `Parser` needs to know how `Command` objects accept arguments and when it can execute them, so it is written very precisely using the API that the `Command` objects expose. It doesn't have a ton of freedom in how it handles those `Command` objects, but, again, that's a product of the fact that the `Parser` is parsing very directly in tandem with the API that the `Command` objects expose, and I don't see a real way around that. 
 
-// FRONTEND ARCHITECTURE OVERVIEW AND FRONTEND DEPENDENCIES
+For dependencies in the front end, we ideally would have liked each of the four main Panes to be completely independent of one another. However, because the `SideBar` and `Toolbar` classes just contain buttons that change things on the `Canvas` or display information that the `Visualizer` or `Canvas` contains, the `SideBar` and `Toolbar` need to be aware of those classes in order to properly update their information. It is clear which other classes are required by a given class because they are taken in in the constructor of a given class and stored as instance variables. 
+
+Whatever is displayed by the `Canvas` is entirely dependent upon the `Turtle` class and `Drawable` interface. The map of Drawables used by most front end classes is dependent upon the Map being properly updated by the `DrawablesTable`. If the map is updated incorrectly, meaning the pen color isn't added to the correct index of the ArrayList, then `Canvas` will be entirely thrown off and unable to draw with the designated pen color. 
+
+### Major Design Choices
+
+One of the big discussions we had at the beginning of this project was how we were going to pass information between the different parts of the program. One early proposal was to have the frontend talk to the `Parser`, have the `Parser` talk to the `Command` objects, have the `Command` objects respond to the `Parser`, and have the `Parser` respond back to the front end. It would have looked something like this:
+
+![alt text](proposed_design.png "Proposed Design")
+
+However, we knew that we wanted to isolate our frontend from any of the command or parsing logic in the backend. For that reason, we made use of the [Observer Pattern](http://www.oodesign.com/observer-pattern.html) described on the OODesign page, which allowed us to decouple our frontend and backend significantly. This allows for much greater flexibility in how the backend is implemented. We chose to have our `Engine` class implement a `ChangeListener` interface which contains two methods, `changeInput()` and `changeLanguage()`. Those two implementations in `Engine` are here:
+
+```java
+@Override
+public void changeInput(String input) {
+	Result result;
+	try {
+		double ans = myParser.parse(input);
+		result = new Result(ans);
+	} catch (Exception e) {
+		result = new ErrorResult(Double.MAX_VALUE, e.getMessage());
+	}
+	
+	myVis.runCommand(result, true);
+}
+
+@Override
+public void changeLanguage(String lang) {
+	myCommandFactory.updateLanguage(lang);
+}
+```
+
+As you can see, the frontend doesn't need to know about any of the details. All the frontend has to do is pass the methods the right arguments, and the rest of the magic happens behind the scene. `Engine` delegates to the `Parser` to get the results of a given command and to the `CommandFactory` to update the language.
+
+As such, our chosen design, which I think is much improved from the original diagram I displayed above, looks like the following:
+
+![alt text](current_design.png "Current Design")
 
 
