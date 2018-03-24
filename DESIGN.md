@@ -32,6 +32,10 @@ The `Command` hierarchy has been carefully designed with the addition of new `Co
 
 Additionally, you'll have to add the new `Command` name to Command.properties and specify the absolute file path of your new command class, and you'll also have to specify the kind of factory that should create it in Factory.properties. Depending on the kind of `Command` you've created, you may have to add a new if statement to successfully create the new `Command` (this isn't true for the `UpdatableFactory` and `NonUpdatableFactory` commands, which use reflection to instantiate new `Command` objects).
 
+##### Adding a Front End Feature
+
+To add a new component to the front end, it really depends on what the component is. If it's something that can be accomplished within a button and within the single handle method that the button calls, then a button method can be added to the `Toolbar` or `SideBar`. If the new feature requires a lot of code, it is probably best to create a new class within the view package and create an instance of the new object wherever it is needed. The `Visualizer` class should not have to be touched to add a new feature to the front end; depending on what aspect of the GUI the feature will affect, the different Panes should be able to handle it.
+
 ### Assumptions and Dependencies
 
 In general, I think that the dependencies are fairly easy to find. Some of the logic in the `Command` inheritance hierarchy can occasionally be hard to follow if you've never seen the structure before because things are subclassed multiple times and make use of protected methods. Nevertheless, I was intentional about making all of my instance variables private, so that the only thing that can be a little tricky to figure out is in which superclass (or supersuperclass) a method is defined. One example is in the following method inside `NonUpdatableCommand`:
