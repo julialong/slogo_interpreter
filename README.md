@@ -1,22 +1,6 @@
 SLOGO
+SLogo
 ===
-
-Date started: 15 Feb 18
-Date finished: 9 Mar 18
-
-Ben Hubsch (bah37)
-* hours worked: 60 - 70
-
-Jennifer Chin (jrc81)
-* hours worked: 40
-
-Julia Long (jbl34)
-* hours worked: 35
-
-Maya Messinger (mm479)
-* hours worked: 45
-
-# slogo
 A development environment that helps users write SLogo programs.
 
 ### Roles
